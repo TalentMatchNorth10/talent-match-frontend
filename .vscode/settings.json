@@ -1,0 +1,66 @@
+{
+  "workbench.startupEditor": "none",
+  "workbench.iconTheme": "material-icon-theme",
+  "editor.tabSize": 2,
+  "editor.wordWrap": "on",
+  "[html]": {
+    "editor.defaultFormatter": "rvest.vs-code-prettier-eslint"
+  },
+  "prettier.jsxSingleQuote": true,
+  "git.autofetch": true,
+  "diffEditor.ignoreTrimWhitespace": false,
+  "[scss]": {
+    "editor.defaultFormatter": "HookyQR.beautify"
+  },
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
+  "terminal.integrated.profiles.windows": {
+    "Cmder": {
+      "path": "${env:windir}\\System32\\cmd.exe",
+      "args": ["/k", "C:\\cmder\\vendor\\bin\\vscode_init.cmd"]
+    }
+  },
+  "terminal.integrated.defaultProfile.windows": "Cmder",
+  "editor.language.brackets": true,
+  "editor.bracketPairColorization.enabled": true,
+  "editor.guides.bracketPairs": "active",
+  "[javascript]": {
+    "editor.defaultFormatter": "rvest.vs-code-prettier-eslint"
+  },
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "rvest.vs-code-prettier-eslint"
+  },
+  "files.associations": {
+    "*.js": "javascript"
+  },
+  "html.format.wrapAttributes": "force-expand-multiline",
+  // "editor.bracketPairColorization.independentColorPoolPerBracketType": true,
+  "tabnine.experimentalAutoImports": true,
+  "editor.accessibilityPageSize": 14,
+  "git.ignoreMissingGitWarning": true,
+  "liveServer.settings.donotShowInfoMsg": true,
+  "explorer.confirmDelete": false,
+  "workbench.colorCustomizations": {},
+  "git.confirmSync": false,
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "[json]": {
+    "editor.defaultFormatter": "rvest.vs-code-prettier-eslint"
+  },
+  "git.enableSmartCommit": true,
+  "editor.defaultFormatter": "rvest.vs-code-prettier-eslint",
+  "editor.formatOnPaste": true,
+  "editor.autoClosingBrackets": "always",
+  "gitlens.gitCommands.skipConfirmations": ["fetch:command", "switch:command"],
+  "livePreview.notifyOnOpenLooseFile": false,
+  "editor.formatOnSave": true,
+  "eslint.format.enable": true,
+  "[typescript]": {
+    "editor.defaultFormatter": "rvest.vs-code-prettier-eslint"
+  },
+  "angular-schematics.schematicsDefaultOptions": {
+    "angular-component": {
+      "skipChangeDetectionOnPush": true
+    }
+  }
+}
