@@ -9,7 +9,7 @@ jobs:
   openapi-generate:
     runs-on: ubuntu-latest
     steps:
-      - run: openapi:client
+      - run: npm run openapi:client
   lint:
     runs-on: ubuntu-latest
     steps:
