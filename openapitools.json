@@ -8,7 +8,7 @@
       "client-server": {
         "generatorName": "typescript-angular",
         "output": "libs/openapi/src",
-        "inputSpec": "http://localhost:8080/api-doc/swagger.json",
+        "inputSpec": "https://talent-match-backend.onrender.com/api-doc/swagger.json",
         "skipValidateSpec": true,
         "additionalProperties": {
           "ngVersion": "15.2.0",

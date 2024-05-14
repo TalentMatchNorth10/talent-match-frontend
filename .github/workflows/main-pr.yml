@@ -6,6 +6,10 @@ on:
       - develop
 
 jobs:
+  openapi-generate:
+    runs-on: ubuntu-latest
+    steps:
+      - run: openapi:client
   lint:
     runs-on: ubuntu-latest
     steps:
