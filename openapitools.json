@@ -11,7 +11,7 @@
         "inputSpec": "https://talent-match-backend.onrender.com/api-doc/swagger.json",
         "skipValidateSpec": true,
         "additionalProperties": {
-          "ngVersion": "~17.3.0",
+          "ngVersion": "17.3.0",
           "useSingleRequestParameter": true,
           "fileNaming": "kebab-case"
         }
@@ -22,7 +22,7 @@
         "inputSpec": "http://localhost:8080/api-doc/swagger.json",
         "skipValidateSpec": true,
         "additionalProperties": {
-          "ngVersion": "~17.3.0",
+          "ngVersion": "17.3.0",
           "useSingleRequestParameter": true,
           "fileNaming": "kebab-case"
         }
@@ -33,7 +33,7 @@
         "glob": "libs/openapi/swagger_output.json",
         "skipValidateSpec": true,
         "additionalProperties": {
-          "ngVersion": "15.2.0",
+          "ngVersion": "17.3.0",
           "useSingleRequestParameter": true,
           "fileNaming": "kebab-case"
         }
