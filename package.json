@@ -11,7 +11,8 @@
     "eslint:fix": "npx eslint --fix .",
     "prepare": "husky",
     "openapi:client": "rm -rf libs/openapi/client/src/* && openapi-generator-cli generate --generator-key client-server",
-    "openapi:local": "rm -rf libs/openapi/client/src/* && openapi-generator-cli generate --generator-key client-file"
+    "openapi:local": "rm -rf libs/openapi/client/src/* && openapi-generator-cli generate --generator-key client-local",
+    "openapi:file": "rm -rf libs/openapi/client/src/* && openapi-generator-cli generate --generator-key client-file"
   },
   "private": true,
   "dependencies": {
