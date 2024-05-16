@@ -27,6 +27,7 @@ export const routes: Routes = [
   },
   {
     path: '',
+    loadComponent: () => import('./pages/layout/layout.component'),
     loadChildren: () => import('./pages/layout/layout.routes')
   }
 ];

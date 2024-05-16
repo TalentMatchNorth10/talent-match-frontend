@@ -1,11 +1,11 @@
 import { FormControl } from '@angular/forms';
 
 export enum LoginFormKey {
-  Email = 'email',
-  Password = 'password'
+  EMAIL = 'email',
+  PASSWORD = 'password'
 }
 
 export interface LoginForm {
-  [LoginFormKey.Email]: FormControl<string | null>;
-  [LoginFormKey.Password]: FormControl<string | null>;
+  [LoginFormKey.EMAIL]: FormControl<string | null>;
+  [LoginFormKey.PASSWORD]: FormControl<string | null>;
 }

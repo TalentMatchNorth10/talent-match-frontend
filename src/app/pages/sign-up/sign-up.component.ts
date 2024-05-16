@@ -5,6 +5,7 @@ import { SignUpForm, SignUpFormKey } from './sign-up.model';
 import { Router } from '@angular/router';
 import { InputComponent } from '@tmf/libs-shared/components';
 import { CustomValidatorError, CustomValidators } from '@tmf/shared';
+import { AuthService } from 'libs/openapi/src';
 
 @Component({
   selector: 'app-sign-up',
@@ -47,6 +48,7 @@ import { CustomValidatorError, CustomValidators } from '@tmf/shared';
           ></tmf-input>
         </div>
         <button
+          (click)="register()"
           class="bg-tmf-orange-2 text-white font-semibold rounded-md w-[200px] py-3 text-center hover:bg-tmf-orange-1 duration-100 mb-6 disabled:bg-tmf-gray-5"
           [disabled]="form.invalid"
         >
@@ -91,6 +93,7 @@ import { CustomValidatorError, CustomValidators } from '@tmf/shared';
 export class SignUpComponent {
   private fb = inject(FormBuilder);
   private router = inject(Router);
+  private authService = inject(AuthService);
 
   form = this.fb.group<SignUpForm>(
     {
@@ -146,7 +149,25 @@ export class SignUpComponent {
   }
 
   register() {
-    // TODO: 串接註冊 API
+    const { nick_name, email, password, confirm_password } =
+      this.form.getRawValue();
+    this.authService
+      .apiAuthRegisterPost({
+        registerRequestModel: {
+          nick_name: nick_name!,
+          email: email!,
+          password: password!,
+          confirm_password: confirm_password!
+        }
+      })
+      .subscribe({
+        next: () => {
+          this.router.navigate(['/login']);
+        },
+        error: (err) => {
+          console.error(err);
+        }
+      });
   }
 
   navigateToLogin() {
