@@ -1,5 +1,5 @@
 {
-  "name": "talent-link",
+  "name": "talent-match-frontend",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -10,9 +10,10 @@
     "eslint": "npx eslint .",
     "eslint:fix": "npx eslint --fix .",
     "prepare": "husky",
-    "openapi:client": "rm -rf libs/openapi/client/src/* && openapi-generator-cli generate --generator-key client-server",
-    "openapi:local": "rm -rf libs/openapi/client/src/* && openapi-generator-cli generate --generator-key client-local",
-    "openapi:file": "rm -rf libs/openapi/client/src/* && openapi-generator-cli generate --generator-key client-file"
+    "openapi:clean": "rimraf ./libs/openapi/client/src",
+    "openapi:client": "npm run openapi:clean && openapi-generator-cli generate --generator-key client-server",
+    "openapi:local": "npm run openapi:clean && openapi-generator-cli generate --generator-key client-local",
+    "openapi:file": "npm run openapi:clean && openapi-generator-cli generate --generator-key client-file"
   },
   "private": true,
   "dependencies": {
@@ -30,6 +31,7 @@
     "@fullcalendar/interaction": "^6.1.11",
     "@openapitools/openapi-generator-cli": "^2.13.4",
     "prettier-eslint": "^16.3.0",
+    "rimraf": "^5.0.7",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.3"
