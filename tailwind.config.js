@@ -24,6 +24,12 @@ module.exports = {
       fontFamily: {
         sans: ['Noto Sans TC', 'sans-serif'],
         inter: ['Inter', 'sans-serif']
+      },
+      breakpoints: {
+        md: '768px',
+        lg: '1024px',
+        xl: '1440px',
+        '2xl': '1920px'
       }
     }
   },

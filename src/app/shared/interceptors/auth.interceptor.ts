@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {
   HttpInterceptor,
   HttpRequest,
@@ -12,14 +12,14 @@ import { Router } from '@angular/router';
 import { AuthService } from 'libs/openapi/src';
 import { StorageService } from '@tmf/libs-shared/services';
 import { PROTECTED_PATHS } from './api-config';
+import { AuthStatusService } from '../services/authStatus.service';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
-  constructor(
-    private authService: AuthService,
-    private storageService: StorageService,
-    private router: Router
-  ) {}
+  private authService = inject(AuthService);
+  private storageService = inject(StorageService);
+  private authStatusService = inject(AuthStatusService);
+  private router = inject(Router);
 
   intercept(
     req: HttpRequest<any>,
@@ -59,14 +59,7 @@ export class AuthInterceptor implements HttpInterceptor {
         })
         .pipe(
           tap((res) => {
-            this.storageService.setLocalItem(
-              'access_token',
-              res.data.access_token
-            );
-            this.storageService.setLocalItem(
-              'refresh_token',
-              res.data.refresh_token
-            );
+            this.authStatusService.setLoginStatus(res.data);
           }),
           switchMap(() => next.handle(req.clone())),
           catchError(() => {
@@ -85,8 +78,7 @@ export class AuthInterceptor implements HttpInterceptor {
   }
 
   private logout(): void {
-    this.storageService.removeLocalItem('access_token');
-    this.storageService.removeLocalItem('refresh_token');
+    this.authStatusService.logout();
     this.router.navigate(['/login']);
   }
 }
