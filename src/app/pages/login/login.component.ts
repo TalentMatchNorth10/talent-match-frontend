@@ -5,8 +5,8 @@ import { InputComponent } from '@tmf/libs-shared/components';
 import { LoginForm, LoginFormKey } from './login.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'libs/openapi/src';
-import { StorageService } from '@tmf/libs-shared/services';
 import { environment } from 'src/environments/environment';
+import { AuthStatusService } from 'src/app/shared/services/authStatus.service';
 
 @Component({
   selector: 'app-login',
@@ -125,7 +125,7 @@ export class LoginComponent implements OnInit {
   private router = inject(Router);
   private route = inject(ActivatedRoute);
   private authService = inject(AuthService);
-  private storageService = inject(StorageService);
+  private authStatusService = inject(AuthStatusService);
 
   form = this.fb.group<LoginForm>({
     [LoginFormKey.EMAIL]: this.fb.control(null, [Validators.required]),
@@ -137,8 +137,7 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
     const { access_token, refresh_token } = this.route.snapshot.queryParams;
     if (access_token && refresh_token) {
-      this.storageService.setLocalItem('access_token', access_token);
-      this.storageService.setLocalItem('refresh_token', refresh_token);
+      this.authStatusService.setLoginStatus({ access_token, refresh_token });
       this.router.navigate(['/home']);
     }
   }
@@ -155,14 +154,7 @@ export class LoginComponent implements OnInit {
         })
         .subscribe({
           next: (res) => {
-            this.storageService.setLocalItem(
-              'access_token',
-              res.data.access_token
-            );
-            this.storageService.setLocalItem(
-              'refresh_token',
-              res.data.refresh_token
-            );
+            this.authStatusService.setLoginStatus(res.data);
             this.router.navigate(['/home']);
           },
           error: (err) => {

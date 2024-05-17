@@ -1,5 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
-import { UserService } from 'libs/openapi/src';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-home-page',
@@ -8,15 +7,4 @@ import { UserService } from 'libs/openapi/src';
   templateUrl: './home-page.component.html',
   styleUrl: './home-page.component.scss'
 })
-export default class HomePageComponent implements OnInit {
-  private userService = inject(UserService);
-
-  ngOnInit(): void {
-    this.userService.apiUserUserInfoGet().subscribe({
-      next: (res) => {},
-      error: (err) => {
-        console.error(err);
-      }
-    });
-  }
-}
+export default class HomePageComponent {}
