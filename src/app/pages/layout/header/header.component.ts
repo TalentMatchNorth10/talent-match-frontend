@@ -65,7 +65,7 @@ import { UserMenuItem } from './header.model';
 
           <!-- 未登入顯示 -->
           @if (!user) {
-            <div class="flex justify-center items-center gap-x-4">
+            <div class="justify-center items-center gap-x-4 hidden lg:flex">
               <button
                 class="flex w-[120px] h-[40px] justify-center items-center text-tmf-orange-1 border-2 border-tmf-orange-1 rounded-lg gap-x-1 hover:bg-tmf-orange-1 hover:text-white duration-100 active:bg-tmf-orange-2 active:text-white"
               >
@@ -93,7 +93,7 @@ import { UserMenuItem } from './header.model';
               <div
                 class="rounded-full overflow-hidden shrink-0 w-[44px] h-[44px] bg-tmf-gray-5"
               >
-                @if (!user.avator_image) {
+                @if (user.avator_image) {
                   <img [src]="user.avator_image" alt="avator_image" />
                 }
               </div>
