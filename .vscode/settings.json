@@ -10,7 +10,7 @@
   "git.autofetch": true,
   "diffEditor.ignoreTrimWhitespace": false,
   "[scss]": {
-    "editor.defaultFormatter": "HookyQR.beautify"
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "explicit"
@@ -18,7 +18,10 @@
   "terminal.integrated.profiles.windows": {
     "Cmder": {
       "path": "${env:windir}\\System32\\cmd.exe",
-      "args": ["/k", "C:\\cmder\\vendor\\bin\\vscode_init.cmd"]
+      "args": [
+        "/k",
+        "C:\\cmder\\vendor\\bin\\vscode_init.cmd"
+      ]
     }
   },
   "terminal.integrated.defaultProfile.windows": "Cmder",
@@ -51,7 +54,10 @@
   "editor.defaultFormatter": "rvest.vs-code-prettier-eslint",
   "editor.formatOnPaste": true,
   "editor.autoClosingBrackets": "always",
-  "gitlens.gitCommands.skipConfirmations": ["fetch:command", "switch:command"],
+  "gitlens.gitCommands.skipConfirmations": [
+    "fetch:command",
+    "switch:command"
+  ],
   "livePreview.notifyOnOpenLooseFile": false,
   "editor.formatOnSave": true,
   "eslint.format.enable": true,
