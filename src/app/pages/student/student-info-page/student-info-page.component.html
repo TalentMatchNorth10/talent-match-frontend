@@ -1,1 +1,88 @@
-<p>student-info-page works!</p>
+<div class="flex items-center justify-center">
+  <div>
+    <h1 class="text-xl mb-4">學生基本資料</h1>
+    <div class="flex flex-col gap-4 mb-4" [formGroup]="formGroup">
+      <div>
+        <h2 class="font-bold">大頭貼</h2>
+        @if (!!formGroup.controls.avator_image.value) {
+          <img
+            class="w-[200px] h-[200px]"
+            [src]="formGroup.controls.avator_image.value"
+            alt=""
+          />
+        } @else {
+          <div class="w-[200px] h-[200px] bg-tmf-gray-3"></div>
+        }
+        @if (isEditMode()) {
+          <input type="file" name="" id="" (change)="uploadImage($event)" />
+        }
+      </div>
+      <div>
+        <h2 class="font-bold">姓名</h2>
+        @if (isEditMode()) {
+          <tmf-input [formControlName]="'name'"></tmf-input>
+        } @else {
+          <p>{{ studentInfo?.name }}</p>
+        }
+      </div>
+      <div>
+        <h2 class="font-bold">暱稱</h2>
+        @if (isEditMode()) {
+          <tmf-input [formControlName]="'nick_name'"></tmf-input>
+        } @else {
+          <p>{{ studentInfo?.nick_name }}</p>
+        }
+      </div>
+      <div>
+        <h2 class="font-bold">生日</h2>
+        @if (isEditMode()) {
+          <tmf-input
+            placeholder="yyyy-mm-dd"
+            [formControlName]="'birthday'"
+          ></tmf-input>
+        } @else {
+          <p>{{ studentInfo?.birthday | date: 'YYYY-MM-dd' }}</p>
+        }
+      </div>
+      <div>
+        <h2 class="font-bold">聯絡電話</h2>
+        @if (isEditMode()) {
+          <tmf-input [formControlName]="'contact_phone'"></tmf-input>
+        } @else {
+          <p>{{ studentInfo?.contact_phone }}</p>
+        }
+      </div>
+      <div>
+        <h2 class="font-bold">電子郵件</h2>
+        @if (isEditMode()) {
+          <tmf-input [formControlName]="'email'"></tmf-input>
+        } @else {
+          <p>{{ studentInfo?.email }}</p>
+        }
+      </div>
+    </div>
+    @if (isEditMode()) {
+      <div class="flex gap-2">
+        <button
+          (click)="updateStudentInfo()"
+          class="p-4 bg-tmf-orange-1 text-white rounded-md"
+        >
+          儲存
+        </button>
+        <button
+          (click)="cancelEditMode()"
+          class="p-4 bg-tmf-gray-3 text-white rounded-md"
+        >
+          取消
+        </button>
+      </div>
+    } @else {
+      <button
+        (click)="isEditMode.set(true)"
+        class="p-4 bg-tmf-orange-1 text-white rounded-md"
+      >
+        編輯
+      </button>
+    }
+  </div>
+</div>
