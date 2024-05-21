@@ -75,7 +75,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: openapi-client
-          path: ./libs/openapi/client/src
+          path: ./libs/openapi/src
 
   deploy:
     runs-on: ubuntu-latest
@@ -104,7 +104,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: openapi-client
-          path: ./libs/openapi/client/src
+          path: ./libs/openapi/src
 
       - name: Build project
         run: npm run build
