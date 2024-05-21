@@ -112,7 +112,7 @@ jobs:
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.ACTIONS_PAT }}
           publish_branch: publish
           publish_dir: ./dist/talent_match_frontend/browser
 
