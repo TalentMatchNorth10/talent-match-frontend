@@ -6,21 +6,60 @@ on:
       - develop
 
 jobs:
-  lint:
+  setup:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
         with:
           node-version: '18'
-      - run: npm install
-      - run: npm run eslint
+
+      - name: Install dependencies
+        run: npm install
+
+  lint:
+    runs-on: ubuntu-latest
+    needs: setup
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Run ESLint
+        run: npm run eslint
+
   openapi-generate:
-      runs-on: ubuntu-latest
-      steps:
-        - uses: actions/checkout@v3
-        - uses: actions/setup-node@v3
-          with:
-            node-version: '18'
-        - run: npm install
-        - run: npm run openapi:client
+    runs-on: ubuntu-latest
+    needs: setup
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Generate OpenAPI client
+        run: npm run openapi:client
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: [lint, openapi-generate]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Build project
+        run: npm run build
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: publish
+          publish_dir: ./dist/talent_match_frontend/browser
+
+      - name: Deploy to Render
+        run: |
+          curl -X POST -H "Authorization: Bearer ${{ secrets.RENDER_TOKEN }}" \
+          -H "Content-Type: application/json" \
+          -d '{}' \
+          ${{ secrets.RENDER_DEPLOY_HOOK }}
