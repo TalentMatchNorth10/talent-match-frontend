@@ -17,8 +17,22 @@ jobs:
         with:
           node-version: '18'
 
+      - name: Cache Node modules
+        id: cache-node-modules
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
       - name: Install dependencies
         run: npm install
+
+      - name: Save Node modules
+        if: steps.cache-node-modules.outputs.cache-hit != 'true'
+        run: npm ci
+        shell: bash
 
   lint:
     runs-on: ubuntu-latest
@@ -26,6 +40,14 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+
+      - name: Restore Node modules cache
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
 
       - name: Run ESLint
         run: npm run eslint
@@ -37,6 +59,14 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      - name: Restore Node modules cache
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
       - name: Generate OpenAPI client
         run: npm run openapi:client
 
@@ -46,6 +76,14 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+
+      - name: Restore Node modules cache
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
 
       - name: Setup Node.js
         uses: actions/setup-node@v3
