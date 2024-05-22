@@ -41,7 +41,7 @@
             [formControlName]="'birthday'"
           ></tmf-input>
         } @else {
-          <p>{{ studentInfo?.birthday | date: 'YYYY-MM-dd' }}</p>
+          <p>{{ studentInfo?.birthday | tmfDate }}</p>
         }
       </div>
       <div>

@@ -13,6 +13,7 @@ import {
 } from 'libs/openapi/src';
 import { InputComponent } from 'libs/shared/src';
 import { switchMap, throwError } from 'rxjs';
+import { TmfDatePipe } from 'src/app/shared/pipes/tmf-date.pipe';
 
 interface StudentInfoForm {
   avator_image: FormControl<string | null>;
@@ -26,10 +27,9 @@ interface StudentInfoForm {
 @Component({
   selector: 'app-student-info-page',
   standalone: true,
-  imports: [InputComponent, ReactiveFormsModule, DatePipe],
+  imports: [InputComponent, ReactiveFormsModule, TmfDatePipe],
   templateUrl: './student-info-page.component.html',
-  styleUrl: './student-info-page.component.scss',
-  providers: [DatePipe]
+  styleUrl: './student-info-page.component.scss'
 })
 export default class StudentInfoPageComponent {
   studentInfo!: StudentInfoResponseModelData;
@@ -38,7 +38,7 @@ export default class StudentInfoPageComponent {
   private studentInfoService = inject(StudentInfoService);
   private uploadService = inject(UploadService);
 
-  constructor(private datePipe: DatePipe) {}
+  constructor() {}
 
   formGroup: FormGroup<StudentInfoForm> = this.fb.group<StudentInfoForm>({
     avator_image: this.fb.control(null),
@@ -90,11 +90,12 @@ export default class StudentInfoPageComponent {
         next: (res) => {
           if (res.status) {
             this.studentInfo = res.data!;
+            console.log(this.studentInfo);
+            this.updateFormControls(this.studentInfo);
             this.isEditMode.set(false);
           }
         }
       });
-    this.updateFormControls(this.studentInfo);
   }
 
   uploadImage(event: any) {
@@ -126,7 +127,7 @@ export default class StudentInfoPageComponent {
       avator_image: studentInfo.avator_image!,
       name: studentInfo.name!,
       nick_name: studentInfo.nick_name!,
-      birthday: this.datePipe.transform(studentInfo.birthday!, 'yyyy-MM-dd'),
+      birthday: new Date(studentInfo.birthday!).toISOString().split('T')[0],
       contact_phone: studentInfo.contact_phone!,
       email: studentInfo.email!
     });
