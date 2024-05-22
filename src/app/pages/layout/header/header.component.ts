@@ -159,6 +159,10 @@ export class HeaderComponent implements OnInit {
     [
       {
         icon: 'face',
+        label: '學生個人管理'
+      },
+      {
+        icon: 'face',
         label: '教師資訊管理'
       },
       {
@@ -227,6 +231,9 @@ export class HeaderComponent implements OnInit {
 
   handleMenuClick(menuItem: UserMenuItem) {
     switch (menuItem.label) {
+      case '學生個人管理':
+        this.router.navigate(['/student']);
+        break;
       case '登出':
         this.authStatusService.logout();
         this.router.navigate(['/login']);

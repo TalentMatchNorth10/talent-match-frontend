@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { authGuard } from 'src/app/guards/auth.guard';
 
 export const routes: Routes = [
   {
@@ -10,7 +11,8 @@ export const routes: Routes = [
     // 學生基本資料頁
     path: 'info',
     loadComponent: () =>
-      import('./student-info-page/student-info-page.component')
+      import('./student-info-page/student-info-page.component'),
+    canActivate: [authGuard]
   },
   {
     // 學生收藏課程頁
