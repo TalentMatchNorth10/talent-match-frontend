@@ -1,9 +1,106 @@
 <div class="w-full h-[100vh] flex flex-col">
-  <div
-    class="h-[50vh] bg-cover bg-no-repeat bg-left"
-    style="
-      background-image: url('../../../assets/images/home-page-banner.svg');
-      -webkit-mask: linear-gradient(180deg, #000 90%, transparent);
-    "
-  ></div>
+  <section>
+    <div
+      class="h-[80vh] bg-auto bg-no-repeat bg-top"
+      style="
+        background-image: url('../../../assets/images/home-page/home-page-banner.svg');
+        -webkit-mask: linear-gradient(180deg, #000 90%, transparent);
+      "
+    ></div>
+  </section>
+  <section class="my-5 flex flex-col gap-4">
+    <div
+      class="w-full text-center text-4xl pt-[1.5rem] bg-no-repeat bg-top"
+      style="
+        background-image: url('../../../assets/images/home-page/orange-80-decorate.svg');
+      "
+    >
+      課程短影音
+    </div>
+    <div class="w-full">
+      <div class="flex justify-center space-x-2">
+        <button
+          *ngFor="let option of shortsSubjectOptions; let i = index"
+          [ngClass]="{
+            'bg-orange-600 text-white': selectedSubjectOption === option,
+            'bg-white border': selectedSubjectOption !== option
+          }"
+          class="px-4 py-2 rounded hover:bg-orange-600 hover:text-white focus:outline-none"
+          (click)="selectSubjectOption(option)"
+        >
+          {{ option }}
+        </button>
+        <button
+          class="px-4 py-2 rounded border hover:bg-orange-600 hover:text-white focus:outline-none"
+        >
+          <svg
+            class="fill-black hover:fill-white w-[24px] h-[24px]"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 512 512"
+          >
+            <!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+            <path
+              d="M0 416c0 17.7 14.3 32 32 32l54.7 0c12.3 28.3 40.5 48 73.3 48s61-19.7 73.3-48L480 448c17.7 0 32-14.3 32-32s-14.3-32-32-32l-246.7 0c-12.3-28.3-40.5-48-73.3-48s-61 19.7-73.3 48L32 384c-17.7 0-32 14.3-32 32zm128 0a32 32 0 1 1 64 0 32 32 0 1 1 -64 0zM320 256a32 32 0 1 1 64 0 32 32 0 1 1 -64 0zm32-80c-32.8 0-61 19.7-73.3 48L32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l246.7 0c12.3 28.3 40.5 48 73.3 48s61-19.7 73.3-48l54.7 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-54.7 0c-12.3-28.3-40.5-48-73.3-48zM192 128a32 32 0 1 1 0-64 32 32 0 1 1 0 64zm73.3-64C253 35.7 224.8 16 192 16s-61 19.7-73.3 48L32 64C14.3 64 0 78.3 0 96s14.3 32 32 32l86.7 0c12.3 28.3 40.5 48 73.3 48s61-19.7 73.3-48L480 128c17.7 0 32-14.3 32-32s-14.3-32-32-32L265.3 64z"
+            />
+          </svg>
+        </button>
+      </div>
+    </div>
+    <div class="w-full flex justify-center">
+      <div class="relative w-9/12 overflow-hidden">
+        <div
+          class="flex transition-transform duration-300"
+          [style.transform]="transformStyle"
+        >
+          <ng-container *ngFor="let card of cards">
+            <div class="w-1/4 h-[530px] p-2 flex-shrink-0">
+              <app-short-video-card
+                videoId="PMfmYUIxV5Q?si=7TiUCmLabml-UrkQ"
+                tag="藝術創作"
+                description="這是一則藝術創作相關的影片，放鬆身體，一切感官交給畫筆"
+              ></app-short-video-card>
+            </div>
+            <!-- <div class="w-1/4 p-2 flex-shrink-0">
+              <div class="bg-white shadow-lg rounded-lg p-6">
+                <h2 class="text-lg font-bold">{{ card.title }}</h2>
+                <p>{{ card.content }}</p>
+              </div>
+            </div> -->
+          </ng-container>
+        </div>
+        <button
+          (click)="prev()"
+          class="absolute left-0 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full"
+        >
+          &larr;
+        </button>
+        <button
+          (click)="next()"
+          class="absolute right-0 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full"
+        >
+          &rarr;
+        </button>
+      </div>
+    </div>
+  </section>
+  <section class="my-5">
+    <div
+      class="w-full text-center text-4xl pt-[1.5rem] bg-no-repeat bg-top"
+      style="
+        background-image: url('../../../assets/images/home-page/orange-80-decorate.svg');
+      "
+    >
+      推薦課程
+    </div>
+  </section>
+  <section class="my-5">
+    <div
+      class="w-full text-center text-4xl pt-[1.5rem] bg-no-repeat bg-top"
+      style="
+        background-image: url('../../../assets/images/home-page/orange-80-decorate.svg');
+      "
+    >
+      學員導師好評推薦
+    </div>
+  </section>
 </div>
