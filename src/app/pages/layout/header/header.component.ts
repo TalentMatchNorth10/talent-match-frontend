@@ -1,9 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { UserInfoResponseModelData, UserService } from 'libs/openapi/src';
+import {
+  GetCartItemsResponseModelDataInner,
+  ShopService,
+  UserInfoResponseModelData,
+  UserService
+} from 'libs/openapi/src';
 import { AuthStatusService } from 'src/app/shared/services/authStatus.service';
-import { UserMenuItem } from './header.model';
+import { CartItem, CartTotal, UserMenuItem } from './header.model';
 
 @Component({
   selector: 'app-header',
@@ -44,23 +49,103 @@ import { UserMenuItem } from './header.model';
         />
         <!-- 使用者區塊 -->
         <div class="flex justify-end items-center gap-x-10">
-          <div class="justify-center mt-2 gap-x-5 flex">
+          <div class="justify-center mt-2 gap-x-4 flex">
             <!-- 公告 -->
-            <button class="relative cursor-pointer">
-              <span class="material-icons-outlined">notifications</span>
-              <div
-                class="rounded-full w-1 h-1 bg-tmf-orange-1 absolute right-0 top-0"
-              ></div>
-            </button>
-            <!-- 購物車 -->
-            <button class="relative cursor-pointer">
-              <span class="material-icons-outlined">shopping_cart</span>
-              <div
-                class="rounded-full w-4 h-4 bg-tmf-orange-1 absolute -right-1 -top-1 flex justify-center items-center text-white text-[10px] font-semibold"
+            <div class="relative cursor-pointer">
+              <button
+                class="p-2 rounded-lg h-[40px] w-[48px] flex justify-center items-center hover:bg-tmf-gray-6 duration-100 active:bg-tmf-gray-5 cursor-pointer"
               >
-                1
+                <span class="material-icons-outlined">notifications</span>
+                <div
+                  class="rounded-full w-[6px] h-[6px] bg-tmf-orange-1 absolute right-2 top-2"
+                ></div>
+              </button>
+            </div>
+            <!-- 購物車 -->
+            <div class="relative group">
+              <button
+                class="p-2 rounded-lg h-[40px] w-[48px] flex justify-center items-center hover:bg-tmf-gray-6 duration-100 active:bg-tmf-gray-5 cursor-pointer"
+              >
+                <span class="material-icons-outlined cursor-pointer"
+                  >shopping_cart</span
+                >
+                <div
+                  class="rounded-full w-4 h-4 bg-tmf-orange-1 absolute right-2 top-1 border-2  border-white flex justify-center items-center text-white text-[10px] font-semibold"
+                >
+                  1
+                </div>
+              </button>
+              <!-- 購物車下拉 -->
+              <div
+                class="absolute top-full bg-white right-0 lg:left-0 pt-[8px] lg:pt-[16px] hidden group-hover:block"
+              >
+                <ul
+                  class="py-3 w-[320px] shadow-lg rounded-b-[12px] border-t border-tmf-purple bg-white"
+                >
+                  @for (
+                    cartItem of cartList;
+                    track cartItem;
+                    let lastCartItem = $last
+                  ) {
+                    <li
+                      class="w-full px-[16px] min-h-[92px] border-b border-tmf-gray-5 py-2 flex items-start justify-start gap-x-3 cursor-pointer bg-white hover:bg-tmf-orange-3 active:bg-tmf-orange-2 duration-100"
+                    >
+                      <div class="w-[84px] h-[48px] bg-tmf-gray-3">
+                        @if (cartItem.image) {
+                          <img class="w-full h-full" src="" alt="" />
+                        }
+                      </div>
+                      <div class="flex flex-col">
+                        <!-- 標籤列 -->
+                        <div class="flex flex-wrap gap-2 mb-1">
+                          <div
+                            class="h-[24px] text-[12px] leading-4 p-1 bg-tmf-gray-5 rounded flex items-center justify-center"
+                          >
+                            {{ cartItem.main_category }}
+                          </div>
+                          <div
+                            class="h-[24px] text-[12px] leading-4 p-1 bg-tmf-gray-5 rounded flex items-center justify-center"
+                          >
+                            {{ cartItem.sub_category }}
+                          </div>
+                        </div>
+                        <!-- 課程名稱 -->
+                        <p class="text-[14px] leading-5 font-bold mb-2">
+                          {{ cartItem.name }}
+                        </p>
+                        <!-- 價格 -->
+                        <div
+                          class="flex justify-between items-center text-[14px] leading-5"
+                        >
+                          <p class="text-tmf-gray-3">
+                            {{ cartItem.quantity }}堂課程
+                          </p>
+                          <p class="font-medium">NT$：{{ cartItem.price }}</p>
+                        </div>
+                      </div>
+                    </li>
+                  }
+                  <li
+                    class="flex flex-col items-start w-full px-[16px] min-h-[84px] py-3 bg-white"
+                  >
+                    <p class="text-[14px] leading-5 text-tmf-gray-3">
+                      共計 {{ cartTotal.courseCount }} 項課程
+                    </p>
+                    <div
+                      class="w-full flex justify-between items-center text-[16px] leading-6"
+                    >
+                      <p>總計 NT$ {{ cartTotal.total }}</p>
+                      <button
+                        (click)="redirect('/cart')"
+                        class="cursor-pointer  px-4 py-2 text-white font-bold bg-tmf-orange-1 rounded-lg"
+                      >
+                        前往結帳
+                      </button>
+                    </div>
+                  </li>
+                </ul>
               </div>
-            </button>
+            </div>
           </div>
 
           <!-- 未登入顯示 -->
@@ -103,10 +188,10 @@ import { UserMenuItem } from './header.model';
               </p>
               <!-- 使用者選單 -->
               <div
-                class="absolute top-full right-0 lg:left-0 pt-[10px] lg:pt-[18px] hidden group-hover:block"
+                class="absolute top-full right-0 lg:left-0 pt-[10px] lg:pt-[18px] bg-white hidden group-hover:block"
               >
                 <ul
-                  class="py-3 w-[200px] shadow-[0px_10px_15px_-3px_#0000001A] rounded-b-[12px] border-t border-tmf-purple"
+                  class="py-3 w-[200px] shadow-lg rounded-b-[12px] border-t border-tmf-purple bg-white"
                 >
                   @for (
                     menuGroup of userMenuList;
@@ -151,6 +236,7 @@ export class HeaderComponent implements OnInit {
   private userService = inject(UserService);
   private router = inject(Router);
   private authStatusService = inject(AuthStatusService);
+  private shopService = inject(ShopService);
 
   user: UserInfoResponseModelData | null = null;
   selectCity = '台北市';
@@ -203,11 +289,17 @@ export class HeaderComponent implements OnInit {
       }
     ]
   ];
+  cartList: Array<GetCartItemsResponseModelDataInner> = [];
+  cartTotal: CartTotal = {
+    courseCount: 0,
+    total: 0
+  };
 
   ngOnInit(): void {
     this.authStatusService.loginStatus$().subscribe((status) => {
       if (status) {
         this.getUserInfo();
+        this.getCartList();
       } else {
         this.user = null;
       }
@@ -222,6 +314,16 @@ export class HeaderComponent implements OnInit {
       error: (err) => {
         console.error(err);
       }
+    });
+  }
+
+  getCartList() {
+    this.shopService.apiShopCartGet().subscribe((res) => {
+      this.cartList = res.data;
+      this.cartTotal = {
+        courseCount: res.data.length,
+        total: res.data.reduce((acc, cur) => acc + cur.price, 0)
+      };
     });
   }
 

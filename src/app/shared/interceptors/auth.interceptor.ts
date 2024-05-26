@@ -49,7 +49,7 @@ export class AuthInterceptor implements HttpInterceptor {
     req: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    const refreshToken = this.storageService.getLocalItem('refreshToken');
+    const refreshToken = this.storageService.getSessionItem('refreshToken');
     if (refreshToken) {
       return this.authService
         .apiAuthRefreshPost({

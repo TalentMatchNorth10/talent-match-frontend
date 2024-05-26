@@ -1,6 +1,9 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ['./src/**/*.{html,ts}'],
+  content: [
+    './src/**/*.{html,ts}',
+    './libs/shared/src/lib/components/**/*.{html,ts}'
+  ],
   theme: {
     extend: {
       colors: {
@@ -30,6 +33,9 @@ module.exports = {
         lg: '1024px',
         xl: '1440px',
         '2xl': '1920px'
+      },
+      boxShadow: {
+        'shadow-lg': 'box-shadow: 0px 10px 15px -3px #0000001A'
       }
     }
   },

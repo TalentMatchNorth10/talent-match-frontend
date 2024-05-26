@@ -15,12 +15,14 @@ import { AuthService } from 'libs/openapi/src';
       [formGroup]="form"
     >
       <div
-        class="flex flex-col items-center shadow-[5px_5px_10px_10px_#F7F7F7] rounded-md p-10"
+        class="flex flex-col items-center shadow-[5px_5px_10px_10px_#F7F7F7] rounded-md p-10 min-w-[260px] w-[80%] md:w-auto"
       >
-        <h1 class="text-tmf-orange-1 text-[32px] font-semibold mb-5">
+        <h1
+          class="text-tmf-orange-1 text-[26px] md:text-[32px] font-semibold mb-3 md:mb-5"
+        >
           忘記密碼
         </h1>
-        <div class="flex flex-col items-center gap-y-1 w-[350px] mb-6">
+        <div class="flex flex-col items-center gap-y-1 md:w-[350px] mb-6">
           <tmf-input
             class="w-[250px]"
             placeholder="信箱"
