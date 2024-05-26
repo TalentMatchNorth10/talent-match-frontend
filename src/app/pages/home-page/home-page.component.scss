@@ -7,3 +7,8 @@
 .card {
   transition: transform 0.3s ease-in-out;
 }
+
+.search-box-container:focus-within {
+  border-color: #f97316; /* 橘色边框 */
+  box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.3); /* 橘色阴影 */
+}

@@ -1,12 +1,70 @@
 <div class="w-full h-[100vh] flex flex-col">
   <section>
     <div
-      class="h-[80vh] bg-auto bg-no-repeat bg-top"
+      class="h-[80vh] bg-auto bg-no-repeat bg-top relative"
       style="
         background-image: url('../../../assets/images/home-page/home-page-banner.svg');
         -webkit-mask: linear-gradient(180deg, #000 90%, transparent);
       "
-    ></div>
+    >
+      <div
+        class="absolute lg:top-1/2 lg:left-[30%] lg:w-[26%] lg:-translate-y-1/2 w-10/12 left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2"
+      >
+        <div class="mb-6">
+          <div class="lg:text-6xl font-bold mb-2 text-gray-900">
+            <span class="text-purple-800 font-bold">連結</span>無限可能
+          </div>
+          <div class="lg:text-6xl font-bold text-gray-900">
+            為你開啟機遇之門
+          </div>
+        </div>
+        <div class="lg:text-lg text-gray-900 mb-6">
+          每個人都擁有獨特的才藝與創造力。因此，我們提供一個專業且多元平台，讓熱愛藝術、音樂、手工藝以及創新技術的你，到志同道合的夥伴及專業導師。
+        </div>
+        <div
+          class="flex border border-gray-300 rounded overflow-hidden w-full max-w-lg search-box-container"
+        >
+          <div class="relative">
+            <select
+              class="appearance-none h-full bg-white text-gray-700 py-2 pl-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500 border-r-0"
+            >
+              <option value="option1">依課程</option>
+              <option value="option2">依教師</option>
+            </select>
+            <div
+              class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700"
+            >
+              <svg
+                class="fill-current h-4 w-4"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 512 512"
+              >
+                <!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+                <path
+                  d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"
+                />
+              </svg>
+            </div>
+          </div>
+          <input
+            type="text"
+            placeholder="準備好啟程了嗎？"
+            class="bg-white text-gray-700 py-2 px-4 flex-grow focus:outline-none focus:bg-white focus:border-gray-500 border-r-0"
+          />
+          <button class="bg-white text-black py-2 px-4">
+            <svg
+              class="fill-current h-4 w-4"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 20 20"
+            >
+              <path
+                d="M12.9 14.32a8 8 0 1 1 1.41-1.41l4.57 4.57-1.41 1.41-4.57-4.57zM8 14A6 6 0 1 0 8 2a6 6 0 0 0 0 12z"
+              />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
   </section>
   <section class="my-5 flex flex-col gap-4">
     <div
