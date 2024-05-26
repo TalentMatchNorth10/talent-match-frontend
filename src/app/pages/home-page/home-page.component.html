@@ -50,9 +50,9 @@
       <div class="relative w-9/12 overflow-hidden">
         <div
           class="flex transition-transform duration-300"
-          [style.transform]="transformStyle"
+          [style.transform]="shortsTransformStyle"
         >
-          <ng-container *ngFor="let card of cards">
+          <ng-container *ngFor="let card of [].constructor(10); let i = index">
             <div class="w-1/4 h-[530px] p-2 flex-shrink-0">
               <app-short-video-card
                 videoId="PMfmYUIxV5Q?si=7TiUCmLabml-UrkQ"
@@ -69,13 +69,13 @@
           </ng-container>
         </div>
         <button
-          (click)="prev()"
+          (click)="shortsPrev()"
           class="absolute left-0 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full"
         >
           &larr;
         </button>
         <button
-          (click)="next()"
+          (click)="shortsNext()"
           class="absolute right-0 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full"
         >
           &rarr;
@@ -92,6 +92,41 @@
     >
       推薦課程
     </div>
+    <div class="w-full flex justify-center">
+      <div class="relative w-9/12 overflow-hidden">
+        <div
+          class="flex transition-transform duration-300"
+          [style.transform]="coursesTransformStyle"
+        >
+          <ng-container *ngFor="let card of [].constructor(10); let i = index">
+            <div class="w-1/4 h-[450px] p-2 flex-shrink-0">
+              <app-course-card
+                imgUrl="https://i.imgur.com/bUVqmwJ.png"
+                teacherImgUrl="https://i.imgur.com/gj4buCB.jpeg"
+              ></app-course-card>
+            </div>
+            <!-- <div class="w-1/4 p-2 flex-shrink-0">
+              <div class="bg-white shadow-lg rounded-lg p-6">
+                <h2 class="text-lg font-bold">{{ card.title }}</h2>
+                <p>{{ card.content }}</p>
+              </div>
+            </div> -->
+          </ng-container>
+        </div>
+        <button
+          (click)="coursesPrev()"
+          class="absolute left-0 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full"
+        >
+          &larr;
+        </button>
+        <button
+          (click)="coursesNext()"
+          class="absolute right-0 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full"
+        >
+          &rarr;
+        </button>
+      </div>
+    </div>
   </section>
   <section class="my-5">
     <div
@@ -101,6 +136,169 @@
       "
     >
       學員導師好評推薦
+    </div>
+    <div class="w-full flex flex-col items-center gap-6">
+      <div class="w-9/12 flex justify-start gap-6">
+        <div
+          class="max-w-xs w-full h-full rounded overflow-hidden shadow-lg bg-gray-400/25"
+        >
+          <div class="p-8">
+            <div class="flex flex-col items-center gap-2">
+              <div class="text-2xl">使用好評高達</div>
+              <div class="text-7xl">4.7</div>
+              <app-rating-star [rating]="4.5"> </app-rating-star>
+            </div>
+          </div>
+        </div>
+        <div
+          class="max-w-xs w-full h-full rounded overflow-hidden shadow-lg bg-white"
+        >
+          <div class="py-6 px-4">
+            <div class="flex justify-between">
+              <div class="flex items-center gap-2">
+                <img
+                  class="w-8 h-8 rounded-full"
+                  [src]="'https://i.imgur.com/gj4buCB.jpeg'"
+                  alt="Avatar"
+                />
+                <div class="flex flex-col">
+                  <div>喵喵小姐</div>
+                  <app-rating-star [rating]="4"> </app-rating-star>
+                </div>
+              </div>
+              <div class="text-gray-400">2024-05-16</div>
+            </div>
+            <div class="font-bold my-4">可以一展長才的平台</div>
+            <div class="text-gray-500 my-4">
+              可以認識不同領域的高手，並且把喜歡的領域做推廣，是一件開心的事。
+            </div>
+          </div>
+        </div>
+        <div
+          class="max-w-xs w-full h-full rounded overflow-hidden shadow-lg bg-white"
+        >
+          <div class="py-6 px-4">
+            <div class="flex justify-between">
+              <div class="flex items-center gap-2">
+                <img
+                  class="w-8 h-8 rounded-full"
+                  [src]="'https://i.imgur.com/gj4buCB.jpeg'"
+                  alt="Avatar"
+                />
+                <div class="flex flex-col">
+                  <div>喵喵小姐</div>
+                  <app-rating-star [rating]="4"> </app-rating-star>
+                </div>
+              </div>
+              <div class="text-gray-400">2024-05-16</div>
+            </div>
+            <div class="font-bold my-4">可以一展長才的平台</div>
+            <div class="text-gray-500 my-4">
+              可以認識不同領域的高手，並且把喜歡的領域做推廣，是一件開心的事。
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="w-9/12 flex justify-center gap-6">
+        <div
+          class="max-w-xs w-full h-full rounded overflow-hidden shadow-lg bg-white"
+        >
+          <div class="py-6 px-4">
+            <div class="flex justify-between">
+              <div class="flex items-center gap-2">
+                <img
+                  class="w-8 h-8 rounded-full"
+                  [src]="'https://i.imgur.com/gj4buCB.jpeg'"
+                  alt="Avatar"
+                />
+                <div class="flex flex-col">
+                  <div>喵喵小姐</div>
+                  <app-rating-star [rating]="4"> </app-rating-star>
+                </div>
+              </div>
+              <div class="text-gray-400">2024-05-16</div>
+            </div>
+            <div class="font-bold my-4">可以一展長才的平台</div>
+            <div class="text-gray-500 my-4">
+              可以認識不同領域的高手，並且把喜歡的領域做推廣，是一件開心的事。
+            </div>
+          </div>
+        </div>
+        <div
+          class="max-w-xs w-full h-full rounded overflow-hidden shadow-lg bg-white"
+        >
+          <div class="py-6 px-4">
+            <div class="flex justify-between">
+              <div class="flex items-center gap-2">
+                <img
+                  class="w-8 h-8 rounded-full"
+                  [src]="'https://i.imgur.com/gj4buCB.jpeg'"
+                  alt="Avatar"
+                />
+                <div class="flex flex-col">
+                  <div>喵喵小姐</div>
+                  <app-rating-star [rating]="4"> </app-rating-star>
+                </div>
+              </div>
+              <div class="text-gray-400">2024-05-16</div>
+            </div>
+            <div class="font-bold my-4">可以一展長才的平台</div>
+            <div class="text-gray-500 my-4">
+              可以認識不同領域的高手，並且把喜歡的領域做推廣，是一件開心的事。
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="w-9/12 flex justify-end gap-6">
+        <div
+          class="max-w-xs w-full h-full rounded overflow-hidden shadow-lg bg-white"
+        >
+          <div class="py-6 px-4">
+            <div class="flex justify-between">
+              <div class="flex items-center gap-2">
+                <img
+                  class="w-8 h-8 rounded-full"
+                  [src]="'https://i.imgur.com/gj4buCB.jpeg'"
+                  alt="Avatar"
+                />
+                <div class="flex flex-col">
+                  <div>喵喵小姐</div>
+                  <app-rating-star [rating]="4"> </app-rating-star>
+                </div>
+              </div>
+              <div class="text-gray-400">2024-05-16</div>
+            </div>
+            <div class="font-bold my-4">可以一展長才的平台</div>
+            <div class="text-gray-500 my-4">
+              可以認識不同領域的高手，並且把喜歡的領域做推廣，是一件開心的事。
+            </div>
+          </div>
+        </div>
+        <div
+          class="max-w-xs w-full h-full rounded overflow-hidden shadow-lg bg-white"
+        >
+          <div class="py-6 px-4">
+            <div class="flex justify-between">
+              <div class="flex items-center gap-2">
+                <img
+                  class="w-8 h-8 rounded-full"
+                  [src]="'https://i.imgur.com/gj4buCB.jpeg'"
+                  alt="Avatar"
+                />
+                <div class="flex flex-col">
+                  <div>喵喵小姐</div>
+                  <app-rating-star [rating]="4"> </app-rating-star>
+                </div>
+              </div>
+              <div class="text-gray-400">2024-05-16</div>
+            </div>
+            <div class="font-bold my-4">可以一展長才的平台</div>
+            <div class="text-gray-500 my-4">
+              可以認識不同領域的高手，並且把喜歡的領域做推廣，是一件開心的事。
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 </div>

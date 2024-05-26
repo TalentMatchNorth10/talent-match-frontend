@@ -1,11 +1,20 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { ShortVideoCardComponent } from '@tmf/shared';
+import {
+  CourseCardComponent,
+  RatingStarComponent,
+  ShortVideoCardComponent
+} from '@tmf/shared';
 
 @Component({
   selector: 'app-home-page',
   standalone: true,
-  imports: [CommonModule, ShortVideoCardComponent],
+  imports: [
+    CommonModule,
+    ShortVideoCardComponent,
+    CourseCardComponent,
+    RatingStarComponent
+  ],
   templateUrl: './home-page.component.html',
   styleUrl: './home-page.component.scss'
 })
@@ -24,7 +33,7 @@ export default class HomePageComponent implements OnInit {
     this.selectedSubjectOption = option;
   }
 
-  cards = [
+  public cards = [
     { title: 'Card 1', content: 'Content of Card 1' },
     { title: 'Card 2', content: 'Content of Card 2' },
     { title: 'Card 3', content: 'Content of Card 3' },
@@ -36,25 +45,44 @@ export default class HomePageComponent implements OnInit {
     { title: 'Card 9', content: 'Content of Card 9' },
     { title: 'Card 10', content: 'Content of Card 10' }
   ];
-  currentIndex = 0;
-  visibleCards = 4;
-  cardWidthPercentage = 25; // Each card takes 25% of the container's width
 
-  get transformStyle() {
-    return `translateX(-${this.currentIndex * this.cardWidthPercentage}%)`;
+  public visibleCards = 4;
+  public cardWidthPercentage = 25; // Each card takes 25% of the container's width
+
+  public shortsCurrentIndex = 0;
+  public coursesCurrentIndex = 0;
+
+  public get shortsTransformStyle() {
+    return `translateX(-${this.shortsCurrentIndex * this.cardWidthPercentage}%)`;
   }
 
-  prev() {
-    if (this.currentIndex > 0) {
-      this.currentIndex--;
+  public shortsPrev() {
+    if (this.shortsCurrentIndex > 0) {
+      this.shortsCurrentIndex--;
     }
   }
 
-  next() {
-    if (this.currentIndex < this.cards.length - this.visibleCards) {
-      this.currentIndex++;
+  public shortsNext() {
+    if (this.shortsCurrentIndex < this.cards.length - this.visibleCards) {
+      this.shortsCurrentIndex++;
     }
   }
 
-  ngOnInit() {}
+  public get coursesTransformStyle() {
+    return `translateX(-${this.coursesCurrentIndex * this.cardWidthPercentage}%)`;
+  }
+
+  public coursesPrev() {
+    if (this.coursesCurrentIndex > 0) {
+      this.coursesCurrentIndex--;
+    }
+  }
+
+  public coursesNext() {
+    if (this.coursesCurrentIndex < this.cards.length - this.visibleCards) {
+      this.coursesCurrentIndex++;
+    }
+  }
+
+  public ngOnInit() {}
 }
