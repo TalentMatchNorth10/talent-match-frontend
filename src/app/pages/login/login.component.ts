@@ -15,10 +15,14 @@ import { AuthStatusService } from 'src/app/shared/services/authStatus.service';
   template: `
     <div class="w-full h-[100vh] flex justify-center items-center">
       <div
-        class="flex flex-col items-center shadow-[5px_5px_10px_10px_#F7F7F7] rounded-md p-10"
+        class="flex flex-col items-center shadow-[5px_5px_10px_10px_#F7F7F7] w-[80%] min-w-[260px] rounded-md p-8 md:p-10 md:w-auto"
       >
-        <h1 class="text-tmf-orange-1 text-[32px] font-semibold mb-5">登入</h1>
-        <div class="flex gap-x-10">
+        <h1
+          class="text-tmf-orange-1 text-[26px] md:text-[32px] font-semibold mb-5"
+        >
+          登入
+        </h1>
+        <div class="flex gap-x-10 w-full">
           <button
             (click)="googleLogin()"
             class="relative border-2 h-[60px] rounded-md py-4 justify-center w-[300px] hover:border-tmf-orange-2 hover:text-tmf-orange-1 duration-100 hidden md:flex"
@@ -51,8 +55,8 @@ import { AuthStatusService } from 'src/app/shared/services/authStatus.service';
             </svg>
             Google 登入
           </button>
-          <div class="flex flex-col items-center">
-            <div class="flex flex-col gap-y-2 w-[300px]" [formGroup]="form">
+          <div class="flex flex-col items-center w-full md:w-auto">
+            <div class="flex flex-col gap-y-2 w-full" [formGroup]="form">
               <tmf-input
                 placeholder="信箱"
                 [formControlName]="LoginFormKey.EMAIL"
@@ -76,7 +80,7 @@ import { AuthStatusService } from 'src/app/shared/services/authStatus.service';
             </button>
             <button
               (click)="googleLogin()"
-              class="relative border-2 h-[48px] rounded-md flex justify-center items-center w-[300px] hover:border-tmf-orange-2 hover:text-tmf-orange-1 duration-100 mb-6 md:hidden"
+              class="relative border-2 h-[48px] rounded-md flex justify-center items-center w-full hover:border-tmf-orange-2 hover:text-tmf-orange-1 duration-100 mb-6 md:hidden"
             >
               <svg
                 class="absolute left-0 top-[50%] -translate-y-[50%] w-8 h-8 ml-4"
