@@ -1,0 +1,1 @@
+import{V as o,Ya as a}from"./chunk-IGM6XWGY.js";import"./chunk-2XJVAMHT.js";var p=(()=>{let e=class e{};e.\u0275fac=function(n){return new(n||e)},e.\u0275cmp=o({type:e,selectors:[["app-home-page"]],standalone:!0,features:[a],decls:0,vars:0,template:function(n,i){}});let t=e;return t})();export{p as default};
