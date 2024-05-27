@@ -1,6 +1,12 @@
-export interface UserMenuItem {
+export enum Step {
+  Step1 = 'ShoppingList',
+  Step2 = 'OrderInfo',
+  Step3 = 'OrderComplete'
+}
+
+export interface StepItem {
   label: string;
-  icon: string;
+  step: Step;
 }
 
 export interface CartItem {
@@ -10,9 +16,4 @@ export interface CartItem {
   price: number;
   quantity: number;
   tags: string[];
-}
-
-export interface CartTotal {
-  courseCount: number;
-  total: number;
 }

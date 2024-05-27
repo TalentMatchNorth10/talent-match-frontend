@@ -16,14 +16,14 @@ export class AuthStatusService {
 
   // 設置用戶登入狀態
   setLoginStatus(tokens: Tokens): void {
-    this.storageService.setLocalItem('access_token', tokens.access_token);
-    this.storageService.setLocalItem('refresh_token', tokens.refresh_token);
+    this.storageService.setSessionItem('access_token', tokens.access_token);
+    this.storageService.setSessionItem('refresh_token', tokens.refresh_token);
     this.loggedInStatus.next(true);
   }
 
   checkLoginStatus(): void {
-    const access_token = this.storageService.getLocalItem('access_token');
-    const refresh_token = this.storageService.getLocalItem('refresh_token');
+    const access_token = this.storageService.getSessionItem('access_token');
+    const refresh_token = this.storageService.getSessionItem('refresh_token');
     if (access_token && refresh_token) {
       this.loggedInStatus.next(true);
     }
@@ -41,8 +41,8 @@ export class AuthStatusService {
 
   // 登出
   logout() {
-    this.storageService.removeLocalItem('access_token');
-    this.storageService.removeLocalItem('refresh_token');
+    this.storageService.removeSessionItem('access_token');
+    this.storageService.removeSessionItem('refresh_token');
     this.loggedInStatus.next(false);
   }
 }
