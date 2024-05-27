@@ -1,0 +1,24 @@
+:host {
+  display: block;
+}
+
+.cart-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.cart-table-header-row {
+  @apply py-2 text-white flex bg-tmf-gray-3;
+}
+
+.cart-table-header-column {
+  @apply px-4;
+}
+
+.cart-table-body-row {
+  @apply border-b border-tmf-gray-5 last:border-none flex duration-100 relative;
+}
+
+.cart-table-body-column {
+  @apply py-4 px-4 text-tmf-gray-2;
+}

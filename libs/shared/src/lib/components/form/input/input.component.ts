@@ -65,9 +65,6 @@ export class InputComponent
 
   ngOnInit(): void {
     this.ngControl = this.inj.get<NgControl>(NgControl);
-    this.control.valueChanges.subscribe(() => {
-      this.onChange;
-    });
   }
 
   ngAfterViewInit(): void {
