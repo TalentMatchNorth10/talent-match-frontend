@@ -1,24 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CardComponent } from '@tmf/libs-shared/components/card/card.component';
 import { CardData } from '@tmf/libs-shared/components/card/card.interface';
-import {
-  CourseCardComponent,
-  RatingStarComponent,
-  ShortVideoCardComponent
-} from '@tmf/shared';
+import { ShortVideoCardComponent } from 'libs/shared/src';
 
 @Component({
   selector: 'app-home-page',
   standalone: true,
-  imports: [
-    CommonModule,
-    ShortVideoCardComponent,
-    CourseCardComponent,
-    RatingStarComponent,
-    CardComponent
-  ],
+  imports: [CommonModule, ShortVideoCardComponent, CardComponent],
   templateUrl: './home-page.component.html',
   styleUrl: './home-page.component.scss'
 })
