@@ -92,30 +92,32 @@ import { CardData } from './card.interface';
         </div>
 
         <!-- hover -->
-        <div class="w-full h-full absolute left-0 top-0">
-          <div
-            class="absolute left-0 top-0 bg-transparent w-full h-full duration-100 group-hover:bg-[#180000]/50 group-hover:backdrop-blur-sm"
-          ></div>
-          <div
-            class="flex flex-col justify-center items-center gap-2 w-full h-full relative z-10 invisible group-hover:visible duration-100"
-          >
-            <button
-              class="h-[40px] w-[114px] flex items-center justify-center bg-tmf-orange-1 text-white rounded-lg"
+        @if (hoverEffect) {
+          <div class="w-full h-full absolute left-0 top-0">
+            <div
+              class="absolute left-0 top-0 bg-transparent w-full h-full duration-100 group-hover:bg-[#180000]/50 group-hover:backdrop-blur-sm"
+            ></div>
+            <div
+              class="flex flex-col justify-center items-center gap-2 w-full h-full relative z-10 invisible group-hover:visible duration-100"
             >
-              加入購物車
-            </button>
-            <button
-              class="h-[40px] w-[114px] flex items-center bg-white justify-center rounded-lg"
-            >
-              瀏覽課程
-            </button>
-            <button
-              class="h-[40px] w-[114px] flex items-center bg-white justify-center rounded-lg"
-            >
-              移除課程
-            </button>
+              <button
+                class="h-[40px] w-[114px] flex items-center justify-center bg-tmf-orange-1 text-white rounded-lg"
+              >
+                加入購物車
+              </button>
+              <button
+                class="h-[40px] w-[114px] flex items-center bg-white justify-center rounded-lg"
+              >
+                瀏覽課程
+              </button>
+              <button
+                class="h-[40px] w-[114px] flex items-center bg-white justify-center rounded-lg"
+              >
+                移除課程
+              </button>
+            </div>
           </div>
-        </div>
+        }
       </div>
     }
   `,
@@ -127,4 +129,5 @@ import { CardData } from './card.interface';
 })
 export class CardComponent {
   @Input() data!: CardData;
+  @Input() hoverEffect: boolean = true;
 }
