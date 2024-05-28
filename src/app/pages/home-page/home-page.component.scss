@@ -1,0 +1,38 @@
+.card-container {
+  display: flex;
+  overflow: hidden;
+  width: 100%;
+}
+
+.card {
+  transition: transform 0.3s ease-in-out;
+}
+
+.search-box-container:focus-within {
+  border-color: #f97316; /* 橘色边框 */
+  box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.3); /* 橘色阴影 */
+}
+
+.parallax-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  // background-image: url('path-to-background-image.jpg');
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: center;
+  z-index: -1;
+}
+
+.card {
+  width: 300px;
+  height: 200px;
+  transition: transform 0.5s;
+  cursor: pointer;
+}
+
+.card:hover {
+  transform: scale(1.1);
+}
