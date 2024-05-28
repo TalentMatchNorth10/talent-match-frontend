@@ -1,1 +1,0 @@
-import{Ra as o,Sa as r,W as n,ab as i,fb as p}from"./chunk-BTTTVX27.js";import"./chunk-2XJVAMHT.js";var f=(()=>{let e=class e{};e.\u0275fac=function(a){return new(a||e)},e.\u0275cmp=n({type:e,selectors:[["app-chart-page"]],standalone:!0,features:[p],decls:2,vars:0,template:function(a,c){a&1&&(o(0,"p"),i(1,"chart-page works!"),r())}});let t=e;return t})();export{f as default};

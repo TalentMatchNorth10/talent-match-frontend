@@ -1,1 +1,0 @@
-import"./chunk-2XJVAMHT.js";var t=[{path:"",redirectTo:"student",pathMatch:"full"},{path:"student",loadChildren:()=>import("./chunk-4N3IKRQ3.js")},{path:"teacher",loadChildren:()=>import("./chunk-XHUYSL6M.js")}],e=t;export{e as default,t as routes};
