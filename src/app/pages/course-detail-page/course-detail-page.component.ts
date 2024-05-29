@@ -8,17 +8,15 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './course-detail-page.component.html',
   styleUrl: './course-detail-page.component.scss'
 })
-export default class CourseDetailPageComponent implements OnInit  {
+export default class CourseDetailPageComponent implements OnInit {
   public course_id: string = '';
 
-  constructor(
-    protected readonly route: ActivatedRoute
-  ){}
-  
+  constructor(protected readonly route: ActivatedRoute) {}
+
   ngOnInit(): void {
-    this.route.params.subscribe(params => {
+    this.route.params.subscribe((params) => {
       // console.log(params);
-      this.course_id = params['id']
-    })
+      this.course_id = params['id'];
+    });
   }
 }
