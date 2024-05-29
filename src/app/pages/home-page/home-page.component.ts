@@ -54,7 +54,7 @@ export default class HomePageComponent implements OnInit {
   constructor(private breakpointObserver: BreakpointObserver) {}
 
   public ngOnInit() {
-    this.videoDataSource = FakeVideos
+    this.videoDataSource = FakeVideos;
     this.courseDataSource = FakeCardData;
 
     this.breakpointObserver
@@ -71,7 +71,7 @@ export default class HomePageComponent implements OnInit {
     this.updateValueBasedOnBreakpoints(initialBreakpoints);
   }
 
-public updateValueBasedOnBreakpoints(breakpoints: {
+  public updateValueBasedOnBreakpoints(breakpoints: {
     [key: string]: boolean;
   }) {
     if (breakpoints[Breakpoints.Handset]) {
@@ -99,7 +99,10 @@ public updateValueBasedOnBreakpoints(breakpoints: {
   }
 
   public shortsNext() {
-    if (this.shortsCurrentIndex < this.videoDataSource.length - this.visibleCards) {
+    if (
+      this.shortsCurrentIndex <
+      this.videoDataSource.length - this.visibleCards
+    ) {
       this.shortsCurrentIndex++;
     }
   }
@@ -120,72 +123,73 @@ public updateValueBasedOnBreakpoints(breakpoints: {
   }
 }
 
-const FakeVideos: VideoCardData[]=[
-   {
-    video_id: "1",
-    name: "Introduction to JavaScript",
-    category: "Programming",
-    intro: "Learn the basics of JavaScript programming language.",
-    video_type: "youtube",
-    url: "https://youtu.be/bjCjJW_aAUk?si=zO58J-33XKrAGHjR"
+const FakeVideos: VideoCardData[] = [
+  {
+    video_id: '1',
+    name: 'Introduction to JavaScript',
+    category: 'Programming',
+    intro: 'Learn the basics of JavaScript programming language.',
+    video_type: 'youtube',
+    url: 'https://youtu.be/bjCjJW_aAUk?si=zO58J-33XKrAGHjR'
   },
   {
-    video_id: "2",
-    name: "Cooking Italian Pasta",
-    category: "Cooking",
-    intro: "Master the art of making authentic Italian pasta dishes.",
-    video_type: "storage",
-    url: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"
+    video_id: '2',
+    name: 'Cooking Italian Pasta',
+    category: 'Cooking',
+    intro: 'Master the art of making authentic Italian pasta dishes.',
+    video_type: 'storage',
+    url: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4'
   },
   {
-    video_id: "3",
-    name: "Yoga for Beginners",
-    category: "Fitness",
-    intro: "Start your yoga journey with these beginner-friendly poses.",
-    video_type: "storage",
-    url: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4"
+    video_id: '3',
+    name: 'Yoga for Beginners',
+    category: 'Fitness',
+    intro: 'Start your yoga journey with these beginner-friendly poses.',
+    video_type: 'storage',
+    url: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4'
   },
   {
-    video_id: "4",
-    name: "Introduction to Astrophysics",
-    category: "Science",
-    intro: "Explore the wonders of the universe with basic astrophysics concepts.",
-    video_type: "storage",
-    url: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4"
+    video_id: '4',
+    name: 'Introduction to Astrophysics',
+    category: 'Science',
+    intro:
+      'Explore the wonders of the universe with basic astrophysics concepts.',
+    video_type: 'storage',
+    url: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4'
   },
   {
-    video_id: "5",
-    name: "Abstract Oil Painting Techniques",
-    category: "Art",
-    intro: "Discover unique techniques for creating abstract oil paintings.",
-    video_type: "storage",
-    url: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4"
+    video_id: '5',
+    name: 'Abstract Oil Painting Techniques',
+    category: 'Art',
+    intro: 'Discover unique techniques for creating abstract oil paintings.',
+    video_type: 'storage',
+    url: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4'
   },
   {
-    video_id: "6",
-    name: "Healthy Smoothie Recipes",
-    category: "Cooking",
-    intro: "Learn how to make delicious and nutritious smoothies at home.",
-    video_type: "storage",
-    url: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4"
+    video_id: '6',
+    name: 'Healthy Smoothie Recipes',
+    category: 'Cooking',
+    intro: 'Learn how to make delicious and nutritious smoothies at home.',
+    video_type: 'storage',
+    url: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4'
   },
   {
-    video_id: "7",
-    name: "Introduction to Machine Learning",
-    category: "Technology",
-    intro: "Get started with machine learning algorithms and applications.",
-    video_type: "storage",
-    url: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4"
+    video_id: '7',
+    name: 'Introduction to Machine Learning',
+    category: 'Technology',
+    intro: 'Get started with machine learning algorithms and applications.',
+    video_type: 'storage',
+    url: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4'
   },
   {
-    video_id: "8",
+    video_id: '8',
     name: "Beginner's Guide to Meditation",
-    category: "Wellness",
-    intro: "Start your meditation practice with these simple techniques.",
-    video_type: "storage",
-    url: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4"
+    category: 'Wellness',
+    intro: 'Start your meditation practice with these simple techniques.',
+    video_type: 'storage',
+    url: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4'
   }
-]
+];
 
 const FakeCardData: CardData[] = [
   {
