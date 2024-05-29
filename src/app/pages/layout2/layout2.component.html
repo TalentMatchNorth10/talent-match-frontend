@@ -1,0 +1,51 @@
+<div class="flex flex-col min-h-[100vh] bg-tmf-gray-7">
+  <app-header></app-header>
+  <div class="gap-6 mt-6 mb-12 mx-auto container sm:flex xl:max-w-screen-xl">
+    <!-- 功能選單 -->
+    <div
+      class="hidden p-6 rounded-xl shadow-lg bg-white sm:block sm:min-w-[13.25rem] xl:min-w-[18.875rem]"
+    >
+      <div class="flex justify-between items-center mb-6">
+        <p class="text-xl font-bold">個人管理</p>
+        <div
+          class="px-2 py-1 rounded bg-tmf-gray-7 text-tmf-orange-1 text-base font-bold"
+        >
+          {{ identityText() }}
+        </div>
+      </div>
+
+      <ul class="min-h-[36.5rem] mb-6 flex flex-col gap-1">
+        @for (menuItem of menuList(); track $index) {
+          <li
+            class="rounded-xl text-tmf-gray-2 hover:bg-tmf-orange-1 hover:text-white cursor-pointer"
+            [routerLinkActive]="['bg-tmf-orange-1', '!text-white']"
+            [routerLinkActiveOptions]="{ exact: true }"
+          >
+            <a
+              class="p-4 flex justify-between items-center gap-3"
+              [routerLink]="menuItem.path"
+            >
+              <span class="material-icons-outlined">{{ menuItem.icon }}</span>
+              <p class="grow">{{ menuItem.title }}</p>
+            </a>
+          </li>
+        }
+      </ul>
+
+      <a
+        class="p-4 flex justify-between items-center rounded-xl gap-3 text-tmf-gray-2 hover:bg-tmf-orange-1 hover:text-white cursor-pointer"
+        [routerLink]="changeIdentity().path"
+      >
+        <span class="material-icons-outlined">restart_alt</span>
+        <p class="grow">切換為{{ changeIdentity().text }}</p>
+      </a>
+    </div>
+    <!-- 功能頁面 -->
+    <div
+      class="bg-white py-6 mx-3 px-3 rounded-2xl shadow-lg sm:mx-0 sm:w-full"
+    >
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+  <app-footer></app-footer>
+</div>
