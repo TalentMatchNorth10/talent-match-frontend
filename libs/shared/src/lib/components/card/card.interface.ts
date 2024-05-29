@@ -1,4 +1,5 @@
 export interface CardData {
+  course_id: string;
   mainImg: string;
   title: string;
   content: string;
