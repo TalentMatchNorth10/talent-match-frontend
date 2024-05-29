@@ -54,25 +54,6 @@ export const routes: Routes = [
     path: 'teacher-apply',
     loadComponent: () =>
       import('../teacher-apply-page/teacher-apply-page.component')
-  },
-  {
-    // 學生個人頁
-    path: 'student',
-    loadChildren: () => import('../student/student.routes')
-  },
-  {
-    // 老師個人頁
-    path: 'teacher',
-    loadChildren: () => import('../teacher/teacher.routes')
-  },
-  {
-    // 404 頁
-    path: 'not-found',
-    loadComponent: () => import('../not-found-page/not-found-page.component')
-  },
-  {
-    path: '**',
-    redirectTo: 'not-found'
   }
 ];
 

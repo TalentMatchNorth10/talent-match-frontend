@@ -334,7 +334,7 @@ export class HeaderComponent implements OnInit {
   handleMenuClick(menuItem: UserMenuItem) {
     switch (menuItem.label) {
       case '學生個人管理':
-        this.router.navigate(['/student']);
+        this.router.navigate(['/layout2/student']);
         break;
       case '登出':
         this.authStatusService.logout();
