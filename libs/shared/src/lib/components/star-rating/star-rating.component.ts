@@ -9,19 +9,22 @@ import { Component, Input, SimpleChanges } from '@angular/core';
     <div class="flex">
       <span
         *ngFor="let star of fullStars"
-        class="material-icons-outlined text-tmf-yellow-1 text-[12px]"
+        class="material-icons-outlined text-tmf-yellow-1 "
+        [ngClass]="starFontSize(starSize)"
       >
         star
       </span>
       <span
         *ngIf="halfStars"
-        class="material-icons-outlined text-tmf-yellow-1 text-[12px]"
+        class="material-icons-outlined text-tmf-yellow-1 "
+        [ngClass]="starFontSize(starSize)"
       >
         star_half
       </span>
       <span
         *ngFor="let star of emptyStars"
-        class="material-icons-outlined text-[12px]"
+        class="material-icons-outlined "
+        [ngClass]="starFontSize(starSize)"
       >
         star_border
       </span>
@@ -35,9 +38,14 @@ import { Component, Input, SimpleChanges } from '@angular/core';
 })
 export class StarRatingComponent {
   @Input() rating: number = 0;
+  @Input() starSize: string = '12px';
   fullStars: number[] = [];
   halfStars: number = 0;
   emptyStars: number[] = [];
+
+  starFontSize(size: string): string {
+    return `text-[${size}]`;
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['rating']) {

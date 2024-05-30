@@ -102,7 +102,7 @@
       </div>
     </div>
     <div class="w-full flex justify-center">
-      <div class="relative w-9/12 overflow-hidden">
+      <div class="relative lg:w-9:12 w-10/12 overflow-hidden">
         <div
           class="flex transition-transform duration-300"
           [style.transform]="shortsTransformStyle"
@@ -147,7 +147,7 @@
       </div>
       <div class="mt-8 py-8">
         <div class="w-full flex justify-center">
-          <div class="relative w-9/12 overflow-hidden">
+          <div class="relative lg:w-9:12 w-10/12 overflow-hidden">
             <div
               class="flex transition-transform duration-300"
               [style.transform]="coursesTransformStyle"
@@ -199,27 +199,50 @@
       學員導師好評推薦
     </div>
     <div class="my-8 w-full flex flex-col items-center gap-6">
-      <div class="w-9/12 flex justify-center flex-wrap gap-3">
-        <div class="basis-1/4">
-          <div
-            class="max-w-xs w-full h-full rounded overflow-hidden shadow-lg bg-gray-400/25"
-          >
-            <div class="p-8">
-              <div class="flex flex-col items-center gap-2">
-                <div class="text-2xl">使用好評高達</div>
-                <div class="text-7xl">4.7</div>
-                <tmf-star-rating [rating]="4.7"></tmf-star-rating>
-                <!-- <app-rating-star [rating]="4.5"> </app-rating-star> -->
-              </div>
+      <ng-container [ngSwitch]="currentWindowSize">
+        <ng-container *ngSwitchCase="'Handset'">
+          <div class="relative w-4/5 overflow-hidden">
+            <div
+              class="flex transition-transform duration-300"
+              [style.transform]="reviewTransformStyle"
+            >
+              <ng-container
+                *ngFor="let review of reviewDataSource; let i = index"
+              >
+                <app-review-card [data]="review"></app-review-card>
+              </ng-container>
             </div>
           </div>
-        </div>
-        <ng-container *ngFor="let review of reviewDataSource; let i = index">
-          <div class="basis-1/4">
-            <app-review-card [data]="review"></app-review-card>
+        </ng-container>
+        <ng-container *ngSwitchDefault>
+          <div class="w-9/12 flex justify-center flex-wrap gap-3">
+            <div class="basis-1/4">
+              <div
+                class="max-w-xs w-full h-full rounded overflow-hidden shadow-lg bg-gray-400/25"
+              >
+                <div class="p-6">
+                  <div class="flex flex-col items-center gap-2">
+                    <div class="text-2xl">使用好評高達</div>
+                    <div class="text-7xl">4.7</div>
+                    <tmf-star-rating
+                      [rating]="4.7"
+                      [starSize]="'1.5rem'"
+                    ></tmf-star-rating>
+                    <!-- <app-rating-star [rating]="4.5"> </app-rating-star> -->
+                  </div>
+                </div>
+              </div>
+            </div>
+            <ng-container
+              *ngFor="let review of reviewDataSource; let i = index"
+            >
+              <div class="basis-1/4">
+                <app-review-card [data]="review"></app-review-card>
+              </div>
+            </ng-container>
           </div>
         </ng-container>
-      </div>
+      </ng-container>
     </div>
   </section>
   <section>
