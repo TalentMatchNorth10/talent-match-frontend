@@ -1,0 +1,26 @@
+<div
+  class="max-w-xs min-w-[20rem] w-full h-full rounded overflow-hidden shadow-lg bg-white"
+>
+  <div class="py-6 px-4">
+    <div class="flex justify-between">
+      <div class="flex items-center gap-2">
+        <img
+          class="w-8 h-8 rounded-full"
+          [src]="data.avator_image"
+          alt="Avatar"
+        />
+        <div class="flex flex-col">
+          <div>{{ data.nick_name }}</div>
+          <tmf-star-rating [rating]="data.rate"></tmf-star-rating>
+        </div>
+      </div>
+      <div class="text-gray-400">
+        {{ data.create_datetime | date: 'yyyy-MM-dd' }}
+      </div>
+    </div>
+    <!-- <div class="font-bold my-4">可以一展長才的平台</div> -->
+    <div class="text-gray-500 my-4">
+      {{ data.comment }}
+    </div>
+  </div>
+</div>
