@@ -3,13 +3,21 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Component, OnInit } from '@angular/core';
 import { CardComponent } from '@tmf/libs-shared/components/card/card.component';
 import { CardData } from '@tmf/libs-shared/components/card/card.interface';
-import { ShortVideoCardComponent } from 'libs/shared/src';
+import { ReviewCardComponent, ShortVideoCardComponent } from 'libs/shared/src';
 import { VideoCardData } from '@tmf/libs-shared/components/short-video-card/video-card.interface';
+import { StarRatingComponent } from '@tmf/libs-shared/components/star-rating/star-rating.component';
+import { ReviewData } from '@tmf/libs-shared/components/review-card/review.interface';
 
 @Component({
   selector: 'app-home-page',
   standalone: true,
-  imports: [CommonModule, ShortVideoCardComponent, CardComponent],
+  imports: [
+    CommonModule,
+    ShortVideoCardComponent,
+    CardComponent,
+    StarRatingComponent,
+    ReviewCardComponent
+  ],
   templateUrl: './home-page.component.html',
   styleUrl: './home-page.component.scss'
 })
@@ -30,6 +38,7 @@ export default class HomePageComponent implements OnInit {
 
   public videoDataSource: VideoCardData[] = [];
   public courseDataSource: CardData[] = [];
+  public reviewDataSource: ReviewData[] = [];
 
   public visibleCards: number = 4;
   public cardWidthPercentage: number = 25;
@@ -56,6 +65,7 @@ export default class HomePageComponent implements OnInit {
   public ngOnInit() {
     this.videoDataSource = FakeVideos;
     this.courseDataSource = FakeCardData;
+    this.reviewDataSource = FakeReviewData;
 
     this.breakpointObserver
       .observe([Breakpoints.Handset, Breakpoints.Tablet, Breakpoints.Web])
@@ -262,5 +272,64 @@ const FakeCardData: CardData[] = [
     sub_category: '次分類2',
     rating: 4.5,
     ratingCount: 100
+  }
+];
+
+export const FakeReviewData = [
+  {
+    nick_name: 'andersonlisa',
+    avator_image: 'https://dummyimage.com/636x651',
+    rate: 4.8,
+    comment: 'Start small myself teacher set.',
+    create_datetime: new Date('2024-05-27T08:22:50')
+  },
+  {
+    nick_name: 'garzakara',
+    avator_image: 'https://dummyimage.com/636x651',
+    rate: 4.9,
+    comment: 'Hard body reason partner treatment.',
+    create_datetime: new Date('2024-02-11T19:41:12')
+  },
+  {
+    nick_name: 'kellerkimberly',
+    avator_image: 'https://dummyimage.com/636x651',
+    rate: 5.0,
+    comment: 'Marriage someone society how new family individual.',
+    create_datetime: new Date('2024-02-21T01:07:07')
+  },
+  {
+    nick_name: 'zstanley',
+    avator_image: 'https://dummyimage.com/636x651',
+    rate: 4.8,
+    comment: 'Upon never suggest institution I professor wish.',
+    create_datetime: new Date('2024-01-06T09:10:48')
+  },
+  {
+    nick_name: 'garzajessica',
+    avator_image: 'https://dummyimage.com/21x441',
+    rate: 5.0,
+    comment: 'Move drop create discover seat become.',
+    create_datetime: new Date('2024-05-27T18:11:08')
+  },
+  {
+    nick_name: 'jgarza',
+    avator_image: 'https://dummyimage.com/636x651',
+    rate: 4.9,
+    comment: 'Left order talk management condition receive.',
+    create_datetime: new Date('2024-04-06T23:52:02')
+  },
+  {
+    nick_name: 'scott59',
+    avator_image: 'https://dummyimage.com/636x651',
+    rate: 4.7,
+    comment: 'Hundred want room begin box raise.',
+    create_datetime: new Date('2024-04-16T23:52:28')
+  },
+  {
+    nick_name: 'martinezlaura',
+    avator_image: 'https://dummyimage.com/636x651',
+    rate: 4.8,
+    comment: 'Option price suddenly.',
+    create_datetime: new Date('2024-01-15T20:49:07')
   }
 ];
