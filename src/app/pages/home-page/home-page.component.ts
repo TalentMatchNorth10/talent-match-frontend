@@ -86,16 +86,6 @@ export default class HomePageComponent implements OnInit {
       [Breakpoints.Web]: window.matchMedia(Breakpoints.Web).matches
     };
     this.updateValueBasedOnBreakpoints(initialBreakpoints);
-
-    // if (this.currentWindowSize == 'Handset') {
-    //   setInterval(() => {
-    //     if (this.reviewCurrentIndex < this.reviewDataSource.length - 1) {
-    //       this.reviewCurrentIndex++;
-    //     } else {
-    //       this.reviewCurrentIndex = 0;
-    //     }
-    //   }, 3000);
-    // }
   }
 
   public updateValueBasedOnBreakpoints(breakpoints: {
