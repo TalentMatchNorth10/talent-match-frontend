@@ -45,6 +45,7 @@ export default class HomePageComponent implements OnInit {
 
   public shortsCurrentIndex = 0;
   public coursesCurrentIndex = 0;
+  public reviewCurrentIndex = 0;
 
   public get shortsTransformStyle() {
     return `translateX(-${this.shortsCurrentIndex * this.cardWidthPercentage}%)`;
@@ -54,11 +55,17 @@ export default class HomePageComponent implements OnInit {
     return `translateX(-${this.coursesCurrentIndex * this.cardWidthPercentage}%)`;
   }
 
+  public get reviewTransformStyle() {
+    return `translateX(-${this.reviewCurrentIndex * 100}%)`;
+  }
+
   public howToUseStepImages: string[] = [
     './../../../assets/images/home-page/how-to-use/how-to-use-step-1.svg',
     './../../../assets/images/home-page/how-to-use/how-to-use-step-2.svg',
     './../../../assets/images/home-page/how-to-use/how-to-use-step-3.svg'
   ];
+
+  public currentWindowSize: string = '';
 
   constructor(private breakpointObserver: BreakpointObserver) {}
 
@@ -79,6 +86,14 @@ export default class HomePageComponent implements OnInit {
       [Breakpoints.Web]: window.matchMedia(Breakpoints.Web).matches
     };
     this.updateValueBasedOnBreakpoints(initialBreakpoints);
+
+    setInterval(() => {
+      if (this.reviewCurrentIndex < this.reviewDataSource.length - 1) {
+        this.reviewCurrentIndex++;
+      } else {
+        this.reviewCurrentIndex = 0;
+      }
+    }, 3000);
   }
 
   public updateValueBasedOnBreakpoints(breakpoints: {
@@ -86,20 +101,25 @@ export default class HomePageComponent implements OnInit {
   }) {
     if (breakpoints[Breakpoints.Handset]) {
       // Do something for small screens
+      this.currentWindowSize = 'Handset';
       this.visibleCards = 1;
       this.cardWidthPercentage = 100;
       // console.log('Handset');
     } else if (breakpoints[Breakpoints.Tablet]) {
       // Do something for medium screens
+      this.currentWindowSize = 'Tablet';
       this.visibleCards = 2;
       this.cardWidthPercentage = 35;
       // console.log('Tablet');
     } else if (breakpoints[Breakpoints.Web]) {
       // Do something for large screens
+      this.currentWindowSize = 'Web';
       this.visibleCards = 4;
       this.cardWidthPercentage = 25;
       // console.log('Web');
     }
+
+    console.log(this.currentWindowSize);
   }
 
   public shortsPrev() {
