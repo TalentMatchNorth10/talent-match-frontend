@@ -1,0 +1,128 @@
+<div class="flex justify-between gap-4">
+  <div
+    class="max-w-xs w-[320px] h-[514px] rounded overflow-hidden shadow-lg bg-white"
+  >
+    <div class="relative w-full h-full pb-16x9">
+      <!-- Aspect ratio of 9:16 for vertical video -->
+      <ng-container [ngSwitch]="data.video_type">
+        <ng-container *ngSwitchCase="'storage'">
+          <video
+            class="absolute top-0 left-0 w-full h-full object-cover"
+            [src]="videoUrl"
+            autoplay
+          ></video>
+        </ng-container>
+        <ng-container *ngSwitchCase="'youtube'">
+          <iframe
+            class="absolute top-0 left-0 w-full h-full"
+            [src]="videoUrl"
+            title="video player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+          ></iframe>
+        </ng-container>
+      </ng-container>
+      <div class="absolute left-2 top-2 p-3 rounded bg-black text-yellow-600">
+        {{ data.category }}
+      </div>
+      <div class="absolute w-full bottom-2 p-3 rounded text-white">
+        {{ data.intro }}
+      </div>
+    </div>
+  </div>
+  <div class="flex flex-col justify-between">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      class="h-6 w-6 text-white hover:text-gray-900"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+      (click)="close()"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M6 18L18 6M6 6l12 12"
+      />
+    </svg>
+    <!-- <button class="text-white hover:text-gray-900"></button> -->
+    <div class="flex flex-col gap-3">
+      <img
+        class="w-10 h-10 rounded-full"
+        [src]="'https://dummyimage.com/636x651'"
+        alt="Avatar"
+      />
+      <!-- <button class="p-2 bg-gray-800 rounded-full text-white">
+        <img
+          [src]="'https://dummyimage.com/636x651'"
+          alt="Uploader Avatar"
+          class="w-6 h-6 rounded-full"
+        />
+      </button> -->
+      <button class="p-2 bg-white rounded-full text-orange-500">
+        <!-- Arrow Icon -->
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-6 w-6"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M17 8l4 4m0 0l-4 4m4-4H3"
+          />
+        </svg>
+      </button>
+      <button class="p-2 bg-white rounded-full text-orange-500">
+        <!-- Bookmark Icon -->
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-6 w-6"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M5 3v16l7-7 7 7V3a2 2 0 00-2-2H7a2 2 0 00-2 2z"
+          />
+        </svg>
+      </button>
+    </div>
+  </div>
+  <!-- <div
+  class="px-10 py-8 flex justify-center bg-white w-[360px] md:w-[400px] lg:w-[440px] xl:w-[480px] rounded-xl shadow-lg"
+>
+  <div class="flex flex-col gap-6">
+    <div class="flex justify-center items-center gap-2">
+      @if (data.icon) {
+        <span class="text-2xl leading-6 text-tmf-orange-1 material-icons">
+          {{ data.icon }}
+        </span>
+      }
+      <p class="text-lg text-center text-tmf-gray-1 font-bold">
+        {{ data.title }}
+      </p>
+    </div>
+    <p class="text-sm text-center text-tmf-gray-1">
+      {{ data.content }}
+    </p>
+    <div class="inline-flex justify-center">
+      <button
+        (click)="close()"
+        class="px-4 py-2 bg-tmf-orange-1 text-white text-sm leading-6 rounded-lg"
+      >
+        關閉
+      </button>
+    </div>
+  </div>
+</div> -->
+</div>
