@@ -15,16 +15,16 @@ import { ActivatedRoute, Router } from '@angular/router';
   imports: [CommonModule, ReactiveFormsModule, InputComponent],
   template: `
     <div
-      class="w-full h-[100vh] flex justify-center items-center"
+      class="flex h-[100vh] w-full items-center justify-center"
       [formGroup]="form"
     >
       <div
-        class="flex flex-col items-center shadow-[5px_5px_10px_10px_#F7F7F7] rounded-md p-10"
+        class="flex flex-col items-center rounded-md p-10 shadow-[5px_5px_10px_10px_#F7F7F7]"
       >
-        <h1 class="text-tmf-orange-1 text-[32px] font-semibold mb-5">
+        <h1 class="mb-5 text-[32px] font-semibold text-tmf-orange-1">
           忘記密碼
         </h1>
-        <div class="flex flex-col items-center gap-y-1 w-[350px] mb-6">
+        <div class="mb-6 flex w-[350px] flex-col items-center gap-y-1">
           <tmf-input
             class="w-[250px]"
             placeholder="密碼"
@@ -42,7 +42,7 @@ import { ActivatedRoute, Router } from '@angular/router';
         </div>
         <button
           (click)="resetPassword()"
-          class="bg-tmf-orange-2 text-white font-semibold rounded-md w-[200px] py-3 text-center hover:bg-tmf-orange-1 duration-100 mb-6 disabled:bg-tmf-gray-5"
+          class="mb-6 w-[200px] rounded-md bg-tmf-orange-2 py-3 text-center font-semibold text-white duration-100 hover:bg-tmf-orange-1 disabled:bg-tmf-gray-5"
           [disabled]="form.invalid"
         >
           發送

@@ -1,0 +1,23 @@
+:host {
+  display: block;
+}
+
+.page-list {
+  @apply flex list-none gap-x-2 p-0;
+}
+
+.page-item {
+  @apply h-[32px] w-[32px] rounded-lg lg:h-[48px] lg:w-[48px];
+}
+
+.page-item .page-link {
+  @apply flex h-full w-full items-center justify-center rounded-lg border border-tmf-gray-5 font-medium text-tmf-gray-2;
+}
+
+.page-item.active .page-link {
+  @apply border-none bg-tmf-orange-1 font-inter text-[16px] leading-6 text-white;
+}
+
+.page-item.disabled .page-link {
+  @apply cursor-default border-none bg-tmf-gray-6 text-tmf-gray-4;
+}

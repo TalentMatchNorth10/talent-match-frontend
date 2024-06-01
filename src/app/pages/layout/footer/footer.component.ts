@@ -7,19 +7,19 @@ import { Component } from '@angular/core';
   imports: [CommonModule],
   template: `
     <div
-      class="h-[372px] lg:h-[248px] bg-tmf-gray-1 bg_image flex justify-center items-center px-5"
+      class="bg_image flex h-[372px] items-center justify-center bg-tmf-gray-1 px-5 lg:h-[248px]"
     >
-      <div class="max-w-[1280px] w-full">
+      <div class="w-full max-w-[1280px]">
         <div
-          class="flex flex-col items-center mb-[48px] lg:flex-row lg:justify-between lg:items-end lg:mb-3"
+          class="mb-[48px] flex flex-col items-center lg:mb-3 lg:flex-row lg:items-end lg:justify-between"
         >
           <img
-            class="w-[200px] mb-[29px] lg:mb-0"
+            class="mb-[29px] w-[200px] lg:mb-0"
             src="/assets/images/footer-logo.svg"
             alt=""
           />
           <ul
-            class="flex flex-wrap gap-x-8 gap-y-5 justify-center text-[14px] leading-5 text-white"
+            class="flex flex-wrap justify-center gap-x-8 gap-y-5 text-[14px] leading-5 text-white"
           >
             <li class="cursor-pointer">教師招募</li>
             <li class="cursor-pointer">服務條款</li>
@@ -29,26 +29,26 @@ import { Component } from '@angular/core';
           </ul>
         </div>
         <div
-          class="flex items-center gap-y-4 flex-col lg:flex-row lg:justify-between lg:items-end"
+          class="flex flex-col items-center gap-y-4 lg:flex-row lg:items-end lg:justify-between"
         >
           <p
-            class="text-[14px] text-center leading-5 text-white order-2 lg:order-1"
+            class="order-2 text-center text-[14px] leading-5 text-white lg:order-1"
           >
             copyright © 2024 Zhong Feng Lin Fiber Technology Co.,Ltd
           </p>
-          <ul class="flex gap-x-4 order-1 lg:order-2">
+          <ul class="order-1 flex gap-x-4 lg:order-2">
             <li
-              class="w-[40px] h-[40px] border border-tmf-orange-2 rounded-full flex justify-center items-center cursor-pointer"
+              class="flex h-[40px] w-[40px] cursor-pointer items-center justify-center rounded-full border border-tmf-orange-2"
             >
               <img src="assets/images/line.png" alt="line" />
             </li>
             <li
-              class="w-[40px] h-[40px] border border-tmf-orange-2 rounded-full flex justify-center items-center cursor-pointer"
+              class="flex h-[40px] w-[40px] cursor-pointer items-center justify-center rounded-full border border-tmf-orange-2"
             >
               <img src="assets/images/youtube.png" alt="youtube" />
             </li>
             <li
-              class="w-[40px] h-[40px] border border-tmf-orange-2 rounded-full flex justify-center items-center cursor-pointer"
+              class="flex h-[40px] w-[40px] cursor-pointer items-center justify-center rounded-full border border-tmf-orange-2"
             >
               <img src="assets/images/facebook.png" alt="facebook" />
             </li>

@@ -1,0 +1,27 @@
+:host {
+  display: block;
+}
+
+.switch {
+  @apply relative h-[22px] w-[42px] cursor-pointer rounded-full bg-gray-200 transition-colors;
+}
+
+.switch-enabled {
+  @apply bg-orange-500;
+}
+
+.switch-disabled {
+  @apply cursor-not-allowed bg-tmf-gray-4;
+}
+
+.switch-circle {
+  @apply absolute left-[3px] top-[3px] h-4 w-4 rounded-full bg-white transition-transform disabled:bg-tmf-gray-1;
+}
+
+.switch-on .switch-circle {
+  @apply translate-x-[20px];
+}
+
+.switch-disabled .switch-circle {
+  @apply bg-tmf-gray-3;
+}
