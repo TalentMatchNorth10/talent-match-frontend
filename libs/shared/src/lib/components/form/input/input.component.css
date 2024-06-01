@@ -1,0 +1,35 @@
+:host {
+  display: block;
+}
+
+.input-container {
+  @apply relative flex w-full items-center border-tmf-gray-4 px-3 duration-75 focus-within:border-tmf-orange-1;
+}
+
+.input {
+  @apply flex-grow overflow-hidden text-ellipsis text-[14px] leading-5 outline-none md:text-[16px] md:leading-6;
+}
+
+.input-selectType-icon {
+  @apply text-[20px] text-tmf-gray-4 duration-100 md:text-[22px];
+}
+
+.input-selectType-list {
+  @apply flex w-full flex-col rounded-lg bg-white py-3 shadow-lg;
+}
+
+.input-selectType-item {
+  @apply px-6 py-3 text-tmf-gray-2 hover:bg-tmf-orange-4 hover:text-tmf-orange-1;
+}
+
+.input-label {
+  @apply mb-1 ml-1 inline-block text-sm font-medium text-tmf-gray-2 md:text-[15px] md:leading-6;
+}
+
+.input-search-icon {
+  @apply absolute right-0 top-2 mr-3 cursor-pointer text-[22px] text-tmf-gray-2 md:top-[6px] md:text-[24px];
+}
+
+.error-message {
+  @apply absolute bottom-0 text-[14px] text-red-500;
+}

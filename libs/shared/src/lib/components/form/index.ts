@@ -1,2 +1,5 @@
-export * from './input/input.component';
-export * from './checkbox/checkbox.component';
+export * from './input';
+export * from './checkbox';
+export * from './switch';
+export * from './select';
+export * from './share';

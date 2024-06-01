@@ -1,0 +1,40 @@
+:host {
+  display: block;
+}
+
+.select {
+  @apply flex h-[36px] cursor-pointer items-center rounded-lg border border-tmf-gray-4 px-3 md:h-[38px] lg:h-[40px];
+}
+
+.select-label {
+  @apply mb-1 ml-1 inline-block text-sm font-medium text-tmf-gray-2 md:text-[15px] md:leading-6;
+}
+
+.select-icon {
+  @apply mr-[3px] shrink-0 transform text-[22px] text-tmf-orange-1 transition-transform md:text-[24px];
+}
+
+.select-chevron {
+  @apply shrink-0 transform text-[18px] transition-transform md:text-[20px];
+}
+
+.select-open {
+  @apply border-tmf-orange-1;
+}
+
+.select-disabled {
+  @apply !cursor-not-allowed bg-tmf-gray-5;
+}
+
+.select-invalid {
+  @apply border-red-500;
+}
+
+.select-text {
+  @apply flex-grow overflow-hidden text-ellipsis text-[14px] leading-5 md:text-[16px] md:leading-6;
+}
+
+.option-container {
+  @apply mt-[10px] w-full rounded-lg bg-white py-3 shadow-lg;
+  width: calc(100% - 40px);
+}

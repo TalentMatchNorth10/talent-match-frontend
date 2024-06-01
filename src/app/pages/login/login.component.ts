@@ -1,34 +1,35 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { InputComponent } from '@tmf/libs-shared/components';
+import { InputComponent, InputSize } from '@tmf/libs-shared/components';
 import { LoginForm, LoginFormKey } from './login.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'libs/openapi/src';
 import { environment } from 'src/environments/environment';
 import { AuthStatusService } from 'src/app/shared/services/authStatus.service';
+import { DialogService } from 'src/app/shared/services/dialog.service';
 
 @Component({
   selector: 'app-login',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, InputComponent],
   template: `
-    <div class="w-full h-[100vh] flex justify-center items-center">
+    <div class="flex h-[100vh] w-full items-center justify-center">
       <div
-        class="flex flex-col items-center shadow-[5px_5px_10px_10px_#F7F7F7] w-[80%] min-w-[260px] rounded-md p-8 md:p-10 md:w-auto"
+        class="flex w-[80%] min-w-[260px] flex-col items-center rounded-md p-8 shadow-[5px_5px_10px_10px_#F7F7F7] md:w-auto md:p-10"
       >
         <h1
-          class="text-tmf-orange-1 text-[26px] md:text-[32px] font-semibold mb-5"
+          class="mb-5 text-[26px] font-semibold text-tmf-orange-1 md:text-[32px]"
         >
           登入
         </h1>
-        <div class="flex gap-x-10 w-full">
+        <div class="flex w-full gap-x-10">
           <button
             (click)="googleLogin()"
-            class="relative border-2 h-[60px] rounded-md py-4 justify-center w-[300px] hover:border-tmf-orange-2 hover:text-tmf-orange-1 duration-100 hidden md:flex"
+            class="relative hidden h-[60px] w-[300px] justify-center rounded-md border-2 py-4 duration-100 hover:border-tmf-orange-2 hover:text-tmf-orange-1 md:flex"
           >
             <svg
-              class="absolute left-0 top-[50%] -translate-y-[50%] w-8 h-8 ml-4"
+              class="absolute left-0 top-[50%] ml-4 h-8 w-8 -translate-y-[50%]"
               xmlns="http://www.w3.org/2000/svg"
               x="0px"
               y="0px"
@@ -55,35 +56,39 @@ import { AuthStatusService } from 'src/app/shared/services/authStatus.service';
             </svg>
             Google 登入
           </button>
-          <div class="flex flex-col items-center w-full md:w-auto">
-            <div class="flex flex-col gap-y-2 w-full" [formGroup]="form">
+          <div class="flex w-full flex-col items-center md:w-auto">
+            <div class="flex w-full flex-col gap-y-2" [formGroup]="form">
               <tmf-input
                 placeholder="信箱"
                 [formControlName]="LoginFormKey.EMAIL"
+                [errorMessage]="getErrorMessage(LoginFormKey.EMAIL)"
+                [inputSize]="InputSize.Large"
               ></tmf-input>
               <tmf-input
                 placeholder="密碼"
                 [formControlName]="LoginFormKey.PASSWORD"
+                [errorMessage]="getErrorMessage(LoginFormKey.PASSWORD)"
+                [inputSize]="InputSize.Large"
               ></tmf-input>
             </div>
             <a
               (click)="forgetPassword()"
-              class="text-tmf-gray-3 text-[14px] leading-4 self-end mb-5 cursor-pointer hover:text-tmf-gray-2 duration-[200ms]"
+              class="mb-5 cursor-pointer self-end text-[14px] leading-4 text-tmf-gray-3 duration-[200ms] hover:text-tmf-gray-2"
               >忘記密碼</a
             >
             <button
               (click)="login()"
-              class="bg-tmf-orange-2 text-white font-semibold rounded-md w-full py-3 text-center hover:bg-tmf-orange-1 duration-100 mb-2 md:mb-6 disabled:bg-tmf-gray-5"
+              class="mb-2 w-full rounded-md bg-tmf-orange-2 py-3 text-center font-semibold text-white duration-100 hover:bg-tmf-orange-1 disabled:bg-tmf-gray-5 md:mb-6"
               [disabled]="form.invalid"
             >
               登入
             </button>
             <button
               (click)="googleLogin()"
-              class="relative border-2 h-[48px] rounded-md flex justify-center items-center w-full hover:border-tmf-orange-2 hover:text-tmf-orange-1 duration-100 mb-6 md:hidden"
+              class="relative mb-6 flex h-[48px] w-full items-center justify-center rounded-md border-2 duration-100 hover:border-tmf-orange-2 hover:text-tmf-orange-1 md:hidden"
             >
               <svg
-                class="absolute left-0 top-[50%] -translate-y-[50%] w-8 h-8 ml-4"
+                class="absolute left-0 top-[50%] ml-4 h-8 w-8 -translate-y-[50%]"
                 xmlns="http://www.w3.org/2000/svg"
                 x="0px"
                 y="0px"
@@ -111,9 +116,9 @@ import { AuthStatusService } from 'src/app/shared/services/authStatus.service';
               Google 登入
             </button>
             <a
-              class="text-tmf-gray-3 text-[14px] leading-4"
+              class="text-[14px] leading-4 text-tmf-gray-3"
               (click)="navigateToSignUp()"
-              >尚未註冊？<span class=" cursor-pointer font-semibold"
+              >尚未註冊？<span class="cursor-pointer font-semibold"
                 >註冊</span
               ></a
             >
@@ -130,13 +135,29 @@ export class LoginComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private authService = inject(AuthService);
   private authStatusService = inject(AuthStatusService);
+  private dialogService = inject(DialogService);
 
   form = this.fb.group<LoginForm>({
-    [LoginFormKey.EMAIL]: this.fb.control(null, [Validators.required]),
+    [LoginFormKey.EMAIL]: this.fb.control(null, [
+      Validators.required,
+      Validators.email
+    ]),
     [LoginFormKey.PASSWORD]: this.fb.control(null, [Validators.required])
   });
 
   readonly LoginFormKey = LoginFormKey;
+  readonly InputSize = InputSize;
+
+  getErrorMessage(key: LoginFormKey) {
+    const control = this.form.get(key);
+    if (control?.hasError('required')) {
+      return '此欄位為必填';
+    }
+    if (control?.hasError('email')) {
+      return '信箱格式不正確';
+    }
+    return '';
+  }
 
   ngOnInit(): void {
     const { access_token, refresh_token } = this.route.snapshot.queryParams;
@@ -162,7 +183,10 @@ export class LoginComponent implements OnInit {
             this.router.navigate(['/home']);
           },
           error: (err) => {
-            console.error(err);
+            this.dialogService.openAlertDialog({
+              title: '登入失敗',
+              content: err.error.message
+            });
           }
         });
     }

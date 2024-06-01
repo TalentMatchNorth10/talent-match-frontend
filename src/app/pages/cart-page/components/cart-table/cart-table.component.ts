@@ -23,17 +23,17 @@ import { GetCartItemsResponseModelDataInner } from 'libs/openapi/src';
     <!-- pc -->
     <div [formGroup]="form" class="cart-table hidden lg:block">
       <div class="cart-table-header-row">
-        <div class="cart-table-header-column text-center w-[52px] shrink-0">
-          <div class="flex items-center h-full">
+        <div class="cart-table-header-column w-[52px] shrink-0 text-center">
+          <div class="flex h-full items-center">
             <tmf-checkbox
               (ngModelChange)="toggleSelectAll($event)"
               [formControlName]="CartTableFormKey.SELECTALL"
             ></tmf-checkbox>
           </div>
         </div>
-        <div class="cart-table-header-column text-left w-[60%]">課程</div>
-        <div class="cart-table-header-column text-center w-[15%]">售價</div>
-        <div class="cart-table-header-column text-center w-[15%]">操作</div>
+        <div class="cart-table-header-column w-[60%] text-left">課程</div>
+        <div class="cart-table-header-column w-[15%] text-center">售價</div>
+        <div class="cart-table-header-column w-[15%] text-center">操作</div>
       </div>
       @if (dataSource.length && rows.controls.length) {
         @for (rowData of dataSource; track rowData; let index = $index) {
@@ -43,22 +43,22 @@ import { GetCartItemsResponseModelDataInner } from 'libs/openapi/src';
             }"
             class="cart-table-body-row"
           >
-            <div class="cart-table-body-column text-center w-[52px] shrink-0">
-              <div class="flex items-center h-full">
+            <div class="cart-table-body-column w-[52px] shrink-0 text-center">
+              <div class="flex h-full items-center">
                 <tmf-checkbox
                   [formControl]="rows.controls[index]"
                 ></tmf-checkbox>
               </div>
             </div>
-            <div class="cart-table-body-column text-left w-[60%]">
-              <div class="flex gap-x-3 items-center">
+            <div class="cart-table-body-column w-[60%] text-left">
+              <div class="flex items-center gap-x-3">
                 <div
-                  class="w-[200px] h-[112px] shrink-0 rounded-lg overflow-hidden"
+                  class="h-[112px] w-[200px] shrink-0 overflow-hidden rounded-lg"
                 >
                   @if (rowData.image) {
                     <img
                       [src]="rowData.image"
-                      class="object-cover w-full h-full"
+                      class="h-full w-full object-cover"
                       alt=""
                     />
                   }
@@ -66,17 +66,17 @@ import { GetCartItemsResponseModelDataInner } from 'libs/openapi/src';
                 <div class="flex flex-col gap-y-1">
                   <div class="flex gap-2">
                     <div
-                      class="px-2 py-1 bg-tmf-gray-5 rounded text-[14px] leading-5"
+                      class="rounded bg-tmf-gray-5 px-2 py-1 text-[14px] leading-5"
                     >
                       {{ rowData.main_category }}
                     </div>
                     <div
-                      class="px-2 py-1 bg-tmf-gray-5 rounded text-[14px] leading-5"
+                      class="rounded bg-tmf-gray-5 px-2 py-1 text-[14px] leading-5"
                     >
                       {{ rowData.sub_category }}
                     </div>
                   </div>
-                  <p class="text-[18px] leading-7 font-bold">
+                  <p class="text-[18px] font-bold leading-7">
                     {{ rowData.name }}
                   </p>
                   <p class="text-[14px] leading-5 text-tmf-gray-3">
@@ -85,23 +85,23 @@ import { GetCartItemsResponseModelDataInner } from 'libs/openapi/src';
                 </div>
               </div>
             </div>
-            <div class="cart-table-body-column text-center w-[15%]">
-              <div class="flex items-center justify-center h-full">
-                <p class="text-[18px] leading-7 text-tmf-gray-2 font-medium">
+            <div class="cart-table-body-column w-[15%] text-center">
+              <div class="flex h-full items-center justify-center">
+                <p class="text-[18px] font-medium leading-7 text-tmf-gray-2">
                   NT$ {{ rowData.price.toLocaleString() }}
                 </p>
               </div>
             </div>
-            <div class="cart-table-body-column text-center w-[15%]">
-              <div class="flex justify-center items-center gap-3 h-full">
+            <div class="cart-table-body-column w-[15%] text-center">
+              <div class="flex h-full items-center justify-center gap-3">
                 <button
                   (click)="addToRemoveStage(rowData)"
-                  class="text-tmf-gray-3 flex justify-center items-center active:scale-90 active:origin-center duration-100"
+                  class="flex items-center justify-center text-tmf-gray-3 duration-100 active:origin-center active:scale-90"
                 >
                   <span class="material-symbols-outlined">delete</span>
                 </button>
                 <button
-                  class="text-tmf-gray-3 flex justify-center items-center active:scale-90 active:origin-center duration-100"
+                  class="flex items-center justify-center text-tmf-gray-3 duration-100 active:origin-center active:scale-90"
                 >
                   <span class="material-symbols-outlined">heart_plus</span>
                 </button>
@@ -124,7 +124,7 @@ import { GetCartItemsResponseModelDataInner } from 'libs/openapi/src';
     <div [formGroup]="form" class="cart-table block lg:hidden">
       <div class="cart-table-header-row">
         <div class="cart-table-header-column shrink-0">
-          <div class="flex items-center gap-2 h-full">
+          <div class="flex h-full items-center gap-2">
             <tmf-checkbox
               (ngModelChange)="toggleSelectAll($event)"
               [formControlName]="CartTableFormKey.SELECTALL"
@@ -136,57 +136,57 @@ import { GetCartItemsResponseModelDataInner } from 'libs/openapi/src';
       @if (dataSource.length && rows.controls.length) {
         @for (rowData of dataSource; track rowData; let index = $index) {
           <div class="cart-table-body-row">
-            <div class="cart-table-body-column w-full flex items-center gap-3">
-              <div class="flex items-center h-full shrink-0">
+            <div class="cart-table-body-column flex w-full items-center gap-3">
+              <div class="flex h-full shrink-0 items-center">
                 <tmf-checkbox
                   [formControl]="rows.controls[index]"
                 ></tmf-checkbox>
               </div>
-              <div class="flex flex-col flex-grow gap-2 items-start">
+              <div class="flex flex-grow flex-col items-start gap-2">
                 <div class="flex gap-2 text-[12px] leading-4">
-                  <div class="px-2 py-1 bg-tmf-gray-5 rounded">
+                  <div class="rounded bg-tmf-gray-5 px-2 py-1">
                     {{ rowData.main_category }}
                   </div>
-                  <div class="px-2 py-1 bg-tmf-gray-5 rounded">
+                  <div class="rounded bg-tmf-gray-5 px-2 py-1">
                     {{ rowData.sub_category }}
                   </div>
                 </div>
                 <div class="flex gap-3">
                   <div
-                    class="w-[120px] h-[68px] md:w-[180px] md:h-[102px] rounded-lg overflow-hidden"
+                    class="h-[68px] w-[120px] overflow-hidden rounded-lg md:h-[102px] md:w-[180px]"
                   >
                     <img
-                      class="w-full h-full object-cover"
+                      class="h-full w-full object-cover"
                       [src]="rowData.image"
                       alt="main image"
                     />
                   </div>
-                  <div class="flex flex-col gap-1 items-start">
+                  <div class="flex flex-col items-start gap-1">
                     <h3
-                      class="text-[16px] leading-6 md:text-[20px] md:leading-87 font-bold text-tmf-gray-2"
+                      class="md:leading-87 text-[16px] font-bold leading-6 text-tmf-gray-2 md:text-[20px]"
                     >
                       {{ rowData.name }}
                     </h3>
                     <p
-                      class="text-[14px] leading-5 md:text-[16px] md:leading-6 text-tmf-gray-3"
+                      class="text-[14px] leading-5 text-tmf-gray-3 md:text-[16px] md:leading-6"
                     >
                       {{ rowData.quantity }}堂課程
                     </p>
                   </div>
                 </div>
-                <div class="flex justify-between w-full">
-                  <p class="text-[18px] leading-7 text-tmf-gray-2 font-medium">
+                <div class="flex w-full justify-between">
+                  <p class="text-[18px] font-medium leading-7 text-tmf-gray-2">
                     NT$ {{ rowData.price }}
                   </p>
-                  <div class="flex justify-center items-center gap-3 h-full">
+                  <div class="flex h-full items-center justify-center gap-3">
                     <button
                       (click)="addToRemoveStage(rowData)"
-                      class="text-tmf-gray-3 flex justify-center items-center active:scale-90 active:origin-center duration-100"
+                      class="flex items-center justify-center text-tmf-gray-3 duration-100 active:origin-center active:scale-90"
                     >
                       <span class="material-symbols-outlined">delete</span>
                     </button>
                     <button
-                      class="text-tmf-gray-3 flex justify-center items-center active:scale-90 active:origin-center duration-100"
+                      class="flex items-center justify-center text-tmf-gray-3 duration-100 active:origin-center active:scale-90"
                     >
                       <span class="material-symbols-outlined">heart_plus</span>
                     </button>
@@ -208,16 +208,16 @@ import { GetCartItemsResponseModelDataInner } from 'libs/openapi/src';
     </div>
 
     <ng-template #empty>
-      <div class="flex flex-col items-center justify-center h-[500px]">
-        <div class="w-[120px] h-[120px] mr-5">
+      <div class="flex h-[500px] flex-col items-center justify-center">
+        <div class="mr-5 h-[120px] w-[120px]">
           <img
-            class="w-full h-full"
+            class="h-full w-full"
             src="./assets/images/cart.png"
             alt="cart"
           />
         </div>
         <p
-          class="text-[18px] leading-7 text-tmf-gray-2 font-bold flex flex-col items-center"
+          class="flex flex-col items-center text-[18px] font-bold leading-7 text-tmf-gray-2"
         >
           <span>購物車是空的 :(</span>
           <span>馬上去瞧瞧其他好課程！</span>
@@ -227,18 +227,18 @@ import { GetCartItemsResponseModelDataInner } from 'libs/openapi/src';
 
     <ng-template #removeMask let-rowData="rowData">
       <div
-        class="w-full h-full absolute z-10 px-6 py-7 left-0 top-0 backdrop-blur bg-white/50"
+        class="absolute left-0 top-0 z-10 h-full w-full bg-white/50 px-6 py-7 backdrop-blur"
       >
-        <div class="flex flex-col justify-center items-end gap-3 h-full">
+        <div class="flex h-full flex-col items-end justify-center gap-3">
           <button
             (click)="remove(rowData)"
-            class="border border-tmf-gray-3 bg-white rounded-lg text-tmf-gray-3 flex text-[16px] leading-6 px-4 py-2"
+            class="flex rounded-lg border border-tmf-gray-3 bg-white px-4 py-2 text-[16px] leading-6 text-tmf-gray-3"
           >
             移除課程
           </button>
           <button
             (click)="cancel(rowData)"
-            class="rounded-lg bg-tmf-orange-1 text-white flex text-[16px] leading-6 px-4 py-2"
+            class="flex rounded-lg bg-tmf-orange-1 px-4 py-2 text-[16px] leading-6 text-white"
           >
             保留課程
           </button>

@@ -3,9 +3,10 @@ import { Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { SignUpForm, SignUpFormKey } from './sign-up.model';
 import { Router } from '@angular/router';
-import { InputComponent } from '@tmf/libs-shared/components';
+import { InputComponent, InputSize } from '@tmf/libs-shared/components';
 import { CustomValidatorError, CustomValidators } from '@tmf/shared';
 import { AuthService } from 'libs/openapi/src';
+import { DialogService } from 'src/app/shared/services/dialog.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -13,28 +14,30 @@ import { AuthService } from 'libs/openapi/src';
   imports: [CommonModule, ReactiveFormsModule, InputComponent],
   template: `
     <div
-      class="w-full h-[100vh] flex justify-center items-center"
+      class="flex h-[100vh] w-full items-center justify-center"
       [formGroup]="form"
     >
       <div
-        class="flex flex-col items-center shadow-[5px_5px_10px_10px_#F7F7F7] w-[80%] min-w-[260px] rounded-md p-10 md:w-auto"
+        class="flex w-[80%] min-w-[260px] flex-col items-center rounded-md p-10 shadow-[5px_5px_10px_10px_#F7F7F7] md:w-auto"
       >
         <h1
-          class="text-tmf-orange-1 text-[26px] md:text-[32px] font-semibold mb-5"
+          class="mb-5 text-[26px] font-semibold text-tmf-orange-1 md:text-[32px]"
         >
           註冊
         </h1>
-        <div class="flex flex-col gap-y-1 w-full md:w-[500px] mb-6">
+        <div class="mb-6 flex w-full flex-col gap-y-1 md:w-[500px]">
           <tmf-input
             placeholder="暱稱"
             [errorMessage]="getErrorMessage(SignUpFormKey.NICK_NAME)"
             [formControlName]="SignUpFormKey.NICK_NAME"
+            [inputSize]="InputSize.Large"
           ></tmf-input>
 
           <tmf-input
             placeholder="信箱"
             [errorMessage]="getErrorMessage(SignUpFormKey.EMAIL)"
             [formControlName]="SignUpFormKey.EMAIL"
+            [inputSize]="InputSize.Large"
           ></tmf-input>
 
           <tmf-input
@@ -42,6 +45,7 @@ import { AuthService } from 'libs/openapi/src';
             type="password"
             [errorMessage]="getErrorMessage(SignUpFormKey.PASSWORD)"
             [formControlName]="SignUpFormKey.PASSWORD"
+            [inputSize]="InputSize.Large"
           ></tmf-input>
 
           <tmf-input
@@ -49,26 +53,27 @@ import { AuthService } from 'libs/openapi/src';
             type="password"
             [errorMessage]="getErrorMessage(SignUpFormKey.CONFIRM_PASSWORD)"
             [formControlName]="SignUpFormKey.CONFIRM_PASSWORD"
+            [inputSize]="InputSize.Large"
           ></tmf-input>
         </div>
         <button
           (click)="register()"
-          class="bg-tmf-orange-2 text-white font-semibold rounded-md w-[200px] py-3 text-center hover:bg-tmf-orange-1 duration-100 mb-6 disabled:bg-tmf-gray-5"
+          class="mb-6 w-[200px] rounded-md bg-tmf-orange-2 py-3 text-center font-semibold text-white duration-100 hover:bg-tmf-orange-1 disabled:bg-tmf-gray-5"
           [disabled]="form.invalid"
         >
           註冊
         </button>
 
-        <div class="flex flex-col gap-y-2 w-[240px] text-center">
-          <p class="text-tmf-gray-3 text-[12px] leading-4">
+        <div class="flex w-[240px] flex-col gap-y-2 text-center">
+          <p class="text-[12px] leading-4 text-tmf-gray-3">
             點擊「註冊」即代表您同意我們的使用<span
-              class="underline cursor-pointer"
+              class="cursor-pointer underline"
               >條款及隱私政策</span
             >
           </p>
-          <a class="text-tmf-gray-3 text-[14px] leading-4"
+          <a class="text-[14px] leading-4 text-tmf-gray-3"
             >已經註冊？<span
-              class=" cursor-pointer font-semibold"
+              class="cursor-pointer font-semibold"
               (click)="navigateToLogin()"
               >登入</span
             ></a
@@ -78,13 +83,13 @@ import { AuthService } from 'libs/openapi/src';
       <ng-template #input let-data="data">
         <div class="relative pb-6">
           <input
-            class="border-b-2 outline-none py-3 focus:border-tmf-orange-1 duration-75 w-full"
+            class="w-full border-b-2 py-3 outline-none duration-75 focus:border-tmf-orange-1"
             [type]="data.type"
             [placeholder]="data.placeholder"
             [formControlName]="data.key"
           />
           @if (getFormControl(data.key)?.touched) {
-            <p class="text-red-500 absolute bottom-0 text-[14px]">
+            <p class="absolute bottom-0 text-[14px] text-red-500">
               {{ getErrorMessage(data.key) }}
             </p>
           }
@@ -98,6 +103,7 @@ export class SignUpComponent {
   private fb = inject(FormBuilder);
   private router = inject(Router);
   private authService = inject(AuthService);
+  private dialogService = inject(DialogService);
 
   form = this.fb.group<SignUpForm>(
     {
@@ -130,6 +136,7 @@ export class SignUpComponent {
   }
 
   readonly SignUpFormKey = SignUpFormKey;
+  readonly InputSize = InputSize;
 
   getFormControl(key: SignUpFormKey) {
     return this.form.get(key);
@@ -165,11 +172,21 @@ export class SignUpComponent {
         }
       })
       .subscribe({
-        next: () => {
-          this.router.navigate(['/login']);
+        next: (res) => {
+          this.dialogService
+            .openAlertDialog({
+              title: '註冊成功',
+              content: res.data.message
+            })
+            .closed.subscribe(() => {
+              this.router.navigate(['/login']);
+            });
         },
         error: (err) => {
-          console.error(err);
+          this.dialogService.openAlertDialog({
+            title: '註冊失敗',
+            content: err.error.message
+          });
         }
       });
   }

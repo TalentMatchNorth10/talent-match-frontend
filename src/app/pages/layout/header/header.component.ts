@@ -17,7 +17,7 @@ import { CartItem, CartTotal, UserMenuItem } from './header.model';
   template: `
     <div class="flex justify-center border-b border-tmf-gray-5">
       <div
-        class="relative flex h-[64px] lg:h-[80px] justify-between items-center w-full px-6 md:px-[32px] lg:max-w-[1280px]"
+        class="relative flex h-[64px] w-full items-center justify-between px-6 md:px-[32px] lg:h-[80px] lg:max-w-[1280px]"
       >
         <!-- 導覽區塊 -->
         <div class="hidden justify-center gap-x-6 lg:flex">
@@ -35,7 +35,7 @@ import { CartItem, CartTotal, UserMenuItem } from './header.model';
             <p class="text-[16px] leading-6">探索</p>
           </div>
         </div>
-        <button class="flex lg:hidden cursor-pointer">
+        <button class="flex cursor-pointer lg:hidden">
           <span class="material-icons-outlined text-[24px] text-tmf-gray-4"
             >menu</span
           >
@@ -43,44 +43,44 @@ import { CartItem, CartTotal, UserMenuItem } from './header.model';
         <!-- Logo圖片 -->
         <img
           (click)="redirect('/home')"
-          class="h-[33px] lg:h-[54px] cursor-pointer lg:left-[50%] lg:-translate-x-[50%] lg:absolute"
+          class="h-[33px] cursor-pointer lg:absolute lg:left-[50%] lg:h-[54px] lg:-translate-x-[50%]"
           src="assets/images/logo.svg"
           alt="logo"
         />
         <!-- 使用者區塊 -->
-        <div class="flex justify-end items-center gap-x-10">
-          <div class="justify-center mt-2 gap-x-4 flex">
+        <div class="flex items-center justify-end gap-x-10">
+          <div class="mt-2 flex justify-center gap-x-4">
             <!-- 公告 -->
             <div class="relative cursor-pointer">
               <button
-                class="p-2 rounded-lg h-[40px] w-[48px] flex justify-center items-center hover:bg-tmf-gray-6 duration-100 active:bg-tmf-gray-5 cursor-pointer"
+                class="flex h-[40px] w-[48px] cursor-pointer items-center justify-center rounded-lg p-2 duration-100 hover:bg-tmf-gray-6 active:bg-tmf-gray-5"
               >
                 <span class="material-icons-outlined">notifications</span>
                 <div
-                  class="rounded-full w-[6px] h-[6px] bg-tmf-orange-1 absolute right-2 top-2"
+                  class="absolute right-2 top-2 h-[6px] w-[6px] rounded-full bg-tmf-orange-1"
                 ></div>
               </button>
             </div>
             <!-- 購物車 -->
-            <div class="relative group">
+            <div class="group relative">
               <button
-                class="p-2 rounded-lg h-[40px] w-[48px] flex justify-center items-center hover:bg-tmf-gray-6 duration-100 active:bg-tmf-gray-5 cursor-pointer"
+                class="flex h-[40px] w-[48px] cursor-pointer items-center justify-center rounded-lg p-2 duration-100 hover:bg-tmf-gray-6 active:bg-tmf-gray-5"
               >
                 <span class="material-icons-outlined cursor-pointer"
                   >shopping_cart</span
                 >
                 <div
-                  class="rounded-full w-4 h-4 bg-tmf-orange-1 absolute right-2 top-1 border-2  border-white flex justify-center items-center text-white text-[10px] font-semibold"
+                  class="absolute right-2 top-1 flex h-4 w-4 items-center justify-center rounded-full border-2 border-white bg-tmf-orange-1 text-[10px] font-semibold text-white"
                 >
                   1
                 </div>
               </button>
               <!-- 購物車下拉 -->
               <div
-                class="absolute top-full bg-white right-0 lg:left-0 pt-[8px] lg:pt-[16px] hidden group-hover:block"
+                class="absolute right-0 top-full hidden bg-white pt-[8px] group-hover:block lg:left-0 lg:pt-[16px]"
               >
                 <ul
-                  class="py-3 w-[320px] shadow-lg rounded-b-[12px] border-t border-tmf-purple bg-white"
+                  class="w-[320px] rounded-b-[12px] border-t border-tmf-purple bg-white py-3 shadow-lg"
                 >
                   @for (
                     cartItem of cartList;
@@ -88,34 +88,34 @@ import { CartItem, CartTotal, UserMenuItem } from './header.model';
                     let lastCartItem = $last
                   ) {
                     <li
-                      class="w-full px-[16px] min-h-[92px] border-b border-tmf-gray-5 py-2 flex items-start justify-start gap-x-3 cursor-pointer bg-white hover:bg-tmf-orange-3 active:bg-tmf-orange-2 duration-100"
+                      class="flex min-h-[92px] w-full cursor-pointer items-start justify-start gap-x-3 border-b border-tmf-gray-5 bg-white px-[16px] py-2 duration-100 hover:bg-tmf-orange-3 active:bg-tmf-orange-2"
                     >
-                      <div class="w-[84px] h-[48px] bg-tmf-gray-3">
+                      <div class="h-[48px] w-[84px] bg-tmf-gray-3">
                         @if (cartItem.image) {
-                          <img class="w-full h-full" src="" alt="" />
+                          <img class="h-full w-full" src="" alt="" />
                         }
                       </div>
                       <div class="flex flex-col">
                         <!-- 標籤列 -->
-                        <div class="flex flex-wrap gap-2 mb-1">
+                        <div class="mb-1 flex flex-wrap gap-2">
                           <div
-                            class="h-[24px] text-[12px] leading-4 p-1 bg-tmf-gray-5 rounded flex items-center justify-center"
+                            class="flex h-[24px] items-center justify-center rounded bg-tmf-gray-5 p-1 text-[12px] leading-4"
                           >
                             {{ cartItem.main_category }}
                           </div>
                           <div
-                            class="h-[24px] text-[12px] leading-4 p-1 bg-tmf-gray-5 rounded flex items-center justify-center"
+                            class="flex h-[24px] items-center justify-center rounded bg-tmf-gray-5 p-1 text-[12px] leading-4"
                           >
                             {{ cartItem.sub_category }}
                           </div>
                         </div>
                         <!-- 課程名稱 -->
-                        <p class="text-[14px] leading-5 font-bold mb-2">
+                        <p class="mb-2 text-[14px] font-bold leading-5">
                           {{ cartItem.name }}
                         </p>
                         <!-- 價格 -->
                         <div
-                          class="flex justify-between items-center text-[14px] leading-5"
+                          class="flex items-center justify-between text-[14px] leading-5"
                         >
                           <p class="text-tmf-gray-3">
                             {{ cartItem.quantity }}堂課程
@@ -126,18 +126,18 @@ import { CartItem, CartTotal, UserMenuItem } from './header.model';
                     </li>
                   }
                   <li
-                    class="flex flex-col items-start w-full px-[16px] min-h-[84px] py-3 bg-white"
+                    class="flex min-h-[84px] w-full flex-col items-start bg-white px-[16px] py-3"
                   >
                     <p class="text-[14px] leading-5 text-tmf-gray-3">
                       共計 {{ cartTotal.courseCount }} 項課程
                     </p>
                     <div
-                      class="w-full flex justify-between items-center text-[16px] leading-6"
+                      class="flex w-full items-center justify-between text-[16px] leading-6"
                     >
                       <p>總計 NT$ {{ cartTotal.total }}</p>
                       <button
                         (click)="redirect('/cart')"
-                        class="cursor-pointer  px-4 py-2 text-white font-bold bg-tmf-orange-1 rounded-lg"
+                        class="cursor-pointer rounded-lg bg-tmf-orange-1 px-4 py-2 font-bold text-white"
                       >
                         前往結帳
                       </button>
@@ -150,9 +150,9 @@ import { CartItem, CartTotal, UserMenuItem } from './header.model';
 
           <!-- 未登入顯示 -->
           @if (!user) {
-            <div class="justify-center items-center gap-x-4 hidden lg:flex">
+            <div class="hidden items-center justify-center gap-x-4 lg:flex">
               <button
-                class="flex w-[120px] h-[40px] justify-center items-center text-tmf-orange-1 border-2 border-tmf-orange-1 rounded-lg gap-x-1 hover:bg-tmf-orange-1 hover:text-white duration-100 active:bg-tmf-orange-2 active:text-white"
+                class="flex h-[40px] w-[120px] items-center justify-center gap-x-1 rounded-lg border-2 border-tmf-orange-1 text-tmf-orange-1 duration-100 hover:bg-tmf-orange-1 hover:text-white active:bg-tmf-orange-2 active:text-white"
               >
                 <span class="material-icons-outlined !text-[18px]"
                   >handshake</span
@@ -161,7 +161,7 @@ import { CartItem, CartTotal, UserMenuItem } from './header.model';
               </button>
               <button
                 (click)="redirect('/login')"
-                class="flex w-[120px] h-[40px] justify-center items-center bg-tmf-orange-1 text-white rounded-lg gap-x-1 hover:bg-tmf-orange-2 duration-100 active:bg-tmf-orange-1"
+                class="flex h-[40px] w-[120px] items-center justify-center gap-x-1 rounded-lg bg-tmf-orange-1 text-white duration-100 hover:bg-tmf-orange-2 active:bg-tmf-orange-1"
               >
                 <span class="material-icons-outlined !text-[18px]"
                   >handshake</span
@@ -172,26 +172,26 @@ import { CartItem, CartTotal, UserMenuItem } from './header.model';
           } @else {
             <!-- 登入顯示 -->
             <div
-              class="relative flex justify-center items-center gap-x-2 group"
+              class="group relative flex items-center justify-center gap-x-2"
             >
               <!-- 使用者頭像 -->
               <div
-                class="rounded-full overflow-hidden shrink-0 w-[44px] h-[44px] bg-tmf-gray-5"
+                class="h-[44px] w-[44px] shrink-0 overflow-hidden rounded-full bg-tmf-gray-5"
               >
                 @if (user.avator_image) {
                   <img [src]="user.avator_image" alt="avator_image" />
                 }
               </div>
               <!-- 使用者名稱 -->
-              <p class="text-[18px] leading-7 font-medium hidden lg:block">
+              <p class="hidden text-[18px] font-medium leading-7 lg:block">
                 {{ user.nick_name }}
               </p>
               <!-- 使用者選單 -->
               <div
-                class="absolute top-full right-0 lg:left-0 pt-[10px] lg:pt-[18px] bg-white hidden group-hover:block"
+                class="absolute right-0 top-full hidden bg-white pt-[10px] group-hover:block lg:left-0 lg:pt-[18px]"
               >
                 <ul
-                  class="py-3 w-[200px] shadow-lg rounded-b-[12px] border-t border-tmf-purple bg-white"
+                  class="w-[200px] rounded-b-[12px] border-t border-tmf-purple bg-white py-3 shadow-lg"
                 >
                   @for (
                     menuGroup of userMenuList;
@@ -206,10 +206,10 @@ import { CartItem, CartTotal, UserMenuItem } from './header.model';
                       <li
                         (click)="handleMenuClick(menuItem)"
                         [ngClass]="{
-                          'border-b border-tmf-gray-5 pb-2 mb-2':
+                          'mb-2 border-b border-tmf-gray-5 pb-2':
                             lastItem && !lastGroup
                         }"
-                        class="w-full px-[26px] h-[48px] flex items-center justify-start gap-x-2 cursor-pointer hover:bg-tmf-orange-3 active:bg-tmf-orange-2 duration-100"
+                        class="flex h-[48px] w-full cursor-pointer items-center justify-start gap-x-2 px-[26px] duration-100 hover:bg-tmf-orange-3 active:bg-tmf-orange-2"
                       >
                         <span class="material-icons-outlined text-tmf-gray-4">{{
                           menuItem.icon
