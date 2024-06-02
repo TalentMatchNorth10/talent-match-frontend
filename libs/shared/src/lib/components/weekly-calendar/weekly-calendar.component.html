@@ -1,0 +1,41 @@
+<div>
+  <table class="w-[640px] xl:w-[820px] box-content border border-tmf-orange-1">
+    <thead class="bg-tmf-orange-4">
+      <tr class="border-b border-tmf-orange-1">
+        <th class="w-[59px] h-14 xl:w-[67px] xl:h-16"></th>
+        @for (day of schedule; track day) {
+          <th class="w-[83px] py-2 px-3 xl:px-0">
+            <p class="text-sm font-bold text-tmf-gray-1 xl:text-lg">{{ day.week }}</p>
+            <p class="text-sm font-bold text-tmf-gray-4">
+              {{ day.date | date: 'MM/dd' }}
+            </p>
+          </th>
+        }
+      </tr>
+    </thead>
+    <tbody>
+      @for (
+        slot of preprocessedSchedule;
+        let index = $index;
+        track index;
+        let first = $first;
+        let last = $last
+      ) {
+        <tr class="border-b border-dashed border-tmf-orange-1">
+          <td class="box-border bg-tmf-orange-4 py-2.5">
+            <div class="flex flex-col justify-center items-center">
+              <p class="text-base font-bold">{{ index + 1 }}</p>
+              <p class="text-sm font-bold text-tmf-orange-1">{{ slot.time }}</p>
+            </div>
+          </td>
+          <td *ngFor="let status of slot.statuses">
+            <tmf-reserve-tag
+              class="px-2 pt-2 pb-[7px]"
+              [status]="status.status"
+            ></tmf-reserve-tag>
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>

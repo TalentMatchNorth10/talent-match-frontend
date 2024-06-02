@@ -1,0 +1,117 @@
+<div class="w-80 bg-white shadow-lg rounded-lg">
+  <div class="flex justify-between items-center p-4 border-b">
+    <span
+      class="material-icons-outlined text-lg text-tmf-gray-1 cursor-pointer"
+      (click)="previousMonth()"
+    >
+      arrow_back</span
+    >
+    <div class="text-lg font-bold">
+      {{ currentYear() + ' 年 ' + (currentMonth() + 1) + ' 月 ' }}
+    </div>
+    <span
+      class="material-icons-outlined text-lg text-tmf-gray-1 cursor-pointer"
+      (click)="nextMonth()"
+    >
+      arrow_forward</span
+    >
+  </div>
+  <div class="p-4">
+    <div class="grid grid-cols-7 text-center text-gray-700 mb-4">
+      <div>週日</div>
+      <div>週一</div>
+      <div>週二</div>
+      <div>週三</div>
+      <div>週四</div>
+      <div>週五</div>
+      <div>週六</div>
+    </div>
+    <div class="grid grid-cols-7 text-center text-tmf-gray-1">
+      @for (day of days(); track $index) {
+        <div (click)="selectDate(day)">
+          <div
+            class="cursor-pointer p-1 rounded-md"
+            [ngClass]="{
+              'text-tmf-gray-3': !day.currentMonth,
+              'bg-tmf-orange-1 text-white':
+                day.year === currentDate()?.year &&
+                day.month === currentDate()?.month &&
+                day.date === currentDate()?.date,
+              'text-tmf-gray-5 cursor-not-allowed': day.disabled,
+              'hover:bg-tmf-orange-1 rounded-md hover:text-white': !day.disabled
+            }"
+          >
+            {{ day.date }}
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+  <div class="p-4 border-t">
+    <div class="grid grid-cols-3 text-center text-gray-700 mb-4">
+      <div>早上</div>
+      <div>下午</div>
+      <div>晚上</div>
+    </div>
+    <div class="grid grid-cols-3 text-center text-gray-700">
+      <div class="flex flex-col gap-2">
+        @for (time of morningTimes; track $index) {
+          <div
+            class="cursor-pointer rounded-md hover:bg-tmf-orange-1 hover:text-white p-1"
+            [ngClass]="{
+              'bg-tmf-orange-1 text-white': time === currentTime()
+            }"
+            (click)="selectTime(time)"
+          >
+            {{ time }}
+          </div>
+        }
+      </div>
+      <div class="flex flex-col gap-2">
+        @for (time of afternoonTimes; track $index) {
+          <div
+            class="cursor-pointer rounded-md hover:bg-tmf-orange-1 hover:text-white p-1"
+            [ngClass]="{
+              'bg-tmf-orange-1 text-white': time === currentTime()
+            }"
+            (click)="selectTime(time)"
+          >
+            {{ time }}
+          </div>
+        }
+      </div>
+      <div class="flex flex-col gap-2">
+        @for (time of eveningTimes; track $index) {
+          <div
+            class="cursor-pointer rounded-md hover:bg-tmf-orange-1 hover:text-white p-1"
+            [ngClass]="{
+              'bg-tmf-orange-1 text-white': time === currentTime()
+            }"
+            (click)="selectTime(time)"
+          >
+            {{ time }}
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+  <div class="p-4 flex gap-4 justify-center items-center">
+    <button
+      class="bg-tmf-gray-5 text-white px-4 py-2 rounded-lg"
+      (click)="reset()"
+    >
+      重設
+    </button>
+    <button
+      class="text-white px-4 py-2 rounded-lg"
+      [ngClass]="{
+        'bg-tmf-orange-1 cursor-pointer': !btnDisabled(),
+        'cursor-not-allowed bg-tmf-gray-5 ': btnDisabled()
+      }"
+      [disabled]="btnDisabled()"
+      (click)="bookNow()"
+    >
+      立即預約
+    </button>
+  </div>
+</div>

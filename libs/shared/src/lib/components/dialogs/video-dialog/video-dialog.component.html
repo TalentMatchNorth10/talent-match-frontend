@@ -1,0 +1,88 @@
+<div
+  class="relative w-[375px] h-screen flex justify-between items-center xl:w-[472px] xl:h-[712px]"
+>
+  <div
+    class="relative w-full h-full overflow-hidden shadow-2xl cursor-pointer xl:w-[25rem] xl:rounded-xl"
+  >
+    <div
+      class="text-sm font-bold bg-tmf-gray-1 text-tmf-yellow-1 px-3 py-1 rounded-lg absolute top-3 left-3"
+    >
+      烹飪料理
+    </div>
+    <video
+      #videoPlayer
+      class="w-full h-full object-cover"
+      [src]="videoUrl"
+      (timeupdate)="updateProgress()"
+      (loadedmetadata)="initializeVideo()"
+    ></video>
+    <div class="absolute bottom-0 w-full h-[168px] mask">
+      <div class="h-full flex items-end">
+        <div class="w-full flex flex-col gap-4 px-4 pb-6">
+          <div class="flex items-center gap-2">
+            <img
+              class="w-6 h-6 rounded-full border border-tmf-gray-6"
+              src="https://fakeimg.pl/24/"
+              alt=""
+            />
+            <p class="text-base font-medium text-white">文文</p>
+          </div>
+          <p class="text-base text-white">
+            只要五分鐘，讓您彷彿擁有專業主廚的刀工！
+          </p>
+        </div>
+      </div>
+      @if (isPlaying()) {
+        <div class="progress-container" (click)="setProgress($event)">
+          <div
+            class="h-full w-0 bg-tmf-orange-1"
+            [style.width.%]="progress"
+          ></div>
+        </div>
+      }
+    </div>
+  </div>
+  <div class="absolute bottom-0 right-0 h-full">
+    <div class="flex flex-col justify-between items-end h-full">
+      <span
+        class="text-4xl leading-9 text-white material-icons cursor-pointer xl:text-[2.5rem] xl:leading-[2.5rem]"
+        (click)="close()"
+        >close</span
+      >
+      <div class="flex flex-col gap-6 pb-[88px] pr-1 xl:p-0">
+        <div
+          class="flex justify-center items-center w-10 h-10 rounded-full bg-white text-tmf-orange-1 cursor-pointer xl:w-12 xl:h-12"
+        >
+          <span
+            class="text-xl leading-5 material-symbols-outlined xl:text-[24px] xl:leading-6"
+          >
+            arrow_right_alt
+          </span>
+        </div>
+        <div
+          class="flex justify-center items-center w-10 h-10 rounded-full bg-white text-tmf-orange-1 cursor-pointer xl:w-12 xl:h-12"
+        >
+          <span
+            class="text-xl leading-5 material-symbols-outlined xl:text-[24px] xl:leading-6"
+          >
+            share
+          </span>
+        </div>
+        <img
+          class="w-10 h-10 rounded-full border bg-tmf-gray-6 xl:w-12 xl:h-12"
+          src="https://fakeimg.pl/48/"
+          alt=""
+        />
+        <div
+          class="flex justify-center items-center w-10 h-10 rounded-full bg-white text-tmf-orange-1 cursor-pointer xl:w-12 xl:h-12"
+        >
+          <span
+            class="text-xl leading-5 material-symbols-outlined xl:text-[24px] xl:leading-6"
+          >
+            bookmark
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

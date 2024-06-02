@@ -34,4 +34,12 @@ export class DialogService {
       data
     }).closed as Observable<boolean>;
   }
+
+  openVideoDialog<T, D>(component: ComponentType<T>, dialogData?: D) {
+    return this.dialog.open(component, {
+      autoFocus: 'none',
+      backdropClass: 'video-mask',
+      data: dialogData
+    });
+  }
 }

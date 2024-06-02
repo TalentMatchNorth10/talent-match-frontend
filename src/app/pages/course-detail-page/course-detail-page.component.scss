@@ -1,0 +1,28 @@
+/* Custom scrollbar styles */
+.custom-scrollbar::-webkit-scrollbar {
+  height: 8px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  @apply bg-tmf-gray-6;
+  border-radius: 50px;
+}
+
+.custom-shadow {
+  box-shadow: 0px -10px 15px -3px #0000001a;
+}
+
+.active {
+  @apply text-tmf-orange-1 border-b-4 border-tmf-orange-1;
+}
+
+.custom-radio {
+  @apply flex justify-between items-center px-4 py-[0.6875rem] border border-tmf-gray-5 rounded-xl bg-white cursor-pointer;
+}
+
+.custom-radio:has(input[type='radio']:checked) {
+  @apply border-tmf-orange-1;
+}
+
+.custom-radio:has(input[type='radio']:checked) > span {
+  @apply visible;
+}
