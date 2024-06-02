@@ -3,6 +3,7 @@ import { DialogRef, DIALOG_DATA } from '@angular/cdk/dialog';
 import { VideoCardData } from '../../short-video-card/video-card.interface';
 import { DomSanitizer } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'tmf-video',
@@ -15,6 +16,7 @@ export class VideoDialogComponent {
   constructor(
     private sanitizer: DomSanitizer,
     public dialogRef: DialogRef<VideoDialogComponent>,
+    protected readonly router: Router,
     @Inject(DIALOG_DATA) public data: VideoCardData
   ) {}
 
@@ -40,5 +42,11 @@ export class VideoDialogComponent {
 
     // 如果匹配成功，返回影片 ID；否則返回 null
     return match ? match[1] : null;
+  }
+
+  public navigateToCoursePage(data: VideoCardData): void {
+    // console.log(data.course_id)
+    this.router.navigate([`course-detail/${data.course_id}`]);
+    this.close();
   }
 }

@@ -51,6 +51,7 @@
     <!-- <button class="text-white hover:text-gray-900"></button> -->
     <div class="flex flex-col gap-3">
       <img
+        (click)="navigateToCoursePage(data)"
         class="w-10 h-10 rounded-full"
         [src]="'https://dummyimage.com/636x651'"
         alt="Avatar"
@@ -62,7 +63,10 @@
           class="w-6 h-6 rounded-full"
         />
       </button> -->
-      <button class="p-2 bg-white rounded-full text-orange-500">
+      <button
+        class="p-2 bg-white rounded-full text-orange-500"
+        (click)="navigateToCoursePage(data)"
+      >
         <!-- Arrow Icon -->
         <svg
           xmlns="http://www.w3.org/2000/svg"
