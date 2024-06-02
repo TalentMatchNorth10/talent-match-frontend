@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
   template: `
     @if (data) {
       <div
-        class="w-[259px] md:w-[302px] rounded-xl overflow-hidden bg-white shadow-lg relative group"
+        class="m-auto w-[259px] md:w-[302px] rounded-xl overflow-hidden bg-white shadow-lg relative group"
       >
         <div class="w-full h-[180px] bg-tmf-gray-4">
           @if (data.avatar) {
@@ -132,14 +132,11 @@ import { Router } from '@angular/router';
 export class CardComponent {
   @Input() data!: CardData;
   @Input() hoverEffect: boolean = true;
-  
-  constructor(
-    protected readonly router: Router
-  
-  ){}
 
-  navigateToCoursePage(data: CardData):void{
+  constructor(protected readonly router: Router) {}
+
+  navigateToCoursePage(data: CardData): void {
     // console.log(data.course_id)
-    this.router.navigate([`course-detail/${data.course_id}`])
+    this.router.navigate([`course-detail/${data.course_id}`]);
   }
 }
