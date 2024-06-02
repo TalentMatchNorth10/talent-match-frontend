@@ -5,3 +5,7 @@
 
 @import './scss/base';
 @import '@angular/cdk/overlay-prebuilt.css';
+
+.video-mask {
+  @apply bg-tmf-gray-1;
+}

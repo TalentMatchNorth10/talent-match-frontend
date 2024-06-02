@@ -1,0 +1,11 @@
+:host {
+  display: block;
+}
+
+table > thead > tr > th {
+  @apply p-0;
+}
+
+table > tbody > tr > td {
+  @apply p-0;
+}
