@@ -34,7 +34,6 @@ import { WeeklyCalendarComponent } from '@tmf/libs-shared/components/weekly-cale
   templateUrl: './course-detail-page.component.html',
   styleUrl: './course-detail-page.component.scss'
 })
-
 export default class CourseDetailPageComponent {
   @ViewChildren('section') sections!: QueryList<ElementRef>;
   activeSection: WritableSignal<string> = signal('sectionA');
