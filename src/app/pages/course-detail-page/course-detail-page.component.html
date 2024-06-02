@@ -1,1 +1,494 @@
-<p>course-detail-page works!</p>
+<div class="relative">
+  <div
+    class="relative w-full h-[538px] bg-[url('./assets/images/guitar-course.png')] bg-center bg-no-repeat bg-cover xl:h-[575px]"
+  >
+    <div
+      class="w-full h-full px-3 pt-6 pb-12 bg-[#10101099] backdrop-blur-[8px] xl:p-0 xl:flex xl:items-center"
+    >
+      <div
+        class="flex flex-col gap-6 xl:w-[1280px] xl:container xl:flex-row xl:mx-auto xl:justify-between"
+      >
+        <!-- 課程縮圖 -->
+        <div
+          class="w-[349px] h-[196px] box-content rounded-xl overflow-hidden border border-tmf-gray-4 shadow-lg xl:w-[737px] xl:h-[415px]"
+        >
+          <img
+            class="w-full h-full"
+            src="./assets/images/guitar-course.png"
+            alt=""
+          />
+        </div>
+        <div class="flex flex-col gap-3 xl:flex-grow xl:py-3">
+          <!-- 標籤 -->
+          <div class="flex items-center gap-3 xl:pb-6">
+            <div
+              class="inline-block p-1 text-tmf-yellow-1 rounded text-xs font-bold bg-[#180000] xl:p-2 xl:text-sm"
+            >
+              音樂
+            </div>
+            <div
+              class="inline-block p-1 text-tmf-yellow-1 rounded text-xs font-bold bg-[#180000] xl:p-2 xl:text-sm"
+            >
+              吉他
+            </div>
+          </div>
+          <!-- 老師頭貼、名字 -->
+          <div class="flex items-center gap-2">
+            <img
+              class="w-8 h-8 rounded-full border border-tmf-gray-6"
+              src="https://fakeimg.pl/32/"
+              alt=""
+            />
+            <p class="text-base font-medium text-white">Eric Clapton</p>
+          </div>
+          <!-- 課程名稱 -->
+          <h1 class="text-lg font-bold text-white xl:text-3xl">
+            從零開始學吉他：初學者入門指南
+          </h1>
+          <!-- 地區、評分 -->
+          <div class="flex items-center gap-3">
+            <div
+              class="flex justify-center items-center gap-1 text-white xl:pr-[0.6875rem] xl:border-r xl:border-tmf-gray-4"
+            >
+              <span class="text-xl leading-5 material-symbols-outlined">
+                pin_drop
+              </span>
+              <p>台北市 永和區</p>
+            </div>
+            <div
+              class="flex justify-center items-center h-full gap-1 text-white xl:pr-[0.6875rem] xl:border-r xl:border-tmf-gray-4"
+            >
+              <tmf-star-rating [rating]="5"></tmf-star-rating>
+              <p class="text-sm font-medium">5.0</p>
+              <p class="text-sm font-medium">(23)</p>
+            </div>
+            <div class="hidden items-center gap-1 text-white xl:flex">
+              <span class="text-xl leading-5 material-symbols-outlined">
+                face
+              </span>
+              <p>120 人學習</p>
+            </div>
+          </div>
+          <!-- 學習人數 -->
+          <div
+            class="flex justify-start items-center gap-1 text-white xl:hidden"
+          >
+            <span class="text-xl leading-5 material-symbols-outlined">
+              face
+            </span>
+            <p>120 人學習</p>
+          </div>
+          <!-- 按鈕 -->
+          <div
+            class="flex items-center gap-3 pt-6 xl:flex-grow xl:items-end xl:pt-0"
+          >
+            <button
+              class="py-2 px-4 gap-1 text-tmf-orange-1 bg-white rounded-lg border border-white"
+            >
+              <div class="flex justify-center items-center">
+                <span class="text-xl leading-5 material-symbols-outlined">
+                  heart_plus
+                </span>
+                <p class="text-sm">收藏課程</p>
+              </div>
+            </button>
+
+            <button
+              class="py-2 px-4 gap-1 text-white bg-transparent rounded-lg border border-white"
+            >
+              <div class="flex justify-center items-center">
+                <span class="text-xl leading-5 material-symbols-outlined">
+                  share
+                </span>
+                <p class="text-sm">分享課程</p>
+              </div>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="w-full h-0.5 bg-gradient-to-r from-[#F7F7F7] via-[#8D0099] to-[#F7F7F7]"
+    ></div>
+  </div>
+  <!-- nav -->
+  <nav
+    class="sticky top-0 px-3 pt-3 pb-4 border-b border-tmf-gray-5 bg-white z-50"
+  >
+    <ul
+      class="flex items-center justify-between gap-[1.875rem] text-base text-tmf-gray-3 xl:container xl:mx-auto xl:w-[1280px] xl:justify-start xl:gap-8"
+    >
+      <li>
+        <a
+          class="py-3"
+          [ngClass]="{ active: activeSection() === 'sectionA' }"
+          routerLink="/course-detail/Test"
+          fragment="sectionA"
+          >課程介紹</a
+        >
+      </li>
+      <li>
+        <a
+          class="py-3"
+          [ngClass]="{ active: activeSection() === 'sectionB' }"
+          routerLink="/course-detail/Test"
+          fragment="sectionB"
+          >授課時間</a
+        >
+      </li>
+      <li>
+        <a
+          class="py-3"
+          [ngClass]="{ active: activeSection() === 'sectionC' }"
+          routerLink="/course-detail/Test"
+          fragment="sectionC"
+          >學生評論</a
+        >
+      </li>
+      <li>
+        <a
+          class="py-3"
+          [ngClass]="{ active: activeSection() === 'sectionD' }"
+          routerLink="/course-detail/Test"
+          fragment="sectionD"
+          >教師履歷</a
+        >
+      </li>
+    </ul>
+  </nav>
+  <div
+    class="pt-6 pb-12 px-3 flex flex-col gap-6 xl:w-[1280px] xl:container xl:mx-auto xl:flex-row xl:pl-0 xl:pt-10 xl:pb-20"
+  >
+    <div class="flex flex-col gap-12 mb-6 xl:w-[845px] xl:pr-6">
+      <!-- 課程介紹 -->
+      <section id="sectionA" #section>
+        <div class="flex justify-start items-center gap-2 mb-4">
+          <img
+            class="w-5 h-5 xl:w-6 xl:h-6"
+            src="assets/images/cart-collect.png"
+            alt=""
+          />
+          <h2 class="text-xl font-bold xl:text-2xl">課程介紹</h2>
+        </div>
+        <p class="text-sm text-tmf-gray-2 mb-4 xl:text-base">
+          這是一個針對初學者或有一定基礎的學生設計的木吉他家教課程。課程旨在提供一個融合理論與實踐的學習環境，讓學生能夠全面地掌握木吉他演奏的基本技巧和音樂知識。<br /><br />
+          課程將從基礎開始，介紹木吉他的構造和功能,讓學生了解木吉他的不同部分及其作用。隨後,課程將重點放在基本的彈奏技巧上，包括手指的姿勢、和弦的彈奏和選擇等。透過簡單易懂的示範和練習，學生將逐步培養出良好的演奏習慣和技巧。<br /><br />
+          除了技巧訓練，課程還將注重音樂理論的學習。學生將學習基本的樂理知識，包括音階、和弦結構、節奏等，並將這些知識應用到實際的演奏中。通過理論與實踐的結合，學生將更深入地理解音樂，並能夠更靈活地運用在演奏中。<br />
+          課程還將根據學生的興趣和目標,量身定制教學內容。無論是流行音樂、古典音樂還是爵士樂，學生都將有機會學習到自己喜愛的音樂風格。
+        </p>
+        <!-- 影片區塊 -->
+        <div
+          class="flex gap-[0.9375rem] justify-between items-center w-full pb-8 overflow-x-auto custom-scrollbar"
+        >
+          <tmf-video-card></tmf-video-card>
+          <tmf-video-card></tmf-video-card>
+          <tmf-video-card></tmf-video-card>
+        </div>
+      </section>
+
+      <!-- 授課時間 -->
+      <section id="sectionB" #section>
+        <div class="flex justify-start items-center gap-2 mb-4">
+          <img
+            class="w-5 h-5 xl:w-6 xl:h-6"
+            src="assets/images/cart-collect.png"
+            alt=""
+          />
+          <h2 class="text-xl font-bold xl:text-2xl">授課時間</h2>
+        </div>
+        <div class="w-full pb-8 overflow-x-auto custom-scrollbar">
+          <tmf-weekly-calendar></tmf-weekly-calendar>
+        </div>
+      </section>
+
+      <!-- 學生評論 -->
+      <section id="sectionC" #section>
+        <div class="flex justify-between mb-4">
+          <div class="flex justify-start items-center gap-2 h-7">
+            <img
+              class="w-5 h-5 xl:w-6 xl:h-6"
+              src="assets/images/cart-collect.png"
+              alt=""
+            />
+            <h2 class="text-xl font-bold xl:text-2xl">學生評論</h2>
+          </div>
+          <button
+            class="py-[0.4375rem] pl-4 pr-2 border border-tmf-orange-1 rounded-lg bg-white"
+          >
+            <div class="flex gap-1 items-center text-tmf-orange-1">
+              <span class="text-sm font-normal">顯示所有評價</span>
+              <span class="text-xl leading-5 material-icons-outlined">
+                chevron_right
+              </span>
+            </div>
+          </button>
+        </div>
+        <!-- 評論區 -->
+        <div class="flex flex-col gap-4">
+          <!-- 評論卡片 -->
+          <div
+            class="flex flex-col gap-3 border p-3 border-tmf-gray-5 rounded-xl bg-white xl:p-6 xl:gap-6"
+          >
+            <div class="flex justify-between items-center">
+              <div class="flex items-center gap-2">
+                <img
+                  class="w-12 h-12 rounded-full border border-tmf-gray-6"
+                  src="https://fakeimg.pl/48/"
+                  alt=""
+                />
+                <div>
+                  <p class="text-base font-medium text-tmf-gray-2 mb-1">匿名</p>
+                  <tmf-star-rating [rating]="5"></tmf-star-rating>
+                </div>
+              </div>
+              <div
+                class="text-sm font-medium text-tmf-gray-4 hidden xl:block xl:self-start"
+              >
+                2024-03-01
+              </div>
+            </div>
+            <div>
+              <p class="text-lg font-bold text-tmf-gray-2 mb-3">
+                清楚明白！值得購買的優秀課程
+              </p>
+              <p class="text-sm text-tmf-gray-3">
+                豐富的範例，精細的解說，尤其老師不嫌麻煩線上回答，很有用且精實，沒太多廢話。雖然課程時間不長，但每個都是精華，需要反覆思考！
+              </p>
+            </div>
+            <div class="text-sm font-medium text-tmf-gray-4 xl:hidden">
+              2024-03-01
+            </div>
+          </div>
+          <!-- 評論卡片 -->
+          <div
+            class="flex flex-col gap-3 border p-3 border-tmf-gray-5 rounded-xl bg-white xl:p-6 xl:gap-6"
+          >
+            <div class="flex justify-between items-center">
+              <div class="flex items-center gap-2">
+                <img
+                  class="w-12 h-12 rounded-full border border-tmf-gray-6"
+                  src="https://fakeimg.pl/48/"
+                  alt=""
+                />
+                <div>
+                  <p class="text-base font-medium text-tmf-gray-2 mb-1">
+                    王文則
+                  </p>
+                  <tmf-star-rating [rating]="5"></tmf-star-rating>
+                </div>
+              </div>
+              <div
+                class="text-sm font-medium text-tmf-gray-4 hidden xl:block xl:self-start"
+              >
+                2024-01-01
+              </div>
+            </div>
+            <div>
+              <p class="text-lg font-bold text-tmf-gray-2 mb-3">老師非常專業</p>
+              <p class="text-sm text-tmf-gray-3">
+                這位吉他老師非常專業,教學方法簡單易懂,深受學生歡迎。他擁有豐富的音樂知識和演奏技巧,能夠有效地指導學生提高吉他技能。他的耐心和鼓勵讓學習過程變得輕鬆愉快,讓我對學習吉他充滿信心。
+              </p>
+            </div>
+            <div class="text-sm font-medium text-tmf-gray-4 xl:hidden">
+              2024-01-01
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 教師履歷 -->
+      <section id="sectionD" #section>
+        <div class="flex justify-start items-center gap-2 mb-4">
+          <img
+            class="w-5 h-5 xl:w-6 xl:h-6"
+            src="assets/images/cart-collect.png"
+            alt=""
+          />
+          <h2 class="text-xl font-bold xl:text-2xl">教師履歷</h2>
+        </div>
+        <div
+          class="flex flex-col gap-3 p-3 border rounded-xl border-tmf-orange-2 bg-white xl:p-6 xl:gap-6"
+        >
+          <div class="flex items-center gap-2 xl:gap-6">
+            <img
+              class="w-16 h-16 rounded-full border border-tmf-gray-6 xl:w-20 xl:h-20"
+              src="https://fakeimg.pl/64/"
+              alt=""
+            />
+            <div>
+              <p
+                class="text-lg font-medium text-tmf-gray-2 xl:text-2xl xl:mb-1"
+              >
+                Eric Clapton
+              </p>
+              <p class="text-sm font-medium text-tmf-gray-4">
+                累積完成 120 堂課程
+              </p>
+            </div>
+          </div>
+          <!-- 自介 -->
+          <p class="text-base text-tmf-gray-2">
+            大家好，我是一位自詡為吉他界的「音樂魔術師」。從小就夢想著用吉他征服世界，結果發現世界沒那麼容易征服，於是決定先從...
+          </p>
+          <!-- 工作經驗 -->
+          <div>
+            <p class="text-xs text-tmf-gray-4 mb-1 xl:text-sm">工作經驗</p>
+            <ul
+              class="list-disc pl-6 text-sm font-medium text-tmf-gray-2 xl:text-sm"
+            >
+              <li>2024-至今 | 好棒音樂有限公司 | 歌曲演唱表演人員</li>
+            </ul>
+          </div>
+          <!-- 教育背景 -->
+          <div>
+            <p class="text-xs text-tmf-gray-4 mb-1 xl:text-sm">教育背景</p>
+            <ul
+              class="list-disc pl-6 text-sm font-medium text-tmf-gray-2 xl:text-sm"
+            >
+              <li>2018-2022｜國立台灣藝術大學－音樂學系｜學士</li>
+              <li>2022-2024｜國立台灣師範大學－音樂學系｜碩士</li>
+            </ul>
+          </div>
+          <!-- 證照證書 -->
+          <div>
+            <p class="text-xs text-tmf-gray-4 mb-1 xl:text-sm">證照證書</p>
+            <ul
+              class="list-disc pl-6 text-sm font-medium text-tmf-gray-2 xl:text-sm"
+            >
+              <li>ISO 9001國際品質認證布拉格音樂機構晉級檢定合格證書</li>
+            </ul>
+          </div>
+          <div class="flex justify-end">
+            <button>
+              <div class="flex gap-1 items-center text-tmf-orange-1">
+                <p class="text-sm xl:text-base">了解更多教師履歷</p>
+                <span class="text-xl leading-5 material-icons-outlined"
+                  >chevron_right</span
+                >
+              </div>
+            </button>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- 課程方案 -->
+    <div class="w-full">
+      <div
+        class="flex flex-col gap-3 border border-tmf-gray-5 rounded-xl bg-white p-3 xl:p-6 xl:gap-6 xl:shadow-lg xl:border-0"
+      >
+        <div class="text-xl font-bold text-tmf-gray-2">課程方案</div>
+        <!-- 方案選擇 -->
+        <div class="flex flex-col gap-3">
+          <label class="custom-radio">
+            <input type="radio" name="course" id="one" class="hidden" />
+            <div>
+              <p class="text-sm font-bold text-tmf-gray-3 mb-1 xl:mb-2">
+                單堂課程
+              </p>
+              <div
+                class="flex gap-1 text-lg font-medium text-tmf-gray-2 xl:text-2xl"
+              >
+                <p>NT$</p>
+                <p>1,200</p>
+              </div>
+            </div>
+            <span
+              class="invisible text-[32px] leading-[32px] text-tmf-orange-1 material-symbols-outlined xl:text-[32px] xl:leading-8"
+            >
+              check
+            </span>
+          </label>
+          <label class="custom-radio">
+            <input type="radio" name="course" id="ten" class="hidden" />
+            <div>
+              <p class="text-sm font-bold text-tmf-gray-3 mb-1 xl:mb-2">
+                十堂課程
+              </p>
+              <div
+                class="flex gap-1 text-lg font-medium text-tmf-gray-2 xl:text-2xl"
+              >
+                <p>NT$</p>
+                <p>1,2000</p>
+              </div>
+            </div>
+            <span
+              class="invisible text-[32px] leading-[32px] text-tmf-orange-1 material-symbols-outlined xl:text-[32px] xl:leading-8"
+            >
+              check
+            </span>
+          </label>
+        </div>
+        <!-- 立即購買、購物車 -->
+        <div
+          class="flex justify-between items-center gap-3 pb-6 border-b border-tmf-gray-5 border-dashed"
+        >
+          <button
+            class="flex-grow text-base font-bold text-white rounded-lg py-2.5 bg-tmf-orange-1 xl:py-3 xl:text-lg"
+          >
+            立即購買
+          </button>
+          <button
+            class="bg-white border border-tmf-orange-1 rounded-lg px-3 py-[0.6875rem]"
+          >
+            <span
+              class="flex items-center text-xl leading-5 text-tmf-orange-1 material-symbols-outlined xl:text-[28px] xl:leading-7"
+              >shopping_cart</span
+            >
+          </button>
+        </div>
+        <!-- 問卷 -->
+        <div>
+          <p class="text-sm mb-3 text-tmf-gray-3 xl:text-base">
+            或許你想在上課前先諮詢教師
+          </p>
+          <button
+            class="w-full text-base text-tmf-purple rounded-lg py-[0.6875rem] bg-white border border-tmf-purple xl:text-lg"
+          >
+            填寫課前諮詢問卷
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- 底部固定欄位 -->
+  <div
+    class="sticky bottom-0 w-full h-[92px] bg-white rounded-xl px-4 py-3 custom-shadow xl:hidden"
+  >
+    <div class="flex gap-1 text-tmf-gray-3 text-sm">
+      <p>目前方案：</p>
+      <p>單堂課程</p>
+    </div>
+    <div class="flex justify-between items-center">
+      <div class="flex gap-1 text-tmf-gray-2 text-2xl font-medium">
+        <p>NT$</p>
+        <p>1,200</p>
+      </div>
+      <button
+        class="text-base text-white font-bold bg-tmf-orange-1 px-4 py-3 rounded-lg"
+      >
+        查看方案
+      </button>
+    </div>
+  </div>
+  <!-- 推薦課程 -->
+  <div
+    class="hidden bg-tmf-gray-7 pt-10 pb-20 xl:flex xl:justify-center xl:items-center"
+  >
+    <div class="xl:container xl:w-[1280px]">
+      <div class="flex justify-start items-center gap-2 mb-6">
+        <img
+          class="w-5 h-5 xl:w-6 xl:h-6"
+          src="assets/images/cart-collect.png"
+          alt=""
+        />
+        <h2 class="text-xl font-bold xl:text-2xl">其他推薦課程</h2>
+      </div>
+      <div class="flex gap-6">
+        @for (card of cardData; track card.title) {
+          <tmf-card [hoverEffect]="false" [data]="card"></tmf-card>
+        }
+      </div>
+    </div>
+  </div>
+</div>
