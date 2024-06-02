@@ -1,0 +1,27 @@
+.video-container {
+  position: relative;
+  width: 100%;
+  height: auto;
+}
+
+.video {
+  width: 100%;
+  height: auto;
+}
+
+.progress-container {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  cursor: pointer;
+}
+
+.mask {
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0) -0.01%,
+    rgba(0, 0, 0, 0.6) 74.25%
+  );
+}

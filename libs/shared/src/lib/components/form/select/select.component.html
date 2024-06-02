@@ -1,0 +1,52 @@
+<span *ngIf="label" class="select-label">{{ label }}</span>
+<span *ngIf="isRequired" class="text-red-500">*</span>
+<div
+  class="select"
+  [ngClass]="{
+    'select-open': panelOpen,
+    'bg-tmf-orange-4': panelOpen && value,
+    'select-disabled': disabled
+  }"
+  [class.fc-invalid]="invalid"
+  (click)="open()"
+  cdkOverlayOrigin
+  #origin="cdkOverlayOrigin"
+>
+  <span *ngIf="icon" class="material-symbols-outlined select-icon">
+    {{ icon }}
+  </span>
+
+  <span
+    class="select-text"
+    [ngClass]="{
+      'text-tmf-gray-2': value && !disabled,
+      'text-tmf-gray-3': !value || disabled,
+      'text-red-500': invalid
+    }"
+  >
+    {{ value ? listOfContainerItemMap[value] : placeholder }}
+  </span>
+
+  <span
+    class="material-symbols-outlined select-chevron"
+    [ngClass]="{
+      'rotate-180 text-tmf-orange-1': panelOpen,
+      'text-tmf-gray-4': disabled
+    }"
+  >
+    keyboard_arrow_down
+  </span>
+</div>
+<ng-template
+  cdkConnectedOverlay
+  cdkConnectedOverlayHasBackdrop
+  cdkConnectedOverlayBackdropClass="cdk-overlay-transparent-backdrop"
+  [cdkConnectedOverlayOrigin]="origin"
+  [cdkConnectedOverlayOpen]="panelOpen"
+  (overlayOutsideClick)="closePanel()"
+  [cdkConnectedOverlayWidth]="originRect?.width"
+>
+  <div class="option-container">
+    <ng-content></ng-content>
+  </div>
+</ng-template>

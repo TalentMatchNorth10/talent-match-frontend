@@ -7,7 +7,7 @@ import { Step, StepItem } from '../../cart-page.model';
   standalone: true,
   imports: [CommonModule],
   template: `
-    <div class="flex justify-center items-center gap-x-2 lg:gap-x-4">
+    <div class="flex items-center justify-center gap-x-2 lg:gap-x-4">
       @for (
         stepItem of stepList;
         track stepItem;
@@ -20,7 +20,7 @@ import { Step, StepItem } from '../../cart-page.model';
               'bg-tmf-orange-1': stepItem.step === currentStep,
               'bg-tmf-gray-4': stepItem.step !== currentStep
             }"
-            class="w-[23px] h-[23px] bg-tmf-orange-1 flex items-center justify-center rounded-full text-white text-[16px] leading-6"
+            class="flex h-[23px] w-[23px] items-center justify-center rounded-full bg-tmf-orange-1 text-[16px] leading-6 text-white"
           >
             {{ index + 1 }}
           </div>
@@ -34,7 +34,7 @@ import { Step, StepItem } from '../../cart-page.model';
           </p>
         </div>
         @if (!last) {
-          <div class="w-6 lg:w-[40px] border-b border-[#AAAAAA]"></div>
+          <div class="w-6 border-b border-[#AAAAAA] lg:w-[40px]"></div>
         }
       }
     </div>
