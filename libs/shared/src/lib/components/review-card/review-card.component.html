@@ -1,10 +1,10 @@
 <div
-  class="max-w-xs lg:min-w-[20rem] min-w-[80vw] w-full h-full rounded overflow-hidden shadow-lg bg-white"
+  class="max-w-xs lg:min-w-[18rem] min-w-[75vw] w-full h-full rounded overflow-hidden shadow-lg bg-white"
 >
-  <div class="py-6 px-4">
-    <div class="flex flex-col justify-between h-full">
+  <div class="py-6 px-4 min-h-[200px]">
+    <div class="flex flex-col justify-between min-h-[180px]">
       <div>
-        <div class="flex justify-between">
+        <div class="flex">
           <div class="flex items-center gap-2">
             <img
               class="w-8 h-8 rounded-full"
@@ -16,7 +16,7 @@
               <tmf-star-rating [rating]="data.rate"></tmf-star-rating>
             </div>
           </div>
-          <div class="text-gray-400 invisible">
+          <div class="text-gray-400 invisible ">
             {{ data.create_datetime | date: 'yyyy-MM-dd' }}
           </div>
         </div>
