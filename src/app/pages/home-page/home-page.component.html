@@ -1,56 +1,41 @@
-<div class="w-full h-full flex flex-col">
+<div class="flex h-full w-full flex-col">
   <section>
     <div
-      class="h-[80vh] bg-auto bg-no-repeat lg:bg-[url('./assets/images/home-page/home-page-banner.svg')] bg-[url('./assets/images/home-page/home-page-banner-mobile.svg')] bg-top relative"
+      class="relative h-[80vh] bg-[url('./assets/images/home-page/home-page-banner-mobile.svg')] bg-auto bg-top bg-no-repeat md:bg-[url('./assets/images/home-page/home-page-banner.svg')] lg:bg-[url('./assets/images/home-page/home-page-banner.svg')]"
       style="-webkit-mask: linear-gradient(180deg, #000 90%, transparent)"
     >
       <div
-        class="absolute lg:top-1/2 lg:left-[30%] lg:w-[26%] lg:-translate-y-1/2 w-10/12 left-1/2 -translate-x-1/2 lg:top-1/2 top-1/4 -translate-y-1/2"
+        class="absolute left-1/2 top-1/4 w-10/12 -translate-x-1/2 -translate-y-1/2 lg:left-[30%] lg:top-1/2 lg:w-[26%] lg:-translate-y-1/2"
       >
         <div class="mb-6">
-          <div class="lg:text-6xl text-4xl font-bold mb-2 text-gray-900">
-            <span class="text-purple-800 font-bold">連結</span>無限可能
+          <div class="mb-2 text-4xl font-bold text-gray-900 lg:text-6xl">
+            <span class="font-bold text-purple-800">連結</span>無限可能
           </div>
-          <div class="lg:text-6xl text-4xl font-bold text-gray-900">
+          <div class="text-4xl font-bold text-gray-900 lg:text-6xl">
             為你開啟機遇之門
           </div>
         </div>
-        <div class="lg:text-lg text-gray-900 mb-6">
+        <div class="mb-6 text-gray-900 lg:text-lg">
           每個人都擁有獨特的才藝與創造力。因此，我們提供一個專業且多元平台，讓熱愛藝術、音樂、手工藝以及創新技術的你，到志同道合的夥伴及專業導師。
         </div>
         <div
-          class="flex border border-gray-300 rounded overflow-hidden w-full max-w-lg search-box-container"
+          class="search-box-container flex w-full max-w-lg overflow-hidden rounded border border-gray-300"
         >
-          <div class="relative">
-            <select
-              class="appearance-none h-full bg-white text-gray-700 py-2 pl-3 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500 border-r-0"
-            >
-              <option value="option1">依課程</option>
-              <option value="option2">依教師</option>
-            </select>
-            <div
-              class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700"
-            >
-              <svg
-                class="fill-current h-4 w-4"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 512 512"
-              >
-                <!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
-                <path
-                  d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"
-                />
-              </svg>
-            </div>
-          </div>
+          <tmf-select class="bg-white text-gray-700" [formControl]="control">
+            <tmf-option
+              *ngFor="let item of items"
+              [value]="item.value"
+              [label]="item.label"
+            ></tmf-option>
+          </tmf-select>
           <input
             type="text"
             placeholder="準備好啟程了嗎？"
-            class="bg-white text-gray-700 py-2 px-4 flex-grow focus:outline-none focus:bg-white focus:border-gray-500 border-r-0"
+            class="flex-grow border-r-0 bg-white px-4 py-2 text-gray-700 focus:border-gray-500 focus:bg-white focus:outline-none"
           />
-          <button class="bg-white text-black py-2 px-4">
+          <button class="bg-white px-4 py-2 text-black">
             <svg
-              class="fill-current h-4 w-4"
+              class="h-4 w-4 fill-current"
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 20 20"
             >
@@ -65,7 +50,7 @@
   </section>
   <section class="my-5 flex flex-col gap-4">
     <div
-      class="w-full text-center text-4xl pt-[1.5rem] bg-no-repeat bg-top"
+      class="w-full bg-top bg-no-repeat pt-[1.5rem] text-center text-4xl"
       style="
         background-image: url('./assets/images/home-page/orange-80-decorate.svg');
       "
@@ -73,23 +58,23 @@
       課程短影音
     </div>
     <div class="w-full">
-      <div class="flex justify-center gap-2 flex-wrap">
+      <div class="flex flex-wrap justify-center gap-2">
         <button
           *ngFor="let option of shortsSubjectOptions; let i = index"
           [ngClass]="{
             'bg-orange-600 text-white': selectedSubjectOption === option,
-            'bg-white border': selectedSubjectOption !== option
+            'border bg-white': selectedSubjectOption !== option
           }"
-          class="px-4 py-2 rounded hover:bg-orange-600 hover:text-white focus:outline-none"
+          class="rounded px-4 py-2 hover:bg-orange-600 hover:text-white focus:outline-none"
           (click)="selectSubjectOption(option)"
         >
           {{ option }}
         </button>
         <button
-          class="px-4 py-2 rounded border hover:bg-orange-600 hover:text-white focus:outline-none"
+          class="rounded border px-4 py-2 hover:bg-orange-600 hover:text-white focus:outline-none"
         >
           <svg
-            class="fill-black hover:fill-white w-[24px] h-[24px]"
+            class="h-[24px] w-[24px] fill-black hover:fill-white"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 512 512"
           >
@@ -101,55 +86,50 @@
         </button>
       </div>
     </div>
-    <div class="w-full h-[530px] flex justify-center">
+    <div class="flex h-[530px] w-full justify-center">
       <div class="lg:w-9:12 w-10/12">
-        <swiper-container
-         slides-per-view="4"
-         navigation="true"
-        >
-        <ng-container *ngFor="let video of videoDataSource">
-          <swiper-slide>
-            <div class="w-full h-[530px] p-2 flex-shrink-0 m-auto">
-              <app-short-video-card [data]="video"></app-short-video-card>
-            </div>
-          </swiper-slide>
-        </ng-container>
-        </swiper-container>
-      </div>
-      <!-- <div class="relative lg:w-9:12 w-10/12 overflow-hidden">
-        <div
-          class="flex transition-transform duration-300"
-          [style.transform]="shortsTransformStyle"
-        >
-          <ng-container *ngFor="let video of videoDataSource; let i = index">
-            <div
-              class="lg:w-1/4 md:w-1/3 w-full h-[530px] p-2 flex-shrink-0 m-auto"
-            >
-              <app-short-video-card [data]="video"></app-short-video-card>
-            </div>
-            <
+        <ng-container [ngSwitch]="currentWindowSize">
+          <ng-container *ngSwitchCase="'Handset'">
+            <swiper-container slides-per-view="1" navigation="true">
+              <ng-container *ngFor="let video of videoDataSource">
+                <swiper-slide>
+                  <div class="m-auto h-[530px] w-full p-2">
+                    <app-short-video-card [data]="video"></app-short-video-card>
+                  </div>
+                </swiper-slide>
+              </ng-container>
+            </swiper-container>
           </ng-container>
-        </div>
-        <button
-          (click)="shortsPrev()"
-          [ngClass]="{ 'bg-gray-400': shortsCurrentIndex == 0 }"
-          class="absolute left-0 top-1/2 transform -translate-y-1/2 bg-orange-600 text-white px-5 py-4 rounded-md"
-        >
-          &larr;
-        </button>
-        <button
-          (click)="shortsNext()"
-          class="absolute right-0 top-1/2 transform -translate-y-1/2 bg-orange-600 text-white px-5 py-4 rounded-md"
-        >
-          &rarr;
-        </button>
-      </div> -->
+          <ng-container *ngSwitchCase="'Tablet'">
+            <swiper-container slides-per-view="3" navigation="true">
+              <ng-container *ngFor="let video of videoDataSource">
+                <swiper-slide>
+                  <div class="m-auto h-[530px] w-full p-2">
+                    <app-short-video-card [data]="video"></app-short-video-card>
+                  </div>
+                </swiper-slide>
+              </ng-container>
+            </swiper-container>
+          </ng-container>
+          <ng-container *ngSwitchDefault>
+            <swiper-container slides-per-view="4" navigation="true">
+              <ng-container *ngFor="let video of videoDataSource">
+                <swiper-slide>
+                  <div class="m-auto h-[530px] w-full p-2">
+                    <app-short-video-card [data]="video"></app-short-video-card>
+                  </div>
+                </swiper-slide>
+              </ng-container>
+            </swiper-container>
+          </ng-container>
+        </ng-container>
+      </div>
     </div>
   </section>
-  <section class="mt-5 py-10 bg-orange-100 lg:skew-y-1">
+  <section class="mt-5 bg-orange-100 py-10 lg:skew-y-1">
     <div class="lg:-skew-y-1">
       <div
-        class="w-full text-center text-4xl pt-[1.5rem] bg-no-repeat bg-top"
+        class="w-full bg-top bg-no-repeat pt-[1.5rem] text-center text-4xl"
         style="
           background-image: url('./assets/images/home-page/orange-80-decorate.svg');
         "
@@ -157,79 +137,94 @@
         推薦課程
       </div>
       <div class="mt-8 py-8">
-        <div class="w-full flex justify-center">
-          <div class="relative lg:w-9:12 w-10/12 overflow-hidden">
-            <div
-              class="flex transition-transform duration-300"
-              [style.transform]="coursesTransformStyle"
-            >
-              <ng-container
-                *ngFor="let courseItem of courseDataSource; let i = index"
-              >
-                <div class="lg:w-1/4 md:w-1/3 w-full p-2 flex-shrink-0">
-                  <tmf-card
-                    [data]="courseItem"
-                    [hoverEffect]="false"
-                  ></tmf-card>
-                </div>
-                <!-- <div class="w-1/4 p-2 flex-shrink-0">
-                  <div class="bg-white shadow-lg rounded-lg p-6">
-                    <h2 class="text-lg font-bold">{{ card.title }}</h2>
-                    <p>{{ card.content }}</p>
-                  </div>
-                </div> -->
+        <div class="flex w-full justify-center">
+          <div class="lg:w-9:12 w-10/12">
+            <ng-container [ngSwitch]="currentWindowSize">
+              <ng-container *ngSwitchCase="'Handset'">
+                <swiper-container slides-per-view="1" navigation="true">
+                  <ng-container *ngFor="let courseItem of courseDataSource">
+                    <swiper-slide>
+                      <div class="m-auto h-[530px] w-full flex-shrink-0 p-2">
+                        <div class="w-full flex-shrink-0 p-2 md:w-1/3 lg:w-1/4">
+                          <tmf-card
+                            [data]="courseItem"
+                            [hoverEffect]="false"
+                          ></tmf-card>
+                        </div>
+                      </div>
+                    </swiper-slide>
+                  </ng-container>
+                </swiper-container>
               </ng-container>
-            </div>
-            <button
-              (click)="coursesPrev()"
-              [ngClass]="{ 'bg-gray-400': shortsCurrentIndex == 0 }"
-              class="absolute left-0 top-1/2 transform -translate-y-1/2 bg-orange-600 text-white px-5 py-4 rounded-md"
-            >
-              &larr;
-            </button>
-            <button
-              (click)="coursesNext()"
-              class="absolute right-0 top-1/2 transform -translate-y-1/2 bg-orange-600 text-white px-5 py-4 rounded-md"
-            >
-              &rarr;
-            </button>
+              <ng-container *ngSwitchCase="'Tablet'">
+                <swiper-container slides-per-view="3" navigation="true">
+                  <ng-container *ngFor="let courseItem of courseDataSource">
+                    <swiper-slide>
+                      <div class="m-auto h-[530px] w-full flex-shrink-0 p-2">
+                        <div class="w-full flex-shrink-0 p-2 md:w-1/3 lg:w-1/4">
+                          <tmf-card
+                            [data]="courseItem"
+                            [hoverEffect]="false"
+                          ></tmf-card>
+                        </div>
+                      </div>
+                    </swiper-slide>
+                  </ng-container>
+                </swiper-container>
+              </ng-container>
+              <ng-container *ngSwitchDefault>
+                <swiper-container slides-per-view="4" navigation="true">
+                  <ng-container *ngFor="let courseItem of courseDataSource">
+                    <swiper-slide>
+                      <div class="m-auto h-[530px] w-full flex-shrink-0 p-2">
+                        <div class="w-full flex-shrink-0 p-2 md:w-1/3 lg:w-1/4">
+                          <tmf-card
+                            [data]="courseItem"
+                            [hoverEffect]="false"
+                          ></tmf-card>
+                        </div>
+                      </div>
+                    </swiper-slide>
+                  </ng-container>
+                </swiper-container>
+              </ng-container>
+            </ng-container>
           </div>
         </div>
       </div>
     </div>
   </section>
   <section
-    class="-mt-5 mb-5 py-12 bg-gray-50 bg-[url('./assets/images/home-page/section-bg-decorate.svg')] bg-center"
+    class="-mt-5 mb-5 bg-gray-50 bg-[url('./assets/images/home-page/section-bg-decorate.svg')] bg-center py-12"
   >
     <div
-      class="w-full text-center text-4xl pt-[1.5rem] bg-no-repeat bg-top"
+      class="w-full bg-top bg-no-repeat pt-[1.5rem] text-center text-4xl"
       style="
         background-image: url('./assets/images/home-page/orange-80-decorate.svg');
       "
     >
       學員導師好評推薦
     </div>
-    <div class="my-8 w-full flex flex-col items-center gap-6">
+    <div class="my-8 flex w-full flex-col items-center gap-6">
       <ng-container [ngSwitch]="currentWindowSize">
         <ng-container *ngSwitchCase="'Handset'">
           <div class="relative w-4/5 overflow-hidden">
-            <div
-              class="flex transition-transform duration-300"
-              [style.transform]="reviewTransformStyle"
-            >
-              <ng-container
-                *ngFor="let review of reviewDataSource; let i = index"
-              >
-                <app-review-card [data]="review"></app-review-card>
+            <swiper-container slides-per-view="1">
+              <ng-container *ngFor="let review of reviewDataSource">
+                <swiper-slide>
+                  <div class="w-full flex-shrink-0 p-2 md:w-1/3 lg:w-1/4">
+                    <app-review-card [data]="review"></app-review-card>
+                  </div>
+                </swiper-slide>
               </ng-container>
-            </div>
+            </swiper-container>
           </div>
         </ng-container>
         <ng-container *ngSwitchDefault>
-          <div class="w-9/12 flex justify-center flex-wrap gap-3">
+          <div class="flex w-9/12 flex-wrap justify-center gap-3">
             <div class="basis-1/4">
               <div
-                class="max-w-xs w-full h-full rounded overflow-hidden shadow-lg bg-gray-400/25"
+                class="h-full w-full max-w-xs overflow-hidden rounded bg-gray-400/25 shadow-lg"
               >
                 <div class="p-6">
                   <div class="flex flex-col items-center gap-2">
@@ -239,7 +234,6 @@
                       [rating]="4.7"
                       [starSize]="'1.5rem'"
                     ></tmf-star-rating>
-                    <!-- <app-rating-star [rating]="4.5"> </app-rating-star> -->
                   </div>
                 </div>
               </div>
@@ -257,7 +251,7 @@
     </div>
   </section>
   <section>
-    <div class="w-full flex flex-col items-center">
+    <div class="flex w-full flex-col items-center">
       <ng-container *ngFor="let img of howToUseStepImages">
         <div>
           <img [src]="img" alt="" />
