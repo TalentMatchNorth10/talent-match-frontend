@@ -1,5 +1,10 @@
 import { MenuService } from './shared/services/menu.service';
-import { Component, OnInit, inject } from '@angular/core';
+import {
+  CUSTOM_ELEMENTS_SCHEMA,
+  Component,
+  OnInit,
+  inject
+} from '@angular/core';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { AuthStatusService } from './shared/services/authStatus.service';
 import { filter } from 'rxjs';
@@ -8,7 +13,8 @@ import { filter } from 'rxjs';
   standalone: true,
   imports: [RouterOutlet],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+  styleUrl: './app.component.scss',
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppComponent implements OnInit {
   private authStatusService = inject(AuthStatusService);

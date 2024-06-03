@@ -101,8 +101,22 @@
         </button>
       </div>
     </div>
-    <div class="w-full flex justify-center">
-      <div class="relative lg:w-9:12 w-10/12 overflow-hidden">
+    <div class="w-full h-[530px] flex justify-center">
+      <div class="lg:w-9:12 w-10/12">
+        <swiper-container
+         slides-per-view="4"
+         navigation="true"
+        >
+        <ng-container *ngFor="let video of videoDataSource">
+          <swiper-slide>
+            <div class="w-full h-[530px] p-2 flex-shrink-0 m-auto">
+              <app-short-video-card [data]="video"></app-short-video-card>
+            </div>
+          </swiper-slide>
+        </ng-container>
+        </swiper-container>
+      </div>
+      <!-- <div class="relative lg:w-9:12 w-10/12 overflow-hidden">
         <div
           class="flex transition-transform duration-300"
           [style.transform]="shortsTransformStyle"
@@ -113,12 +127,7 @@
             >
               <app-short-video-card [data]="video"></app-short-video-card>
             </div>
-            <!-- <div class="w-1/4 p-2 flex-shrink-0">
-              <div class="bg-white shadow-lg rounded-lg p-6">
-                <h2 class="text-lg font-bold">{{ card.title }}</h2>
-                <p>{{ card.content }}</p>
-              </div>
-            </div> -->
+            <
           </ng-container>
         </div>
         <button
@@ -134,7 +143,7 @@
         >
           &rarr;
         </button>
-      </div>
+      </div> -->
     </div>
   </section>
   <section class="mt-5 py-10 bg-orange-100 lg:skew-y-1">

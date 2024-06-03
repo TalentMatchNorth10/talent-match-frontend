@@ -1,12 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Component, OnInit } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, Component, OnInit } from '@angular/core';
 import { CardComponent } from '@tmf/libs-shared/components/card/card.component';
 import { CardData } from '@tmf/libs-shared/components/card/card.interface';
 import { ReviewCardComponent, ShortVideoCardComponent } from 'libs/shared/src';
 import { VideoCardData } from '@tmf/libs-shared/components/short-video-card/video-card.interface';
 import { StarRatingComponent } from '@tmf/libs-shared/components/star-rating/star-rating.component';
 import { ReviewData } from '@tmf/libs-shared/components/review-card/review.interface';
+import SwiperCore from 'swiper';
 
 @Component({
   selector: 'app-home-page',
@@ -19,7 +20,8 @@ import { ReviewData } from '@tmf/libs-shared/components/review-card/review.inter
     ReviewCardComponent
   ],
   templateUrl: './home-page.component.html',
-  styleUrl: './home-page.component.scss'
+  styleUrl: './home-page.component.scss',
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export default class HomePageComponent implements OnInit {
   public shortsSubjectOptions: string[] = [
