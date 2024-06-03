@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { StarRatingComponent } from '../star-rating/star-rating.component';
 import { CardData } from './card.interface';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'tmf-card',
@@ -10,7 +11,7 @@ import { CardData } from './card.interface';
   template: `
     @if (data) {
       <div
-        class="w-[259px] md:w-[302px] rounded-xl overflow-hidden bg-white shadow-lg relative group"
+        class="m-auto w-[259px] md:w-[302px] rounded-xl overflow-hidden bg-white shadow-lg relative group"
       >
         <div class="w-full h-[180px] bg-tmf-gray-4">
           @if (data.avatar) {
@@ -85,6 +86,7 @@ import { CardData } from './card.interface';
           <div class="h-full flex justify-end flex-grow">
             <span
               class="material-icons-outlined text-[20px] text-tmf-gray-4 cursor-pointer"
+              (click)="navigateToCoursePage(data)"
             >
               east
             </span>
@@ -130,4 +132,11 @@ import { CardData } from './card.interface';
 export class CardComponent {
   @Input() data!: CardData;
   @Input() hoverEffect: boolean = true;
+
+  constructor(protected readonly router: Router) {}
+
+  navigateToCoursePage(data: CardData): void {
+    // console.log(data.course_id)
+    this.router.navigate([`course-detail/${data.course_id}`]);
+  }
 }

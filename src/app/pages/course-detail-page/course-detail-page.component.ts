@@ -39,6 +39,7 @@ export default class CourseDetailPageComponent {
   activeSection: WritableSignal<string> = signal('sectionA');
   cardData = [
     {
+      course_id: '1',
       mainImg: 'https://fakeimg.pl/300/',
       title: '課程名稱1',
       content: '課程內容1',
@@ -52,6 +53,7 @@ export default class CourseDetailPageComponent {
       ratingCount: 100
     },
     {
+      course_id: '1',
       mainImg: 'https://fakeimg.pl/300/',
       title: '課程名稱2',
       content: '課程內容2',
@@ -65,6 +67,7 @@ export default class CourseDetailPageComponent {
       ratingCount: 100
     },
     {
+      course_id: '1',
       mainImg: 'https://fakeimg.pl/300/',
       title: '課程名稱2',
       content:
@@ -79,6 +82,7 @@ export default class CourseDetailPageComponent {
       ratingCount: 100
     },
     {
+      course_id: '1',
       mainImg: 'https://fakeimg.pl/300/',
       title: '課程名稱2',
       content: '課程內容2',

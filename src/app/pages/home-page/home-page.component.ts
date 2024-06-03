@@ -3,12 +3,21 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Component, OnInit } from '@angular/core';
 import { CardComponent } from '@tmf/libs-shared/components/card/card.component';
 import { CardData } from '@tmf/libs-shared/components/card/card.interface';
-import { ShortVideoCardComponent } from 'libs/shared/src';
+import { ReviewCardComponent, ShortVideoCardComponent } from 'libs/shared/src';
+import { VideoCardData } from '@tmf/libs-shared/components/short-video-card/video-card.interface';
+import { StarRatingComponent } from '@tmf/libs-shared/components/star-rating/star-rating.component';
+import { ReviewData } from '@tmf/libs-shared/components/review-card/review.interface';
 
 @Component({
   selector: 'app-home-page',
   standalone: true,
-  imports: [CommonModule, ShortVideoCardComponent, CardComponent],
+  imports: [
+    CommonModule,
+    ShortVideoCardComponent,
+    CardComponent,
+    StarRatingComponent,
+    ReviewCardComponent
+  ],
   templateUrl: './home-page.component.html',
   styleUrl: './home-page.component.scss'
 })
@@ -27,29 +36,27 @@ export default class HomePageComponent implements OnInit {
     this.selectedSubjectOption = option;
   }
 
+  public videoDataSource: VideoCardData[] = [];
   public courseDataSource: CardData[] = [];
-
-  public cards = [
-    { title: 'Card 1', content: 'Content of Card 1' },
-    { title: 'Card 2', content: 'Content of Card 2' },
-    { title: 'Card 3', content: 'Content of Card 3' },
-    { title: 'Card 4', content: 'Content of Card 4' },
-    { title: 'Card 5', content: 'Content of Card 5' },
-    { title: 'Card 6', content: 'Content of Card 6' },
-    { title: 'Card 7', content: 'Content of Card 7' },
-    { title: 'Card 8', content: 'Content of Card 8' },
-    { title: 'Card 9', content: 'Content of Card 9' },
-    { title: 'Card 10', content: 'Content of Card 10' }
-  ];
+  public reviewDataSource: ReviewData[] = [];
 
   public visibleCards: number = 4;
   public cardWidthPercentage: number = 25;
 
   public shortsCurrentIndex = 0;
   public coursesCurrentIndex = 0;
+  public reviewCurrentIndex = 0;
 
   public get shortsTransformStyle() {
     return `translateX(-${this.shortsCurrentIndex * this.cardWidthPercentage}%)`;
+  }
+
+  public get coursesTransformStyle() {
+    return `translateX(-${this.coursesCurrentIndex * this.cardWidthPercentage}%)`;
+  }
+
+  public get reviewTransformStyle() {
+    return `translateX(-${this.reviewCurrentIndex * 100}%)`;
   }
 
   public howToUseStepImages: string[] = [
@@ -58,10 +65,14 @@ export default class HomePageComponent implements OnInit {
     './../../../assets/images/home-page/how-to-use/how-to-use-step-3.svg'
   ];
 
+  public currentWindowSize: string = '';
+
   constructor(private breakpointObserver: BreakpointObserver) {}
 
   public ngOnInit() {
+    this.videoDataSource = FakeVideos;
     this.courseDataSource = FakeCardData;
+    this.reviewDataSource = FakeReviewData;
 
     this.breakpointObserver
       .observe([Breakpoints.Handset, Breakpoints.Tablet, Breakpoints.Web])
@@ -75,6 +86,16 @@ export default class HomePageComponent implements OnInit {
       [Breakpoints.Web]: window.matchMedia(Breakpoints.Web).matches
     };
     this.updateValueBasedOnBreakpoints(initialBreakpoints);
+
+    // if (this.currentWindowSize == 'Handset') {
+    //   setInterval(() => {
+    //     if (this.reviewCurrentIndex < this.reviewDataSource.length - 1) {
+    //       this.reviewCurrentIndex++;
+    //     } else {
+    //       this.reviewCurrentIndex = 0;
+    //     }
+    //   }, 3000);
+    // }
   }
 
   public updateValueBasedOnBreakpoints(breakpoints: {
@@ -82,20 +103,25 @@ export default class HomePageComponent implements OnInit {
   }) {
     if (breakpoints[Breakpoints.Handset]) {
       // Do something for small screens
+      this.currentWindowSize = 'Handset';
       this.visibleCards = 1;
       this.cardWidthPercentage = 100;
       // console.log('Handset');
     } else if (breakpoints[Breakpoints.Tablet]) {
       // Do something for medium screens
+      this.currentWindowSize = 'Tablet';
       this.visibleCards = 2;
       this.cardWidthPercentage = 35;
       // console.log('Tablet');
     } else if (breakpoints[Breakpoints.Web]) {
       // Do something for large screens
+      this.currentWindowSize = 'Web';
       this.visibleCards = 4;
       this.cardWidthPercentage = 25;
       // console.log('Web');
     }
+
+    console.log(this.currentWindowSize);
   }
 
   public shortsPrev() {
@@ -105,13 +131,12 @@ export default class HomePageComponent implements OnInit {
   }
 
   public shortsNext() {
-    if (this.shortsCurrentIndex < this.cards.length - this.visibleCards) {
+    if (
+      this.shortsCurrentIndex <
+      this.videoDataSource.length - this.visibleCards
+    ) {
       this.shortsCurrentIndex++;
     }
-  }
-
-  public get coursesTransformStyle() {
-    return `translateX(-${this.coursesCurrentIndex * this.cardWidthPercentage}%)`;
   }
 
   public coursesPrev() {
@@ -130,8 +155,93 @@ export default class HomePageComponent implements OnInit {
   }
 }
 
-const FakeCardData = [
+const FakeVideos: VideoCardData[] = [
   {
+    video_id: '1',
+    name: 'Introduction to JavaScript',
+    category: 'Programming',
+    intro: 'Learn the basics of JavaScript programming language.',
+    video_type: 'youtube',
+    url: 'https://youtu.be/bjCjJW_aAUk?si=zO58J-33XKrAGHjR',
+    teacher_id: 't-1',
+    course_id: 'c-1'
+  },
+  {
+    video_id: '2',
+    name: 'Cooking Italian Pasta',
+    category: 'Cooking',
+    intro: 'Master the art of making authentic Italian pasta dishes.',
+    video_type: 'storage',
+    url: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4',
+    teacher_id: 't-2',
+    course_id: 'c-2'
+  },
+  {
+    video_id: '3',
+    name: 'Yoga for Beginners',
+    category: 'Fitness',
+    intro: 'Start your yoga journey with these beginner-friendly poses.',
+    video_type: 'storage',
+    url: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
+    teacher_id: 't-3',
+    course_id: 'c-3'
+  },
+  {
+    video_id: '4',
+    name: 'Introduction to Astrophysics',
+    category: 'Science',
+    intro:
+      'Explore the wonders of the universe with basic astrophysics concepts.',
+    video_type: 'storage',
+    url: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
+    teacher_id: 't-4',
+    course_id: 'c-4'
+  },
+  {
+    video_id: '5',
+    name: 'Abstract Oil Painting Techniques',
+    category: 'Art',
+    intro: 'Discover unique techniques for creating abstract oil paintings.',
+    video_type: 'storage',
+    url: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4',
+    teacher_id: 't-5',
+    course_id: 'c-5'
+  },
+  {
+    video_id: '6',
+    name: 'Healthy Smoothie Recipes',
+    category: 'Cooking',
+    intro: 'Learn how to make delicious and nutritious smoothies at home.',
+    video_type: 'storage',
+    url: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4',
+    teacher_id: 't-6',
+    course_id: 'c-6'
+  },
+  {
+    video_id: '7',
+    name: 'Introduction to Machine Learning',
+    category: 'Technology',
+    intro: 'Get started with machine learning algorithms and applications.',
+    video_type: 'storage',
+    url: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
+    teacher_id: 't-7',
+    course_id: 'c-7'
+  },
+  {
+    video_id: '8',
+    name: "Beginner's Guide to Meditation",
+    category: 'Wellness',
+    intro: 'Start your meditation practice with these simple techniques.',
+    video_type: 'storage',
+    url: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4',
+    teacher_id: 't-8',
+    course_id: 'c-8'
+  }
+];
+
+const FakeCardData: CardData[] = [
+  {
+    course_id: '1',
     mainImg: 'https://fakeimg.pl/300/',
     title: '課程名稱1',
     content: '課程內容1',
@@ -145,6 +255,7 @@ const FakeCardData = [
     ratingCount: 100
   },
   {
+    course_id: '2',
     mainImg: 'https://fakeimg.pl/300/',
     title: '課程名稱2',
     content: '課程內容2',
@@ -158,6 +269,7 @@ const FakeCardData = [
     ratingCount: 100
   },
   {
+    course_id: '3',
     mainImg: 'https://fakeimg.pl/300/',
     title: '課程名稱2',
     content:
@@ -172,6 +284,7 @@ const FakeCardData = [
     ratingCount: 100
   },
   {
+    course_id: '4',
     mainImg: 'https://fakeimg.pl/300/',
     title: '課程名稱2',
     content: '課程內容2',
@@ -185,6 +298,7 @@ const FakeCardData = [
     ratingCount: 100
   },
   {
+    course_id: '5',
     mainImg: 'https://fakeimg.pl/300/',
     title: '課程名稱2',
     content: '課程內容2',
@@ -196,5 +310,64 @@ const FakeCardData = [
     sub_category: '次分類2',
     rating: 4.5,
     ratingCount: 100
+  }
+];
+
+export const FakeReviewData = [
+  {
+    nick_name: 'andersonlisa',
+    avator_image: 'https://dummyimage.com/636x651',
+    rate: 4.8,
+    comment: 'Start small myself teacher set.',
+    create_datetime: new Date('2024-05-27T08:22:50')
+  },
+  {
+    nick_name: 'garzakara',
+    avator_image: 'https://dummyimage.com/636x651',
+    rate: 4.9,
+    comment: 'Hard body reason partner treatment.',
+    create_datetime: new Date('2024-02-11T19:41:12')
+  },
+  {
+    nick_name: 'kellerkimberly',
+    avator_image: 'https://dummyimage.com/636x651',
+    rate: 5.0,
+    comment: 'Marriage someone society how new family individual.',
+    create_datetime: new Date('2024-02-21T01:07:07')
+  },
+  {
+    nick_name: 'zstanley',
+    avator_image: 'https://dummyimage.com/636x651',
+    rate: 4.8,
+    comment: 'Upon never suggest institution I professor wish.',
+    create_datetime: new Date('2024-01-06T09:10:48')
+  },
+  {
+    nick_name: 'garzajessica',
+    avator_image: 'https://dummyimage.com/21x441',
+    rate: 5.0,
+    comment: 'Move drop create discover seat become.',
+    create_datetime: new Date('2024-05-27T18:11:08')
+  },
+  {
+    nick_name: 'jgarza',
+    avator_image: 'https://dummyimage.com/636x651',
+    rate: 4.9,
+    comment: 'Left order talk management condition receive.',
+    create_datetime: new Date('2024-04-06T23:52:02')
+  },
+  {
+    nick_name: 'scott59',
+    avator_image: 'https://dummyimage.com/636x651',
+    rate: 4.7,
+    comment: 'Hundred want room begin box raise.',
+    create_datetime: new Date('2024-04-16T23:52:28')
+  },
+  {
+    nick_name: 'martinezlaura',
+    avator_image: 'https://dummyimage.com/636x651',
+    rate: 4.8,
+    comment: 'Option price suddenly.',
+    create_datetime: new Date('2024-01-15T20:49:07')
   }
 ];

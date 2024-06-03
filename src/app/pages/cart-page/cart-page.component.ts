@@ -74,8 +74,9 @@ export default class CartPageComponent implements OnInit {
   }
 }
 
-const FakeCardData = [
+const FakeCardData: CardData[] = [
   {
+    course_id: '1',
     mainImg: 'https://fakeimg.pl/300/',
     title: '課程名稱1',
     content: '課程內容1',
@@ -89,6 +90,7 @@ const FakeCardData = [
     ratingCount: 100
   },
   {
+    course_id: '2',
     mainImg: 'https://fakeimg.pl/300/',
     title: '課程名稱2',
     content: '課程內容2',
@@ -102,6 +104,7 @@ const FakeCardData = [
     ratingCount: 100
   },
   {
+    course_id: '3',
     mainImg: 'https://fakeimg.pl/300/',
     title: '課程名稱2',
     content:
@@ -116,6 +119,21 @@ const FakeCardData = [
     ratingCount: 100
   },
   {
+    course_id: '4',
+    mainImg: 'https://fakeimg.pl/300/',
+    title: '課程名稱2',
+    content: '課程內容2',
+    avatar: 'https://fakeimg.pl/300/',
+    name: '老師名稱2',
+    price: 2000,
+    quantity: 2,
+    main_category: '主分類2',
+    sub_category: '次分類2',
+    rating: 4.5,
+    ratingCount: 100
+  },
+  {
+    course_id: '5',
     mainImg: 'https://fakeimg.pl/300/',
     title: '課程名稱2',
     content: '課程內容2',

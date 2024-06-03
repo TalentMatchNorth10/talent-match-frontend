@@ -1,20 +1,33 @@
-<div class="max-w-xs w-full h-full rounded overflow-hidden shadow-lg bg-white">
+<div
+  class="max-w-xs w-full h-full rounded overflow-hidden shadow-lg bg-white"
+  (click)="openVideoDialog()"
+>
   <div class="relative w-full h-full pb-16x9">
     <!-- Aspect ratio of 9:16 for vertical video -->
-    <iframe
-      class="absolute top-0 left-0 w-full h-full"
-      [src]="videoUrl"
-      title="YouTube video player"
-      frameborder="0"
-      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-      referrerpolicy="strict-origin-when-cross-origin"
-      allowfullscreen
-    ></iframe>
+    <ng-container [ngSwitch]="data.video_type">
+      <ng-container *ngSwitchCase="'storage'">
+        <video
+          class="absolute top-0 left-0 w-full h-full object-cover"
+          [src]="videoUrl"
+        ></video>
+      </ng-container>
+      <ng-container *ngSwitchCase="'youtube'">
+        <iframe
+          class="absolute top-0 left-0 w-full h-full"
+          [src]="videoUrl"
+          title="video player"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerpolicy="strict-origin-when-cross-origin"
+          allowfullscreen
+        ></iframe>
+      </ng-container>
+    </ng-container>
     <div class="absolute left-2 top-2 p-3 rounded bg-black text-yellow-600">
-      {{ tag }}
+      {{ data.category }}
     </div>
     <div class="absolute w-full bottom-2 p-3 rounded text-white">
-      {{ description }}
+      {{ data.intro }}
     </div>
   </div>
 </div>
