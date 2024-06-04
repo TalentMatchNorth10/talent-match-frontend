@@ -1,12 +1,19 @@
 import { CommonModule } from '@angular/common';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Component, OnInit } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, Component, OnInit } from '@angular/core';
 import { CardComponent } from '@tmf/libs-shared/components/card/card.component';
 import { CardData } from '@tmf/libs-shared/components/card/card.interface';
-import { ReviewCardComponent, ShortVideoCardComponent } from 'libs/shared/src';
+import {
+  OptionComponent,
+  ReviewCardComponent,
+  SelectComponent,
+  ShortVideoCardComponent
+} from 'libs/shared/src';
 import { VideoCardData } from '@tmf/libs-shared/components/short-video-card/video-card.interface';
 import { StarRatingComponent } from '@tmf/libs-shared/components/star-rating/star-rating.component';
 import { ReviewData } from '@tmf/libs-shared/components/review-card/review.interface';
+import SwiperCore from 'swiper';
+import { FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-home-page',
@@ -16,10 +23,13 @@ import { ReviewData } from '@tmf/libs-shared/components/review-card/review.inter
     ShortVideoCardComponent,
     CardComponent,
     StarRatingComponent,
-    ReviewCardComponent
+    ReviewCardComponent,
+    SelectComponent,
+    OptionComponent
   ],
   templateUrl: './home-page.component.html',
-  styleUrl: './home-page.component.scss'
+  styleUrl: './home-page.component.scss',
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export default class HomePageComponent implements OnInit {
   public shortsSubjectOptions: string[] = [
@@ -40,25 +50,6 @@ export default class HomePageComponent implements OnInit {
   public courseDataSource: CardData[] = [];
   public reviewDataSource: ReviewData[] = [];
 
-  public visibleCards: number = 4;
-  public cardWidthPercentage: number = 25;
-
-  public shortsCurrentIndex = 0;
-  public coursesCurrentIndex = 0;
-  public reviewCurrentIndex = 0;
-
-  public get shortsTransformStyle() {
-    return `translateX(-${this.shortsCurrentIndex * this.cardWidthPercentage}%)`;
-  }
-
-  public get coursesTransformStyle() {
-    return `translateX(-${this.coursesCurrentIndex * this.cardWidthPercentage}%)`;
-  }
-
-  public get reviewTransformStyle() {
-    return `translateX(-${this.reviewCurrentIndex * 100}%)`;
-  }
-
   public howToUseStepImages: string[] = [
     './../../../assets/images/home-page/how-to-use/how-to-use-step-1.svg',
     './../../../assets/images/home-page/how-to-use/how-to-use-step-2.svg',
@@ -66,6 +57,13 @@ export default class HomePageComponent implements OnInit {
   ];
 
   public currentWindowSize: string = '';
+
+  control = new FormControl(false, [Validators.required]);
+
+  items = [
+    { label: '依關鍵字', value: 1 },
+    { label: '依類別', value: 2 }
+  ];
 
   constructor(private breakpointObserver: BreakpointObserver) {}
 
@@ -77,25 +75,14 @@ export default class HomePageComponent implements OnInit {
     this.breakpointObserver
       .observe([Breakpoints.Handset, Breakpoints.Tablet, Breakpoints.Web])
       .subscribe((result) => {
-        this.updateValueBasedOnBreakpoints(result.breakpoints);
+        // this.updateValueBasedOnBreakpoints(result.breakpoints);
+        const initialBreakpoints = {
+          [Breakpoints.Handset]: window.matchMedia(Breakpoints.Handset).matches,
+          [Breakpoints.Tablet]: window.matchMedia(Breakpoints.Tablet).matches,
+          [Breakpoints.Web]: window.matchMedia(Breakpoints.Web).matches
+        };
+        this.updateValueBasedOnBreakpoints(initialBreakpoints);
       });
-
-    const initialBreakpoints = {
-      [Breakpoints.Handset]: window.matchMedia(Breakpoints.Handset).matches,
-      [Breakpoints.Tablet]: window.matchMedia(Breakpoints.Tablet).matches,
-      [Breakpoints.Web]: window.matchMedia(Breakpoints.Web).matches
-    };
-    this.updateValueBasedOnBreakpoints(initialBreakpoints);
-
-    // if (this.currentWindowSize == 'Handset') {
-    //   setInterval(() => {
-    //     if (this.reviewCurrentIndex < this.reviewDataSource.length - 1) {
-    //       this.reviewCurrentIndex++;
-    //     } else {
-    //       this.reviewCurrentIndex = 0;
-    //     }
-    //   }, 3000);
-    // }
   }
 
   public updateValueBasedOnBreakpoints(breakpoints: {
@@ -104,54 +91,20 @@ export default class HomePageComponent implements OnInit {
     if (breakpoints[Breakpoints.Handset]) {
       // Do something for small screens
       this.currentWindowSize = 'Handset';
-      this.visibleCards = 1;
-      this.cardWidthPercentage = 100;
+
       // console.log('Handset');
     } else if (breakpoints[Breakpoints.Tablet]) {
       // Do something for medium screens
       this.currentWindowSize = 'Tablet';
-      this.visibleCards = 2;
-      this.cardWidthPercentage = 35;
+
       // console.log('Tablet');
     } else if (breakpoints[Breakpoints.Web]) {
       // Do something for large screens
       this.currentWindowSize = 'Web';
-      this.visibleCards = 4;
-      this.cardWidthPercentage = 25;
       // console.log('Web');
     }
 
     console.log(this.currentWindowSize);
-  }
-
-  public shortsPrev() {
-    if (this.shortsCurrentIndex > 0) {
-      this.shortsCurrentIndex--;
-    }
-  }
-
-  public shortsNext() {
-    if (
-      this.shortsCurrentIndex <
-      this.videoDataSource.length - this.visibleCards
-    ) {
-      this.shortsCurrentIndex++;
-    }
-  }
-
-  public coursesPrev() {
-    if (this.coursesCurrentIndex > 0) {
-      this.coursesCurrentIndex--;
-    }
-  }
-
-  public coursesNext() {
-    if (
-      this.coursesCurrentIndex <
-      this.courseDataSource.length - this.visibleCards
-    ) {
-      this.coursesCurrentIndex++;
-    }
   }
 }
 
@@ -313,7 +266,7 @@ const FakeCardData: CardData[] = [
   }
 ];
 
-export const FakeReviewData = [
+const FakeReviewData = [
   {
     nick_name: 'andersonlisa',
     avator_image: 'https://dummyimage.com/636x651',
