@@ -13,7 +13,7 @@ import { VideoCardData } from '@tmf/libs-shared/components/short-video-card/vide
 import { StarRatingComponent } from '@tmf/libs-shared/components/star-rating/star-rating.component';
 import { ReviewData } from '@tmf/libs-shared/components/review-card/review.interface';
 import SwiperCore from 'swiper';
-import { FormControl, Validators } from '@angular/forms';
+
 
 @Component({
   selector: 'app-home-page',
@@ -26,6 +26,7 @@ import { FormControl, Validators } from '@angular/forms';
     ReviewCardComponent,
     SelectComponent,
     OptionComponent
+
   ],
   templateUrl: './home-page.component.html',
   styleUrl: './home-page.component.scss',
@@ -49,6 +50,7 @@ export default class HomePageComponent implements OnInit {
   public videoDataSource: VideoCardData[] = [];
   public courseDataSource: CardData[] = [];
   public reviewDataSource: ReviewData[] = [];
+
 
   public howToUseStepImages: string[] = [
     './../../../assets/images/home-page/how-to-use/how-to-use-step-1.svg',
@@ -91,10 +93,12 @@ export default class HomePageComponent implements OnInit {
     if (breakpoints[Breakpoints.Handset]) {
       // Do something for small screens
       this.currentWindowSize = 'Handset';
+
       // console.log('Handset');
     } else if (breakpoints[Breakpoints.Tablet]) {
       // Do something for medium screens
       this.currentWindowSize = 'Tablet';
+
       // console.log('Tablet');
     } else if (breakpoints[Breakpoints.Web]) {
       // Do something for large screens
@@ -102,10 +106,11 @@ export default class HomePageComponent implements OnInit {
       // console.log('Web');
     }
 
+
     console.log(this.currentWindowSize);
   }
 
-}
+
 
 const FakeVideos: VideoCardData[] = [
   {
@@ -193,6 +198,7 @@ const FakeVideos: VideoCardData[] = [
 
 const FakeCardData: CardData[] = [
   {
+
     course_id: '1',
     mainImg: 'https://fakeimg.pl/300/',
     title: '課程名稱1',
