@@ -66,7 +66,7 @@ import { DialogService } from 'src/app/shared/services/dialog.service';
               ></tmf-input>
               <tmf-input
                 placeholder="密碼"
-                type=password
+                type="password"
                 [formControlName]="LoginFormKey.PASSWORD"
                 [errorMessage]="getErrorMessage(LoginFormKey.PASSWORD)"
                 [inputSize]="InputSize.Large"
