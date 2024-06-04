@@ -13,6 +13,7 @@ import { VideoCardData } from '@tmf/libs-shared/components/short-video-card/vide
 import { StarRatingComponent } from '@tmf/libs-shared/components/star-rating/star-rating.component';
 import { ReviewData } from '@tmf/libs-shared/components/review-card/review.interface';
 import SwiperCore from 'swiper';
+import { FormControl, Validators } from '@angular/forms';
 
 
 @Component({
@@ -109,7 +110,7 @@ export default class HomePageComponent implements OnInit {
 
     console.log(this.currentWindowSize);
   }
-
+}
 
 
 const FakeVideos: VideoCardData[] = [
@@ -271,7 +272,7 @@ const FakeCardData: CardData[] = [
   }
 ];
 
-export const FakeReviewData = [
+const FakeReviewData = [
   {
     nick_name: 'andersonlisa',
     avator_image: 'https://dummyimage.com/636x651',
@@ -328,4 +329,4 @@ export const FakeReviewData = [
     comment: 'Option price suddenly.',
     create_datetime: new Date('2024-01-15T20:49:07')
   }
-];
+]
