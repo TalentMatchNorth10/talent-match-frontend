@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import {
   Component,
   ElementRef,
+  Input,
   ViewChild,
   WritableSignal,
   inject,
@@ -9,6 +10,7 @@ import {
 } from '@angular/core';
 import { DialogService } from 'src/app/shared/services/dialog.service';
 import { VideoDialogComponent } from '../dialogs/video-dialog/video-dialog.component';
+import { VideoCardData } from '../short-video-card/video-card.interface';
 
 @Component({
   selector: 'tmf-video-card',
@@ -18,6 +20,8 @@ import { VideoDialogComponent } from '../dialogs/video-dialog/video-dialog.compo
   styleUrl: './video-card.component.css'
 })
 export class VideoCardComponent {
+  @Input('data')
+  data!: VideoCardData;
   @ViewChild('videoPlayer', { static: true })
   videoPlayer!: ElementRef<HTMLVideoElement>;
   private dialogService = inject(DialogService);
@@ -55,7 +59,7 @@ export class VideoCardComponent {
   }
 
   openVideoDialog() {
-    this.dialogService.openVideoDialog(VideoDialogComponent);
+    this.dialogService.openVideoDialog(VideoDialogComponent,this.data);
     this.videoPlayer.nativeElement.pause();
     this.isPlaying.set(false);
   }

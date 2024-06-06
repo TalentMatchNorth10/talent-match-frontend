@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
   template: `
     @if (data) {
       <div
-        class="m-auto w-[259px] md:w-[302px] rounded-xl overflow-hidden bg-white shadow-lg relative group"
+        class="m-auto lg:w-[302px] md:w-[320px] w-[320px] rounded-xl overflow-hidden bg-white shadow-lg relative group"
       >
         <div class="w-full h-[180px] bg-tmf-gray-4">
           @if (data.avatar) {
