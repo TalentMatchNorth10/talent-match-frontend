@@ -18,7 +18,13 @@
         <div class="mb-6 text-gray-900 lg:text-lg">
           每個人都擁有獨特的才藝與創造力。因此，我們提供一個專業且多元平台，讓熱愛藝術、音樂、手工藝以及創新技術的你，到志同道合的夥伴及專業導師。
         </div>
-        <div
+        <tmf-input
+          [formControl]="control"
+          [inputType]="InputType.SearchByType"
+          [options]="items"
+          (clickSearch)="search($event)"
+        ></tmf-input>
+        <!-- <div
           class="search-box-container flex w-full max-w-lg overflow-hidden rounded border border-gray-300"
         >
           <tmf-select class="bg-white text-gray-700" [formControl]="control">
@@ -44,7 +50,7 @@
               />
             </svg>
           </button>
-        </div>
+        </div> -->
       </div>
     </div>
   </section>
@@ -86,26 +92,28 @@
         </button>
       </div>
     </div>
-    <div class="flex h-[530px] w-full justify-center">
+    <div class="flex h-full w-full justify-center">
       <div class="lg:w-9:12 w-10/12">
         <ng-container [ngSwitch]="currentWindowSize">
           <ng-container *ngSwitchCase="'Handset'">
-            <swiper-container slides-per-view="1" navigation="true">
+            <swiper-container [] slides-per-view="2" navigation="true">
               <ng-container *ngFor="let video of videoDataSource">
                 <swiper-slide>
-                  <div class="m-auto h-[530px] w-full p-2">
-                    <app-short-video-card [data]="video"></app-short-video-card>
+                  <div class="m-auto h-full w-full p-2">
+                    <!-- <app-short-video-card [data]="video"></app-short-video-card> -->
+                    <tmf-video-card [data]="video"></tmf-video-card>
                   </div>
                 </swiper-slide>
               </ng-container>
             </swiper-container>
           </ng-container>
           <ng-container *ngSwitchCase="'Tablet'">
-            <swiper-container slides-per-view="3" navigation="true">
+            <swiper-container slides-per-view="2" navigation="true">
               <ng-container *ngFor="let video of videoDataSource">
                 <swiper-slide>
-                  <div class="m-auto h-[530px] w-full p-2">
-                    <app-short-video-card [data]="video"></app-short-video-card>
+                  <div class="m-auto h-full w-full p-2">
+                    <!-- <app-short-video-card [data]="video"></app-short-video-card> -->
+                    <tmf-video-card [data]="video"></tmf-video-card>
                   </div>
                 </swiper-slide>
               </ng-container>
@@ -115,8 +123,9 @@
             <swiper-container slides-per-view="4" navigation="true">
               <ng-container *ngFor="let video of videoDataSource">
                 <swiper-slide>
-                  <div class="m-auto h-[530px] w-full p-2">
-                    <app-short-video-card [data]="video"></app-short-video-card>
+                  <div class="m-auto h-full w-full p-2">
+                    <!-- <app-short-video-card [data]="video"></app-short-video-card> -->
+                    <tmf-video-card [data]="video"></tmf-video-card>
                   </div>
                 </swiper-slide>
               </ng-container>
@@ -157,7 +166,7 @@
                 </swiper-container>
               </ng-container>
               <ng-container *ngSwitchCase="'Tablet'">
-                <swiper-container slides-per-view="3" navigation="true">
+                <swiper-container slides-per-view="2" navigation="true">
                   <ng-container *ngFor="let courseItem of courseDataSource">
                     <swiper-slide>
                       <div class="m-auto h-[530px] w-full flex-shrink-0 p-2">
@@ -208,9 +217,25 @@
     <div class="my-8 flex w-full flex-col items-center gap-6">
       <ng-container [ngSwitch]="currentWindowSize">
         <ng-container *ngSwitchCase="'Handset'">
+          <div
+            class="h-[160px] w-[351px] overflow-hidden rounded-xl bg-gray-100/30 shadow-lg backdrop-blur-md"
+          >
+            <div class="p-6">
+              <div class="flex flex-col items-center gap-2">
+                <div class="text-xl lg:text-2xl">使用好評高達</div>
+                <div class="text-5xl lg:text-7xl">4.7</div>
+                <tmf-star-rating
+                  [rating]="4.7"
+                  [starSize]="'1.5rem'"
+                ></tmf-star-rating>
+              </div>
+            </div>
+          </div>
           <div class="relative w-4/5 overflow-hidden">
             <swiper-container slides-per-view="1">
-              <ng-container *ngFor="let review of reviewDataSource">
+              <ng-container
+                *ngFor="let review of reviewDataSource; let i = index"
+              >
                 <swiper-slide>
                   <div class="w-full flex-shrink-0 p-2 md:w-1/3 lg:w-1/4">
                     <app-review-card [data]="review"></app-review-card>
@@ -221,10 +246,53 @@
           </div>
         </ng-container>
         <ng-container *ngSwitchDefault>
-          <div class="flex w-9/12 flex-wrap justify-center gap-3">
+          <div class="flex flex-col gap-6">
+            <div class="flex gap-6">
+              <div
+                class="h-[220px] w-[302px] overflow-hidden rounded-xl bg-gray-100/30 shadow-lg backdrop-blur-md"
+              >
+                <div class="p-6">
+                  <div class="flex flex-col items-center gap-2">
+                    <div class="text-2xl">使用好評高達</div>
+                    <div class="text-7xl">4.7</div>
+                    <tmf-star-rating
+                      [rating]="4.7"
+                      [starSize]="'1.5rem'"
+                    ></tmf-star-rating>
+                  </div>
+                </div>
+              </div>
+              <ng-container
+                *ngFor="let review of reviewDataSource | slice: 0 : 2"
+              >
+                <div>
+                  <app-review-card [data]="review"></app-review-card>
+                </div>
+              </ng-container>
+            </div>
+            <div class="flex gap-6 justify-center">
+              <ng-container
+                *ngFor="let review of reviewDataSource | slice: 2 : 4"
+              >
+                <div>
+                  <app-review-card [data]="review"></app-review-card>
+                </div>
+              </ng-container>
+            </div>
+            <div class="flex gap-6 justify-end">
+              <ng-container
+                *ngFor="let review of reviewDataSource | slice: 4 : 6"
+              >
+                <div>
+                  <app-review-card [data]="review"></app-review-card>
+                </div>
+              </ng-container>
+            </div>
+          </div>
+          <!-- <div class="flex w-9/12 flex-wrap justify-center gap-3">
             <div class="basis-1/4">
               <div
-                class="h-full w-full max-w-xs overflow-hidden rounded bg-gray-400/25 shadow-lg"
+                class="h-[220px] w-[302px] overflow-hidden rounded-xl bg-gray-100/30 shadow-lg backdrop-blur-md"
               >
                 <div class="p-6">
                   <div class="flex flex-col items-center gap-2">
@@ -241,11 +309,14 @@
             <ng-container
               *ngFor="let review of reviewDataSource; let i = index"
             >
-              <div class="basis-1/4">
+              <ng-container [ngSwitch]="i">
+                <ng-container *ngSwitchCase="i < 2"> </ng-container>
+              </ng-container>
+              <div>
                 <app-review-card [data]="review"></app-review-card>
               </div>
             </ng-container>
-          </div>
+          </div> -->
         </ng-container>
       </ng-container>
     </div>
