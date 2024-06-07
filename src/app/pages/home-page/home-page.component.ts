@@ -74,7 +74,8 @@ export default class HomePageComponent implements OnInit {
     { label: '依類別', value: 2 }
   ];
 
-  constructor(private breakpointObserver: BreakpointObserver,
+  constructor(
+    private breakpointObserver: BreakpointObserver,
     protected readonly router: Router
   ) {}
 
@@ -116,15 +117,15 @@ export default class HomePageComponent implements OnInit {
     console.log(this.currentWindowSize);
   }
 
-    search(event: any) {
+  search(event: any) {
     console.log(event);
   }
 
-  navigateToSignUp(){
-this.router.navigate(['sign-up']);
+  navigateToSignUp() {
+    this.router.navigate(['sign-up']);
   }
 
-  navigateToTeacherApply(){
+  navigateToTeacherApply() {
     this.router.navigate(['teacher-apply']);
   }
 }
@@ -329,7 +330,7 @@ export const FakeReviewData = [
     rate: 4.9,
     comment: 'Left order talk management condition receive.',
     create_datetime: new Date('2024-04-06T23:52:02')
-  },
+  }
   // {
   //   nick_name: 'scott59',
   //   avator_image: 'https://dummyimage.com/636x651',
