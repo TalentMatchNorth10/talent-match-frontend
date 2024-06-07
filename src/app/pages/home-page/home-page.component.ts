@@ -17,6 +17,7 @@ import { ReviewData } from '@tmf/libs-shared/components/review-card/review.inter
 import SwiperCore from 'swiper';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { VideoCardComponent } from '@tmf/libs-shared/components/video-card/video-card.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home-page',
@@ -73,7 +74,9 @@ export default class HomePageComponent implements OnInit {
     { label: '依類別', value: 2 }
   ];
 
-  constructor(private breakpointObserver: BreakpointObserver) {}
+  constructor(private breakpointObserver: BreakpointObserver,
+    protected readonly router: Router
+  ) {}
 
   public ngOnInit() {
     this.videoDataSource = FakeVideos;
@@ -115,6 +118,14 @@ export default class HomePageComponent implements OnInit {
 
     search(event: any) {
     console.log(event);
+  }
+
+  navigateToSignUp(){
+this.router.navigate(['sign-up']);
+  }
+
+  navigateToTeacherApply(){
+    this.router.navigate(['teacher-apply']);
   }
 }
 
