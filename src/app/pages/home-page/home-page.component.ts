@@ -293,6 +293,7 @@ const FakeCardData: CardData[] = [
     ratingCount: 100
   },
   {
+    course_id: '2',
     mainImg: 'https://fakeimg.pl/300/',
     title: '課程名稱2',
     content: '課程內容2',
@@ -307,6 +308,7 @@ const FakeCardData: CardData[] = [
     course_id: '2'
   },
   {
+    course_id: '3',
     mainImg: 'https://fakeimg.pl/300/',
     title: '課程名稱2',
     content:
@@ -322,6 +324,7 @@ const FakeCardData: CardData[] = [
     course_id: '3'
   },
   {
+    course_id: '4',
     mainImg: 'https://fakeimg.pl/300/',
     title: '課程名稱2',
     content: '課程內容2',
@@ -336,6 +339,7 @@ const FakeCardData: CardData[] = [
     course_id: '4'
   },
   {
+    course_id: '5',
     mainImg: 'https://fakeimg.pl/300/',
     title: '課程名稱2',
     content: '課程內容2',
