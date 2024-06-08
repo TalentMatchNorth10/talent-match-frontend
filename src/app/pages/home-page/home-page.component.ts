@@ -303,7 +303,8 @@ const FakeCardData: CardData[] = [
     main_category: '主分類2',
     sub_category: '次分類2',
     rating: 4.5,
-    ratingCount: 100
+    ratingCount: 100,
+    course_id: '2'
   },
   {
     mainImg: 'https://fakeimg.pl/300/',
@@ -317,7 +318,8 @@ const FakeCardData: CardData[] = [
     main_category: '主分類2',
     sub_category: '次分類2',
     rating: 4.5,
-    ratingCount: 100
+    ratingCount: 100,
+    course_id: '3'
   },
   {
     mainImg: 'https://fakeimg.pl/300/',
@@ -330,7 +332,8 @@ const FakeCardData: CardData[] = [
     main_category: '主分類2',
     sub_category: '次分類2',
     rating: 4.5,
-    ratingCount: 100
+    ratingCount: 100,
+    course_id: '4'
   },
   {
     mainImg: 'https://fakeimg.pl/300/',
@@ -343,7 +346,8 @@ const FakeCardData: CardData[] = [
     main_category: '主分類2',
     sub_category: '次分類2',
     rating: 4.5,
-    ratingCount: 100
+    ratingCount: 100,
+    course_id: '5'
   }
 ];
 
