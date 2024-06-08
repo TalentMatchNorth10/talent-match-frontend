@@ -13,6 +13,7 @@ import { CardData } from '@tmf/libs-shared/components/card/card.interface';
 import {
   InputComponent,
   InputType,
+
   OptionComponent,
   ReviewCardComponent,
   SelectComponent,
@@ -26,12 +27,14 @@ import { VideoCardComponent } from '@tmf/libs-shared/components/video-card/video
 import { Router } from '@angular/router';
 import { SwiperOptions } from 'swiper/types';
 
+
 @Component({
   selector: 'app-home-page',
   standalone: true,
   imports: [
     CommonModule,
     ReactiveFormsModule,
+
     ShortVideoCardComponent,
     CardComponent,
     StarRatingComponent,
@@ -40,6 +43,7 @@ import { SwiperOptions } from 'swiper/types';
     OptionComponent,
     InputComponent,
     VideoCardComponent
+
   ],
   templateUrl: './home-page.component.html',
   styleUrl: './home-page.component.scss',
@@ -75,6 +79,7 @@ export default class HomePageComponent implements OnInit, AfterViewInit {
   public currentWindowSize: string = '';
 
   control = new FormControl('準備好啟程了嗎？', [Validators.required]);
+
 
   items = [
     { label: '依關鍵字', value: 1 },
@@ -127,6 +132,7 @@ export default class HomePageComponent implements OnInit, AfterViewInit {
     protected readonly router: Router
   ) {}
 
+
   public ngOnInit() {
     this.videoDataSource = FakeVideos;
     this.courseDataSource = FakeCardData;
@@ -158,6 +164,7 @@ export default class HomePageComponent implements OnInit, AfterViewInit {
     } catch (error) {
       console.error('Swiper initialization failed', error);
     }
+
   }
 
   public updateValueBasedOnBreakpoints(breakpoints: {
@@ -166,10 +173,12 @@ export default class HomePageComponent implements OnInit, AfterViewInit {
     if (breakpoints[Breakpoints.Handset]) {
       // Do something for small screens
       this.currentWindowSize = 'Handset';
+
       // console.log('Handset');
     } else if (breakpoints[Breakpoints.Tablet]) {
       // Do something for medium screens
       this.currentWindowSize = 'Tablet';
+
       // console.log('Tablet');
     } else if (breakpoints[Breakpoints.Web]) {
       // Do something for large screens
@@ -190,10 +199,12 @@ export default class HomePageComponent implements OnInit, AfterViewInit {
 
   navigateToTeacherApply() {
     this.router.navigate(['teacher-apply']);
+
   }
 }
 
 const FakeVideos: VideoCardData[] = [
+
   // {
   //   video_id: '1',
   //   name: 'Introduction to JavaScript',
@@ -204,6 +215,7 @@ const FakeVideos: VideoCardData[] = [
   //   teacher_id: 't-1',
   //   course_id: 'c-1'
   // },
+
   {
     video_id: '2',
     name: 'Cooking Italian Pasta',
@@ -352,6 +364,7 @@ const FakeCardData: CardData[] = [
 ];
 
 export const FakeReviewData = [
+
   {
     nick_name: 'andersonlisa',
     avator_image: 'https://dummyimage.com/636x651',
@@ -408,4 +421,5 @@ export const FakeReviewData = [
   //   comment: 'Option price suddenly.',
   //   create_datetime: new Date('2024-01-15T20:49:07')
   // }
+
 ];

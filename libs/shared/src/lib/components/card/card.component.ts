@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
     @if (data) {
       <div
         class="m-auto lg:w-[302px] md:w-[320px] w-[320px] rounded-xl overflow-hidden bg-white shadow-lg relative group"
+
       >
         <div class="w-full h-[180px] bg-tmf-gray-4">
           @if (data.avatar) {
