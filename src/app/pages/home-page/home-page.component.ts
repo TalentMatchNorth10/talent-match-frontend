@@ -304,8 +304,7 @@ const FakeCardData: CardData[] = [
     main_category: '主分類2',
     sub_category: '次分類2',
     rating: 4.5,
-    ratingCount: 100,
-    course_id: '2'
+    ratingCount: 100
   },
   {
     course_id: '3',
@@ -320,8 +319,7 @@ const FakeCardData: CardData[] = [
     main_category: '主分類2',
     sub_category: '次分類2',
     rating: 4.5,
-    ratingCount: 100,
-    course_id: '3'
+    ratingCount: 100
   },
   {
     course_id: '4',
@@ -335,8 +333,7 @@ const FakeCardData: CardData[] = [
     main_category: '主分類2',
     sub_category: '次分類2',
     rating: 4.5,
-    ratingCount: 100,
-    course_id: '4'
+    ratingCount: 100
   },
   {
     course_id: '5',
@@ -350,8 +347,7 @@ const FakeCardData: CardData[] = [
     main_category: '主分類2',
     sub_category: '次分類2',
     rating: 4.5,
-    ratingCount: 100,
-    course_id: '5'
+    ratingCount: 100
   }
 ];
 
