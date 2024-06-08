@@ -96,7 +96,13 @@
       <div class="lg:w-9:12 w-10/12">
         <ng-container [ngSwitch]="currentWindowSize">
           <ng-container *ngSwitchCase="'Handset'">
-            <swiper-container [] slides-per-view="2" navigation="true">
+            <swiper-container
+              #swiperElement
+              init="false"
+              slides-per-view="2"
+              navigation="false"
+              spaceBetween="10"
+            >
               <ng-container *ngFor="let video of videoDataSource">
                 <swiper-slide>
                   <div class="m-auto h-full w-full p-2">
@@ -108,7 +114,13 @@
             </swiper-container>
           </ng-container>
           <ng-container *ngSwitchCase="'Tablet'">
-            <swiper-container slides-per-view="2" navigation="true">
+            <swiper-container
+              #swiperElement
+              init="false"
+              slides-per-view="2"
+              navigation="false"
+              spaceBetween="10"
+            >
               <ng-container *ngFor="let video of videoDataSource">
                 <swiper-slide>
                   <div class="m-auto h-full w-full p-2">
@@ -120,7 +132,12 @@
             </swiper-container>
           </ng-container>
           <ng-container *ngSwitchDefault>
-            <swiper-container slides-per-view="4" navigation="true">
+            <swiper-container
+              #swiperElement
+              init="false"
+              slides-per-view="4"
+              navigation="true"
+            >
               <ng-container *ngFor="let video of videoDataSource">
                 <swiper-slide>
                   <div class="m-auto h-full w-full p-2">
@@ -146,11 +163,15 @@
         推薦課程
       </div>
       <div class="mt-8 py-8">
-        <div class="flex w-full justify-center">
-          <div class="lg:w-9:12 w-10/12">
+        <div class="w-full h-full">
+          <div class="lg:w-9:12 w-10/12 m-auto">
             <ng-container [ngSwitch]="currentWindowSize">
               <ng-container *ngSwitchCase="'Handset'">
-                <swiper-container slides-per-view="1" navigation="true">
+                <swiper-container
+                  #swiperElementCourse
+                  slides-per-view="1"
+                  navigation="false"
+                >
                   <ng-container *ngFor="let courseItem of courseDataSource">
                     <swiper-slide>
                       <div class="m-auto h-[530px] w-full flex-shrink-0 p-2">
@@ -166,7 +187,11 @@
                 </swiper-container>
               </ng-container>
               <ng-container *ngSwitchCase="'Tablet'">
-                <swiper-container slides-per-view="2" navigation="true">
+                <swiper-container
+                  #swiperElementCourse
+                  slides-per-view="2"
+                  navigation="false"
+                >
                   <ng-container *ngFor="let courseItem of courseDataSource">
                     <swiper-slide>
                       <div class="m-auto h-[530px] w-full flex-shrink-0 p-2">
@@ -182,16 +207,19 @@
                 </swiper-container>
               </ng-container>
               <ng-container *ngSwitchDefault>
-                <swiper-container slides-per-view="4" navigation="true">
+                <swiper-container
+                  #swiperElementCourse
+                  init="false"
+                  slides-per-view="4"
+                  navigation="true"
+                >
                   <ng-container *ngFor="let courseItem of courseDataSource">
                     <swiper-slide>
-                      <div class="m-auto h-[530px] w-full flex-shrink-0 p-2">
-                        <div class="w-full flex-shrink-0 p-2 md:w-1/3 lg:w-1/4">
-                          <tmf-card
-                            [data]="courseItem"
-                            [hoverEffect]="false"
-                          ></tmf-card>
-                        </div>
+                      <div class="m-auto h-full w-full p-2">
+                        <tmf-card
+                          [data]="courseItem"
+                          [hoverEffect]="false"
+                        ></tmf-card>
                       </div>
                     </swiper-slide>
                   </ng-container>
@@ -331,26 +359,34 @@
     </div>
   </section>
   <section class="md:h-[12.5rem] lg:h-[12.5rem] h-auto lg:mb-0 -mb-8">
-    <div class="w-full flex lg:flex-row md:flex-row flex-col items-center justify-center gap-6">
-      <div class="lg:w-[520px] lg:h-[225px] w-[325px] h-[190px] rounded-2xl lg:bg-auto lg:bg-[size: 100%] bg-[size:60%] bg-[url('./assets/images/home-page/cta/cta-signup.svg')] bg-no-repeat bg-right-top shadow-md bg-white z-[999]">
+    <div
+      class="w-full flex lg:flex-row md:flex-row flex-col items-center justify-center gap-6"
+    >
+      <div
+        class="lg:w-[520px] lg:h-[225px] w-[325px] h-[190px] rounded-2xl lg:bg-auto lg:bg-[size: 100%] bg-[size:60%] bg-[url('./assets/images/home-page/cta/cta-signup.svg')] bg-no-repeat bg-right-top shadow-md bg-white z-[999]"
+      >
         <div class="h-full px-5 py-6">
           <div class="flex flex-col h-full justify-end gap-4">
-            <div class="ld:text-3xl  text-2xl">成為會員</div>
+            <div class="ld:text-3xl text-2xl">成為會員</div>
             <div class="flex items-center">
               <div class="lg:w-11/12 w-4/5">
                 享有第一時間課程資訊上架消息，用最優惠的價格購買課程，同時能與老師一對一教學。
               </div>
               <div class="h-full flex justify-end items-center flex-grow">
-            <span
-              class="material-icons-outlined text-[20px] text-tmf-gray-4 cursor-pointer" (click)="navigateToSignUp()">
-              east
-            </span>
-          </div>
+                <span
+                  class="material-icons-outlined text-[20px] text-tmf-gray-4 cursor-pointer"
+                  (click)="navigateToSignUp()"
+                >
+                  east
+                </span>
+              </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="lg:w-[520px] lg:h-[225px] w-[325px] h-[190px]  rounded-2xl bg-[url('./assets/images/home-page/cta/cta-teach.svg')] lg:bg-[size: 100%] bg-[size:60%] bg-no-repeat bg-right-top shadow-md bg-white z-[999]">
+      <div
+        class="lg:w-[520px] lg:h-[225px] w-[325px] h-[190px] rounded-2xl bg-[url('./assets/images/home-page/cta/cta-teach.svg')] lg:bg-[size: 100%] bg-[size:60%] bg-no-repeat bg-right-top shadow-md bg-white z-[999]"
+      >
         <div class="h-full px-5 py-6">
           <div class="flex flex-col h-full justify-end gap-4">
             <div class="lg:text-3xl text-2xl">成為教師</div>
@@ -359,11 +395,13 @@
                 每個人都有擅長的知識技能，足夠的熱情創造更多附加價值，一起將這些技能分享給全世界吧！
               </div>
               <div class="h-full flex justify-end items-center flex-grow">
-            <span
-              class="material-icons-outlined text-[20px] text-tmf-gray-4 cursor-pointer" (click)="navigateToTeacherApply()">
-              east
-            </span>
-          </div>
+                <span
+                  class="material-icons-outlined text-[20px] text-tmf-gray-4 cursor-pointer"
+                  (click)="navigateToTeacherApply()"
+                >
+                  east
+                </span>
+              </div>
             </div>
           </div>
         </div>
