@@ -358,35 +358,6 @@
               </ng-container>
             </div>
           </div>
-          <!-- <div class="flex w-9/12 flex-wrap justify-center gap-3">
-            <div class="basis-1/4">
-              <div
-                class="h-[220px] w-[302px] overflow-hidden rounded-xl bg-gray-100/30 shadow-lg backdrop-blur-md"
-
-              >
-                <div class="p-6">
-                  <div class="flex flex-col items-center gap-2">
-                    <div class="text-2xl">使用好評高達</div>
-                    <div class="text-7xl">4.7</div>
-                    <tmf-star-rating
-                      [rating]="4.7"
-                      [starSize]="'1.5rem'"
-                    ></tmf-star-rating>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <ng-container
-              *ngFor="let review of reviewDataSource; let i = index"
-            >
-              <ng-container [ngSwitch]="i">
-                <ng-container *ngSwitchCase="i < 2"> </ng-container>
-              </ng-container>
-              <div>
-                <app-review-card [data]="review"></app-review-card>
-              </div>
-            </ng-container>
-          </div> -->
         </ng-container>
       </ng-container>
     </div>
@@ -446,18 +417,5 @@
               </div>
             </div>
           </div>
-        </ng-container>
-      </ng-container>
     </div>
-  </section>
-
-  <section>
-    <div class="flex w-full flex-col items-center">
-      <ng-container *ngFor="let img of howToUseStepImages">
-        <div>
-          <img [src]="img" alt="" />
-        </div>
-      </ng-container>
-    </div>
-  </section>
 </div>

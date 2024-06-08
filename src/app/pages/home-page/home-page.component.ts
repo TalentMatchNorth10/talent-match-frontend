@@ -13,7 +13,6 @@ import { CardData } from '@tmf/libs-shared/components/card/card.interface';
 import {
   InputComponent,
   InputType,
-
   OptionComponent,
   ReviewCardComponent,
   SelectComponent,
@@ -26,7 +25,6 @@ import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { VideoCardComponent } from '@tmf/libs-shared/components/video-card/video-card.component';
 import { Router } from '@angular/router';
 import { SwiperOptions } from 'swiper/types';
-
 
 @Component({
   selector: 'app-home-page',
@@ -43,7 +41,6 @@ import { SwiperOptions } from 'swiper/types';
     OptionComponent,
     InputComponent,
     VideoCardComponent
-
   ],
   templateUrl: './home-page.component.html',
   styleUrl: './home-page.component.scss',
@@ -79,7 +76,6 @@ export default class HomePageComponent implements OnInit, AfterViewInit {
   public currentWindowSize: string = '';
 
   control = new FormControl('準備好啟程了嗎？', [Validators.required]);
-
 
   items = [
     { label: '依關鍵字', value: 1 },
@@ -132,7 +128,6 @@ export default class HomePageComponent implements OnInit, AfterViewInit {
     protected readonly router: Router
   ) {}
 
-
   public ngOnInit() {
     this.videoDataSource = FakeVideos;
     this.courseDataSource = FakeCardData;
@@ -164,7 +159,6 @@ export default class HomePageComponent implements OnInit, AfterViewInit {
     } catch (error) {
       console.error('Swiper initialization failed', error);
     }
-
   }
 
   public updateValueBasedOnBreakpoints(breakpoints: {
@@ -199,12 +193,10 @@ export default class HomePageComponent implements OnInit, AfterViewInit {
 
   navigateToTeacherApply() {
     this.router.navigate(['teacher-apply']);
-
   }
 }
 
 const FakeVideos: VideoCardData[] = [
-
   // {
   //   video_id: '1',
   //   name: 'Introduction to JavaScript',
@@ -364,7 +356,6 @@ const FakeCardData: CardData[] = [
 ];
 
 export const FakeReviewData = [
-
   {
     nick_name: 'andersonlisa',
     avator_image: 'https://dummyimage.com/636x651',
@@ -421,5 +412,4 @@ export const FakeReviewData = [
   //   comment: 'Option price suddenly.',
   //   create_datetime: new Date('2024-01-15T20:49:07')
   // }
-
 ];
