@@ -35,6 +35,6 @@
 }
 
 .option-container {
-  @apply mt-[10px] w-full rounded-lg bg-white py-3 shadow-lg;
+  @apply mt-[10px] max-h-[300px] w-full overflow-y-auto rounded-lg bg-white py-3 shadow-lg;
   width: calc(100% - 40px);
 }

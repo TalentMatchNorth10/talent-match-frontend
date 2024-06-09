@@ -1,0 +1,78 @@
+<div class="mx-auto flex h-fit max-w-[1280px] flex-col gap-6 px-3 pb-[100px]">
+  <div class="flex flex-col items-center gap-3">
+    <div class="w-[120px] lg:w-[160px]">
+      <img
+        class="w-full"
+        src="assets/images/order-completed.png"
+        alt="order-completed"
+      />
+    </div>
+    <p class="text-3xl font-bold text-tmf-gray-2">感謝您的購買!</p>
+  </div>
+
+  <div class="mb-[60px] flex flex-col gap-3">
+    <div class="flex flex-col items-center text-tmf-gray-2">
+      <p class="mb-2 text-xl font-semibold">訂單編號：</p>
+      <p class="text-lg">{{ orderId }}</p>
+    </div>
+    <div class="flex flex-col items-center text-lg text-tmf-gray-2">
+      <p class="mb-2 text-xl font-semibold">訂單明細：</p>
+      @if (orderList.length) {
+        <div class="border border-tmf-gray-3 p-5">
+          @for (item of orderList; track item) {
+            <div class="flex h-[90px] items-center gap-2">
+              <div
+                class="h-[80px] w-[120px] flex-shrink-0 md:h-[90px] md:w-[180px]"
+              >
+                <img
+                  class="h-full w-full object-cover"
+                  [src]="item.image"
+                  alt="main_image"
+                />
+              </div>
+              <div class="flex h-full flex-col gap-2">
+                <div class="flex items-center gap-1">
+                  <h3 class="line-clamp-1 text-[16px] font-bold leading-5">
+                    {{ item.name }}
+                  </h3>
+                  <div
+                    class="hidden whitespace-nowrap rounded-md bg-tmf-gray-5 px-[6px] py-[2px] text-[12px] leading-4 md:block"
+                  >
+                    {{ item.main_category }}
+                  </div>
+                  <div
+                    class="hidden whitespace-nowrap rounded-md bg-tmf-gray-5 px-[6px] py-[2px] text-[12px] leading-4 md:block"
+                  >
+                    {{ item.sub_category }}
+                  </div>
+                </div>
+                <p class="line-clamp-3 text-[13px] leading-4 md:text-sm">
+                  {{ item.content }}
+                </p>
+              </div>
+              <div class="flex h-full flex-col items-end justify-center gap-3">
+                <h3 class="whitespace-nowrap text-[16px] font-bold leading-5">
+                  NT${{ item.price.toLocaleString() }}
+                </h3>
+                <p class="text-sm">{{ item.quantity }}堂課</p>
+              </div>
+            </div>
+          }
+        </div>
+      }
+    </div>
+  </div>
+
+  <div class="flex items-center justify-center gap-5">
+    <button
+      class="flex h-[50px] w-[240px] items-center justify-center rounded-md border border-tmf-gray-2 px-3 text-tmf-gray-2"
+    >
+      繼續選購
+    </button>
+    <button
+      class="flex h-[50px] w-[240px] items-center justify-center rounded-md bg-tmf-orange-1 px-3 text-white"
+    >
+      預約課程
+    </button>
+  </div>
+</div>

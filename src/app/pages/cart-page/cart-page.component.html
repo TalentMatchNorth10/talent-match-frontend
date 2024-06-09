@@ -1,88 +1,23 @@
-<div class="mt-[40px] mb-6 h-[56px] px-3 max-w-[1280px] mx-auto">
+<div class="mx-auto mb-6 mt-[40px] h-[56px] max-w-[1280px] px-3">
   <app-stepper [stepList]="stepList" [currentStep]="currentStep"></app-stepper>
 </div>
 
 @switch (currentStep) {
   @case (Step.Step1) {
-    <div
-      class="mb-[48px] lg:mb-[80px] flex items-start gap-6 px-3 max-w-[1280px] mx-auto"
-    >
-      <app-cart-table
-        (selectChange)="handleSelectedChange($event)"
-        (removeItem)="handleRemoveItem($event)"
-        [dataSource]="cartDataSource"
-        class="flex-grow"
-      ></app-cart-table>
-      <div class="p-6 shadow-lg rounded-lg w-[300px] hidden lg:block">
-        <p class="text-[20px] leading-7 text-tmf-gray-2 mb-[48px]">我的訂單</p>
-        <div class="text-end mb-6">
-          <p class="text-[18px] leading-7 text-tmf-gray-3">
-            共計 {{ totalCount }} 項課程
-          </p>
-          <p class="text-tmf-gray-2">
-            <span class="text-[16px] leading-6 mb-3 mr-[2px]">總計</span>
-            <span class="text-[36px] leading-10 font-medium"
-              >NT${{ totalAmount }}</span
-            >
-          </p>
-        </div>
-        <div class="flex flex-col gap-4">
-          @if (totalCount) {
-            <button
-              class="h-[52px] w-full flex items-center justify-center bg-tmf-orange-1 text-white rounded-lg"
-            >
-              前往結帳
-            </button>
-          }
-          <button
-            class="h-[52px] w-full flex items-center justify-center border border-tmf-orange-1 text-tmf-orange-1 rounded-lg"
-          >
-            繼續購物
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <div
-      class="bg-tmf-gray-7 w-full flex flex-col justify-center pt-[40px] pb-[128px] lg:pb-[80px] px-3 relative"
-    >
-      <div class="max-w-[1280px] mx-auto w-full">
-        <div class="flex items-center gap-2 mb-6">
-          <img
-            class="w-6 h-6 shrink-0"
-            src="assets/images/cart-collect.png"
-            alt="cart-collect"
-          />
-          <h3 class="text-[24px] leading-8 text-tmf-gray-2 font-bold">
-            我的收藏
-          </h3>
-        </div>
-        <div class="flex gap-4 md:gap-6 overflow-auto w-full">
-          @for (courseItem of courseDataSource; track courseItem) {
-            <tmf-card [data]="courseItem"></tmf-card>
-          }
-        </div>
-      </div>
-      <div
-        class="py-3 px-4 bg-white rounded-t-xl shadow-lg flex justify-between items-end absolute bottom-0 left-0 w-full lg:hidden"
-      >
-        <div class="flex flex-col gap-2">
-          <p class="text-[14px] leading-5 text-tmf-gray-3 font-medium">
-            共計 {{ totalCount }} 項課程
-          </p>
-          <p class="text-[24px] leading-8 text-tmf-gray-2 font-bold">
-            <span class="text-[16px] leading-6 font-normal">總計</span> NT$
-            {{ totalAmount }}
-          </p>
-        </div>
-        <button
-          class="bg-tmf-orange-1 rounded-lg text-white flex justify-center items-center h-[48px] px-4"
-        >
-          前往結帳
-        </button>
-      </div>
-    </div>
+    <app-cart-list
+      [cartDataSource]="cartDataSource"
+      [courseDataSource]="courseDataSource"
+      (removeItem)="handleRemoveItem($event)"
+      (selectChange)="handleSelectedChange($event)"
+      (stepChange)="currentStep = Step.Step2"
+    ></app-cart-list>
   }
-  @case (Step.Step2) {}
-  @case (Step.Step3) {}
+  @case (Step.Step2) {
+    <app-checkout [selectedArr]="selectedArr"></app-checkout>
+  }
+  @case (Step.Step3) {
+    <app-order-completed
+      (stepChange)="currentStep = Step.Step1"
+    ></app-order-completed>
+  }
 }
