@@ -1,0 +1,351 @@
+<div
+  [formGroup]="checkoutForm"
+  class="mx-auto flex h-fit max-w-[1280px] items-start gap-6 px-3"
+>
+  <div class="flex flex-grow flex-col gap-y-5">
+    <!-- 付款方式 -->
+    <div class="flex w-full flex-col items-start">
+      <h3 class="mb-5 flex items-center text-[20px] leading-7">
+        <span class="material-symbols-outlined mr-1"> payments </span>付款方式
+      </h3>
+      <div class="mb-5 flex w-full items-center gap-x-5">
+        @for (option of purchaseWayOptions; track option) {
+          <div
+            (click)="
+              changeControlValue(CheckoutFormKey.PURCHASE_WAY, option.value)
+            "
+            class="flex flex-grow cursor-pointer items-center justify-center rounded-lg border py-3 text-tmf-gray-2 duration-100 hover:bg-tmf-orange-1 hover:text-white"
+            [style.width]="100 / purchaseWayOptions.length + '%'"
+            [ngClass]="{
+              'bg-tmf-orange-1 text-white': purchase_way.value == option.value
+            }"
+          >
+            {{ option.label }}
+          </div>
+        }
+      </div>
+      <div
+        class="flex h-[300px] w-full flex-col items-center justify-center gap-y-5 rounded-lg border px-5 md:flex-row md:justify-between md:gap-x-[10%] md:gap-y-0 md:px-[10%]"
+      >
+        <div class="flex flex-col items-center text-sm">
+          <p>線上刷卡支援卡片</p>
+          <p>
+            支援海外信用卡:使用海外信用卡,請與該發卡機構確認海外交易手續費收取標準
+          </p>
+        </div>
+        <div class="w-[250px] shrink-0">
+          <img
+            src="assets/images/cart-purchase-way.png"
+            alt="cart-purchase-way"
+          />
+        </div>
+      </div>
+    </div>
+
+    <!-- 發票選項 -->
+    <div class="flex w-full flex-col items-start">
+      <h3 class="mb-5 flex items-center text-[20px] leading-7">
+        <span class="material-symbols-outlined mr-1"> contract </span>發票選項
+      </h3>
+      <div class="mb-5 flex w-full items-center gap-x-5">
+        @for (option of invoiceOptions; track option) {
+          <div
+            (click)="changeControlValue(CheckoutFormKey.INVOICE, option.value)"
+            class="flex flex-grow cursor-pointer items-center justify-center rounded-lg border py-3 text-tmf-gray-2 duration-100 hover:bg-tmf-orange-1 hover:text-white"
+            [style.width]="100 / invoiceOptions.length + '%'"
+            [ngClass]="{
+              'bg-tmf-orange-1 text-white': invoice.value == option.value
+            }"
+          >
+            {{ option.label }}
+          </div>
+        }
+      </div>
+      <div
+        class="flex w-full flex-col items-start justify-center gap-y-5 rounded-lg border px-10 py-[50px]"
+      >
+        @switch (invoice.value) {
+          @case (Invoice.PERSONAL) {
+            <tmf-select
+              label="選擇領取方式"
+              [isRequired]="true"
+              [formControlName]="CheckoutFormKey.INVOICE_WAY"
+            >
+              @for (option of invoiceWayOptions; track option) {
+                <tmf-option
+                  [value]="option.value"
+                  [label]="option.label"
+                ></tmf-option>
+              }
+            </tmf-select>
+            @switch (invoice_way.value) {
+              @case (InvoiceWay.EMAIL) {
+                <div class="flex gap-x-1 text-red-500">
+                  <span class="material-symbols-outlined text-[20px]">
+                    error
+                  </span>
+                  <p class="text-sm">
+                    若發票中獎將主動寄信至你的電子信箱通知領獎事宜。海外用戶無法請他人代領,會建議在購買時直接選擇「捐贈發票」
+                  </p>
+                </div>
+              }
+              @case (InvoiceWay.MOBILE_BARCODE) {
+                <tmf-input
+                  class="w-full"
+                  [errorMessage]="getErrorMessage(CheckoutFormKey.INVOICE_CODE)"
+                  [inputType]="InputType.Outline"
+                  [formControlName]="CheckoutFormKey.INVOICE_CODE"
+                ></tmf-input>
+              }
+              @case (InvoiceWay.NATURAL_CERTIFICATE) {
+                <tmf-input
+                  class="w-full"
+                  [errorMessage]="
+                    getErrorMessage(CheckoutFormKey.NATURAL_CERTIFICATE)
+                  "
+                  [inputType]="InputType.Outline"
+                  [formControlName]="CheckoutFormKey.NATURAL_CERTIFICATE"
+                ></tmf-input>
+              }
+            }
+          }
+          @case (Invoice.COMPANY) {
+            <div class="flex flex-col">
+              <div class="flex flex-col gap-5 md:flex-row">
+                <tmf-input
+                  class="w-full"
+                  label="公司統編"
+                  [errorMessage]="getErrorMessage(CheckoutFormKey.TAX_ID)"
+                  [isRequired]="true"
+                  [inputType]="InputType.Outline"
+                  [formControlName]="CheckoutFormKey.TAX_ID"
+                ></tmf-input>
+                <tmf-input
+                  class="w-full"
+                  label="公司抬頭"
+                  [errorMessage]="
+                    getErrorMessage(CheckoutFormKey.COMPANY_LETTERHEAD)
+                  "
+                  [isRequired]="true"
+                  [inputType]="InputType.Outline"
+                  [formControlName]="CheckoutFormKey.COMPANY_LETTERHEAD"
+                ></tmf-input>
+              </div>
+              <div class="flex gap-x-1 text-red-500">
+                <span class="material-symbols-outlined text-[20px]">
+                  error
+                </span>
+                <p class="text-sm">
+                  付款成功後將自動發通知信,並寄至你的電子信箱。
+                  選擇「公司發票」,信件中點選「發票明細」,並選擇發票格式,即可列印報帳
+                </p>
+              </div>
+            </div>
+          }
+          @case (Invoice.TRANSFER) {
+            <div class="flex flex-col gap-3">
+              <tmf-select
+                label="選擇捐獻單位"
+                [isRequired]="true"
+                [formControlName]="CheckoutFormKey.DONATION_UNIT"
+              >
+                @for (option of invoiceWayOptions; track option) {
+                  <tmf-option
+                    [value]="option.value"
+                    [label]="option.label"
+                  ></tmf-option>
+                }
+              </tmf-select>
+              <div class="flex gap-x-1 text-red-500">
+                <span class="material-symbols-outlined text-[20px]">
+                  error
+                </span>
+                <p class="text-sm">選擇上方捐贈單位,就可以完成雲端發票的捐贈</p>
+              </div>
+            </div>
+          }
+        }
+      </div>
+    </div>
+
+    <!-- 個人資訊 -->
+    <div class="flex w-full flex-col items-start lg:mb-[100px]">
+      <h3 class="mb-5 flex items-center text-[20px] leading-7">
+        <span class="material-symbols-outlined mr-1"> person </span>個人資訊
+      </h3>
+      <div
+        class="flex w-full flex-col items-center justify-center gap-y-5 rounded-lg border p-5"
+      >
+        <tmf-input
+          class="w-full"
+          label="付款人姓名"
+          [errorMessage]="getErrorMessage(CheckoutFormKey.NAME)"
+          [isRequired]="true"
+          [inputType]="InputType.Outline"
+          [formControlName]="CheckoutFormKey.NAME"
+        ></tmf-input>
+        <tmf-input
+          class="w-full"
+          label="付款人電話"
+          [errorMessage]="getErrorMessage(CheckoutFormKey.PHONE)"
+          [isRequired]="true"
+          [inputType]="InputType.Outline"
+          [formControlName]="CheckoutFormKey.PHONE"
+        ></tmf-input>
+        <div class="flex w-full flex-col">
+          <div class="flex items-end gap-x-3">
+            <tmf-select
+              label="通訊地址"
+              [isRequired]="true"
+              [formControlName]="CheckoutFormKey.REGION"
+            >
+              @for (option of regionOptions; track option) {
+                <tmf-option
+                  [value]="option.value"
+                  [label]="option.label"
+                ></tmf-option>
+              }
+            </tmf-select>
+            <tmf-select [formControlName]="CheckoutFormKey.CITY">
+              @for (option of cityOptions; track option) {
+                <tmf-option
+                  [value]="option.value"
+                  [label]="option.label"
+                ></tmf-option>
+              }
+            </tmf-select>
+            <tmf-select [formControlName]="CheckoutFormKey.DISTRICT">
+              @for (option of distOptions; track option) {
+                <tmf-option
+                  [value]="option.value"
+                  [label]="option.label"
+                ></tmf-option>
+              }
+            </tmf-select>
+          </div>
+        </div>
+        <tmf-input
+          class="w-full"
+          label="地址"
+          [errorMessage]="getErrorMessage(CheckoutFormKey.ADDRESS)"
+          [isRequired]="true"
+          [inputType]="InputType.Outline"
+          [formControlName]="CheckoutFormKey.ADDRESS"
+        ></tmf-input>
+      </div>
+    </div>
+
+    <!-- 訂單內容 -->
+    <div class="lg:hidden">
+      <h3 class="mb-5 flex items-center text-[20px] leading-7">
+        <span class="material-symbols-outlined mr-1"> shopping_bag </span
+        >訂單內容
+      </h3>
+      <ul
+        class="mt-7 flex flex-col gap-y-3 overflow-auto rounded-lg bg-tmf-gray-7 p-10"
+      >
+        @for (item of selectedArr; track item) {
+          <li class="flex items-center">
+            <div class="mr-3 h-[60px] w-[120px] shrink-0">
+              <img
+                class="h-full object-cover"
+                [src]="item.image"
+                alt="main_image"
+              />
+            </div>
+            <p class="line-clamp-2 text-sm">{{ item.content }}</p>
+          </li>
+        }
+      </ul>
+    </div>
+
+    <!-- 結帳 -->
+    <div
+      class="flex w-full items-end justify-between rounded-t-xl bg-white px-4 py-3 shadow-lg lg:hidden"
+    >
+      <div class="flex flex-col gap-2">
+        <p class="text-[14px] font-medium leading-5 text-tmf-gray-3">
+          共計 {{ totalCount }} 項課程
+        </p>
+        <p class="text-[24px] font-bold leading-8 text-tmf-gray-2">
+          <span class="text-[16px] font-normal leading-6">總計</span> NT$
+          {{ totalAmount }}
+        </p>
+      </div>
+      <button
+        (click)="previewOrder()"
+        class="flex h-[48px] items-center justify-center rounded-lg bg-tmf-orange-1 px-4 text-white"
+        [ngClass]="{
+          'cursor-not-allowed !bg-tmf-gray-4':
+            !selectedArr || selectedArr.length === 0 || formInvalid
+        }"
+      >
+        前往付款
+      </button>
+    </div>
+  </div>
+  <div class="hidden lg:block">
+    <div class="mb-5 w-[300px] rounded-lg p-6 shadow-lg">
+      <p class="mb-[48px] text-[20px] leading-7 text-tmf-gray-2">我的訂單</p>
+      <div class="mb-6 text-end">
+        <p class="text-[18px] leading-7 text-tmf-gray-3">
+          共計 {{ totalCount }} 項課程
+        </p>
+        <p class="text-tmf-gray-2">
+          <span class="mb-3 mr-[2px] text-[16px] leading-6">總計</span>
+          <span class="text-[36px] font-medium leading-10"
+            >NT${{ totalAmount }}</span
+          >
+        </p>
+      </div>
+      <div class="flex flex-col gap-4">
+        <button
+          (click)="previewOrder()"
+          [ngClass]="{
+            'cursor-not-allowed !bg-tmf-gray-4':
+              !selectedArr || selectedArr.length === 0 || formInvalid
+          }"
+          class="flex h-[52px] w-full items-center justify-center rounded-lg bg-tmf-orange-1 text-white"
+        >
+          前往付款
+        </button>
+      </div>
+    </div>
+    <div cdkAccordion class="w-[300px] rounded-lg p-6 shadow-lg">
+      <div
+        cdkAccordionItem
+        #accordionItem="cdkAccordionItem"
+        [expanded]="false"
+        class="flex cursor-pointer justify-between"
+        (click)="accordionItem.toggle()"
+      >
+        <h3 class="text-[20px] leading-7 text-tmf-gray-2">訂單內容</h3>
+        <button>
+          <span
+            class="material-symbols-outlined duration-100"
+            [class.rotate-180]="accordionItem.expanded"
+          >
+            keyboard_arrow_down
+          </span>
+        </button>
+      </div>
+
+      @if (accordionItem.expanded) {
+        <ul class="mt-7 flex max-h-[300px] flex-col gap-y-3 overflow-auto">
+          @for (item of selectedArr; track item) {
+            <li class="flex items-center">
+              <div class="mr-3 h-[60px] w-[120px] shrink-0">
+                <img
+                  class="h-full object-cover"
+                  [src]="item.image"
+                  alt="main_image"
+                />
+              </div>
+              <p class="line-clamp-2 text-sm">{{ item.content }}</p>
+            </li>
+          }
+        </ul>
+      }
+    </div>
+  </div>
+</div>

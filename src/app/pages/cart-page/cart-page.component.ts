@@ -1,15 +1,16 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { CartItem, Step, StepItem } from './cart-page.model';
+import { Step, StepItem } from './cart-page.model';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
-import { CartTableComponent } from './components/cart-table/cart-table.component';
-import { CardComponent } from '@tmf/libs-shared/components/card/card.component';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CardData } from '@tmf/libs-shared/components/card/card.interface';
 import {
   GetCartItemsResponseModelDataInner,
   ShopService
 } from 'libs/openapi/src';
 import { StepperComponent } from './components/stepper/stepper.component';
+import { CartListComponent } from './components/cart-list/cart-list.component';
+import { CheckoutComponent } from './components/checkout/checkout.component';
+import { OrderCompletedComponent } from './components/order-completed/order-completed.component';
 
 @Component({
   selector: 'app-cart-page',
@@ -17,9 +18,10 @@ import { StepperComponent } from './components/stepper/stepper.component';
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    CartTableComponent,
-    CardComponent,
-    StepperComponent
+    StepperComponent,
+    CartListComponent,
+    CheckoutComponent,
+    OrderCompletedComponent
   ],
   templateUrl: './cart-page.component.html',
   styleUrl: './cart-page.component.scss'
@@ -35,20 +37,9 @@ export default class CartPageComponent implements OnInit {
   currentStep: Step = Step.Step1;
   cartDataSource: GetCartItemsResponseModelDataInner[] = [];
   courseDataSource: CardData[] = [];
+  selectedArr: GetCartItemsResponseModelDataInner[] | null = null;
 
   readonly Step = Step;
-
-  get totalCount(): number {
-    if (!this.cartDataSource || !this.cartDataSource.length) return 0;
-    return this.cartDataSource.length;
-  }
-
-  get totalAmount(): string {
-    if (!this.cartDataSource || !this.cartDataSource.length) return '0';
-    return this.cartDataSource
-      .reduce((acc, cur) => acc + cur.price, 0)
-      .toLocaleString();
-  }
 
   ngOnInit(): void {
     this.courseDataSource = FakeCardData;
@@ -61,8 +52,8 @@ export default class CartPageComponent implements OnInit {
     });
   }
 
-  handleSelectedChange(selectedArr: CartItem[]) {
-    console.log(selectedArr);
+  handleSelectedChange(selectedArr: GetCartItemsResponseModelDataInner[]) {
+    this.selectedArr = selectedArr;
   }
 
   handleRemoveItem(purchase_item_id: string) {
