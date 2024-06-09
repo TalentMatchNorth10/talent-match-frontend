@@ -1,9 +1,18 @@
 import { CommonModule } from '@angular/common';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { CUSTOM_ELEMENTS_SCHEMA, Component, OnInit } from '@angular/core';
+import {
+  AfterViewInit,
+  CUSTOM_ELEMENTS_SCHEMA,
+  Component,
+  ElementRef,
+  OnInit,
+  ViewChild
+} from '@angular/core';
 import { CardComponent } from '@tmf/libs-shared/components/card/card.component';
 import { CardData } from '@tmf/libs-shared/components/card/card.interface';
 import {
+  InputComponent,
+  InputType,
   OptionComponent,
   ReviewCardComponent,
   SelectComponent,
@@ -12,26 +21,34 @@ import {
 import { VideoCardData } from '@tmf/libs-shared/components/short-video-card/video-card.interface';
 import { StarRatingComponent } from '@tmf/libs-shared/components/star-rating/star-rating.component';
 import { ReviewData } from '@tmf/libs-shared/components/review-card/review.interface';
-import SwiperCore from 'swiper';
-import { FormControl, Validators } from '@angular/forms';
+import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
+import { VideoCardComponent } from '@tmf/libs-shared/components/video-card/video-card.component';
+import { Router } from '@angular/router';
+import { SwiperOptions } from 'swiper/types';
 
 @Component({
   selector: 'app-home-page',
   standalone: true,
   imports: [
     CommonModule,
+    ReactiveFormsModule,
+
     ShortVideoCardComponent,
     CardComponent,
     StarRatingComponent,
     ReviewCardComponent,
     SelectComponent,
-    OptionComponent
+    OptionComponent,
+    InputComponent,
+    VideoCardComponent
   ],
   templateUrl: './home-page.component.html',
   styleUrl: './home-page.component.scss',
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export default class HomePageComponent implements OnInit {
+export default class HomePageComponent implements OnInit, AfterViewInit {
+  readonly InputType = InputType;
+
   public shortsSubjectOptions: string[] = [
     '全部',
     '烹飪料理',
@@ -58,14 +75,58 @@ export default class HomePageComponent implements OnInit {
 
   public currentWindowSize: string = '';
 
-  control = new FormControl(false, [Validators.required]);
+  control = new FormControl('準備好啟程了嗎？', [Validators.required]);
 
   items = [
     { label: '依關鍵字', value: 1 },
     { label: '依類別', value: 2 }
   ];
 
-  constructor(private breakpointObserver: BreakpointObserver) {}
+  @ViewChild('swiperElement')
+  swiperElement!: ElementRef;
+
+  @ViewChild('swiperElementCourse')
+  swiperElementCourse!: ElementRef;
+
+  swiperConfig: SwiperOptions = {
+    // init: true,
+    // breakpoints: this.breakpoints,
+    injectStyles: [
+      `:host .swiper { overflow: visible !important; }
+      :host .swiper-button-disabled {
+        opacity: 1;
+        background-color: #9F9F9F !important;
+      }
+      :host .swiper-button-prev {
+        width: 56px;
+        height: 56px;
+        border-radius: 15%;
+        background-color: #F36923;
+      }
+      :host .swiper-button-prev svg {
+        width: 16px;
+        height: 12px;
+        color: #fff;
+      }
+      :host .swiper-button-next {
+        width: 56px;
+        height: 56px;
+        border-radius: 15%;
+        background-color: #F36923;
+      }
+      :host .swiper-button-next svg {
+        width: 16px;
+        height: 12px;
+        color: #fff;
+      }
+      `
+    ]
+  };
+
+  constructor(
+    private breakpointObserver: BreakpointObserver,
+    protected readonly router: Router
+  ) {}
 
   public ngOnInit() {
     this.videoDataSource = FakeVideos;
@@ -83,6 +144,21 @@ export default class HomePageComponent implements OnInit {
         };
         this.updateValueBasedOnBreakpoints(initialBreakpoints);
       });
+  }
+
+  ngAfterViewInit(): void {
+    this.initSwiper();
+  }
+
+  initSwiper() {
+    try {
+      Object.assign(this.swiperElement.nativeElement, this.swiperConfig);
+      this.swiperElement.nativeElement.initialize();
+      Object.assign(this.swiperElementCourse.nativeElement, this.swiperConfig);
+      this.swiperElementCourse.nativeElement.initialize();
+    } catch (error) {
+      console.error('Swiper initialization failed', error);
+    }
   }
 
   public updateValueBasedOnBreakpoints(breakpoints: {
@@ -106,19 +182,32 @@ export default class HomePageComponent implements OnInit {
 
     console.log(this.currentWindowSize);
   }
+
+  search(event: any) {
+    console.log(event);
+  }
+
+  navigateToSignUp() {
+    this.router.navigate(['sign-up']);
+  }
+
+  navigateToTeacherApply() {
+    this.router.navigate(['teacher-apply']);
+  }
 }
 
 const FakeVideos: VideoCardData[] = [
-  {
-    video_id: '1',
-    name: 'Introduction to JavaScript',
-    category: 'Programming',
-    intro: 'Learn the basics of JavaScript programming language.',
-    video_type: 'youtube',
-    url: 'https://youtu.be/bjCjJW_aAUk?si=zO58J-33XKrAGHjR',
-    teacher_id: 't-1',
-    course_id: 'c-1'
-  },
+  // {
+  //   video_id: '1',
+  //   name: 'Introduction to JavaScript',
+  //   category: 'Programming',
+  //   intro: 'Learn the basics of JavaScript programming language.',
+  //   video_type: 'youtube',
+  //   url: 'https://youtu.be/bjCjJW_aAUk?si=zO58J-33XKrAGHjR',
+  //   teacher_id: 't-1',
+  //   course_id: 'c-1'
+  // },
+
   {
     video_id: '2',
     name: 'Cooking Italian Pasta',
@@ -266,7 +355,7 @@ const FakeCardData: CardData[] = [
   }
 ];
 
-const FakeReviewData = [
+export const FakeReviewData = [
   {
     nick_name: 'andersonlisa',
     avator_image: 'https://dummyimage.com/636x651',
@@ -308,19 +397,19 @@ const FakeReviewData = [
     rate: 4.9,
     comment: 'Left order talk management condition receive.',
     create_datetime: new Date('2024-04-06T23:52:02')
-  },
-  {
-    nick_name: 'scott59',
-    avator_image: 'https://dummyimage.com/636x651',
-    rate: 4.7,
-    comment: 'Hundred want room begin box raise.',
-    create_datetime: new Date('2024-04-16T23:52:28')
-  },
-  {
-    nick_name: 'martinezlaura',
-    avator_image: 'https://dummyimage.com/636x651',
-    rate: 4.8,
-    comment: 'Option price suddenly.',
-    create_datetime: new Date('2024-01-15T20:49:07')
   }
+  // {
+  //   nick_name: 'scott59',
+  //   avator_image: 'https://dummyimage.com/636x651',
+  //   rate: 4.7,
+  //   comment: 'Hundred want room begin box raise.',
+  //   create_datetime: new Date('2024-04-16T23:52:28')
+  // },
+  // {
+  //   nick_name: 'martinezlaura',
+  //   avator_image: 'https://dummyimage.com/636x651',
+  //   rate: 4.8,
+  //   comment: 'Option price suddenly.',
+  //   create_datetime: new Date('2024-01-15T20:49:07')
+  // }
 ];

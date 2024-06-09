@@ -1,27 +1,29 @@
 <div
-  class="relative w-[10.5rem] h-[18.75rem] shadow-lg border border-tmf-gray-6 rounded-xl overflow-hidden cursor-pointer xl:w-[18.875rem] xl:h-[33.75rem]"
+  class="relative md:h-[537px] md:w-[302px] h-[298px] w-[168px] cursor-pointer overflow-hidden rounded-xl border border-tmf-gray-6 shadow-lg xl:h-[33.75rem] xl:w-[18.875rem]"
   (mouseenter)="togglePlay(true)"
   (mouseleave)="togglePlay(false)"
   (click)="openVideoDialog()"
 >
   <div
-    class="text-sm font-bold bg-tmf-gray-1 text-tmf-yellow-1 px-3 py-1 rounded-lg absolute top-3 left-3"
+    class="absolute left-3 top-3 rounded-lg bg-tmf-gray-1 px-3 py-1 text-sm font-bold text-tmf-yellow-1"
   >
-    烹飪料理
+    <!-- 烹飪料理 -->
+    {{data.category}}
   </div>
   <video
     #videoPlayer
     preload="auto"
     muted
-    class="w-full h-full object-cover"
-    src="https://storage.googleapis.com/talent-match-fd353.appspot.com/images/users/2f8dda8c-fcc9-4a19-bb2a-000bf1833c78.mp4?GoogleAccessId=firebase-adminsdk-vnucd%40talent-match-fd353.iam.gserviceaccount.com&Expires=16756646400&Signature=i83ZRQbK8PoBms7MLXx1TOcmNJaxl86lMpuxSkDiajDnu%2FRDY6V8U2eqOZXSVF6QlSYC0cpxzWWP0emSNa477pMLW5KZNfB6BfX2vf2o%2F7%2B%2FKhYIieT6MGzc%2F3C6uQKRhePtq9RJQEpePCJTkpA3WbVs9lrn08qj6PDB15qmZMpP37ryLODAZrkQTnOhbq1aNdyC3P4WrxIAPdX3oe698yzpwfqG%2Bh49NAO54u%2BaHaUuY5U24DF2bD6ZQ6Yg%2B53EfB6vPgPWI9pjPvqFQc7SFfYon9%2BQFzG3C6sSbMWZOWLKrkzXyzrxPlyoPkjKn3ITl3MVwAaaTG8oZT6cqBGcrg%3D%3D"
+    class="h-full w-full object-cover"
+    [src]="data.url"
     (timeupdate)="updateProgress()"
     (loadedmetadata)="initializeVideo()"
   ></video>
-  <div class="absolute bottom-0 h-[140px] mask">
-    <div class="h-full flex items-end">
-      <p class="text-sm px-3 pb-3 text-white xl:text-base xl:px-4 xl:pb-6">
-        只要五分鐘，讓您彷彿擁有專業主廚的刀工！
+  <div class="mask absolute bottom-0 h-[140px]">
+    <div class="flex h-full items-end">
+      <p class="px-3 pb-3 text-sm text-white xl:px-4 xl:pb-6 xl:text-base">
+        {{ data.intro }}
+        <!-- 只要五分鐘，讓您彷彿擁有專業主廚的刀工！ -->
       </p>
     </div>
     @if (isPlaying()) {

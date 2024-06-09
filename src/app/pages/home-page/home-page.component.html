@@ -18,7 +18,15 @@
         <div class="mb-6 text-gray-900 lg:text-lg">
           每個人都擁有獨特的才藝與創造力。因此，我們提供一個專業且多元平台，讓熱愛藝術、音樂、手工藝以及創新技術的你，到志同道合的夥伴及專業導師。
         </div>
-        <div
+
+        <tmf-input
+          [formControl]="control"
+          [inputType]="InputType.SearchByType"
+          [options]="items"
+          (clickSearch)="search($event)"
+        ></tmf-input>
+        <!-- <div
+
           class="search-box-container flex w-full max-w-lg overflow-hidden rounded border border-gray-300"
         >
           <tmf-select class="bg-white text-gray-700" [formControl]="control">
@@ -44,7 +52,7 @@
               />
             </svg>
           </button>
-        </div>
+        </div> -->
       </div>
     </div>
   </section>
@@ -86,37 +94,60 @@
         </button>
       </div>
     </div>
-    <div class="flex h-[530px] w-full justify-center">
+    <div class="flex h-full w-full justify-center overflow-hidden">
       <div class="lg:w-9:12 w-10/12">
         <ng-container [ngSwitch]="currentWindowSize">
           <ng-container *ngSwitchCase="'Handset'">
-            <swiper-container slides-per-view="1" navigation="true">
+            <swiper-container
+              #swiperElement
+              init="false"
+              slides-per-view="2"
+              navigation="false"
+              spaceBetween="10"
+            >
               <ng-container *ngFor="let video of videoDataSource">
                 <swiper-slide>
-                  <div class="m-auto h-[530px] w-full p-2">
-                    <app-short-video-card [data]="video"></app-short-video-card>
+                  <div class="m-auto h-full w-full p-2">
+                    <!-- <app-short-video-card [data]="video"></app-short-video-card> -->
+                    <tmf-video-card [data]="video"></tmf-video-card>
+
                   </div>
                 </swiper-slide>
               </ng-container>
             </swiper-container>
           </ng-container>
           <ng-container *ngSwitchCase="'Tablet'">
-            <swiper-container slides-per-view="3" navigation="true">
+            <swiper-container
+              #swiperElement
+              init="false"
+              slides-per-view="2"
+              navigation="false"
+              spaceBetween="10"
+            >
               <ng-container *ngFor="let video of videoDataSource">
                 <swiper-slide>
-                  <div class="m-auto h-[530px] w-full p-2">
-                    <app-short-video-card [data]="video"></app-short-video-card>
+                  <div class="m-auto h-full w-full p-2">
+                    <!-- <app-short-video-card [data]="video"></app-short-video-card> -->
+                    <tmf-video-card [data]="video"></tmf-video-card>
+
                   </div>
                 </swiper-slide>
               </ng-container>
             </swiper-container>
           </ng-container>
           <ng-container *ngSwitchDefault>
-            <swiper-container slides-per-view="4" navigation="true">
+            <swiper-container
+              #swiperElement
+              init="false"
+              slides-per-view="4"
+              navigation="true"
+            >
               <ng-container *ngFor="let video of videoDataSource">
                 <swiper-slide>
-                  <div class="m-auto h-[530px] w-full p-2">
-                    <app-short-video-card [data]="video"></app-short-video-card>
+                  <div class="m-auto h-full w-full p-2">
+                    <!-- <app-short-video-card [data]="video"></app-short-video-card> -->
+                    <tmf-video-card [data]="video"></tmf-video-card>
+
                   </div>
                 </swiper-slide>
               </ng-container>
@@ -138,11 +169,16 @@
         推薦課程
       </div>
       <div class="mt-8 py-8">
-        <div class="flex w-full justify-center">
-          <div class="lg:w-9:12 w-10/12">
+        <div class="w-full h-full overflow-hidden">
+          <div class="lg:w-9:12 w-10/12 m-auto">
             <ng-container [ngSwitch]="currentWindowSize">
               <ng-container *ngSwitchCase="'Handset'">
-                <swiper-container slides-per-view="1" navigation="true">
+                <swiper-container
+                  #swiperElementCourse
+                  slides-per-view="1"
+                  navigation="false"
+                >
+
                   <ng-container *ngFor="let courseItem of courseDataSource">
                     <swiper-slide>
                       <div class="m-auto h-[530px] w-full flex-shrink-0 p-2">
@@ -158,7 +194,13 @@
                 </swiper-container>
               </ng-container>
               <ng-container *ngSwitchCase="'Tablet'">
-                <swiper-container slides-per-view="3" navigation="true">
+                <swiper-container
+                  #swiperElementCourse
+                  init="false"
+                  slides-per-view="2"
+                  navigation="false"
+                >
+
                   <ng-container *ngFor="let courseItem of courseDataSource">
                     <swiper-slide>
                       <div class="m-auto h-[530px] w-full flex-shrink-0 p-2">
@@ -174,16 +216,20 @@
                 </swiper-container>
               </ng-container>
               <ng-container *ngSwitchDefault>
-                <swiper-container slides-per-view="4" navigation="true">
+                <swiper-container
+                  #swiperElementCourse
+                  init="false"
+                  slides-per-view="4"
+                  navigation="true"
+                >
                   <ng-container *ngFor="let courseItem of courseDataSource">
                     <swiper-slide>
-                      <div class="m-auto h-[530px] w-full flex-shrink-0 p-2">
-                        <div class="w-full flex-shrink-0 p-2 md:w-1/3 lg:w-1/4">
-                          <tmf-card
-                            [data]="courseItem"
-                            [hoverEffect]="false"
-                          ></tmf-card>
-                        </div>
+                      <div class="m-auto h-full w-full p-2">
+                        <tmf-card
+                          [data]="courseItem"
+                          [hoverEffect]="false"
+                        ></tmf-card>
+
                       </div>
                     </swiper-slide>
                   </ng-container>
@@ -210,9 +256,26 @@
     <div class="my-8 flex w-full flex-col items-center gap-6">
       <ng-container [ngSwitch]="currentWindowSize">
         <ng-container *ngSwitchCase="'Handset'">
+          <div
+            class="h-[160px] w-[351px] overflow-hidden rounded-xl bg-gray-100/30 shadow-lg backdrop-blur-md"
+          >
+            <div class="p-6">
+              <div class="flex flex-col items-center gap-2">
+                <div class="text-xl lg:text-2xl">使用好評高達</div>
+                <div class="text-5xl lg:text-7xl">4.7</div>
+                <tmf-star-rating
+                  [rating]="4.7"
+                  [starSize]="'1.5rem'"
+                ></tmf-star-rating>
+              </div>
+            </div>
+          </div>
           <div class="relative w-4/5 overflow-hidden">
             <swiper-container slides-per-view="1">
-              <ng-container *ngFor="let review of reviewDataSource">
+              <ng-container
+                *ngFor="let review of reviewDataSource; let i = index"
+              >
+
                 <swiper-slide>
                   <div class="w-full flex-shrink-0 p-2 md:w-1/3 lg:w-1/4">
                     <app-review-card [data]="review"></app-review-card>
@@ -222,11 +285,40 @@
             </swiper-container>
           </div>
         </ng-container>
+        <ng-container *ngSwitchCase="'Tablet'">
+          <div
+            class="h-[160px] w-[351px] overflow-hidden rounded-xl bg-gray-100/30 shadow-lg backdrop-blur-md"
+          >
+            <div class="p-6">
+              <div class="flex flex-col items-center gap-2">
+                <div class="text-xl lg:text-2xl">使用好評高達</div>
+                <div class="text-5xl lg:text-7xl">4.7</div>
+                <tmf-star-rating
+                  [rating]="4.7"
+                  [starSize]="'1.5rem'"
+                ></tmf-star-rating>
+              </div>
+            </div>
+          </div>
+          <div class="relative w-4/5 overflow-hidden">
+            <swiper-container slides-per-view="2">
+              <ng-container
+                *ngFor="let review of reviewDataSource; let i = index"
+              >
+                <swiper-slide>
+                  <div class="w-full">
+                    <app-review-card [data]="review"></app-review-card>
+                  </div>
+                </swiper-slide>
+              </ng-container>
+            </swiper-container>
+          </div>
+        </ng-container>
         <ng-container *ngSwitchDefault>
-          <div class="flex w-9/12 flex-wrap justify-center gap-3">
-            <div class="basis-1/4">
+          <div class="flex flex-col gap-6">
+            <div class="flex gap-6">
               <div
-                class="h-full w-full max-w-xs overflow-hidden rounded bg-gray-400/25 shadow-lg"
+                class="h-[220px] w-[302px] overflow-hidden rounded-xl bg-gray-100/30 shadow-lg backdrop-blur-md"
               >
                 <div class="p-6">
                   <div class="flex flex-col items-center gap-2">
@@ -239,20 +331,38 @@
                   </div>
                 </div>
               </div>
+              <ng-container
+                *ngFor="let review of reviewDataSource | slice: 0 : 2"
+              >
+                <div>
+                  <app-review-card [data]="review"></app-review-card>
+                </div>
+              </ng-container>
             </div>
-            <ng-container
-              *ngFor="let review of reviewDataSource; let i = index"
-            >
-              <div class="basis-1/4">
-                <app-review-card [data]="review"></app-review-card>
-              </div>
-            </ng-container>
+            <div class="flex gap-6 justify-center">
+              <ng-container
+                *ngFor="let review of reviewDataSource | slice: 2 : 4"
+              >
+                <div>
+                  <app-review-card [data]="review"></app-review-card>
+                </div>
+              </ng-container>
+            </div>
+            <div class="flex gap-6 justify-end">
+              <ng-container
+                *ngFor="let review of reviewDataSource | slice: 4 : 6"
+              >
+                <div>
+                  <app-review-card [data]="review"></app-review-card>
+                </div>
+              </ng-container>
+            </div>
           </div>
         </ng-container>
       </ng-container>
     </div>
   </section>
-  <section>
+  <section class="mb-12">
     <div class="flex w-full flex-col items-center">
       <ng-container *ngFor="let img of howToUseStepImages">
         <div>
@@ -261,4 +371,51 @@
       </ng-container>
     </div>
   </section>
+  <section class="md:h-[12.5rem] lg:h-[12.5rem] h-auto lg:mb-0 -mb-8">
+    <div
+      class="w-full flex lg:flex-row md:flex-row flex-col items-center justify-center gap-6"
+    >
+      <div
+        class="lg:w-[520px] lg:h-[225px] w-[325px] h-[190px] rounded-2xl lg:bg-auto lg:bg-[size: 100%] bg-[size:60%] bg-[url('./assets/images/home-page/cta/cta-signup.svg')] bg-no-repeat bg-right-top shadow-md bg-white z-[999]"
+      >
+        <div class="h-full px-5 py-6">
+          <div class="flex flex-col h-full justify-end gap-4">
+            <div class="ld:text-3xl text-2xl">成為會員</div>
+            <div class="flex items-center">
+              <div class="lg:w-11/12 w-4/5">
+                享有第一時間課程資訊上架消息，用最優惠的價格購買課程，同時能與老師一對一教學。
+              </div>
+              <div class="h-full flex justify-end items-center flex-grow">
+                <span
+                  class="material-icons-outlined text-[20px] text-tmf-gray-4 cursor-pointer"
+                  (click)="navigateToSignUp()"
+                >
+                  east
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="lg:w-[520px] lg:h-[225px] w-[325px] h-[190px] rounded-2xl bg-[url('./assets/images/home-page/cta/cta-teach.svg')] lg:bg-[size: 100%] bg-[size:60%] bg-no-repeat bg-right-top shadow-md bg-white z-[999]"
+      >
+        <div class="h-full px-5 py-6">
+          <div class="flex flex-col h-full justify-end gap-4">
+            <div class="lg:text-3xl text-2xl">成為教師</div>
+            <div class="flex items-center">
+              <div class="lg:w-11/12 w-4/5">
+                每個人都有擅長的知識技能，足夠的熱情創造更多附加價值，一起將這些技能分享給全世界吧！
+              </div>
+              <div class="h-full flex justify-end items-center flex-grow">
+                <span
+                  class="material-icons-outlined text-[20px] text-tmf-gray-4 cursor-pointer"
+                  (click)="navigateToTeacherApply()"
+                >
+                  east
+                </span>
+              </div>
+            </div>
+          </div>
+    </div>
 </div>
