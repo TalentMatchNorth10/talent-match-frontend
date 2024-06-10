@@ -1,4 +1,4 @@
-import { DatePipe } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { UploadService } from './../../../../../libs/openapi/src/api/upload.service';
 import { Component, inject, signal } from '@angular/core';
 import {
@@ -11,7 +11,7 @@ import {
   StudentInfoResponseModelData,
   StudentInfoService
 } from 'libs/openapi/src';
-import { InputComponent } from 'libs/shared/src';
+import { InputComponent, InputType } from 'libs/shared/src';
 import { switchMap, throwError } from 'rxjs';
 import { TmfDatePipe } from 'src/app/shared/pipes/tmf-date.pipe';
 
@@ -27,7 +27,7 @@ interface StudentInfoForm {
 @Component({
   selector: 'app-student-info-page',
   standalone: true,
-  imports: [InputComponent, ReactiveFormsModule, TmfDatePipe],
+  imports: [CommonModule, InputComponent, ReactiveFormsModule, TmfDatePipe],
   templateUrl: './student-info-page.component.html',
   styleUrl: './student-info-page.component.scss'
 })
@@ -38,7 +38,7 @@ export default class StudentInfoPageComponent {
   private studentInfoService = inject(StudentInfoService);
   private uploadService = inject(UploadService);
 
-  constructor() {}
+  readonly InputType = InputType;
 
   formGroup: FormGroup<StudentInfoForm> = this.fb.group<StudentInfoForm>({
     avator_image: this.fb.control(null),
@@ -55,6 +55,7 @@ export default class StudentInfoPageComponent {
         if (res.status) {
           this.studentInfo = res.data!;
           this.updateFormControls(this.studentInfo);
+          this.formGroup.disable();
         } else {
           console.error(res);
         }
@@ -115,8 +116,14 @@ export default class StudentInfoPageComponent {
       });
   }
 
+  openEditMode() {
+    this.isEditMode.set(true);
+    this.formGroup.enable();
+  }
+
   cancelEditMode() {
     this.isEditMode.set(false);
+    this.formGroup.disable();
     this.formGroup.controls.avator_image.setValue(
       this.studentInfo.avator_image!
     );

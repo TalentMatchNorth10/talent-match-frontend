@@ -179,8 +179,6 @@ export default class HomePageComponent implements OnInit, AfterViewInit {
       this.currentWindowSize = 'Web';
       // console.log('Web');
     }
-
-    console.log(this.currentWindowSize);
   }
 
   search(event: any) {

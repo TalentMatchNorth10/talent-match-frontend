@@ -62,7 +62,7 @@
   "editor.formatOnSave": true,
   "eslint.format.enable": true,
   "[typescript]": {
-    "editor.defaultFormatter": "rvest.vs-code-prettier-eslint"
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "angular-schematics.schematicsDefaultOptions": {
     "angular-component": {

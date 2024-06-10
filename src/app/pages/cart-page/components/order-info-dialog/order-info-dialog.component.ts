@@ -152,8 +152,8 @@ export class OrderInfoDialogComponent {
           }))
         }
       })
-      .subscribe(() => {
-        this.dialog.close();
+      .subscribe((res) => {
+        document.write(res.data);
       });
   }
 }
