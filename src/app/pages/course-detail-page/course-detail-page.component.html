@@ -39,7 +39,12 @@
               src="https://fakeimg.pl/32/"
               alt=""
             />
-            <p class="text-base font-medium text-white">Eric Clapton</p>
+            <p
+              class="text-base font-medium text-white cursor-pointer"
+              (click)="navigateToTeacherDetail('teacherId')"
+            >
+              Eric Clapton
+            </p>
           </div>
           <!-- 課程名稱 -->
           <h1 class="text-lg font-bold text-white xl:text-3xl">
@@ -180,9 +185,12 @@
         <div
           class="flex gap-[0.9375rem] justify-between items-center w-full pb-8 overflow-x-auto custom-scrollbar"
         >
+          <ng-container *ngFor="let video of videoData">
+            <tmf-video-card [data]="video"></tmf-video-card>
+          </ng-container>
+          <!-- <tmf-video-card></tmf-video-card>
           <tmf-video-card></tmf-video-card>
-          <tmf-video-card></tmf-video-card>
-          <tmf-video-card></tmf-video-card>
+          <tmf-video-card></tmf-video-card> -->
         </div>
       </section>
 
