@@ -10,31 +10,36 @@ export const routes: Routes = [
     // 老師個人資訊管理頁
     path: 'info',
     loadComponent: () =>
-      import('./teacher-info-page/teacher-info-page.component')
+      import('./teacher-info-page/teacher-info-page.component'),
+    data: { state: 'teacher' }
   },
   {
     // 老師影片管理頁
     path: 'videos',
     loadComponent: () =>
-      import('./teacher-videos-page/teacher-videos-page.component')
+      import('./teacher-videos-page/teacher-videos-page.component'),
+    data: { state: 'teacher' }
   },
   {
     // 老師行事曆管理頁
     path: 'calendar',
     loadComponent: () =>
-      import('./teacher-calendar-page/teacher-calendar-page.component')
+      import('./teacher-calendar-page/teacher-calendar-page.component'),
+    data: { state: 'teacher' }
   },
   {
     // 老師課程管理頁
     path: 'courses',
     loadComponent: () =>
-      import('./teacher-courses-page/teacher-courses-page.component')
+      import('./teacher-courses-page/teacher-courses-page.component'),
+    data: { state: 'teacher' }
   },
   {
     // 老師交易紀錄頁
     path: 'record',
     loadComponent: () =>
-      import('./teacher-record-page/teacher-record-page.component')
+      import('./teacher-record-page/teacher-record-page.component'),
+    data: { state: 'teacher' }
   }
 ];
 

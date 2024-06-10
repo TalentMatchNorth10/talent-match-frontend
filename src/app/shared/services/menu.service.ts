@@ -9,39 +9,39 @@ export class MenuService {
   menuListSig = this.menuList.asReadonly();
   identitySig = this.identity.asReadonly();
 
-  updateMenuList(identity: 'student' | 'teacher'): void {
+  updateMenuList(identity: 'student' | 'teacher' | 'default'): void {
     this.identity.set(identity);
     switch (identity) {
       case 'student':
         this.menuList.set([
           {
             icon: 'face',
-            path: '/layout2/student/info',
+            path: '/student/info',
             title: '基本資訊'
           },
           {
             icon: 'favorite',
-            path: '/layout2/student/favorites',
+            path: '/student/favorites',
             title: '收藏課程'
           },
           {
             icon: 'calendar_today',
-            path: '/layout2/student/calendar',
+            path: '/student/calendar',
             title: '行事曆'
           },
           {
             icon: 'book',
-            path: '/layout2/student/courses',
+            path: '/student/courses',
             title: '已購買課程'
           },
           {
             icon: 'account_balance_wallet',
-            path: '/layout2/student/record',
+            path: '/student/record',
             title: '交易紀錄'
           },
           {
             icon: 'favorite_border',
-            path: '/layout2/student/preference',
+            path: '/student/preference',
             title: '喜好類別'
           }
         ]);
@@ -50,27 +50,27 @@ export class MenuService {
         this.menuList.set([
           {
             icon: 'face',
-            path: '/layout2/teacher/info',
+            path: '/teacher/info',
             title: '老師個人資訊'
           },
           {
             icon: 'smart_display',
-            path: '/layout2/teacher/videos',
+            path: '/teacher/videos',
             title: '影片管理'
           },
           {
             icon: 'edit_calendar',
-            path: '/layout2/teacher/calendar',
+            path: '/teacher/calendar',
             title: '行事曆管理'
           },
           {
             icon: 'description',
-            path: '/layout2/teacher/courses',
+            path: '/teacher/courses',
             title: '課程管理'
           },
           {
             icon: 'account_balance_wallet',
-            path: '/layout2/teacher/record',
+            path: '/teacher/record',
             title: '老師交易紀錄'
           }
         ]);

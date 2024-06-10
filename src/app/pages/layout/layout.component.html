@@ -1,7 +1,59 @@
-<div class="flex flex-col min-h-[100vh]">
-  <app-header></app-header>
-  <main class="flex-grow">
-    <router-outlet></router-outlet>
-  </main>
-  <app-footer></app-footer>
+<div class="flex min-h-[100vh] flex-col">
+  <app-header class="relative z-50"></app-header>
+  @if (identity() === 'default') {
+    <main class="relative z-40 flex-grow">
+      <router-outlet></router-outlet>
+    </main>
+  } @else {
+    <main
+      class="container flex-grow relative z-40 mx-auto mb-12 mt-6 gap-6 sm:flex xl:max-w-screen-xl"
+    >
+      <!-- 功能選單 -->
+      <div
+        class="hidden rounded-xl bg-white p-6 shadow-lg sm:block sm:min-w-[13.25rem] xl:min-w-[18.875rem]"
+      >
+        <div class="mb-6 flex items-center justify-between">
+          <p class="text-xl font-bold">個人管理</p>
+          <div
+            class="rounded bg-tmf-gray-7 px-2 py-1 text-base font-bold text-tmf-orange-1"
+          >
+            {{ identityText() }}
+          </div>
+        </div>
+
+        <ul class="mb-6 flex min-h-[36.5rem] flex-col gap-1">
+          @for (menuItem of menuList(); track $index) {
+            <li
+              class="cursor-pointer rounded-xl text-tmf-gray-2 hover:bg-tmf-orange-1 hover:text-white"
+              [routerLinkActive]="['bg-tmf-orange-1', '!text-white']"
+              [routerLinkActiveOptions]="{ exact: true }"
+            >
+              <a
+                class="flex items-center justify-between gap-3 p-4"
+                [routerLink]="menuItem.path"
+              >
+                <span class="material-icons-outlined">{{ menuItem.icon }}</span>
+                <p class="grow">{{ menuItem.title }}</p>
+              </a>
+            </li>
+          }
+        </ul>
+
+        <a
+          class="flex cursor-pointer items-center justify-between gap-3 rounded-xl p-4 text-tmf-gray-2 hover:bg-tmf-orange-1 hover:text-white"
+          [routerLink]="changeIdentity().path"
+        >
+          <span class="material-icons-outlined">restart_alt</span>
+          <p class="grow">切換為{{ changeIdentity().text }}</p>
+        </a>
+      </div>
+      <!-- 功能頁面 -->
+      <div
+        class="mx-3 rounded-2xl bg-white px-3 py-6 shadow-lg sm:mx-0 sm:w-full"
+      >
+        <router-outlet></router-outlet>
+      </div>
+    </main>
+  }
+  <app-footer class="relative z-30"></app-footer>
 </div>

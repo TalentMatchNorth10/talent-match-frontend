@@ -26,11 +26,6 @@ export const routes: Routes = [
       )
   },
   {
-    path: 'layout2',
-    loadComponent: () => import('./pages/layout2/layout2.component'),
-    loadChildren: () => import('./pages/layout2/layout2.routes')
-  },
-  {
     path: '',
     loadComponent: () => import('./pages/layout/layout.component'),
     loadChildren: () => import('./pages/layout/layout.routes')
