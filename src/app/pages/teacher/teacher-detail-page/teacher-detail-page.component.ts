@@ -24,7 +24,7 @@ import { CourseData, FakeVideos } from '../../course-detail-page/mock-data';
   styleUrl: './teacher-detail-page.component.scss'
 })
 export default class TeacherDetailPageComponent {
-  activeSection: WritableSignal<string> = signal('sectionA');
+  // activeSection: WritableSignal<string> = signal('sectionA');
 
   videoData: VideoCardData[] = FakeVideos;
   courseData = CourseData;
