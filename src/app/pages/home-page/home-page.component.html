@@ -376,7 +376,8 @@
       class="w-full flex lg:flex-row md:flex-row flex-col items-center justify-center gap-6"
     >
       <div
-        class="lg:w-[520px] lg:h-[225px] w-[325px] h-[190px] rounded-2xl lg:bg-auto lg:bg-[size: 100%] bg-[size:60%] bg-[url('./assets/images/home-page/cta/cta-signup.svg')] bg-no-repeat bg-right-top shadow-md bg-white z-[999]"
+        class="lg:w-[520px] lg:h-[225px] w-[325px] h-[190px] rounded-2xl lg:bg-auto lg:bg-[size: 100%] bg-[size:60%] bg-[url('./assets/images/home-page/cta/cta-signup.svg')] bg-no-repeat bg-right-top shadow-md bg-white z-[999] cursor-pointer"
+        (click)="navigateToSignUp()"
       >
         <div class="h-full px-5 py-6">
           <div class="flex flex-col h-full justify-end gap-4">
@@ -387,8 +388,8 @@
               </div>
               <div class="h-full flex justify-end items-center flex-grow">
                 <span
-                  class="material-icons-outlined text-[20px] text-tmf-gray-4 cursor-pointer"
-                  (click)="navigateToSignUp()"
+                  class="material-icons-outlined text-[20px] text-tmf-gray-4"
+
                 >
                   east
                 </span>
@@ -398,7 +399,8 @@
         </div>
       </div>
       <div
-        class="lg:w-[520px] lg:h-[225px] w-[325px] h-[190px] rounded-2xl bg-[url('./assets/images/home-page/cta/cta-teach.svg')] lg:bg-[size: 100%] bg-[size:60%] bg-no-repeat bg-right-top shadow-md bg-white z-[999]"
+        class="lg:w-[520px] lg:h-[225px] w-[325px] h-[190px] rounded-2xl bg-[url('./assets/images/home-page/cta/cta-teach.svg')] lg:bg-[size: 100%] bg-[size:60%] bg-no-repeat bg-right-top shadow-md bg-white z-[999] cursor-pointer"
+        (click)="navigateToTeacherApply()"
       >
         <div class="h-full px-5 py-6">
           <div class="flex flex-col h-full justify-end gap-4">
@@ -409,8 +411,8 @@
               </div>
               <div class="h-full flex justify-end items-center flex-grow">
                 <span
-                  class="material-icons-outlined text-[20px] text-tmf-gray-4 cursor-pointer"
-                  (click)="navigateToTeacherApply()"
+                  class="material-icons-outlined text-[20px] text-tmf-gray-4"
+
                 >
                   east
                 </span>
