@@ -98,6 +98,7 @@
       <div class="lg:w-9:12 w-10/12">
         <ng-container [ngSwitch]="currentWindowSize">
           <!-- <ng-container *ngSwitchCase="'Handset'">
+          <!-- <ng-container *ngSwitchCase="'Handset'">
             <swiper-container
               #swiperElement
               init="false"
@@ -130,6 +131,7 @@
                 </swiper-slide>
               </ng-container>
             </swiper-container>
+          </ng-container> -->
           </ng-container> -->
           <ng-container *ngSwitchDefault>
             <swiper-container
@@ -165,7 +167,10 @@
       <div class="mt-8 py-8">
         <div class="h-full w-full overflow-hidden">
           <div class="lg:w-9:12 m-auto w-10/12">
+        <div class="h-full w-full overflow-hidden">
+          <div class="lg:w-9:12 m-auto w-10/12">
             <ng-container [ngSwitch]="currentWindowSize">
+              <!-- <ng-container *ngSwitchCase="'Handset'">
               <!-- <ng-container *ngSwitchCase="'Handset'">
                 <swiper-container
                   #swiperElementCourse
@@ -206,6 +211,7 @@
                     </swiper-slide>
                   </ng-container>
                 </swiper-container>
+              </ng-container> -->
               </ng-container> -->
               <ng-container *ngSwitchDefault>
                 <swiper-container
@@ -424,7 +430,8 @@
         </div>
       </div>
       <div
-        class="lg:bg-[size: 100%] z-[999] h-[190px] w-[325px] rounded-2xl bg-white bg-[url('./assets/images/home-page/cta/cta-teach.svg')] bg-[size:60%] bg-right-top bg-no-repeat shadow-md lg:h-[225px] lg:w-[520px]"
+        class="lg:bg-[size: 100%] z-[999] h-[190px] w-[325px] rounded-2xl bg-white bg-[url('./assets/images/home-page/cta/cta-teach.svg')] bg-[size:60%] bg-right-top bg-no-repeat shadow-md lg:h-[225px] lg:w-[520px] cursor-pointer"
+        (click)="navigateToTeacherApply()"
       >
         <div class="h-full px-5 py-6">
           <div class="flex h-full flex-col justify-end gap-4">
