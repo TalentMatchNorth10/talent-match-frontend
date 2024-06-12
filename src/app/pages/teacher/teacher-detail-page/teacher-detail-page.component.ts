@@ -30,12 +30,12 @@ export default class TeacherDetailPageComponent implements OnInit {
   introductionData!: VideoCardData;
   advantagesData!: VideoCardData;
 
-  recommendedCourseData!:CardData[]
+  recommendedCourseData!: CardData[];
 
   ngOnInit(): void {
-    this.introductionData = FakeVideos[0]
-    this.advantagesData = FakeVideos[1]
+    this.introductionData = FakeVideos[0];
+    this.advantagesData = FakeVideos[1];
 
-    this.recommendedCourseData = CourseData
+    this.recommendedCourseData = CourseData;
   }
 }
