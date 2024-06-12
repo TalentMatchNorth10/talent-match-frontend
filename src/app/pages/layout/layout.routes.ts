@@ -54,6 +54,17 @@ export const routes: Routes = [
     path: 'teacher-apply',
     loadComponent: () =>
       import('../teacher-apply-page/teacher-apply-page.component')
+  },
+  /** ==================================  使用者管理 ========================================= */
+  {
+    path: 'student',
+    loadChildren: () => import('../student/student.routes'),
+    data: { state: 'student' }
+  },
+  {
+    path: 'teacher',
+    loadChildren: () => import('../teacher/teacher.routes'),
+    data: { state: 'teacher' }
   }
 ];
 

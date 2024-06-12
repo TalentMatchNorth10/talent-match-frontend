@@ -97,7 +97,7 @@
     <div class="flex h-full w-full justify-center overflow-hidden">
       <div class="lg:w-9:12 w-10/12">
         <ng-container [ngSwitch]="currentWindowSize">
-          <ng-container *ngSwitchCase="'Handset'">
+          <!-- <ng-container *ngSwitchCase="'Handset'">
             <swiper-container
               #swiperElement
               init="false"
@@ -108,9 +108,7 @@
               <ng-container *ngFor="let video of videoDataSource">
                 <swiper-slide>
                   <div class="m-auto h-full w-full p-2">
-                    <!-- <app-short-video-card [data]="video"></app-short-video-card> -->
                     <tmf-video-card [data]="video"></tmf-video-card>
-
                   </div>
                 </swiper-slide>
               </ng-container>
@@ -127,14 +125,12 @@
               <ng-container *ngFor="let video of videoDataSource">
                 <swiper-slide>
                   <div class="m-auto h-full w-full p-2">
-                    <!-- <app-short-video-card [data]="video"></app-short-video-card> -->
                     <tmf-video-card [data]="video"></tmf-video-card>
-
                   </div>
                 </swiper-slide>
               </ng-container>
             </swiper-container>
-          </ng-container>
+          </ng-container> -->
           <ng-container *ngSwitchDefault>
             <swiper-container
               #swiperElement
@@ -147,14 +143,12 @@
                   <div class="m-auto h-full w-full p-2">
                     <!-- <app-short-video-card [data]="video"></app-short-video-card> -->
                     <tmf-video-card [data]="video"></tmf-video-card>
-
                   </div>
                 </swiper-slide>
               </ng-container>
             </swiper-container>
           </ng-container>
         </ng-container>
-
       </div>
     </div>
   </section>
@@ -169,16 +163,15 @@
         推薦課程
       </div>
       <div class="mt-8 py-8">
-        <div class="w-full h-full overflow-hidden">
-          <div class="lg:w-9:12 w-10/12 m-auto">
+        <div class="h-full w-full overflow-hidden">
+          <div class="lg:w-9:12 m-auto w-10/12">
             <ng-container [ngSwitch]="currentWindowSize">
-              <ng-container *ngSwitchCase="'Handset'">
+              <!-- <ng-container *ngSwitchCase="'Handset'">
                 <swiper-container
                   #swiperElementCourse
                   slides-per-view="1"
                   navigation="false"
                 >
-
                   <ng-container *ngFor="let courseItem of courseDataSource">
                     <swiper-slide>
                       <div class="m-auto h-[530px] w-full flex-shrink-0 p-2">
@@ -200,7 +193,6 @@
                   slides-per-view="2"
                   navigation="false"
                 >
-
                   <ng-container *ngFor="let courseItem of courseDataSource">
                     <swiper-slide>
                       <div class="m-auto h-[530px] w-full flex-shrink-0 p-2">
@@ -214,7 +206,7 @@
                     </swiper-slide>
                   </ng-container>
                 </swiper-container>
-              </ng-container>
+              </ng-container> -->
               <ng-container *ngSwitchDefault>
                 <swiper-container
                   #swiperElementCourse
@@ -229,14 +221,12 @@
                           [data]="courseItem"
                           [hoverEffect]="false"
                         ></tmf-card>
-
                       </div>
                     </swiper-slide>
                   </ng-container>
                 </swiper-container>
               </ng-container>
             </ng-container>
-
           </div>
         </div>
       </div>
@@ -271,11 +261,10 @@
             </div>
           </div>
           <div class="relative w-4/5 overflow-hidden">
-            <swiper-container slides-per-view="1">
+            <swiper-container slides-per-view="1" autoplay="true">
               <ng-container
                 *ngFor="let review of reviewDataSource; let i = index"
               >
-
                 <swiper-slide>
                   <div class="w-full flex-shrink-0 p-2 md:w-1/3 lg:w-1/4">
                     <app-review-card [data]="review"></app-review-card>
@@ -339,7 +328,7 @@
                 </div>
               </ng-container>
             </div>
-            <div class="flex gap-6 justify-center">
+            <div class="flex justify-center gap-6">
               <ng-container
                 *ngFor="let review of reviewDataSource | slice: 2 : 4"
               >
@@ -348,7 +337,7 @@
                 </div>
               </ng-container>
             </div>
-            <div class="flex gap-6 justify-end">
+            <div class="flex justify-end gap-6">
               <ng-container
                 *ngFor="let review of reviewDataSource | slice: 4 : 6"
               >
@@ -363,30 +352,66 @@
     </div>
   </section>
   <section class="mb-12">
-    <div class="flex w-full flex-col items-center">
+    <!-- <div class="flex w-full flex-col items-center">
       <ng-container *ngFor="let img of howToUseStepImages">
         <div>
           <img [src]="img" alt="" />
         </div>
       </ng-container>
+    </div> -->
+    <div class="flex w-full flex-col items-center gap-4">
+      <div class="lg:w-[1280px] lg:h-[776px] md:w-[800px] md:h-[600px] h-[440px] w-[350px] shadow-md rounded-lg px-2 pb-0 pt-8 bg-[#FEEFE7]">
+        <div class="h-full flex flex-col items-center justify-between gap-3">
+          <span
+            class="rounded-lg border-2 border-orange-500 px-2 py-1 text-base font-bold text-orange-500"
+            >STEP 1</span
+          >
+          <span class="font-bold text-2xl lg:text-3xl">註冊帳號</span>
+          <span class="text-center text-sm lg:text-lg lg:w-[1040px] md:w-[500px]">在我們的平台上註冊一個帳號，填寫您的基本資料並設置登入密碼。註冊完成後,您將獲得全面的訪問權限，可以開始瀏覽和使用我們的各項功能。</span>
+          <img class="lg:w-[1040px] lg:h-[560px] md:h-[320px]" [src]="'./../../../assets/images/home-page/how-to-use/how-to-use-step-1.svg'" alt="" />
+        </div>
+      </div>
+      <div class="lg:w-[1280px] lg:h-[776px] md:w-[800px] md:h-[600px] h-[440px] w-[350px] shadow-md rounded-lg px-2 pb-0 pt-8 bg-[#F6FEE7]">
+        <div class="h-full flex flex-col items-center justify-between gap-3">
+          <span
+            class="rounded-lg border-2 border-orange-500 px-2 py-1 text-base font-bold text-orange-500"
+            >STEP 2</span
+          >
+          <span class="font-bold text-2xl lg:text-3xl">尋找才藝教學</span>
+          <span class="text-center text-sm lg:text-lg lg:w-[1040px] md:w-[500px]">瀏覽我們平台上豐富的才藝教學資源，您可以根據興趣和需求，尋找到合適的教學內容。無論您想要學習音樂、舞蹈、美術還是其他才藝，都能在這裡找到適合您的課程。</span>
+          <img class="lg:w-[1040px] lg:h-[560px] md:h-[320px]" [src]="'./../../../assets/images/home-page/how-to-use/how-to-use-step-2.svg'" alt="" />
+        </div>
+      </div>
+      <div class="lg:w-[1280px] lg:h-[776px] md:w-[800px] md:h-[600px] h-[440px] w-[350px] shadow-md rounded-lg px-2 pb-0 pt-8 bg-[#E7F6FE]">
+        <div class="h-full flex flex-col items-center justify-between gap-3">
+          <span
+            class="rounded-lg border-2 border-orange-500 px-2 py-1 text-base font-bold text-orange-500"
+            >STEP 3</span
+          >
+          <span class="font-bold text-2xl lg:text-3xl">預約學習課程</span>
+          <span class="text-center text-sm lg:text-lg lg:w-[1040px] md:w-[500px]">找到心儀的教學內容後，您可以直接預約相應的學習課程。選擇適合您時間和地點的授課老師，並確定預約詳情。完成預約後，您將收到確認郵件，準時參加課程即可。</span>
+          <img class="lg:w-[1040px] lg:h-[560px] md:h-[320px]" [src]="'./../../../assets/images/home-page/how-to-use/how-to-use-step-3.svg'" alt="" />
+        </div>
+      </div>
     </div>
   </section>
-  <section class="md:h-[12.5rem] lg:h-[12.5rem] h-auto lg:mb-0 -mb-8">
+  <section class="-mb-8 h-auto md:h-[12.5rem] lg:mb-0 lg:h-[12.5rem]">
     <div
-      class="w-full flex lg:flex-row md:flex-row flex-col items-center justify-center gap-6"
+      class="flex w-full flex-col items-center justify-center gap-6 md:flex-row lg:flex-row"
     >
       <div
         class="lg:w-[520px] lg:h-[225px] w-[325px] h-[190px] rounded-2xl lg:bg-auto lg:bg-[size: 100%] bg-[size:60%] bg-[url('./assets/images/home-page/cta/cta-signup.svg')] bg-no-repeat bg-right-top shadow-md bg-white z-[999] cursor-pointer"
         (click)="navigateToSignUp()"
+        class="lg:bg-[size: 100%] z-[999] h-[190px] w-[325px] rounded-2xl bg-white bg-[url('./assets/images/home-page/cta/cta-signup.svg')] bg-[size:60%] bg-right-top bg-no-repeat shadow-md lg:h-[225px] lg:w-[520px] lg:bg-auto"
       >
         <div class="h-full px-5 py-6">
-          <div class="flex flex-col h-full justify-end gap-4">
+          <div class="flex h-full flex-col justify-end gap-4">
             <div class="ld:text-3xl text-2xl">成為會員</div>
             <div class="flex items-center">
-              <div class="lg:w-11/12 w-4/5">
+              <div class="w-4/5 lg:w-11/12">
                 享有第一時間課程資訊上架消息，用最優惠的價格購買課程，同時能與老師一對一教學。
               </div>
-              <div class="h-full flex justify-end items-center flex-grow">
+              <div class="flex h-full flex-grow items-center justify-end">
                 <span
                   class="material-icons-outlined text-[20px] text-tmf-gray-4"
 
@@ -403,21 +428,24 @@
         (click)="navigateToTeacherApply()"
       >
         <div class="h-full px-5 py-6">
-          <div class="flex flex-col h-full justify-end gap-4">
-            <div class="lg:text-3xl text-2xl">成為教師</div>
+          <div class="flex h-full flex-col justify-end gap-4">
+            <div class="text-2xl lg:text-3xl">成為教師</div>
             <div class="flex items-center">
-              <div class="lg:w-11/12 w-4/5">
+              <div class="w-4/5 lg:w-11/12">
                 每個人都有擅長的知識技能，足夠的熱情創造更多附加價值，一起將這些技能分享給全世界吧！
               </div>
-              <div class="h-full flex justify-end items-center flex-grow">
+              <div class="flex h-full flex-grow items-center justify-end">
                 <span
-                  class="material-icons-outlined text-[20px] text-tmf-gray-4"
-
+                  class="material-icons-outlined cursor-pointer text-[20px] text-tmf-gray-4"
+                  (click)="navigateToTeacherApply()"
                 >
                   east
                 </span>
               </div>
             </div>
           </div>
+        </div>
+      </div>
     </div>
+  </section>
 </div>

@@ -90,7 +90,80 @@ export default class HomePageComponent implements OnInit, AfterViewInit {
 
   swiperConfig: SwiperOptions = {
     // init: true,
-    // breakpoints: this.breakpoints,
+    breakpoints: {
+      320: {
+        //当屏幕宽度大于等于320
+        slidesPerView: 2,
+        spaceBetween: 10,
+        navigation: {
+          enabled: false
+        }
+      },
+      768: {
+        //当屏幕宽度大于等于768
+        slidesPerView: 2,
+        spaceBetween: 20
+      },
+      1280: {
+        //当屏幕宽度大于等于1280
+        slidesPerView: 4,
+        spaceBetween: 30
+      }
+    },
+    injectStyles: [
+      `:host .swiper { overflow: visible !important; }
+      :host .swiper-button-disabled {
+        opacity: 1;
+        background-color: #9F9F9F !important;
+      }
+      :host .swiper-button-prev {
+        width: 56px;
+        height: 56px;
+        border-radius: 15%;
+        background-color: #F36923;
+      }
+      :host .swiper-button-prev svg {
+        width: 16px;
+        height: 12px;
+        color: #fff;
+      }
+      :host .swiper-button-next {
+        width: 56px;
+        height: 56px;
+        border-radius: 15%;
+        background-color: #F36923;
+      }
+      :host .swiper-button-next svg {
+        width: 16px;
+        height: 12px;
+        color: #fff;
+      }
+      `
+    ]
+  };
+
+  courseSwiperConfig: SwiperOptions = {
+    // init: true,
+    breakpoints: {
+      320: {
+        //当屏幕宽度大于等于320
+        slidesPerView: 1,
+        spaceBetween: 10,
+        navigation: {
+          enabled: false
+        }
+      },
+      768: {
+        //当屏幕宽度大于等于768
+        slidesPerView: 2,
+        spaceBetween: 20
+      },
+      1280: {
+        //当屏幕宽度大于等于1280
+        slidesPerView: 4,
+        spaceBetween: 30
+      }
+    },
     injectStyles: [
       `:host .swiper { overflow: visible !important; }
       :host .swiper-button-disabled {
@@ -154,7 +227,10 @@ export default class HomePageComponent implements OnInit, AfterViewInit {
     try {
       Object.assign(this.swiperElement.nativeElement, this.swiperConfig);
       this.swiperElement.nativeElement.initialize();
-      Object.assign(this.swiperElementCourse.nativeElement, this.swiperConfig);
+      Object.assign(
+        this.swiperElementCourse.nativeElement,
+        this.courseSwiperConfig
+      );
       this.swiperElementCourse.nativeElement.initialize();
     } catch (error) {
       console.error('Swiper initialization failed', error);
@@ -179,8 +255,6 @@ export default class HomePageComponent implements OnInit, AfterViewInit {
       this.currentWindowSize = 'Web';
       // console.log('Web');
     }
-
-    console.log(this.currentWindowSize);
   }
 
   search(event: any) {

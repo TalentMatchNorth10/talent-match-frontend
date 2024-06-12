@@ -3,7 +3,7 @@
 }
 
 .input-container {
-  @apply relative flex w-full items-center border-tmf-gray-4 px-3 duration-75 focus-within:border-tmf-orange-1;
+  @apply relative flex w-full items-center border-tmf-gray-4 bg-white px-3 duration-75 focus-within:border-tmf-orange-1;
 }
 
 .input {

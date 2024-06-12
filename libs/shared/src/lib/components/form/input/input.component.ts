@@ -48,23 +48,24 @@ import { Subject, takeUntil } from 'rxjs';
         <span class="text-red-500">*</span>
       }
     }
-    <div class="pb-6 relative">
+    <div class="relative pb-6">
       <div
         class="input-container"
         (keyup.enter)="search()"
         [ngClass]="{
-          'bg-tmf-gray-5 cursor-not-allowed': disabled,
+          'cursor-not-allowed !bg-tmf-gray-5': disabled,
           'border-b placeholder:text-tmf-gray-3':
             inputType === InputType.Underline,
           'placeholder:text-tmf-gray-3': inputType === InputType.Outline,
-          '!border-tmf-gray-5 !placeholder:text-tmf-gray-5':
+          '!placeholder:text-tmf-gray-5 !border-tmf-gray-5':
             inputType === InputType.Search,
-          'border rounded-lg':
+          'rounded-lg border':
             inputType === InputType.Outline ||
             inputType === InputType.Search ||
             inputType === InputType.SearchByType,
           '!pr-[38px]':
-            inputType === InputType.Search || inputType === InputType.SearchByType,
+            inputType === InputType.Search ||
+            inputType === InputType.SearchByType,
           'h-[44px] md:h-[48px] lg:h-[52px]': inputSize === InputSize.Large,
           'h-[36px] md:h-[38px] lg:h-[40px]': inputSize === InputSize.Default
         }"
@@ -75,11 +76,11 @@ import { Subject, takeUntil } from 'rxjs';
             cdkOverlayOrigin
             (click)="open()"
             #origin="cdkOverlayOrigin"
-            class="flex items-center mr-4"
+            class="mr-4 flex items-center"
           >
             @if (selectedOption.label) {
               <p
-                class="whitespace-nowrap mr-1"
+                class="mr-1 whitespace-nowrap"
                 [ngClass]="{
                   'text-tmf-gray-3': disabled
                 }"
@@ -123,7 +124,7 @@ import { Subject, takeUntil } from 'rxjs';
         <input
           class="input"
           [ngClass]="{
-            'bg-tmf-gray-5 cursor-not-allowed': disabled
+            'cursor-not-allowed bg-tmf-gray-5': disabled
           }"
           [formControl]="control"
           [type]="type"
@@ -136,7 +137,7 @@ import { Subject, takeUntil } from 'rxjs';
           <span
             class="material-symbols-outlined input-search-icon"
             [ngClass]="{
-              '!text-tmf-gray-4 !cursor-not-allowed': disabled
+              '!cursor-not-allowed !text-tmf-gray-4': disabled
             }"
             (click)="search()"
           >
@@ -181,7 +182,7 @@ export class InputComponent
   @Input() placeholder = '請輸入';
   @Input() inputType: InputType = InputType.Underline;
   @Input() inputSize: InputSize = InputSize.Default;
-  @Input() type: 'text' | 'password' | 'search'= 'text';
+  @Input() type: 'text' | 'password' | 'search' = 'text';
   @Input() isRequired: boolean = false;
   @Input() label = '';
   @Input() errorMessage: string = '';

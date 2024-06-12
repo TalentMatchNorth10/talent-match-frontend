@@ -3,7 +3,7 @@
 }
 
 .select {
-  @apply flex h-[36px] cursor-pointer items-center rounded-lg border border-tmf-gray-4 px-3 md:h-[38px] lg:h-[40px];
+  @apply flex h-[36px] cursor-pointer items-center rounded-lg border border-tmf-gray-4 bg-white px-3 md:h-[38px] lg:h-[40px];
 }
 
 .select-label {
