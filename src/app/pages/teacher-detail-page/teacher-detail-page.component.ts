@@ -6,7 +6,7 @@ import { VideoCardData } from '@tmf/libs-shared/components/short-video-card/vide
 import { StarRatingComponent } from '@tmf/libs-shared/components/star-rating/star-rating.component';
 import { VideoCardComponent } from '@tmf/libs-shared/components/video-card/video-card.component';
 import { WeeklyCalendarComponent } from '@tmf/libs-shared/components/weekly-calendar/weekly-calendar.component';
-import { CourseData, FakeVideos } from '../../course-detail-page/mock-data';
+import { CourseData, FakeVideos } from '../course-detail-page/mock-data';
 import { CardData } from '@tmf/libs-shared/components/card/card.interface';
 
 @Component({
