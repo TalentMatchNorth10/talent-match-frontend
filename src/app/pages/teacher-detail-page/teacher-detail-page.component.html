@@ -1,7 +1,10 @@
-<div class="w-full py-12 bg-gray-50 bg-[url('./assets/images/home-page/section-bg-decorate.svg')] bg-center">
+<div
+  class="w-full bg-gray-50 bg-[url('./assets/images/home-page/section-bg-decorate.svg')] bg-center py-12"
+  style="-webkit-mask: linear-gradient(180deg, #000 90%, transparent)"
+>
   <!-- 教師頭像、名字 -->
-  <section class="lg:ml-32 m-auto lg:w-2/3 w-10/12">
-    <div class="flex lg:flex-row flex-col items-center gap-6">
+  <section class="m-auto w-10/12 lg:ml-32 lg:w-2/3">
+    <div class="flex flex-col items-center gap-6 lg:flex-row">
       <img
         class="h-[200px] w-[200px] rounded-full border border-tmf-gray-6"
         src="https://fakeimg.pl/200/"
@@ -30,11 +33,11 @@
     </div>
   </section>
 </div>
-<div class="lg:ml-32 m-auto lg:w-2/3 w-10/12 py-12">
+<div class="m-auto w-10/12 py-12 lg:ml-32 lg:w-2/3">
   <div class="flex h-full w-full flex-col gap-8">
     <!-- 教師短影片 -->
     <section>
-      <div class="flex lg:gap-4 py-4 gap-2 overflow-x-auto custom-scrollbar">
+      <div class="custom-scrollbar flex gap-2 overflow-x-auto py-4 lg:gap-4">
         <!-- 自我介紹影片 -->
         <div class="flex flex-col gap-4">
           <tmf-video-card [data]="introductionData"></tmf-video-card>
@@ -74,7 +77,9 @@
         />
         <h2 class="text-xl font-bold xl:text-2xl">課程瀏覽</h2>
       </div>
-      <div class="flex gap-4 px-2 py-4 max-w-full overflow-x-auto custom-scrollbar">
+      <div
+        class="custom-scrollbar flex max-w-full gap-4 overflow-x-auto px-2 py-4"
+      >
         <ng-container *ngFor="let course of recommendedCourseData">
           <tmf-card [data]="course" [hoverEffect]="false"></tmf-card>
         </ng-container>
