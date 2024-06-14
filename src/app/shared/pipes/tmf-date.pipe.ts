@@ -16,3 +16,20 @@ export class TmfDatePipe implements PipeTransform {
     return localDate.toISOString().split('T')[0];
   }
 }
+
+/**
+ * 2024-06-11T13:00:00.000Z -> 2024-06-11 13:00
+ */
+@Pipe({
+  name: 'tmfDateTime',
+  standalone: true
+})
+export class TmfDateTimePipe implements PipeTransform {
+  constructor() {}
+
+  transform(value: string | undefined): string {
+    const date = value!.split('T')[0];
+    const time = value!.split('T')[1].split('.')[0].slice(0, 5);
+    return `${date} ${time}`;
+  }
+}

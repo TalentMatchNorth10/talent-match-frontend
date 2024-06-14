@@ -1,0 +1,116 @@
+<h1 class="mb-6 text-3xl font-bold text-tmf-gray-2">已購買課程</h1>
+<div class="flex flex-col gap-5">
+  @for (purchasedCourse of purchasedCourses(); track $index) {
+    <div class="relative rounded-lg border border-tmf-gray-4 p-4 shadow-md">
+      <div class="flex gap-4">
+        <img
+          class="h-[166px] w-[250px] rounded-md"
+          src="./assets/images/guitar-course.png"
+          alt=""
+        />
+        <div class="flex flex-grow flex-col gap-1">
+          <h2 class="text-2xl text-tmf-gray-2">
+            {{ purchasedCourse.course_name }}
+          </h2>
+          <p>
+            {{ purchasedCourse.main_category }}｜{{ purchasedCourse.city_id }}
+          </p>
+          <div class="flex items-center gap-2">
+            <p>王太郎</p>
+            <tmf-star-rating [rating]="5"></tmf-star-rating>
+          </div>
+          <p class="text-right text-lg">
+            剩餘 {{ purchasedCourse.remain_quantity }} 堂
+          </p>
+          <div class="flex items-center justify-end gap-4">
+            <button
+              class="rounded-lg border border-tmf-gray-4 bg-white px-4 py-2 text-tmf-gray-2"
+            >
+              查看教材
+            </button>
+            <button
+              [disabled]="purchasedCourse.remain_quantity === 0"
+              (click)="openReserrveDialog(purchasedCourse)"
+              class="rounded-lg bg-tmf-orange-1 px-4 py-2 text-white disabled:bg-tmf-gray-5"
+            >
+              預約上課
+            </button>
+          </div>
+        </div>
+      </div>
+      <div
+        class="content"
+        [ngClass]="{
+          expanded: purchasedCourse.isExpanded
+        }"
+      >
+        <div class="inside">
+          <ul class="flex flex-col gap-4 px-4 text-tmf-gray-2">
+            @for (course of purchasedCourse.reserved_course; track $index) {
+              <li class="flex items-center justify-between">
+                <p class="min-w-[9.375rem]">
+                  {{ course.reserve_time| tmfDateTime }}
+                </p>
+                <p class="min-w-[3.75rem]">已預約</p>
+                <p class="min-w-24"></p>
+              </li>
+            } @empty {
+              <li class="flex items-center justify-center">
+                <p>尚無預約課程</p>
+              </li>
+            }
+            //TODO 等待老師管理-行事曆管理頁面完成候補
+            <!-- <li class="flex items-center justify-between">
+              <p class="min-w-[9.375rem]">2024-04-05 20:00</p>
+              <p class="min-w-[3.75rem]">已預約</p>
+              <p class="min-w-24"></p>
+            </li>
+            <li class="flex items-center justify-between">
+              <p class="min-w-[9.375rem]">2024-04-05 20:00</p>
+              <p class="min-w-[3.75rem]">已完課</p>
+              <button
+                class="min-w-24 rounded-md bg-tmf-orange-1 px-4 py-1 text-center text-white"
+              >
+                完成課程
+              </button>
+            </li>
+            <li class="flex items-center justify-between">
+              <p class="min-w-[9.375rem]">2024-04-05 20:00</p>
+              <p class="min-w-[3.75rem]">已完課</p>
+              <button
+                class="min-w-24 rounded-md bg-tmf-purple px-4 py-1 text-center text-white"
+              >
+                給予評價
+              </button>
+            </li>
+            <li class="flex items-center justify-between">
+              <p class="min-w-[9.375rem]">2024-04-05 20:00</p>
+              <p class="min-w-[3.75rem]">已完課</p>
+              <p
+                class="min-w-24 rounded-md bg-tmf-gray-5 px-4 py-1 text-center text-white"
+              >
+                已評價
+              </p>
+            </li> -->
+          </ul>
+        </div>
+      </div>
+      <div
+        (click)="purchasedCourse.isExpanded = !purchasedCourse.isExpanded"
+        class="absolute -bottom-4 left-1/2 h-8 w-8 -translate-x-1/2 rounded-full border border-tmf-gray-4 bg-white"
+      >
+        <div class="flex h-full w-full items-center justify-center">
+          @if (purchasedCourse.isExpanded) {
+            <span class="material-symbols-outlined text-[32px] leading-8">
+              arrow_drop_up
+            </span>
+          } @else {
+            <span class="material-symbols-outlined text-[32px] leading-8">
+              arrow_drop_down
+            </span>
+          }
+        </div>
+      </div>
+    </div>
+  }
+</div>

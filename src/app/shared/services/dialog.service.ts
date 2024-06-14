@@ -8,6 +8,7 @@ import {
   TmfAlertConfig,
   TmfConfirmConfig
 } from '@tmf/libs-shared/components/dialogs/dialogs.obj';
+import { ReserveComponent } from '@tmf/libs-shared/components/dialogs/reserve/reserve.component';
 
 @Injectable({
   providedIn: 'root'
@@ -39,6 +40,13 @@ export class DialogService {
     return this.dialog.open(component, {
       autoFocus: 'none',
       backdropClass: 'video-mask',
+      data: dialogData
+    });
+  }
+
+  openReserveDialog<D>(dialogData?: D) {
+    return this.dialog.open(ReserveComponent, {
+      autoFocus: 'none',
       data: dialogData
     });
   }
