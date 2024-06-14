@@ -1,0 +1,7 @@
+.custom-scrollbar::-webkit-scrollbar {
+  height: 8px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  @apply bg-tmf-gray-6;
+  border-radius: 50px;
+}

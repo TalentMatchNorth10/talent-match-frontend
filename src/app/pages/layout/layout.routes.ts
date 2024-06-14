@@ -37,7 +37,7 @@ export const routes: Routes = [
     // 老師詳情頁
     path: 'teacher-detail/:id',
     loadComponent: () =>
-      import('../teacher/teacher-detail-page/teacher-detail-page.component')
+      import('../teacher-detail-page/teacher-detail-page.component')
   },
   {
     // 訊息公告頁

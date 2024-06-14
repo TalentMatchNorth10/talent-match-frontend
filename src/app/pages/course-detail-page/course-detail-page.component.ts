@@ -1,4 +1,5 @@
-import { NgClass } from '@angular/common';
+import { CourseData, FakeVideos } from './mock-data';
+import { CommonModule, NgClass } from '@angular/common';
 import {
   Component,
   ElementRef,
@@ -16,6 +17,7 @@ import {
   RouterLink
 } from '@angular/router';
 import { CardComponent } from '@tmf/libs-shared/components/card/card.component';
+import { VideoCardData } from '@tmf/libs-shared/components/short-video-card/video-card.interface';
 import { StarRatingComponent } from '@tmf/libs-shared/components/star-rating/star-rating.component';
 import { VideoCardComponent } from '@tmf/libs-shared/components/video-card/video-card.component';
 import { WeeklyCalendarComponent } from '@tmf/libs-shared/components/weekly-calendar/weekly-calendar.component';
@@ -24,6 +26,7 @@ import { WeeklyCalendarComponent } from '@tmf/libs-shared/components/weekly-cale
   selector: 'app-course-detail-page',
   standalone: true,
   imports: [
+    CommonModule,
     StarRatingComponent,
     VideoCardComponent,
     WeeklyCalendarComponent,
@@ -37,65 +40,8 @@ import { WeeklyCalendarComponent } from '@tmf/libs-shared/components/weekly-cale
 export default class CourseDetailPageComponent {
   @ViewChildren('section') sections!: QueryList<ElementRef>;
   activeSection: WritableSignal<string> = signal('sectionA');
-  cardData = [
-    {
-      course_id: '1',
-      mainImg: 'https://fakeimg.pl/300/',
-      title: '課程名稱1',
-      content: '課程內容1',
-      avatar: 'https://fakeimg.pl/300/',
-      name: '老師名稱1',
-      price: 1000,
-      quantity: 1,
-      main_category: '主分類1',
-      sub_category: '次分類1',
-      rating: 4.5,
-      ratingCount: 100
-    },
-    {
-      course_id: '1',
-      mainImg: 'https://fakeimg.pl/300/',
-      title: '課程名稱2',
-      content: '課程內容2',
-      avatar: 'https://fakeimg.pl/300/',
-      name: '老師名稱2',
-      price: 2000,
-      quantity: 2,
-      main_category: '主分類2',
-      sub_category: '次分類2',
-      rating: 4.5,
-      ratingCount: 100
-    },
-    {
-      course_id: '1',
-      mainImg: 'https://fakeimg.pl/300/',
-      title: '課程名稱2',
-      content:
-        '課程內容2課程內容2課程內容2課程內容2課程內容2課程內容2課程內容2課程內容2課程內容2課程內容2課程內容2課程內容2課程內容2課程內容2課程內容2',
-      avatar: 'https://fakeimg.pl/300/',
-      name: '老師名稱2',
-      price: 2000,
-      quantity: 2,
-      main_category: '主分類2',
-      sub_category: '次分類2',
-      rating: 4.5,
-      ratingCount: 100
-    },
-    {
-      course_id: '1',
-      mainImg: 'https://fakeimg.pl/300/',
-      title: '課程名稱2',
-      content: '課程內容2',
-      avatar: 'https://fakeimg.pl/300/',
-      name: '老師名稱2',
-      price: 2000,
-      quantity: 2,
-      main_category: '主分類2',
-      sub_category: '次分類2',
-      rating: 4.5,
-      ratingCount: 100
-    }
-  ];
+  cardData = CourseData;
+  videoData: VideoCardData[] = FakeVideos;
 
   private router = inject(Router);
   private route = inject(ActivatedRoute);
@@ -145,5 +91,9 @@ export default class CourseDetailPageComponent {
     });
 
     this.activeSection.set(currentSection);
+  }
+
+  navigateToTeacherDetail(id: string): void {
+    this.router.navigate([`teacher-detail/${id}`]);
   }
 }
