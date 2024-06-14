@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, inject } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, Input, OnInit, inject } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import {
   CommonService,
   GetCartItemsResponseModelDataInner,
@@ -11,13 +11,21 @@ import {
 } from 'libs/openapi/src';
 import { AuthStatusService } from 'src/app/shared/services/authStatus.service';
 import { CartItem, CartTotal, UserMenuItem } from './header.model';
+import { Animations } from 'src/app/shared/functions/animations';
 import {
+  InputComponent,
+  InputType,
+  SearchType,
   OptionComponent,
   OptionType,
   SelectComponent
 } from '@tmf/libs-shared/components';
-import { Animations } from 'src/app/shared/functions/animations';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormControl,
+  FormsModule,
+  Validators,
+  ReactiveFormsModule
+} from '@angular/forms';
 
 @Component({
   selector: 'app-header',
@@ -26,7 +34,9 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
     CommonModule,
     ReactiveFormsModule,
     SelectComponent,
-    OptionComponent
+    OptionComponent,
+    InputComponent,
+    FormsModule
   ],
   template: `
     <div class="relative z-10 flex justify-center border-b border-tmf-gray-5">
@@ -57,7 +67,7 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
                   let lastCartItem = $last
                 ) {
                   <li
-                    (click)="toggleSelectCity(option)"
+                    (click)="searchCity(option.value)"
                     class="flex w-full cursor-pointer items-start justify-start gap-x-3 bg-white px-[16px] py-2 duration-100 hover:bg-tmf-orange-3 active:bg-tmf-orange-2"
                   >
                     <p>{{ option.label }}</p>
@@ -115,7 +125,7 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
                         <ul class="grid grid-cols-2">
                           @for (sub of selectTag.sub_category; track sub) {
                             <li
-                              (click)="currentTag = sub"
+                              (click)="searchTag(sub)"
                               class="relative col-span-1 flex h-fit justify-center px-[16px] py-3 text-center hover:bg-tmf-orange-3 active:bg-tmf-orange-2"
                             >
                               {{ sub }}
@@ -129,6 +139,14 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
               </ul>
             </div>
           </div>
+          @if (!isIndex) {
+            <tmf-input
+              [inputType]="InputType.Search"
+              [(ngModel)]="searchInputControl"
+              placeholder="快速搜尋"
+              (clickSearch)="search($event)"
+            ></tmf-input>
+          }
         </div>
         <button (click)="toggleSidenav()" class="flex cursor-pointer lg:hidden">
           <span class="material-icons-outlined text-[24px] text-tmf-gray-4"
@@ -429,7 +447,7 @@ export class HeaderComponent implements OnInit {
   private authStatusService = inject(AuthStatusService);
   private shopService = inject(ShopService);
   private commonService = inject(CommonService);
-
+  private route = inject(ActivatedRoute);
   user: UserInfoResponseModelData | null = null;
   cityOptions: OptionType[] = [];
   selectCity!: OptionType | null;
@@ -437,7 +455,7 @@ export class HeaderComponent implements OnInit {
   tagOptions: TagsResponseModelDataInner[] = [];
   selectTag!: TagsResponseModelDataInner | null;
   currentTag: string = '';
-
+  isIndex = false;
   isOpen: boolean = false;
 
   userMenuList: Array<Array<UserMenuItem>> = [
@@ -493,6 +511,9 @@ export class HeaderComponent implements OnInit {
     courseCount: 0,
     total: 0
   };
+  searchInputControl = '';
+
+  readonly InputType = InputType;
 
   ngOnInit(): void {
     this.getOptions();
@@ -503,6 +524,9 @@ export class HeaderComponent implements OnInit {
       } else {
         this.user = null;
       }
+    });
+    this.route.url.subscribe(() => {
+      this.isIndex = window.location.pathname === '/home';
     });
   }
 
@@ -591,5 +615,19 @@ export class HeaderComponent implements OnInit {
       default:
         break;
     }
+  }
+
+  search(e: SearchType) {
+    this.router.navigateByUrl(`/result-keyword?keyword=${e.value}`);
+  }
+
+  searchCity(cityId: string) {
+    this.router.navigateByUrl(`/result-tag?cityId=${cityId}`);
+  }
+
+  searchTag(tag: string) {
+    this.router.navigateByUrl(
+      `/result-tag?mainCategory=${this.selectTag?.main_category}&subCategory=${tag}`
+    );
   }
 }

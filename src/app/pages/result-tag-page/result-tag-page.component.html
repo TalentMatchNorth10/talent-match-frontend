@@ -1,0 +1,53 @@
+<div class="relative bg-tmf-gray-7">
+  <div class="xl:container mx-auto px-4 xl:px-0 xl:w-[1280px] pb-20 pt-10 bg-[url('./assets/images/itemArea_bg.png')] bg-no-repeat bg-[right_25px]">
+    <!-- 類別面板 -->
+    @if (true) {
+      <div
+        class="text-3xl w-full bg-left bg-no-repeat pt-[1.5rem] text-left font-bold
+        bg-[url('./assets/images/home-page/orange-80-decorate.svg')]"
+      >
+        探索課程
+      </div>
+      @if (tags) {
+      <div class="py-6 flex gap-x-6 w-full overflow-auto">
+        <button [ngClass]="{ 'main-active': !query.mainCategory}" class="w-[120px] h-[120px] flex-shrink-0 bg-white rounded-2xl flex flex-col justify-between items-center py-5 shadow-[0_10px_15px_-3px_#0000001A] hover:bg-tmf-orange-1 group " (click)="clearMainCategory()">
+          <img class="w-10 h-10 group-hover:brightness-0 group-hover:invert" src="assets/images/tag-icon/action_key.svg" alt="">
+          <span class="font-bold text-xl group-hover:text-white">探索全部</span>
+        </button>
+
+        @for (tag of tags; track $index) {
+          <button [ngClass]="{ 'main-active': query.mainCategory === tag.main_category}" class="w-[120px] h-[120px] flex-shrink-0 bg-white rounded-2xl flex flex-col justify-between items-center py-5 shadow-[0_10px_15px_-3px_#0000001A] hover:bg-tmf-orange-1 group"
+          (click)="mainCategory(tag)"
+          >
+            <img class="w-10 h-10 group-hover:brightness-0 group-hover:invert" [src]="tag['icon_url']" alt="">
+
+            <span class="font-bold text-xl group-hover:text-white">{{tag.main_category}}</span>
+          </button>
+        }
+      </div>
+      <div class="h-[42px]">
+        @if (currentTag) {
+          <button type="button" [ngClass]="{ 'sub-active': !query.subCategory}" class="text-base px-3 py-2 rounded-lg font-normal bg-white border-tmf-gray-4 border hover:text-white hover:bg-tmf-orange-1 hover:border-tmf-orange-1" (click)="subCategory(null)"
+          >所有{{currentTag.main_category}}</button>
+          @for (subTag of currentTag.sub_category; track $index) {
+            <button [ngClass]="{ 'sub-active': query.subCategory === subTag}" type="button" class="text-base px-3 py-2 rounded-lg font-normal bg-white border-tmf-gray-4 border ml-3 hover:text-white hover:bg-tmf-orange-1 hover:border-tmf-orange-1"
+            (click)="subCategory(subTag)"
+            >{{subTag}}</button>
+          }
+        }
+      </div>
+      }
+    }
+  </div>
+</div>
+
+<hr class="h-[2px] bg-gradient-to-r from-[#F7F7F7] via-[#8D0099] to-[#F7F7F7]">
+
+<result-course-list
+[data]="data"
+[query]="query"
+[canCity]="true"
+(pageChange)="page($event)"
+(sortChange)="sort($event)"
+(cityIdChange)="cityId($event)"
+></result-course-list>

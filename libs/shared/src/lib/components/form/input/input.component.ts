@@ -48,7 +48,10 @@ import { Subject, takeUntil } from 'rxjs';
         <span class="text-red-500">*</span>
       }
     }
-    <div class="relative pb-6">
+    <div
+      class="relative"
+      [ngClass]="{ 'pb-6': inputType !== InputType.Search }"
+    >
       <div
         class="input-container"
         (keyup.enter)="search()"

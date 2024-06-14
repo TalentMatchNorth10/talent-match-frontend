@@ -1,0 +1,12 @@
+.main-active {
+  @apply cursor-default bg-tmf-orange-1;
+  > img {
+    @apply brightness-0 invert;
+  }
+  > span {
+    @apply cursor-default text-white;
+  }
+}
+.sub-active {
+  @apply border-tmf-orange-1 bg-tmf-orange-1 text-white;
+}

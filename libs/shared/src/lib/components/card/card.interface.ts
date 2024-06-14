@@ -6,7 +6,7 @@ export interface CardData {
   avatar: string;
   name: string;
   price: number;
-  quantity: number;
+  quantity?: number;
   main_category: string;
   sub_category: string;
   rating: number;

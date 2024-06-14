@@ -1,1 +1,38 @@
-<p>result-keyword-page works!</p>
+@if (data && data.teachers?.length) {
+  <div class="relative bg-tmf-gray-7">
+    <div class="xl:container mx-auto px-4 xl:px-0  xl:w-[1280px] pb-20 pt-10 bg-[url('./assets/images/itemArea_bg.png')] bg-no-repeat bg-[right_25px]">
+      <!-- 老師列表 -->
+      <div
+        class="text-3xl w-full bg-left bg-no-repeat pt-[1.5rem] text-left font-bold
+        bg-[url('./assets/images/home-page/orange-80-decorate.svg')]"
+      >
+        專業導師群
+      </div>
+      <div class="pt-6 flex gap-6">
+        @for (item of data.teachers; track $index) {
+          <div class="px-[16.5px]">
+            <img class="w-40 h-40 rounded-full object-cover" [src]="item.avator_image" alt="">
+            <div class="text-center font-bold text-lg mt-3">{{item.name}}</div>
+            <div class="flex items-center justify-center gap-1">
+                <tmf-star-rating [rating]="item.rate_avg"></tmf-star-rating>
+                <p
+                  class="text-[14px] leading-5 pb-[2px] flex items-center font-medium gap-1"
+                >
+                  <span class="text-black">{{item.rate_avg}}</span>
+                  <span class=" text-tmf-gray-3">({{item.rate_count}})</span>
+                </p>
+              </div>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+  <hr class="h-[2px] bg-gradient-to-r from-[#F7F7F7] via-[#8D0099] to-[#F7F7F7]">
+}
+
+<result-course-list
+[data]="data"
+[query]="query"
+[canCity]="false"
+(pageChange)="page($event)"
+(sortChange)="sort($event)"></result-course-list>
