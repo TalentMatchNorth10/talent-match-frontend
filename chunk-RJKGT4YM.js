@@ -1,1 +1,0 @@
-import{t as r}from"./chunk-UDI6KFO4.js";import{Cb as a,ca as n}from"./chunk-5CDLLB3L.js";import"./chunk-TMC7WMLO.js";var m=(()=>{let e=class e{};e.\u0275fac=function(o){return new(o||e)},e.\u0275cmp=n({type:e,selectors:[["app-result-tag-page"]],standalone:!0,features:[a],decls:0,vars:0,template:function(o,s){},dependencies:[r]});let t=e;return t})();export{m as default};
