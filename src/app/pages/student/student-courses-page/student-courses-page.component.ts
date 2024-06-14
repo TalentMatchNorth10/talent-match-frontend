@@ -30,7 +30,6 @@ export default class StudentCoursesPageComponent {
 
   ngOnInit(): void {
     this.studentService.apiStudentPurchasedCoursesGet().subscribe((data) => {
-      console.log(data.data?.purchased_courses);
       if (data.data?.purchased_courses) {
         this.studetnCourseService.updatePurchasedCourses(
           data.data?.purchased_courses.map((course) => ({
