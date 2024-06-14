@@ -1,0 +1,9 @@
+:host {
+  display: block;
+}
+tmf-pagination::ng-deep nav ul {
+  justify-content: center;
+}
+.sort-active{
+  @apply font-bold text-tmf-orange-1
+}

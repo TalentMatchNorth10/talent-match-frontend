@@ -15,6 +15,7 @@ import {
   InputType,
   OptionComponent,
   ReviewCardComponent,
+  SearchType,
   SelectComponent,
   ShortVideoCardComponent
 } from 'libs/shared/src';
@@ -257,8 +258,8 @@ export default class HomePageComponent implements OnInit, AfterViewInit {
     }
   }
 
-  search(event: any) {
-    console.log(event);
+  search(event: SearchType) {
+    this.router.navigateByUrl(`/result-keyword?keyword=${event.value}`);
   }
 
   navigateToSignUp() {

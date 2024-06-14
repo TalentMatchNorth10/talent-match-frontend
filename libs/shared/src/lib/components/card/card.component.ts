@@ -40,7 +40,7 @@ import { Router } from '@angular/router';
           >
             @if (data.avatar) {
               <img
-                class="h-full w-full cursor-pointer"
+                class="h-full w-full cursor-pointer object-cover"
                 [src]="data.avatar"
                 alt="avator_image"
                 (click)="navigateToTeacherPage(data)"
@@ -80,7 +80,7 @@ import { Router } from '@angular/router';
                   data.rating ? data.rating : ''
                 }}</span>
                 <span class="text-tmf-gray-3"
-                  >({{ data.ratingCount ? data.ratingCount : '' }})</span
+                  >({{ data.ratingCount ? data.ratingCount : 0 }})</span
                 >
               </p>
             </div>
