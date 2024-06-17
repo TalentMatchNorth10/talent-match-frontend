@@ -7,7 +7,6 @@ import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Params, Router, RouterModule } from '@angular/router';
 import { CardData } from '@tmf/libs-shared/components/card/card.interface';
 import { StarRatingComponent } from '@tmf/libs-shared/components/star-rating/star-rating.component';
-import { SearchData, SearchDataCoursesInner } from 'libs/openapi/src';
 import {
   BehaviorSubject,
   debounceTime,
@@ -17,6 +16,7 @@ import {
 } from 'rxjs';
 import { SortType } from './result-keyword-page.model';
 import { ResultCourseListComponent } from './component/result-course-list/result-course-list.component';
+import { SearchResponseModelData } from 'libs/openapi/src';
 
 @Component({
   selector: 'app-result-keyword-page',
@@ -35,7 +35,7 @@ export default class ResultKeywordPageComponent implements OnInit {
   protected route = inject(ActivatedRoute);
   protected router = inject(Router);
 
-  data?: SearchData;
+  data?: SearchResponseModelData;
   readonly queryKey: Array<keyof ApiCommonSearchResultAllGetRequestParams> = [
     'keyword',
     'page',
