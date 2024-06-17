@@ -4,8 +4,8 @@ import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import {
   ApiCommonSearchResultAllGetRequestParams,
   CityResponseModelDataInner,
-  SearchData,
-  SearchDataCoursesInner
+  SearchResponseModelData,
+  SearchResponseModelDataCoursesInner
 } from 'libs/openapi/src';
 import { SortType } from '../../result-keyword-page.model';
 import {
@@ -139,7 +139,7 @@ import { ReplaySubject, filter, map, tap } from 'rxjs';
 export class ResultCourseListComponent {
   private commonService = inject(CommonService);
   private route = inject(ActivatedRoute);
-  @Input() data?: SearchData;
+  @Input() data?: SearchResponseModelData;
   @Input() query!: ApiCommonSearchResultAllGetRequestParams;
   @Output() pageChange = new EventEmitter();
   @Output() sortChange = new EventEmitter();
@@ -157,7 +157,7 @@ export class ResultCourseListComponent {
   cityId?: string;
   cityOptions?: CityResponseModelDataInner[];
   cityOptions$ = new ReplaySubject<CityResponseModelDataInner[]>();
-  transformToCardData(course: SearchDataCoursesInner): CardData {
+  transformToCardData(course: SearchResponseModelDataCoursesInner): CardData {
     return {
       ...course,
       course_id: course._id,
