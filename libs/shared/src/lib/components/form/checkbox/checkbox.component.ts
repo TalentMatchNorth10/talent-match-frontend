@@ -5,6 +5,7 @@ import {
   Injector,
   Input,
   OnInit,
+  Output,
   forwardRef,
   inject
 } from '@angular/core';
@@ -15,6 +16,7 @@ import {
   NgControl
 } from '@angular/forms';
 import { v4 as uuidv4 } from 'uuid';
+import { OptionType } from '../share';
 
 @Component({
   selector: 'tmf-checkbox',
@@ -28,44 +30,96 @@ import { v4 as uuidv4 } from 'uuid';
     }
   ],
   template: `
-    <div
-      [ngClass]="{
-        'flex-col gap-y-1': direct === 'vertical',
-        'flex-row gap-x-1': direct === 'horizontal'
-      }"
-      class="flex items-center"
-    >
-      <p>
-        {{ label }}
-      </p>
-      <label
-        [for]="id"
+    @if (single) {
+      <div
         [ngClass]="{
-          'bg-tmf-orange-1': value && ngControl.control?.enabled,
-          'border border-tmf-gray-5 bg-white':
-            !value && ngControl.control?.enabled,
-          'bg-tmf-gray-4 cursor-not-allowed': ngControl.control?.disabled
+          'flex-col gap-y-1': direct === 'vertical',
+          'flex-row-reverse gap-x-2': direct === 'horizontal'
         }"
-        class="rounded flex items-center justify-center w-[20px] h-[20px] cursor-pointer duration-100"
+        class="flex items-center"
       >
-        <span
+        <p>
+          {{ label }}
+        </p>
+        <label
+          [for]="id"
           [ngClass]="{
-            'text-white': value,
-            hidden: !value
+            'bg-tmf-orange-1': value && ngControl.control?.enabled,
+            'border border-tmf-gray-5 bg-white':
+              !value && ngControl.control?.enabled,
+            '!cursor-not-allowed bg-tmf-gray-5': ngControl.control?.disabled
           }"
-          class="material-icons-outlined text-[14px] select-none"
-          >done</span
+          class="flex h-[20px] w-[20px] cursor-pointer items-center justify-center rounded duration-100"
         >
-      </label>
-      <input
-        (change)="onCheckboxChange()"
-        [id]="id"
-        [checked]="value"
-        [disabled]="disabled"
-        type="checkbox"
-        class="hidden"
-      />
-    </div>
+          <span
+            [ngClass]="{
+              'text-white': value,
+              hidden: !value
+            }"
+            class="material-icons-outlined select-none text-[14px]"
+            >done</span
+          >
+        </label>
+        <input
+          (change)="onCheckboxChange()"
+          [id]="id"
+          [checked]="value"
+          [disabled]="disabled"
+          type="checkbox"
+          class="hidden"
+        />
+      </div>
+    } @else {
+      <div
+        [ngClass]="{
+          'flex-col gap-y-1': direct === 'vertical',
+          'flex-row gap-x-1': direct === 'horizontal'
+        }"
+        class="flex items-center"
+      >
+        <p>
+          {{ label }}
+        </p>
+        <div class="flex flex-wrap items-center gap-3">
+          @for (option of options; track option; let index = $index) {
+            <div class="flex items-center gap-2">
+              <label
+                [for]="id + index"
+                [ngClass]="{
+                  'bg-tmf-orange-1':
+                    isSelected(option) && ngControl.control?.enabled,
+                  'border border-tmf-gray-5 bg-white':
+                    !isSelected(option) && ngControl.control?.enabled,
+                  '!cursor-not-allowed bg-tmf-gray-5':
+                    ngControl.control?.disabled
+                }"
+                class="flex h-[20px] w-[20px] cursor-pointer items-center justify-center rounded duration-100"
+              >
+                <span
+                  [ngClass]="{
+                    'text-white': isSelected(option),
+                    hidden: !isSelected(option)
+                  }"
+                  class="material-icons-outlined select-none text-[14px]"
+                  >done</span
+                >
+              </label>
+              <input
+                (change)="onCheckboxChange(option)"
+                [id]="id + index"
+                [checked]="isSelected(option)"
+                [disabled]="disabled"
+                type="checkbox"
+                class="hidden"
+              />
+              <p>
+                {{ option.label }}
+              </p>
+            </div>
+          }
+        </div>
+      </div>
+    }
   `,
   styles: `
     :host {
@@ -78,6 +132,10 @@ export class CheckboxComponent implements ControlValueAccessor, OnInit {
 
   @Input() label = '';
   @Input() direct: 'vertical' | 'horizontal' = 'vertical';
+  @Input() single: boolean = true;
+  @Input() options: OptionType[] = [];
+
+  @Output() checkedChange = new EventEmitter<any>();
 
   id = uuidv4();
   value: boolean = false;
@@ -91,14 +149,42 @@ export class CheckboxComponent implements ControlValueAccessor, OnInit {
     this.ngControl = this.inj.get<NgControl>(NgControl);
   }
 
-  onCheckboxChange(): void {
-    this.value = !this.value;
-    this.onChange(this.value);
+  isSelected(option?: OptionType): boolean {
+    return this.ngControl.control?.value?.includes(option?.value);
+  }
+
+  onCheckboxChange(option?: OptionType): void {
+    if (this.single) {
+      this.value = !this.value;
+      this.onChange(this.value);
+      this.checkedChange.emit(this.value);
+    } else {
+      const currentValue = this.ngControl.control?.value;
+      if (!(currentValue instanceof Array)) {
+        this.onChange([option?.value]);
+        this.checkedChange.emit([option?.value]);
+      }
+
+      let newValue;
+      if (currentValue.includes(option?.value)) {
+        newValue = currentValue.filter((value: any) => value !== option?.value);
+      } else {
+        newValue = [...currentValue, option?.value];
+      }
+      this.onChange(newValue);
+      this.checkedChange.emit(newValue);
+    }
     this.onTouched();
   }
 
-  writeValue(value: boolean): void {
-    this.value = value;
+  writeValue(value: any): void {
+    if (this.single) {
+      this.value = value;
+    } else {
+      if (!(value instanceof Array)) {
+        throw new Error('value must be array');
+      }
+    }
   }
 
   registerOnChange(fn: any): void {
