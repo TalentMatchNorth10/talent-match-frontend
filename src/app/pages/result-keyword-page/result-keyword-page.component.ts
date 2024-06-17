@@ -5,7 +5,6 @@ import {
 import { NgClass } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Params, Router, RouterModule } from '@angular/router';
-import { CardData } from '@tmf/libs-shared/components/card/card.interface';
 import { StarRatingComponent } from '@tmf/libs-shared/components/star-rating/star-rating.component';
 import {
   BehaviorSubject,
