@@ -5,9 +5,7 @@ import {
 import { NgClass } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Params, Router, RouterModule } from '@angular/router';
-import { CardData } from '@tmf/libs-shared/components/card/card.interface';
 import { StarRatingComponent } from '@tmf/libs-shared/components/star-rating/star-rating.component';
-import { SearchData, SearchDataCoursesInner } from 'libs/openapi/src';
 import {
   BehaviorSubject,
   debounceTime,
@@ -17,6 +15,7 @@ import {
 } from 'rxjs';
 import { SortType } from './result-keyword-page.model';
 import { ResultCourseListComponent } from './component/result-course-list/result-course-list.component';
+import { SearchData } from 'libs/openapi/src';
 
 @Component({
   selector: 'app-result-keyword-page',
