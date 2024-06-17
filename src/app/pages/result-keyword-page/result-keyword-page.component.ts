@@ -15,6 +15,7 @@ import {
 } from 'rxjs';
 import { SortType } from './result-keyword-page.model';
 import { ResultCourseListComponent } from './component/result-course-list/result-course-list.component';
+
 import { SearchResponseModelData } from 'libs/openapi/src';
 
 @Component({
