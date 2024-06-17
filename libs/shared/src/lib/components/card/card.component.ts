@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { StarRatingComponent } from '../star-rating/star-rating.component';
-import { CardData } from './card.interface';
+import { CardData, HoverButton, HoverButtonClickEvent } from './card.interface';
 import { Router } from '@angular/router';
 
 @Component({
@@ -104,21 +104,23 @@ import { Router } from '@angular/router';
             <div
               class="invisible relative z-10 flex h-full w-full flex-col items-center justify-center gap-2 duration-100 group-hover:visible"
             >
-              <button
-                class="flex h-[40px] w-[114px] items-center justify-center rounded-lg bg-tmf-orange-1 text-white"
-              >
-                加入購物車
-              </button>
-              <button
-                class="flex h-[40px] w-[114px] items-center justify-center rounded-lg bg-white"
-              >
-                瀏覽課程
-              </button>
-              <button
-                class="flex h-[40px] w-[114px] items-center justify-center rounded-lg bg-white"
-              >
-                移除課程
-              </button>
+              @for (button of hoverButtons; track button) {
+                <button
+                  (click)="
+                    hoverButtonClick.emit({
+                      eventType: button.eventType,
+                      data: data
+                    })
+                  "
+                  [ngClass]="{
+                    'bg-tmf-orange-1 text-white': button.color === 'primary',
+                    'bg-white text-tmf-gray-2': button.color === 'white'
+                  }"
+                  class="flex h-[40px] w-[114px] items-center justify-center rounded-lg"
+                >
+                  {{ button.text }}
+                </button>
+              }
             </div>
           </div>
         }
@@ -134,6 +136,20 @@ import { Router } from '@angular/router';
 export class CardComponent {
   @Input() data!: CardData;
   @Input() hoverEffect: boolean = true;
+  @Input() hoverButtons: HoverButton[] = [
+    {
+      text: '瀏覽課程',
+      eventType: 'view',
+      color: 'primary'
+    },
+    {
+      text: '移除課程',
+      eventType: 'remove',
+      color: 'white'
+    }
+  ];
+
+  @Output() hoverButtonClick = new EventEmitter<HoverButtonClickEvent>();
 
   constructor(protected readonly router: Router) {}
 

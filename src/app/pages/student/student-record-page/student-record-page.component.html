@@ -1,1 +1,79 @@
-<p>student-record-page works!</p>
+<h1 class="mb-10 text-[30px] font-bold leading-9">交易紀錄</h1>
+<div class="min-h-[600px]">
+  <cdk-accordion class="flex flex-col gap-y-5">
+    @for (record of recordList; track record; let index = $index) {
+      <cdk-accordion-item #accordionItem="cdkAccordionItem">
+        <div (click)="accordionItem.toggle()" class="relative cursor-pointer">
+          <div
+            [ngClass]="{
+              'border-none bg-tmf-orange-1 text-white': accordionItem.expanded
+            }"
+            class="flex items-center gap-5 rounded-t-lg border-b border-tmf-gray-2 p-2 pb-3 text-tmf-gray-2 duration-100"
+          >
+            <div class="flex-grow break-all">
+              訂單編號：{{ record.order_id }}
+            </div>
+            <div class="hidden min-w-[120px] shrink-0 break-all lg:block">
+              訂單日期：{{ record.date }}
+            </div>
+            <div class="hidden min-w-[120px] shrink-0 break-all lg:block">
+              付款狀態：{{ stateTramsform(record.status) }}
+            </div>
+          </div>
+          <span
+            [ngClass]="{ 'rotate-180': accordionItem.expanded }"
+            class="material-symbols-outlined absolute left-1/2 top-full -translate-x-1/2 -translate-y-[15px] rounded-full border border-white bg-tmf-orange-1 text-[30px] text-white duration-100"
+          >
+            arrow_drop_down
+          </span>
+        </div>
+        @if (accordionItem.expanded) {
+          <div
+            class="flex flex-col gap-5 rounded-b-lg border border-tmf-orange-1 bg-tmf-orange-4 p-5 lg:flex-row"
+          >
+            <div class="flex flex-grow flex-col gap-y-3">
+              @for (
+                item of record.purchase_items;
+                track item;
+                let index = $index
+              ) {
+                <div class="flex items-center gap-3">
+                  <div class="h-[60px] w-[120px]">
+                    <img
+                      class="h-full w-full object-cover"
+                      [src]="item.mainImg"
+                      alt=""
+                    />
+                  </div>
+                  <div class="flex flex-col gap-y-1">
+                    <p class="text-tmf-gray-2">{{ item.title }}</p>
+                    <div class="flex gap-1">
+                      <div class="rounded-md bg-tmf-gray-3 px-[6px] py-1">
+                        <p class="text-[12px] leading-4 text-white">
+                          {{ item.main_category }}
+                        </p>
+                      </div>
+                      <div class="rounded-md bg-tmf-gray-3 px-[6px] py-1">
+                        <p class="text-[12px] leading-4 text-white">
+                          {{ item.sub_category }}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              }
+            </div>
+            <div
+              class="flex flex-col items-start justify-center gap-y-3 rounded-lg border border-tmf-orange-1 bg-white p-5"
+            >
+              <p class="lg:hidden">訂單日期 {{ record.date }}</p>
+              <p class="lg:hidden">付款狀態 {{ stateTramsform(record.status) }}</p>
+              <p>付款金額 NT$ {{ getTotalPrice(record.purchase_items) }}</p>
+              <p>付款方式 {{ purchaseWayTransform(record.purchase_way) }}</p>
+            </div>
+          </div>
+        }
+      </cdk-accordion-item>
+    }
+  </cdk-accordion>
+</div>
