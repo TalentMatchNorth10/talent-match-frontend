@@ -1,1 +1,45 @@
-<p>student-preference-page works!</p>
+<div class="mb-5 flex w-full justify-between">
+  <h1 class="text-[30px] font-bold leading-9">喜好類別</h1>
+  @if (isEditMode()) {
+    <div class="flex gap-2">
+      <button
+        (click)="updatePreference()"
+        class="rounded-md bg-tmf-orange-1 px-5 py-2 text-white"
+      >
+        儲存
+      </button>
+      <button
+        (click)="cancelEditMode()"
+        class="rounded-md bg-tmf-gray-3 px-5 py-2 text-white"
+      >
+        取消
+      </button>
+    </div>
+  } @else {
+    <button
+      (click)="openEditMode()"
+      class="flex items-center gap-2 rounded-md bg-tmf-orange-1 px-3 py-2 text-white"
+    >
+      <span class="material-symbols-outlined"> edit_square </span>
+      編輯
+    </button>
+  }
+</div>
+  @for (tag of tags; track tag; let index = $index) {
+    <div class="mb-5 flex flex-col items-start gap-3">
+      <tmf-checkbox
+        (checkedChange)="handleMainCategoryChange($event, index)"
+        [label]="tag.main_category ?? ''"
+        [direct]="'horizontal'"
+        [formControl]="tagsFormArray.at(index).controls.main_category"
+      ></tmf-checkbox>
+      <div class="rounded-lg bg-tmf-gray-6 p-3">
+        <tmf-checkbox
+          (checkedChange)="handleSubCategoryChange($event, index)"
+          [formControl]="tagsFormArray.at(index).controls.sub_category"
+          [single]="false"
+          [options]="getSubTagOptions(tag.sub_category ?? [])"
+        ></tmf-checkbox>
+      </div>
+    </div>
+  }

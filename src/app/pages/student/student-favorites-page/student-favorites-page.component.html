@@ -1,1 +1,24 @@
-<p>student-favorites-page works!</p>
+<h1 class="text-[30px] font-bold leading-9 mb-10">收藏課程</h1>
+@if (favoriteList.length !== 0) {
+  <div class="flex flex-wrap gap-5">
+    @for (favoriteItem of favoriteList; track favoriteItem) {
+      <tmf-card (hoverButtonClick)="handleHoverButtonClicked($event)" [data]="favoriteItem"></tmf-card>
+    }
+  </div>
+} @else {
+  <div class="flex h-full flex-col items-center justify-center gap-5">
+    <div class="h-[160px] md:h-[240px]">
+      <img
+        class="h-full"
+        src="assets/images/favorite-cart.png"
+        alt="favorite-cart"
+      />
+    </div>
+    <button
+      (click)="navigateToHome()"
+      class="flex h-[48px] w-[260px] md:w-[300px] items-center justify-center rounded-lg bg-tmf-orange-1 px-4 text-white"
+    >
+      前往收藏課程
+    </button>
+  </div>
+}

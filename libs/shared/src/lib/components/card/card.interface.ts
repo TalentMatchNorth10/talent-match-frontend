@@ -12,3 +12,14 @@ export interface CardData {
   rating: number;
   ratingCount: number;
 }
+
+export interface HoverButton {
+  text: string;
+  eventType: string;
+  color: 'primary' | 'white';
+}
+
+export interface HoverButtonClickEvent {
+  eventType: string;
+  data: CardData;
+}
