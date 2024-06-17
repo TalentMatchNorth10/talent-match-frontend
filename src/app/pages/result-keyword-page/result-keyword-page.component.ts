@@ -15,7 +15,8 @@ import {
 } from 'rxjs';
 import { SortType } from './result-keyword-page.model';
 import { ResultCourseListComponent } from './component/result-course-list/result-course-list.component';
-import { SearchData } from 'libs/openapi/src/model/search-data';
+
+import { SearchResponseModelData } from 'libs/openapi/src';
 
 @Component({
   selector: 'app-result-keyword-page',
@@ -34,7 +35,7 @@ export default class ResultKeywordPageComponent implements OnInit {
   protected route = inject(ActivatedRoute);
   protected router = inject(Router);
 
-  data?: SearchData;
+  data?: SearchResponseModelData;
   readonly queryKey: Array<keyof ApiCommonSearchResultAllGetRequestParams> = [
     'keyword',
     'page',
