@@ -1,62 +1,90 @@
+import { StudetnCourseService } from './studetn-course.service';
 import { CommonModule } from '@angular/common';
-import { Component, WritableSignal, computed, signal } from '@angular/core';
-import { ReserveDatepickerComponent } from '@tmf/libs-shared/components/reserve-datepicker/reserve-datepicker.component';
+import { Component, Signal, inject } from '@angular/core';
+import { StarRatingComponent } from '@tmf/libs-shared/components/star-rating/star-rating.component';
+import { StudentService } from 'libs/openapi/src';
+import { PurchasedCoursesResponseModelDataPurchasedCoursesInner } from 'libs/openapi/src/model/purchased-courses-response-model-data-purchased-courses-inner';
+import { TmfDateTimePipe } from 'src/app/shared/pipes/tmf-date.pipe';
+import { DialogService } from 'src/app/shared/services/dialog.service';
+
+export interface PurchasedCourses
+  extends PurchasedCoursesResponseModelDataPurchasedCoursesInner {
+  isExpanded: boolean;
+}
 
 @Component({
   selector: 'app-student-courses-page',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, StarRatingComponent, TmfDateTimePipe],
   templateUrl: './student-courses-page.component.html',
   styleUrl: './student-courses-page.component.scss'
 })
 export default class StudentCoursesPageComponent {
-  courses = [
-    {
-      title: '西點製作',
-      category: '廚藝',
-      location: '高雄',
-      instructor: '王太郎',
-      remainingClasses: 3,
-      isExpanded: false,
-      sessions: [
-        {
-          date: '4/5 20:00~21:00',
-          status: '已預約',
-          statusClass: 'text-green-500'
-        },
-        {
-          date: '3/28 20:00~21:00',
-          status: '已完課',
-          statusClass: 'text-gray-500',
-          action: '完成課程'
-        },
-        {
-          date: '3/27 20:00~21:00',
-          status: '已完課',
-          statusClass: 'text-gray-500',
-          action: '給予評價'
-        },
-        {
-          date: '3/26 20:00~21:00',
-          status: '已完課',
-          statusClass: 'text-gray-500',
-          action: '已評價'
-        }
-      ]
-    },
-    {
-      title: '專業刀工教學',
-      category: '廚藝',
-      location: '高雄',
-      instructor: '王太郎',
-      isExpanded: false,
-      sessions: []
-    }
-  ];
+  private studentService = inject(StudentService);
+  private dialogService = inject(DialogService);
+  private studetnCourseService = inject(StudetnCourseService);
 
-  ngOnInit(): void {}
+  purchasedCourses: Signal<PurchasedCourses[]> =
+    this.studetnCourseService.purchasedCoursesSig;
+  isExpanded = false;
 
-  toggleExpand(course: any) {
-    course.isExpanded = !course.isExpanded;
+  ngOnInit(): void {
+    this.studentService.apiStudentPurchasedCoursesGet().subscribe((data) => {
+      if (data.data?.purchased_courses) {
+        this.studetnCourseService.updatePurchasedCourses(
+          data.data?.purchased_courses.map((course) => ({
+            ...course,
+            isExpanded: false
+          }))
+        );
+      }
+    });
+  }
+
+  openReserrveDialog(
+    purchasedCourse: PurchasedCoursesResponseModelDataPurchasedCoursesInner
+  ) {
+    const { course_id, teacher_id, course_name } = purchasedCourse;
+    const { id: student_id } = this.decodeJWT(
+      localStorage.getItem('access_token') ||
+        sessionStorage.getItem('access_token') ||
+        ''
+    );
+    this.dialogService
+      .openReserveDialog({
+        student_id,
+        course_id,
+        teacher_id,
+        course_name
+      })
+      .closed.subscribe(() => {
+        this.studentService
+          .apiStudentPurchasedCoursesGet()
+          .subscribe((data) => {
+            if (data.data?.purchased_courses) {
+              this.studetnCourseService.updatePurchasedCourses(
+                data.data?.purchased_courses.map((course) => ({
+                  ...course,
+                  isExpanded: false
+                }))
+              );
+            }
+          });
+      });
+  }
+
+  decodeJWT(token: string) {
+    const base64Url = token.split('.')[1]; // 取得 payload 部分
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    const jsonPayload = decodeURIComponent(
+      atob(base64)
+        .split('')
+        .map(function (c) {
+          return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        })
+        .join('')
+    );
+
+    return JSON.parse(jsonPayload);
   }
 }

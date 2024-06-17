@@ -1,0 +1,179 @@
+<div class="rounded-md bg-white px-8 py-4">
+  <div class="mb-4 flex items-center justify-between text-xl">
+    <p>預約 {{data.course_name}}</p>
+    <span class="material-icons-outlined cursor-pointer" (click)="close()"
+      >close</span
+    >
+  </div>
+  <div class="w-[400px] rounded-lg bg-white">
+    <div class="flex items-center justify-between border-b p-4">
+      <span
+        class="material-icons-outlined cursor-pointer text-lg text-tmf-gray-1"
+        (click)="previousMonth()"
+      >
+        arrow_back</span
+      >
+      <div class="text-lg font-bold">
+        {{ currentYear() + ' 年 ' + (currentMonth() + 1) + ' 月 ' }}
+      </div>
+      <span
+        class="material-icons-outlined cursor-pointer text-lg text-tmf-gray-1"
+        (click)="nextMonth()"
+      >
+        arrow_forward</span
+      >
+    </div>
+    <div class="p-4">
+      <div class="mb-4 grid grid-cols-7 text-center text-gray-700">
+        <div>週日</div>
+        <div>週一</div>
+        <div>週二</div>
+        <div>週三</div>
+        <div>週四</div>
+        <div>週五</div>
+        <div>週六</div>
+      </div>
+      <div class="grid grid-cols-7 text-center text-tmf-gray-1">
+        @for (day of days(); track $index) {
+          <div (click)="selectDate(day)">
+            <div
+              class="cursor-pointer rounded-md p-1"
+              [ngClass]="{
+                'text-tmf-gray-3': !day.currentMonth,
+                'bg-tmf-orange-1 text-white':
+                  day.year === currentDate()?.year &&
+                  day.month === currentDate()?.month &&
+                  day.date === currentDate()?.date,
+                'cursor-not-allowed text-tmf-gray-5': day.disabled,
+                'rounded-md hover:bg-tmf-orange-1 hover:text-white':
+                  !day.disabled
+              }"
+            >
+              {{ day.date }}
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+    @if (!!currentDate()) {
+      <div class="border-y p-4">
+        <div class="mb-4 grid grid-cols-3 text-center text-gray-700">
+          <div>早上</div>
+          <div>下午</div>
+          <div>晚上</div>
+        </div>
+        <div
+          class="relative grid min-h-[192px] grid-cols-3 text-center text-gray-700"
+        >
+          @if (isLoading()) {
+            <div
+              class="absolute left-0 top-0 flex h-full w-full items-center justify-center bg-white"
+            >
+              <div class="flex items-center justify-center space-x-2">
+                <div class="relative">
+                  <div
+                    class="spin h-8 w-8 rounded-full border-4 border-solid border-tmf-orange-1"
+                  ></div>
+                  <div
+                    class="spin afterimage absolute left-0 top-0 h-8 w-8 rounded-full border-4 border-solid border-tmf-orange-1"
+                  ></div>
+                </div>
+                <div class="text-xl text-tmf-orange-1">Loading...</div>
+              </div>
+            </div>
+          }
+          <div class="flex flex-col gap-2">
+            @for (time of morningTimes(); track time) {
+              <div
+                class="cursor-pointer rounded-md p-1 hover:bg-tmf-orange-1 hover:text-white"
+                [ngClass]="{
+                  'bg-tmf-orange-1 text-white': time === currentTime()
+                }"
+                (click)="selectTime(time)"
+              >
+                {{ time }}
+              </div>
+            } @empty {
+              <div class="text-tmf-gray-3">-</div>
+            }
+          </div>
+          <div class="flex flex-col gap-2">
+            @for (time of afternoonTimes(); track time) {
+              <div
+                class="cursor-pointer rounded-md p-1 hover:bg-tmf-orange-1 hover:text-white"
+                [ngClass]="{
+                  'bg-tmf-orange-1 text-white': time === currentTime()
+                }"
+                (click)="selectTime(time)"
+              >
+                {{ time }}
+              </div>
+            } @empty {
+              <div class="text-tmf-gray-3">-</div>
+            }
+          </div>
+          <div class="flex flex-col gap-2">
+            @for (time of eveningTimes(); track time) {
+              <div
+                class="cursor-pointer rounded-md p-1 hover:bg-tmf-orange-1 hover:text-white"
+                [ngClass]="{
+                  'bg-tmf-orange-1 text-white': time === currentTime()
+                }"
+                (click)="selectTime(time)"
+              >
+                {{ time }}
+              </div>
+            } @empty {
+              <div class="text-tmf-gray-3">-</div>
+            }
+          </div>
+        </div>
+      </div>
+    }
+    <div class="flex items-center justify-between">
+      <div class="flex items-center gap-4">
+        <p>已選取時段</p>
+        @if (currentYear() && currentMonth() && currentDate()) {
+          <p>
+            {{
+              currentYear() +
+                '-' +
+                (currentMonth() + 1 < 10
+                  ? '0' + (currentMonth() + 1)
+                  : currentMonth() + 1) +
+                '-' +
+                (currentDate()!.date < 10
+                  ? '0' + currentDate()?.date
+                  : currentDate()?.date)
+            }}
+            {{ currentTime() }}
+          </p>
+        }
+      </div>
+      <div class="flex items-center justify-center gap-4 p-4">
+        <button
+          class="rounded-lg px-4 py-2 text-white transition-all duration-300 ease-in-out"
+          [ngClass]="{
+            'cursor-pointer bg-tmf-orange-1': !btnDisabled(),
+            'cursor-not-allowed bg-tmf-gray-5': btnDisabled()
+          }"
+          [disabled]="btnDisabled()"
+          (click)="bookNow()"
+        >
+          <div class="flex items-center justify-center gap-2">
+            <p>確認預約</p>
+            @if (inProgress()) {
+              <div class="flex items-center justify-center space-x-2">
+                <div class="relative">
+                  <div
+                    class="spin h-4 w-4 rounded-full border-2 border-solid border-white"
+                  ></div>
+                </div>
+              </div>
+            }
+          </div>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
