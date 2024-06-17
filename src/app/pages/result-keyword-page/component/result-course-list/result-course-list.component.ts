@@ -3,9 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import {
   ApiCommonSearchResultAllGetRequestParams,
-  CityResponseModelDataInner,
-  SearchData,
-  SearchDataCoursesInner
+  CityResponseModelDataInner
 } from 'libs/openapi/src';
 import { SortType } from '../../result-keyword-page.model';
 import {
@@ -19,6 +17,8 @@ import { CardData } from '@tmf/libs-shared/components/card/card.interface';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { ReplaySubject, filter, map, tap } from 'rxjs';
+import { SearchData } from 'libs/openapi/src/model/search-data';
+import { SearchDataCoursesInner } from 'libs/openapi/src/model/search-data-courses-inner';
 
 @Component({
   selector: 'result-course-list',

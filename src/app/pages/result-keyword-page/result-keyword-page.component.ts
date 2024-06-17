@@ -15,7 +15,7 @@ import {
 } from 'rxjs';
 import { SortType } from './result-keyword-page.model';
 import { ResultCourseListComponent } from './component/result-course-list/result-course-list.component';
-import { SearchData } from 'libs/openapi/src';
+import { SearchData } from 'libs/openapi/src/model/search-data';
 
 @Component({
   selector: 'app-result-keyword-page',
