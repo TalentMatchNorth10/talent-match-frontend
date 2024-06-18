@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
   CommonService,
@@ -10,7 +10,7 @@ import {
   UserService
 } from 'libs/openapi/src';
 import { AuthStatusService } from 'src/app/shared/services/authStatus.service';
-import { CartItem, CartTotal, UserMenuItem } from './header.model';
+import { CartTotal, UserMenuItem } from './header.model';
 import { Animations } from 'src/app/shared/functions/animations';
 import {
   InputComponent,
@@ -20,12 +20,7 @@ import {
   OptionType,
   SelectComponent
 } from '@tmf/libs-shared/components';
-import {
-  FormControl,
-  FormsModule,
-  Validators,
-  ReactiveFormsModule
-} from '@angular/forms';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-header',
@@ -201,6 +196,7 @@ import {
                     let lastCartItem = $last
                   ) {
                     <li
+                      (click)="redirect('/course-detail/' + cartItem.course_id)"
                       class="flex min-h-[92px] w-full cursor-pointer items-start justify-start gap-x-3 border-b border-tmf-gray-5 bg-white px-[16px] py-2 duration-100 hover:bg-tmf-orange-3 active:bg-tmf-orange-2"
                     >
                       <div class="h-[48px] w-[84px] bg-tmf-gray-3">
@@ -319,7 +315,7 @@ import {
                       <li
                         (click)="handleMenuClick(menuItem)"
                         [ngClass]="{
-                          'mb-2 border-b border-tmf-gray-5 pb-2':
+                          'mb-2 border-b border-tmf-gray-5':
                             lastItem && !lastGroup
                         }"
                         class="flex h-[48px] w-full cursor-pointer items-center justify-start gap-x-2 px-[26px] duration-100 hover:bg-tmf-orange-3 active:bg-tmf-orange-2"
