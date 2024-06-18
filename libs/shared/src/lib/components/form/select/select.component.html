@@ -24,7 +24,12 @@
       'text-red-500': invalid
     }"
   >
-    {{ value ? listOfContainerItemMap[value] : placeholder }}
+    {{
+      listOfContainerItemMap[value] !== null &&
+      listOfContainerItemMap[value] !== undefined
+        ? listOfContainerItemMap[value]
+        : placeholder
+    }}
   </span>
 
   <span
