@@ -66,7 +66,7 @@ export class SelectComponent
   @Output() selectChange = new EventEmitter<any>();
   @Output() tmfBlur = new EventEmitter<void>();
 
-  listOfContainerItemMap: Record<string, string | number | null> = {};
+  listOfContainerItemMap: Record<string, string | number | boolean | null> = {};
 
   originRect: any;
 
