@@ -92,23 +92,43 @@ export default class HomePageComponent implements OnInit, AfterViewInit {
   swiperConfig: SwiperOptions = {
     // init: true,
     breakpoints: {
-      320: {
-        //当屏幕宽度大于等于320
+      0: {
         slidesPerView: 2,
         spaceBetween: 10,
         navigation: {
           enabled: false
         }
       },
-      768: {
-        //当屏幕宽度大于等于768
-        slidesPerView: 2,
-        spaceBetween: 20
+      600: {
+        //当屏幕宽度大于等于320
+        slidesPerView: 3,
+        spaceBetween: 10,
+        navigation: {
+          enabled: false
+        }
       },
-      1280: {
-        //当屏幕宽度大于等于1280
+      768: {
+        slidesPerView: 2,
+        spaceBetween: 10,
+        navigation: {
+          enabled: true
+        }
+      },
+      1080: {
+        //当屏幕宽度大于等于768
+        slidesPerView: 3,
+        spaceBetween: 10,
+        navigation: {
+          enabled: true
+        }
+      },
+      1460: {
+        //当屏幕宽度大于等于1460
         slidesPerView: 4,
-        spaceBetween: 30
+        spaceBetween: 10,
+        navigation: {
+          enabled: true
+        }
       }
     },
     injectStyles: [
@@ -146,23 +166,23 @@ export default class HomePageComponent implements OnInit, AfterViewInit {
   courseSwiperConfig: SwiperOptions = {
     // init: true,
     breakpoints: {
-      320: {
-        //当屏幕宽度大于等于320
+      0: {
+        //当屏幕宽度大于等于0
         slidesPerView: 1,
         spaceBetween: 10,
         navigation: {
           enabled: false
         }
       },
-      768: {
+      1080: {
         //当屏幕宽度大于等于768
-        slidesPerView: 2,
-        spaceBetween: 20
+        slidesPerView: 3,
+        spaceBetween: 10
       },
-      1280: {
-        //当屏幕宽度大于等于1280
+      1460: {
+        //当屏幕宽度大于等于1460
         slidesPerView: 4,
-        spaceBetween: 30
+        spaceBetween: 10
       }
     },
     injectStyles: [

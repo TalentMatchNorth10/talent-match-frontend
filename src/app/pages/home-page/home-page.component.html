@@ -25,34 +25,6 @@
           [options]="items"
           (clickSearch)="search($event)"
         ></tmf-input>
-        <!-- <div
-
-          class="search-box-container flex w-full max-w-lg overflow-hidden rounded border border-gray-300"
-        >
-          <tmf-select class="bg-white text-gray-700" [formControl]="control">
-            <tmf-option
-              *ngFor="let item of items"
-              [value]="item.value"
-              [label]="item.label"
-            ></tmf-option>
-          </tmf-select>
-          <input
-            type="text"
-            placeholder="準備好啟程了嗎？"
-            class="flex-grow border-r-0 bg-white px-4 py-2 text-gray-700 focus:border-gray-500 focus:bg-white focus:outline-none"
-          />
-          <button class="bg-white px-4 py-2 text-black">
-            <svg
-              class="h-4 w-4 fill-current"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 20 20"
-            >
-              <path
-                d="M12.9 14.32a8 8 0 1 1 1.41-1.41l4.57 4.57-1.41 1.41-4.57-4.57zM8 14A6 6 0 1 0 8 2a6 6 0 0 0 0 12z"
-              />
-            </svg>
-          </button>
-        </div> -->
       </div>
     </div>
   </section>
@@ -96,59 +68,20 @@
     </div>
     <div class="flex h-full w-full justify-center overflow-hidden">
       <div class="lg:w-9:12 w-10/12">
-        <ng-container [ngSwitch]="currentWindowSize">
-          <!-- <ng-container *ngSwitchCase="'Handset'">
-            <swiper-container
-              #swiperElement
-              init="false"
-              slides-per-view="2"
-              navigation="false"
-              spaceBetween="10"
-            >
-              <ng-container *ngFor="let video of videoDataSource">
-                <swiper-slide>
-                  <div class="m-auto h-full w-full p-2">
-                    <tmf-video-card [data]="video"></tmf-video-card>
-                  </div>
-                </swiper-slide>
-              </ng-container>
-            </swiper-container>
+        <swiper-container
+          #swiperElement
+          init="false"
+          slides-per-view="4"
+          navigation="true"
+        >
+          <ng-container *ngFor="let video of videoDataSource">
+            <swiper-slide>
+              <div class="m-auto h-full w-full p-2">
+                <tmf-video-card [data]="video"></tmf-video-card>
+              </div>
+            </swiper-slide>
           </ng-container>
-          <ng-container *ngSwitchCase="'Tablet'">
-            <swiper-container
-              #swiperElement
-              init="false"
-              slides-per-view="2"
-              navigation="false"
-              spaceBetween="10"
-            >
-              <ng-container *ngFor="let video of videoDataSource">
-                <swiper-slide>
-                  <div class="m-auto h-full w-full p-2">
-                    <tmf-video-card [data]="video"></tmf-video-card>
-                  </div>
-                </swiper-slide>
-              </ng-container>
-            </swiper-container>
-          </ng-container> -->
-          <ng-container *ngSwitchDefault>
-            <swiper-container
-              #swiperElement
-              init="false"
-              slides-per-view="4"
-              navigation="true"
-            >
-              <ng-container *ngFor="let video of videoDataSource">
-                <swiper-slide>
-                  <div class="m-auto h-full w-full p-2">
-                    <!-- <app-short-video-card [data]="video"></app-short-video-card> -->
-                    <tmf-video-card [data]="video"></tmf-video-card>
-                  </div>
-                </swiper-slide>
-              </ng-container>
-            </swiper-container>
-          </ng-container>
-        </ng-container>
+        </swiper-container>
       </div>
     </div>
   </section>
@@ -165,68 +98,23 @@
       <div class="mt-8 py-8">
         <div class="h-full w-full overflow-hidden">
           <div class="lg:w-9:12 m-auto w-10/12">
-            <ng-container [ngSwitch]="currentWindowSize">
-              <!-- <ng-container *ngSwitchCase="'Handset'">
-                <swiper-container
-                  #swiperElementCourse
-                  slides-per-view="1"
-                  navigation="false"
-                >
-                  <ng-container *ngFor="let courseItem of courseDataSource">
-                    <swiper-slide>
-                      <div class="m-auto h-[530px] w-full flex-shrink-0 p-2">
-                        <div class="w-full flex-shrink-0 p-2 md:w-1/3 lg:w-1/4">
-                          <tmf-card
-                            [data]="courseItem"
-                            [hoverEffect]="false"
-                          ></tmf-card>
-                        </div>
-                      </div>
-                    </swiper-slide>
-                  </ng-container>
-                </swiper-container>
+            <swiper-container
+              #swiperElementCourse
+              init="false"
+              slides-per-view="4"
+              navigation="true"
+            >
+              <ng-container *ngFor="let courseItem of courseDataSource">
+                <swiper-slide>
+                  <div class="m-auto h-full w-full p-2">
+                    <tmf-card
+                      [data]="courseItem"
+                      [hoverEffect]="false"
+                    ></tmf-card>
+                  </div>
+                </swiper-slide>
               </ng-container>
-              <ng-container *ngSwitchCase="'Tablet'">
-                <swiper-container
-                  #swiperElementCourse
-                  init="false"
-                  slides-per-view="2"
-                  navigation="false"
-                >
-                  <ng-container *ngFor="let courseItem of courseDataSource">
-                    <swiper-slide>
-                      <div class="m-auto h-[530px] w-full flex-shrink-0 p-2">
-                        <div class="w-full flex-shrink-0 p-2 md:w-1/3 lg:w-1/4">
-                          <tmf-card
-                            [data]="courseItem"
-                            [hoverEffect]="false"
-                          ></tmf-card>
-                        </div>
-                      </div>
-                    </swiper-slide>
-                  </ng-container>
-                </swiper-container>
-              </ng-container> -->
-              <ng-container *ngSwitchDefault>
-                <swiper-container
-                  #swiperElementCourse
-                  init="false"
-                  slides-per-view="4"
-                  navigation="true"
-                >
-                  <ng-container *ngFor="let courseItem of courseDataSource">
-                    <swiper-slide>
-                      <div class="m-auto h-full w-full p-2">
-                        <tmf-card
-                          [data]="courseItem"
-                          [hoverEffect]="false"
-                        ></tmf-card>
-                      </div>
-                    </swiper-slide>
-                  </ng-container>
-                </swiper-container>
-              </ng-container>
-            </ng-container>
+            </swiper-container>
           </div>
         </div>
       </div>
@@ -352,13 +240,6 @@
     </div>
   </section>
   <section class="mb-12">
-    <!-- <div class="flex w-full flex-col items-center">
-      <ng-container *ngFor="let img of howToUseStepImages">
-        <div>
-          <img [src]="img" alt="" />
-        </div>
-      </ng-container>
-    </div> -->
     <div class="flex w-full flex-col items-center gap-4">
       <div class="lg:w-[1280px] lg:h-[776px] md:w-[800px] md:h-[600px] h-[440px] w-[350px] shadow-md rounded-lg px-2 pb-0 pt-8 bg-[#FEEFE7]">
         <div class="h-full flex flex-col items-center justify-between gap-3">
