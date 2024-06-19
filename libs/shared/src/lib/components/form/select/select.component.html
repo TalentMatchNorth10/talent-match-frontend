@@ -4,7 +4,7 @@
   class="select"
   [ngClass]="{
     'select-open': panelOpen,
-    'bg-tmf-orange-4': panelOpen && value,
+    'bg-tmf-orange-4': panelOpen && (multiSelect ? value && value.length > 0 : value),
     'select-disabled': disabled
   }"
   [class.fc-invalid]="invalid"
@@ -19,12 +19,12 @@
   <span
     class="select-text"
     [ngClass]="{
-      'text-tmf-gray-2': value && !disabled,
-      'text-tmf-gray-3': !value || disabled,
+      'text-tmf-gray-2': (multiSelect ? value && value.length > 0 : value) && !disabled,
+      'text-tmf-gray-3': (multiSelect ? !(value && value.length > 0) : !value) || disabled,
       'text-red-500': invalid
     }"
   >
-    {{ value ? listOfContainerItemMap[value] : placeholder }}
+    {{ multiSelect ? (value && value.length > 0 ? displayOptions : placeholder) : (value ? displayOptions : placeholder) }}
   </span>
 
   <span

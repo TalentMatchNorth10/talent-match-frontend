@@ -19,6 +19,18 @@
     </div>
     <!-- Form填寫 -->
 
+<tmf-select class="bg-white text-gray-700" label="選擇領取方式"
+              [isRequired]="true"
+              [multiSelect]="false"
+              (selectChange)="displaySelectedOption($event)"
+              [formControl]="control"
+              >
+            <tmf-option
+              *ngFor="let item of items"
+              [value]="item.value"
+              [label]="item.label"
+            ></tmf-option>
+          </tmf-select>
 
     <!-- 按鈕 -->
     <div class="flex justify-end gap-6 mt-16">

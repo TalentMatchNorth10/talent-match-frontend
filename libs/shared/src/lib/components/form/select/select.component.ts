@@ -63,6 +63,7 @@ export class SelectComponent
   @Input() invalid = false;
   @Input() isRequired: boolean = false;
   @Input() icon: string = '';
+  @Input() multiSelect: boolean = false; // Add this line
   @Output() selectChange = new EventEmitter<any>();
   @Output() tmfBlur = new EventEmitter<void>();
 
@@ -70,8 +71,7 @@ export class SelectComponent
 
   originRect: any;
 
-  private _displayOption = '';
-  private _selectedOption?: OptionComponent;
+  private _selectedOptions: OptionComponent[] = [];
   private _panelOpen = false;
   private _disabled = false;
   private readonly destory$ = new Subject<void>();
@@ -82,12 +82,17 @@ export class SelectComponent
     return this._panelOpen;
   }
 
-  get selectedOption(): OptionComponent | undefined {
-    return this._selectedOption;
+  get selectedOptions(): OptionComponent[] {
+    return this._selectedOptions;
   }
 
-  get displayOption(): any {
-    return this._displayOption;
+  get displayOptions(): string {
+    if (this.multiSelect) {
+      return this._selectedOptions
+        .map((option) => this.listOfContainerItemMap[option.value] as string)
+        .join(', ');
+    }
+    return this.listOfContainerItemMap[this.value] as string;
   }
 
   get disabled(): boolean {
@@ -133,11 +138,22 @@ export class SelectComponent
   }
 
   onSelect(option: OptionComponent) {
-    this._selectedOption = option;
-    this.value = option.value;
-    this.onChange(option.value);
-    this.selectChange.emit(option.value);
-    this.closePanel();
+    if (this.multiSelect) {
+      const index = this._selectedOptions.indexOf(option);
+      if (index === -1) {
+        this._selectedOptions.push(option);
+      } else {
+        this._selectedOptions.splice(index, 1);
+      }
+      this.value = this._selectedOptions.map((opt) => opt.value);
+      console.log([this.multiSelect, this._selectedOptions, this.value]);
+    } else {
+      this._selectedOptions = [option];
+      this.value = option.value;
+      this.closePanel();
+    }
+    this.onChange(this.value);
+    this.selectChange.emit(this.value);
     this.cdr.markForCheck();
   }
 
@@ -160,8 +176,27 @@ export class SelectComponent
   }
 
   writeValue(modelValue: any): void {
-    if (this.value !== modelValue) {
+    if (this.value !== modelValue && this.optionComponents) {
       this.value = modelValue;
+      if (this.multiSelect) {
+        console.log([
+          this.multiSelect,
+          this.optionComponents,
+          this._selectedOptions
+        ]);
+        this._selectedOptions = this.optionComponents.filter((option) =>
+          modelValue.includes(option.value)
+        );
+      } else {
+        console.log([
+          this.multiSelect,
+          this.optionComponents,
+          this._selectedOptions
+        ]);
+        this._selectedOptions = this.optionComponents.filter(
+          (option) => option.value === modelValue
+        );
+      }
       this.cdr.markForCheck();
     }
   }

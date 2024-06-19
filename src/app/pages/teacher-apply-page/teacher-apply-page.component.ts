@@ -1,10 +1,21 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import {
+  OptionComponent,
+  OptionType,
+  SelectComponent
+} from '@tmf/libs-shared/components';
 
 @Component({
   selector: 'app-teacher-apply-page',
   standalone: true,
-  imports: [CommonModule],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    SelectComponent,
+    OptionComponent
+  ],
   templateUrl: './teacher-apply-page.component.html',
   styleUrl: './teacher-apply-page.component.scss'
 })
@@ -17,6 +28,13 @@ export default class TeacherApplyPageComponent {
   ];
 
   currentStepIndex = 0;
+
+  control = new FormControl();
+
+  items: OptionType[] = [
+    { label: 'A', value: 1 },
+    { label: 'B', value: 2 }
+  ];
 
   nextStep() {
     if (this.currentStepIndex < this.steps.length - 1) {
@@ -32,5 +50,9 @@ export default class TeacherApplyPageComponent {
 
   completeStep(index: number) {
     this.steps[index].completed = true;
+  }
+
+  displaySelectedOption($event: any) {
+    console.log($event, this.control.value);
   }
 }
