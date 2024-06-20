@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -9,6 +9,7 @@ import {
   ReactiveFormsModule
 } from '@angular/forms';
 import {
+  CheckboxComponent,
   InputComponent,
   InputType,
   OptionComponent,
@@ -16,6 +17,7 @@ import {
   SelectComponent
 } from '@tmf/libs-shared/components';
 import { TeacherApplyForm } from './teacher-apply-page.model';
+import { TeacherFormService } from './teacher-form.service';
 
 @Component({
   selector: 'app-teacher-apply-page',
@@ -25,15 +27,19 @@ import { TeacherApplyForm } from './teacher-apply-page.model';
     ReactiveFormsModule,
     SelectComponent,
     OptionComponent,
-    InputComponent
+    InputComponent,
+    CheckboxComponent
   ],
   templateUrl: './teacher-apply-page.component.html',
   styleUrl: './teacher-apply-page.component.scss'
 })
-export default class TeacherApplyPageComponent {
+export default class TeacherApplyPageComponent implements OnInit {
   private fb = inject(FormBuilder);
+  private teacherFormService = inject(TeacherFormService);
 
   readonly InputType = InputType;
+
+  teacherForm!: FormGroup;
 
   steps = [
     { name: '填寫基本資料', completed: false },
@@ -42,13 +48,18 @@ export default class TeacherApplyPageComponent {
     { name: '填寫教學證照', completed: false }
   ];
 
-  currentStepIndex = 0;
+  currentStepIndex = 1;
 
   items: OptionType[] = [
     { label: 'A', value: 1 },
     { label: 'B', value: 2 }
   ];
 
+  ngOnInit(): void {
+    this.teacherForm = this.teacherFormService.createTeacherForm();
+  }
+
+  // Stepper
   nextStep() {
     if (this.currentStepIndex < this.steps.length - 1) {
       this.currentStepIndex++;
@@ -65,73 +76,99 @@ export default class TeacherApplyPageComponent {
     this.steps[index].completed = true;
   }
 
-  // displaySelectedOption($event: any) {
-  //   console.log($event, this.control.value);
-  // }
-
-  createTeacherForm(): FormGroup {
-    return this.fb.group({
-      user_id: ['', Validators.required],
-      avator_image: [''],
-      main_categorys: this.fb.array([], Validators.required),
-      sub_categorys: this.fb.array([], Validators.required),
-      application_status: [null, Validators.required],
-      nationality: [''],
-      introduction: [''],
-      work_experiences: this.fb.array([this.createWorkExperience()]),
-      learning_experience: this.createLearningExperience(),
-      teaching_certificate: this.fb.array([this.createTeachingCertificate()]),
-      intro_video_id: [''],
-      courses: this.fb.array([]),
-      can_reserve_week: this.fb.array([this.createCanReserveWeek()])
-    });
+  // Teacher Form
+  onSubmit() {
+    if (this.teacherForm.valid) {
+      console.log(this.teacherForm.value);
+    }
   }
 
-  createWorkExperience(): FormGroup {
-    return this.fb.group({
-      is_working: [false],
-      workplace: [''],
-      job_category: [''],
-      start_year: [null],
-      start_month: [null],
-      end_year: [null],
-      end_month: [null],
-      position: [''],
-      place: ['']
-    });
+  get main_categorys() {
+    return this.teacherForm.get('main_categorys') as FormArray;
   }
 
-  createLearningExperience(): FormGroup {
-    return this.fb.group({
-      is_in_school: [false],
-      degree: [''],
-      department: [''],
-      start_year: [null],
-      start_month: [null],
-      end_year: [null],
-      end_month: [null],
-      name: [''],
-      place: [''],
-      file: ['']
-    });
+  addMainCategory() {
+    this.main_categorys.push(this.fb.control(''));
   }
 
-  createTeachingCertificate(): FormGroup {
-    return this.fb.group({
-      verifying_institution: [''],
-      license_name: [''],
-      name: [''],
-      license_number: [''],
-      file: [''],
-      category: [''],
-      subject: ['']
-    });
+  removeMainCategory(index: number) {
+    this.main_categorys.removeAt(index);
   }
 
-  createCanReserveWeek(): FormGroup {
-    return this.fb.group({
-      day: ['', Validators.required],
-      timeSlots: this.fb.array([], Validators.required)
-    });
+  get sub_categorys() {
+    return this.teacherForm.get('sub_categorys') as FormArray;
+  }
+
+  addSubCategory() {
+    this.sub_categorys.push(this.fb.control(''));
+  }
+
+  removeSubCategory(index: number) {
+    this.sub_categorys.removeAt(index);
+  }
+
+  get work_experiences() {
+    return this.teacherForm.get('work_experiences') as FormArray;
+  }
+
+  addWorkExperience() {
+    console.log('add workExperience');
+    this.work_experiences.push(this.teacherFormService.createWorkExperience());
+  }
+
+  removeWorkExperience(index: number) {
+    this.work_experiences.removeAt(index);
+  }
+
+  get teaching_certificate() {
+    return this.teacherForm.get('teaching_certificate') as FormArray;
+  }
+
+  addTeachingCertificate() {
+    this.teaching_certificate.push(
+      this.teacherFormService.createTeachingCertificate()
+    );
+  }
+
+  removeTeachingCertificate(index: number) {
+    this.teaching_certificate.removeAt(index);
+  }
+
+  get courses() {
+    return this.teacherForm.get('courses') as FormArray;
+  }
+
+  addCourse() {
+    this.courses.push(this.fb.control(''));
+  }
+
+  removeCourse(index: number) {
+    this.courses.removeAt(index);
+  }
+
+  get can_reserve_week() {
+    return this.teacherForm.get('can_reserve_week') as FormArray;
+  }
+
+  addCanReserveWeek() {
+    this.can_reserve_week.push(this.teacherFormService.createCanReserveWeek());
+  }
+
+  removeCanReserveWeek(index: number) {
+    this.can_reserve_week.removeAt(index);
+  }
+
+  addTimeSlot(weekIndex: number) {
+    const control = this.can_reserve_week
+      .at(weekIndex)
+      .get('timeSlots') as FormArray;
+    control.push(this.fb.control(''));
+  }
+
+  removeTimeSlot(weekIndex: number, slotIndex: number) {
+    const control = this.can_reserve_week
+      .at(weekIndex)
+      .get('timeSlots') as FormArray;
+    control.removeAt(slotIndex);
   }
 }
