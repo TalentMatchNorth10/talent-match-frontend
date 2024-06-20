@@ -60,6 +60,7 @@ export class SelectComponent
 
   @Input() placeholder = '請選擇';
   @Input() label = '';
+  @Input() info = '';
   @Input() invalid = false;
   @Input() isRequired: boolean = false;
   @Input() icon: string = '';

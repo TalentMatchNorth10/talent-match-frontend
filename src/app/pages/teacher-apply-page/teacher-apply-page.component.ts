@@ -9,6 +9,8 @@ import {
   ReactiveFormsModule
 } from '@angular/forms';
 import {
+  InputComponent,
+  InputType,
   OptionComponent,
   OptionType,
   SelectComponent
@@ -22,13 +24,16 @@ import { TeacherApplyForm } from './teacher-apply-page.model';
     CommonModule,
     ReactiveFormsModule,
     SelectComponent,
-    OptionComponent
+    OptionComponent,
+    InputComponent
   ],
   templateUrl: './teacher-apply-page.component.html',
   styleUrl: './teacher-apply-page.component.scss'
 })
 export default class TeacherApplyPageComponent {
   private fb = inject(FormBuilder);
+
+  readonly InputType = InputType;
 
   steps = [
     { name: '填寫基本資料', completed: false },
@@ -38,8 +43,6 @@ export default class TeacherApplyPageComponent {
   ];
 
   currentStepIndex = 0;
-
-  control = new FormControl();
 
   items: OptionType[] = [
     { label: 'A', value: 1 },
