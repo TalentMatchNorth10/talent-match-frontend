@@ -48,7 +48,7 @@ export default class TeacherApplyPageComponent implements OnInit {
     { name: '填寫教學證照', completed: false }
   ];
 
-  currentStepIndex = 1;
+  currentStepIndex = 3;
 
   items: OptionType[] = [
     { label: 'A', value: 1 },

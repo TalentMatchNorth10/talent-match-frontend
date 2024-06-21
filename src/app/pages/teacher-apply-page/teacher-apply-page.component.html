@@ -105,37 +105,367 @@
             *請提供教學經歷，以及教授科目相關的工作經歷，以利審核。
           </div>
           <div class="to-gray-500 text-xl font-bold">工作經驗</div>
-          <div class="flex flex-col">
-            <span
-              class="flex cursor-pointer items-center text-tmf-orange-1"
-              (click)="addWorkExperience()"
-              ><span class="material-icons-outlined">add</span
-              >新增工作經歷</span
-            >
+          <div class="flex flex-col gap-4">
             <div formArrayName="work_experiences">
-              <div
+              <ng-container
                 *ngFor="
                   let workExperience of work_experiences.controls;
                   let i = index
                 "
-                [formGroupName]="i"
               >
-                <!-- <label for="is_working_{{i}}">是否在職中</label>
-        <input id="is_working_{{i}}" type="checkbox" formControlName="is_working"> -->
-                <tmf-checkbox
-                  formControlName="is_working"
-                  label="是否在職中"
-                  direct="horizontal"
-                ></tmf-checkbox>
-                <tmf-input
-                  class="w-full"
-                  [label]="'單位名稱'"
-                  [inputType]="InputType.Outline"
-                  [formControlName]="'workplace'"
-                ></tmf-input>
-              </div>
+                <div [formGroupName]="i" class="py-4">
+                  <div class="flex flex-col gap-2">
+                    <div class="flex justify-between">
+                      <tmf-checkbox
+                        formControlName="is_working"
+                        label="是否在職中"
+                        direct="horizontal"
+                      ></tmf-checkbox>
+                      <button
+                        class="h-6 w-6 rounded-full bg-red-500 hover:bg-red-700"
+                        (click)="removeWorkExperience(i)"
+                      >
+                        <span class="material-icons-outlined text-white"
+                          >close</span
+                        >
+                      </button>
+                    </div>
+                    <div class="flex justify-between gap-6">
+                      <div class="flex flex-1 flex-col gap-2">
+                        <div>開始時間<span class="text-red-500">*</span></div>
+                        <div class="flex justify-between gap-4">
+                          <tmf-select
+                            class="bg-white text-gray-700"
+                            [multiSelect]="false"
+                            [formControlName]="'start_year'"
+                            placeholder="年份"
+                          >
+                            <tmf-option
+                              *ngFor="let item of items"
+                              [value]="item.value"
+                              [label]="item.label"
+                            ></tmf-option>
+                          </tmf-select>
+                          <tmf-select
+                            class="bg-white text-gray-700"
+                            [multiSelect]="false"
+                            [formControlName]="'start_month'"
+                            placeholder="月份"
+                          >
+                            <tmf-option
+                              *ngFor="let item of items"
+                              [value]="item.value"
+                              [label]="item.label"
+                            ></tmf-option>
+                          </tmf-select>
+                        </div>
+                      </div>
+                      <div class="flex flex-1 flex-col gap-2">
+                        <div>結束時間<span class="text-red-500">*</span></div>
+                        <div class="flex justify-between gap-4">
+                          <tmf-select
+                            class="bg-white text-gray-700"
+                            [multiSelect]="false"
+                            [formControlName]="'end_year'"
+                            placeholder="年份"
+                          >
+                            <tmf-option
+                              *ngFor="let item of items"
+                              [value]="item.value"
+                              [label]="item.label"
+                            ></tmf-option>
+                          </tmf-select>
+                          <tmf-select
+                            class="bg-white text-gray-700"
+                            [multiSelect]="false"
+                            [formControlName]="'end_month'"
+                            placeholder="月份"
+                          >
+                            <tmf-option
+                              *ngFor="let item of items"
+                              [value]="item.value"
+                              [label]="item.label"
+                            ></tmf-option>
+                          </tmf-select>
+                        </div>
+                      </div>
+                    </div>
+                    <tmf-select
+                      class="bg-white text-gray-700"
+                      label="地點"
+                      [isRequired]="true"
+                      [multiSelect]="false"
+                      [formControlName]="'place'"
+                    >
+                      <tmf-option
+                        *ngFor="let item of items"
+                        [value]="item.value"
+                        [label]="item.label"
+                      ></tmf-option>
+                    </tmf-select>
+                    <tmf-input
+                      class="w-full"
+                      [label]="'單位名稱'"
+                      [inputType]="InputType.Outline"
+                      [formControlName]="'workplace'"
+                    ></tmf-input>
+                    <tmf-select
+                      class="bg-white text-gray-700"
+                      label="職務類別"
+                      [isRequired]="true"
+                      [multiSelect]="false"
+                      [formControlName]="'position'"
+                    >
+                      <tmf-option
+                        *ngFor="let item of items"
+                        [value]="item.value"
+                        [label]="item.label"
+                      ></tmf-option>
+                    </tmf-select>
+                    <tmf-input
+                      class="w-full"
+                      [label]="'職位名稱'"
+                      [inputType]="InputType.Outline"
+                      [formControlName]="'position'"
+                    ></tmf-input>
+                  </div>
+                </div>
+              </ng-container>
+              <span
+                class="flex cursor-pointer items-center text-tmf-orange-1"
+                (click)="addWorkExperience()"
+                ><span class="material-icons-outlined">add</span
+                >新增工作經歷</span
+              >
             </div>
           </div>
+        </section>
+        <section
+          class="flex flex-col gap-4"
+          [ngClass]="{ hidden: currentStepIndex !== 2 }"
+        >
+          <div class="text-sm text-gray-300">
+            *請提供教學經歷，以及教授科目相關的工作經歷，以利審核。
+          </div>
+          <div class="to-gray-500 text-xl font-bold">學歷背景</div>
+          <div class="flex flex-col gap-4" formGroupName="learning_experience">
+            <div class="flex">
+              <tmf-checkbox
+                formControlName="is_in_school"
+                label="我是在校生，目前就讀中"
+                direct="horizontal"
+              ></tmf-checkbox>
+            </div>
+            <div class="flex justify-between gap-6">
+              <div class="flex flex-1 flex-col gap-2">
+                <div>開始時間<span class="text-red-500">*</span></div>
+                <div class="flex justify-between gap-4">
+                  <tmf-select
+                    class="bg-white text-gray-700"
+                    [multiSelect]="false"
+                    [formControlName]="'start_year'"
+                    placeholder="年份"
+                  >
+                    <tmf-option
+                      *ngFor="let item of items"
+                      [value]="item.value"
+                      [label]="item.label"
+                    ></tmf-option>
+                  </tmf-select>
+                  <tmf-select
+                    class="bg-white text-gray-700"
+                    [multiSelect]="false"
+                    [formControlName]="'start_month'"
+                    placeholder="月份"
+                  >
+                    <tmf-option
+                      *ngFor="let item of items"
+                      [value]="item.value"
+                      [label]="item.label"
+                    ></tmf-option>
+                  </tmf-select>
+                </div>
+              </div>
+              <div class="flex flex-1 flex-col gap-2">
+                <div>結束時間<span class="text-red-500">*</span></div>
+                <div class="flex justify-between gap-4">
+                  <tmf-select
+                    class="bg-white text-gray-700"
+                    [multiSelect]="false"
+                    [formControlName]="'end_year'"
+                    placeholder="年份"
+                  >
+                    <tmf-option
+                      *ngFor="let item of items"
+                      [value]="item.value"
+                      [label]="item.label"
+                    ></tmf-option>
+                  </tmf-select>
+                  <tmf-select
+                    class="bg-white text-gray-700"
+                    [multiSelect]="false"
+                    [formControlName]="'end_month'"
+                    placeholder="月份"
+                  >
+                    <tmf-option
+                      *ngFor="let item of items"
+                      [value]="item.value"
+                      [label]="item.label"
+                    ></tmf-option>
+                  </tmf-select>
+                </div>
+              </div>
+            </div>
+            <tmf-select
+              class="bg-white text-gray-700"
+              label="地點"
+              [isRequired]="true"
+              [multiSelect]="false"
+              [formControlName]="'place'"
+            >
+              <tmf-option
+                *ngFor="let item of items"
+                [value]="item.value"
+                [label]="item.label"
+              ></tmf-option>
+            </tmf-select>
+            <tmf-input
+              class="w-full"
+              [label]="'學校名稱'"
+              [inputType]="InputType.Outline"
+              [formControlName]="'name'"
+            ></tmf-input>
+            <tmf-input
+              class="w-full"
+              [label]="'科系名稱'"
+              [inputType]="InputType.Outline"
+              [formControlName]="'department'"
+            ></tmf-input>
+            <tmf-select
+              class="bg-white text-gray-700"
+              label="學位"
+              [isRequired]="true"
+              [multiSelect]="false"
+              [formControlName]="'degree'"
+            >
+              <tmf-option
+                *ngFor="let item of items"
+                [value]="item.value"
+                [label]="item.label"
+              ></tmf-option>
+            </tmf-select>
+            <div class="flex flex-col gap-2">
+              <span
+                class="inline-block text-sm font-medium text-tmf-gray-2 md:text-[15px] md:leading-6"
+                >上傳學位證書<span class="text-red-500">*</span></span
+              >
+              <button
+                class="shadow-white-1/10 hover:shadow-white-1/20 select-none rounded-lg border bg-white px-6 py-3 text-center align-middle font-sans text-xs font-bold uppercase text-black shadow-md transition-all hover:shadow-lg focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                type="button"
+              >
+                選擇檔案
+              </button>
+            </div>
+          </div>
+        </section>
+        <section
+          class="flex flex-col gap-4"
+          [ngClass]="{ hidden: currentStepIndex !== 3 }"
+        >
+          <div class="to-gray-500 text-xl font-bold">教學證照</div>
+          <div class="text-sm text-gray-300">
+            << 非必填 >> 若您無教學證照，請直接點選「完成」
+          </div>
+          <div formArrayName="teaching_certificate">
+            <ng-container
+              *ngFor="
+                let teaching_certificate of teaching_certificate.controls;
+                let i = index
+              "
+            >
+              <div [formGroupName]="i" class="py-4">
+                <div class="flex flex-col gap-2">
+                  <div class="flex justify-end">
+                    <button
+                      class="h-6 w-6 rounded-full bg-red-500 hover:bg-red-700"
+                      (click)="removeTeachingCertificate(i)"
+                    >
+                      <span class="material-icons-outlined text-white"
+                        >close</span
+                      >
+                    </button>
+                  </div>
+                  <tmf-select
+                    class="bg-white text-gray-700"
+                    [multiSelect]="false"
+                    [formControlName]="'category'"
+                    [isRequired]="true"
+                    label="證照類別"
+                  >
+                    <tmf-option
+                      *ngFor="let item of items"
+                      [value]="item.value"
+                      [label]="item.label"
+                    ></tmf-option>
+                  </tmf-select>
+                  <tmf-select
+                    class="bg-white text-gray-700"
+                    [multiSelect]="false"
+                    [formControlName]="'subject'"
+                    [isRequired]="true"
+                    label="證照科目"
+                  >
+                    <tmf-option
+                      *ngFor="let item of items"
+                      [value]="item.value"
+                      [label]="item.label"
+                    ></tmf-option>
+                  </tmf-select>
+                  <tmf-input
+                    class="w-full"
+                    [label]="'認證機構'"
+                    [inputType]="InputType.Outline"
+                    [formControlName]="'verifying_institution'"
+                  ></tmf-input>
+                  <tmf-input
+                    class="w-full"
+                    [label]="'證照名稱'"
+                    [inputType]="InputType.Outline"
+                    [formControlName]="'license_name'"
+                  ></tmf-input>
+                  <tmf-input
+                    class="w-full"
+                    [label]="'姓名'"
+                    [inputType]="InputType.Outline"
+                    [formControlName]="'name'"
+                  ></tmf-input>
+                  <tmf-input
+                    class="w-full"
+                    [label]="'證照序號(限輸入英數)'"
+                    [inputType]="InputType.Outline"
+                    [formControlName]="'license_number'"
+                  ></tmf-input>
+                  <div class="flex flex-col gap-2">
+                    <span
+                      class="inline-block text-sm font-medium text-tmf-gray-2 md:text-[15px] md:leading-6"
+                      >上傳證照<span class="text-red-500">*</span></span
+                    >
+                    <button
+                      class="shadow-white-1/10 hover:shadow-white-1/20 select-none rounded-lg border bg-white px-6 py-3 text-center align-middle font-sans text-xs font-bold uppercase text-black shadow-md transition-all hover:shadow-lg focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                      type="button"
+                    >
+                      選擇檔案
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+          </div>
+          <span
+            class="flex cursor-pointer items-center text-tmf-orange-1"
+            (click)="addTeachingCertificate()"
+            ><span class="material-icons-outlined">add</span>新增教學證照</span
+          >
         </section>
       </div>
     </form>
@@ -155,8 +485,17 @@
         type="button"
         (click)="nextStep()"
         [disabled]="currentStepIndex === steps.length - 1"
+        [hidden]="currentStepIndex === steps.length - 1"
       >
         下一步
+      </button>
+      <button
+        class="select-none rounded-lg bg-tmf-orange-1 px-6 py-3 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-tmf-orange-1/10 transition-all hover:shadow-lg hover:shadow-tmf-orange-1/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+        type="button"
+        (click)="onSubmit()"
+        [hidden]="currentStepIndex !== steps.length - 1"
+      >
+        完成
       </button>
     </div>
   </div>
