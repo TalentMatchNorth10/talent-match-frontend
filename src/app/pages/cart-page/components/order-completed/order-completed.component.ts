@@ -26,8 +26,6 @@ export class OrderCompletedComponent implements OnInit {
     this.orderId = this.route.snapshot.queryParamMap.get('order');
     if (this.orderId) {
       this.getOrderList();
-    } else {
-      this.stepChange.emit();
     }
   }
 

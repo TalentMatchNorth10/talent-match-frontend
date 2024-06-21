@@ -11,6 +11,7 @@ import { StepperComponent } from './components/stepper/stepper.component';
 import { CartListComponent } from './components/cart-list/cart-list.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
 import { OrderCompletedComponent } from './components/order-completed/order-completed.component';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-cart-page',
@@ -28,6 +29,7 @@ import { OrderCompletedComponent } from './components/order-completed/order-comp
 })
 export default class CartPageComponent implements OnInit {
   private shopService = inject(ShopService);
+  private route = inject(ActivatedRoute);
 
   stepList: Array<StepItem> = [
     { label: '購物清單', step: Step.Step1 },
@@ -42,8 +44,13 @@ export default class CartPageComponent implements OnInit {
   readonly Step = Step;
 
   ngOnInit(): void {
-    this.courseDataSource = FakeCardData;
-    this.getCarts();
+    const orderId = this.route.snapshot.queryParamMap.get('order');
+    if (orderId) {
+      this.currentStep = Step.Step3;
+    } else {
+      this.courseDataSource = FakeCardData;
+      this.getCarts();
+    }
   }
 
   getCarts() {
