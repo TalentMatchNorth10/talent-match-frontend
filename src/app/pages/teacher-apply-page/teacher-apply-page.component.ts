@@ -18,6 +18,12 @@ import {
 } from '@tmf/libs-shared/components';
 import { TeacherApplyForm } from './teacher-apply-page.model';
 import { TeacherFormService } from './teacher-form.service';
+import {
+  CommonService,
+  TagsResponseModelDataInner,
+  UserInfoResponseModelData,
+  UserService
+} from 'libs/openapi/src';
 
 @Component({
   selector: 'app-teacher-apply-page',
@@ -36,8 +42,18 @@ import { TeacherFormService } from './teacher-form.service';
 export default class TeacherApplyPageComponent implements OnInit {
   private fb = inject(FormBuilder);
   private teacherFormService = inject(TeacherFormService);
+  private userService = inject(UserService);
+  private commonService = inject(CommonService);
 
   readonly InputType = InputType;
+
+  user: UserInfoResponseModelData | null = null;
+
+  tagOptions: TagsResponseModelDataInner[] = [];
+  selectTag!: TagsResponseModelDataInner | null;
+
+  mainCategoryOptions: OptionType[] = [];
+  subCategoryOptions: SubCategoryOptions[] = [];
 
   teacherForm!: FormGroup;
 
@@ -48,7 +64,7 @@ export default class TeacherApplyPageComponent implements OnInit {
     { name: '填寫教學證照', completed: false }
   ];
 
-  currentStepIndex = 3;
+  currentStepIndex = 0;
 
   items: OptionType[] = [
     { label: 'A', value: 1 },
@@ -57,6 +73,51 @@ export default class TeacherApplyPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.teacherForm = this.teacherFormService.createTeacherForm();
+    this.teacherForm.patchValue({ user_id: this.user?.nick_name });
+    this.getTags();
+  }
+
+  getUserInfo() {
+    this.userService.apiUserUserInfoGet().subscribe({
+      next: (res) => {
+        this.user = res.data;
+      },
+      error: (err) => {
+        console.error(err);
+      }
+    });
+  }
+
+  getTags() {
+    this.commonService.apiCommonTagGet().subscribe((res) => {
+      this.tagOptions = res.data;
+      this.tagOptions.forEach((item) => {
+        const option: OptionType = {
+          label: item.main_category as string,
+          value: item.main_category
+        };
+        this.mainCategoryOptions.push(option);
+      });
+    });
+  }
+
+  getSubCategoryOptions($event: any) {
+    const result: SubCategoryOptions[] = [];
+
+    $event.forEach((category: string) => {
+      const found = this.tagOptions.find(
+        (item) => item.main_category === category
+      );
+      if (found && found.sub_category) {
+        const subCategoryOptions = found.sub_category.map((subCat) => ({
+          label: subCat,
+          value: subCat
+        }));
+        result.push({ mainCategory: category, subCategoryOptions });
+      }
+    });
+
+    this.subCategoryOptions = result;
   }
 
   // Stepper
@@ -171,4 +232,9 @@ export default class TeacherApplyPageComponent implements OnInit {
       .get('timeSlots') as FormArray;
     control.removeAt(slotIndex);
   }
+}
+
+interface SubCategoryOptions {
+  mainCategory: string;
+  subCategoryOptions: OptionType[];
 }

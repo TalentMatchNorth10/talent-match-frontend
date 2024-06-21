@@ -66,10 +66,11 @@
             info="*您最多只能教授三種科目"
             [isRequired]="true"
             [multiSelect]="true"
-            [formControlName]="'main_categorys'"
+            [formArrayName]="'main_categorys'"
+            (selectChange)="getSubCategoryOptions($event)"
           >
             <tmf-option
-              *ngFor="let item of items"
+              *ngFor="let item of mainCategoryOptions"
               [value]="item.value"
               [label]="item.label"
             ></tmf-option>
@@ -83,18 +84,21 @@
               >*盡可能選擇熱門專長，以獲得更多招生機會。</span
             >
           </div>
-          <tmf-select
-            class="bg-white text-gray-700"
-            label="科目"
-            [multiSelect]="true"
-            [formControlName]="'sub_categorys'"
-          >
-            <tmf-option
-              *ngFor="let item of items"
-              [value]="item.value"
-              [label]="item.label"
-            ></tmf-option>
-          </tmf-select>
+          <ng-container *ngFor="let item of subCategoryOptions" >
+            <tmf-select
+              class="bg-white text-gray-700"
+              [label]="item.mainCategory"
+              [multiSelect]="true"
+              [formArrayName]="'sub_categorys'"
+            >
+              <tmf-option
+                *ngFor="let item of item.subCategoryOptions"
+                [value]="item.value"
+                [label]="item.label"
+              ></tmf-option>
+            </tmf-select>
+          </ng-container>
+
         </section>
         <section
           class="flex flex-col gap-4"

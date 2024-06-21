@@ -29,12 +29,7 @@
       'text-red-500': invalid
     }"
   >
-    {{
-      listOfContainerItemMap[value] !== null &&
-      listOfContainerItemMap[value] !== undefined
-        ? listOfContainerItemMap[value]
-        : placeholder
-    }}
+    {{ multiSelect ? (value && value.length > 0 ? displayOptions : placeholder) : (value ? displayOptions : placeholder) }}
   </span>
 
   <span
