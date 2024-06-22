@@ -50,20 +50,7 @@
         >
           {{ option }}
         </button>
-        <button
-          class="rounded border px-4 py-2 hover:bg-orange-600 hover:text-white focus:outline-none"
-        >
-          <svg
-            class="h-[24px] w-[24px] fill-black hover:fill-white"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 512 512"
-          >
-            <!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
-            <path
-              d="M0 416c0 17.7 14.3 32 32 32l54.7 0c12.3 28.3 40.5 48 73.3 48s61-19.7 73.3-48L480 448c17.7 0 32-14.3 32-32s-14.3-32-32-32l-246.7 0c-12.3-28.3-40.5-48-73.3-48s-61 19.7-73.3 48L32 384c-17.7 0-32 14.3-32 32zm128 0a32 32 0 1 1 64 0 32 32 0 1 1 -64 0zM320 256a32 32 0 1 1 64 0 32 32 0 1 1 -64 0zm32-80c-32.8 0-61 19.7-73.3 48L32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l246.7 0c12.3 28.3 40.5 48 73.3 48s61-19.7 73.3-48l54.7 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-54.7 0c-12.3-28.3-40.5-48-73.3-48zM192 128a32 32 0 1 1 0-64 32 32 0 1 1 0 64zm73.3-64C253 35.7 224.8 16 192 16s-61 19.7-73.3 48L32 64C14.3 64 0 78.3 0 96s14.3 32 32 32l86.7 0c12.3 28.3 40.5 48 73.3 48s61-19.7 73.3-48L480 128c17.7 0 32-14.3 32-32s-14.3-32-32-32L265.3 64z"
-            />
-          </svg>
-        </button>
+
       </div>
     </div>
     <div class="flex h-full w-full justify-center overflow-hidden">
@@ -76,9 +63,9 @@
         >
           <ng-container *ngFor="let video of videoDataSource">
             <swiper-slide>
-              <div class="m-auto h-full w-full p-2">
+              <!-- <div class="h-auto w-auto"> -->
                 <tmf-video-card [data]="video"></tmf-video-card>
-              </div>
+              <!-- </div> -->
             </swiper-slide>
           </ng-container>
         </swiper-container>
@@ -241,37 +228,70 @@
   </section>
   <section class="mb-12">
     <div class="flex w-full flex-col items-center gap-4">
-      <div class="lg:w-[1280px] lg:h-[776px] md:w-[800px] md:h-[600px] h-[440px] w-[350px] shadow-md rounded-lg px-2 pb-0 pt-8 bg-[#FEEFE7]">
-        <div class="h-full flex flex-col items-center justify-between gap-3">
+      <div
+        class="h-[440px] w-[350px] rounded-lg bg-[#FEEFE7] px-2 pb-0 pt-8 shadow-md md:h-[600px] md:w-[800px] lg:h-[776px] lg:w-[1280px]"
+      >
+        <div class="flex h-full flex-col items-center justify-between gap-3">
           <span
             class="rounded-lg border-2 border-orange-500 px-2 py-1 text-base font-bold text-orange-500"
             >STEP 1</span
           >
-          <span class="font-bold text-2xl lg:text-3xl">註冊帳號</span>
-          <span class="text-center text-sm lg:text-lg lg:w-[1040px] md:w-[500px]">在我們的平台上註冊一個帳號，填寫您的基本資料並設置登入密碼。註冊完成後,您將獲得全面的訪問權限，可以開始瀏覽和使用我們的各項功能。</span>
-          <img class="lg:w-[1040px] lg:h-[560px] md:h-[320px]" [src]="'./../../../assets/images/home-page/how-to-use/how-to-use-step-1.svg'" alt="" />
+          <span class="text-2xl font-bold lg:text-3xl">註冊帳號</span>
+          <span
+            class="text-center text-sm md:w-[500px] lg:w-[1040px] lg:text-lg"
+            >在我們的平台上註冊一個帳號，填寫您的基本資料並設置登入密碼。註冊完成後,您將獲得全面的訪問權限，可以開始瀏覽和使用我們的各項功能。</span
+          >
+          <img
+            class="md:h-[320px] lg:h-[560px] lg:w-[1040px]"
+            [src]="
+              './../../../assets/images/home-page/how-to-use/how-to-use-step-1.svg'
+            "
+            alt=""
+          />
         </div>
       </div>
-      <div class="lg:w-[1280px] lg:h-[776px] md:w-[800px] md:h-[600px] h-[440px] w-[350px] shadow-md rounded-lg px-2 pb-0 pt-8 bg-[#F6FEE7]">
-        <div class="h-full flex flex-col items-center justify-between gap-3">
+      <div
+        class="h-[440px] w-[350px] rounded-lg bg-[#F6FEE7] px-2 pb-0 pt-8 shadow-md md:h-[600px] md:w-[800px] lg:h-[776px] lg:w-[1280px]"
+      >
+        <div class="flex h-full flex-col items-center justify-between gap-3">
           <span
             class="rounded-lg border-2 border-orange-500 px-2 py-1 text-base font-bold text-orange-500"
             >STEP 2</span
           >
-          <span class="font-bold text-2xl lg:text-3xl">尋找才藝教學</span>
-          <span class="text-center text-sm lg:text-lg lg:w-[1040px] md:w-[500px]">瀏覽我們平台上豐富的才藝教學資源，您可以根據興趣和需求，尋找到合適的教學內容。無論您想要學習音樂、舞蹈、美術還是其他才藝，都能在這裡找到適合您的課程。</span>
-          <img class="lg:w-[1040px] lg:h-[560px] md:h-[320px]" [src]="'./../../../assets/images/home-page/how-to-use/how-to-use-step-2.svg'" alt="" />
+          <span class="text-2xl font-bold lg:text-3xl">尋找才藝教學</span>
+          <span
+            class="text-center text-sm md:w-[500px] lg:w-[1040px] lg:text-lg"
+            >瀏覽我們平台上豐富的才藝教學資源，您可以根據興趣和需求，尋找到合適的教學內容。無論您想要學習音樂、舞蹈、美術還是其他才藝，都能在這裡找到適合您的課程。</span
+          >
+          <img
+            class="md:h-[320px] lg:h-[560px] lg:w-[1040px]"
+            [src]="
+              './../../../assets/images/home-page/how-to-use/how-to-use-step-2.svg'
+            "
+            alt=""
+          />
         </div>
       </div>
-      <div class="lg:w-[1280px] lg:h-[776px] md:w-[800px] md:h-[600px] h-[440px] w-[350px] shadow-md rounded-lg px-2 pb-0 pt-8 bg-[#E7F6FE]">
-        <div class="h-full flex flex-col items-center justify-between gap-3">
+      <div
+        class="h-[440px] w-[350px] rounded-lg bg-[#E7F6FE] px-2 pb-0 pt-8 shadow-md md:h-[600px] md:w-[800px] lg:h-[776px] lg:w-[1280px]"
+      >
+        <div class="flex h-full flex-col items-center justify-between gap-3">
           <span
             class="rounded-lg border-2 border-orange-500 px-2 py-1 text-base font-bold text-orange-500"
             >STEP 3</span
           >
-          <span class="font-bold text-2xl lg:text-3xl">預約學習課程</span>
-          <span class="text-center text-sm lg:text-lg lg:w-[1040px] md:w-[500px]">找到心儀的教學內容後，您可以直接預約相應的學習課程。選擇適合您時間和地點的授課老師，並確定預約詳情。完成預約後，您將收到確認郵件，準時參加課程即可。</span>
-          <img class="lg:w-[1040px] lg:h-[560px] md:h-[320px]" [src]="'./../../../assets/images/home-page/how-to-use/how-to-use-step-3.svg'" alt="" />
+          <span class="text-2xl font-bold lg:text-3xl">預約學習課程</span>
+          <span
+            class="text-center text-sm md:w-[500px] lg:w-[1040px] lg:text-lg"
+            >找到心儀的教學內容後，您可以直接預約相應的學習課程。選擇適合您時間和地點的授課老師，並確定預約詳情。完成預約後，您將收到確認郵件，準時參加課程即可。</span
+          >
+          <img
+            class="md:h-[320px] lg:h-[560px] lg:w-[1040px]"
+            [src]="
+              './../../../assets/images/home-page/how-to-use/how-to-use-step-3.svg'
+            "
+            alt=""
+          />
         </div>
       </div>
     </div>
@@ -284,7 +304,10 @@
         class="lg:bg-[size: 100%] z-[999] h-[190px] w-[325px] rounded-2xl bg-white bg-[url('./assets/images/home-page/cta/cta-signup.svg')] bg-[size:60%] bg-right-top bg-no-repeat shadow-md lg:h-[225px] lg:w-[520px] lg:bg-auto"
       >
         <div class="h-full px-5 py-6">
-          <div class="flex h-full flex-col justify-end gap-4">
+          <div
+            class="flex h-full flex-col justify-end gap-4"
+            (click)="navigateToSignUp()"
+          >
             <div class="ld:text-3xl text-2xl">成為會員</div>
             <div class="flex items-center">
               <div class="w-4/5 lg:w-11/12">
@@ -306,7 +329,10 @@
         class="lg:bg-[size: 100%] z-[999] h-[190px] w-[325px] rounded-2xl bg-white bg-[url('./assets/images/home-page/cta/cta-teach.svg')] bg-[size:60%] bg-right-top bg-no-repeat shadow-md lg:h-[225px] lg:w-[520px]"
       >
         <div class="h-full px-5 py-6">
-          <div class="flex h-full flex-col justify-end gap-4">
+          <div
+            class="flex h-full flex-col justify-end gap-4"
+            (click)="navigateToTeacherApply()"
+          >
             <div class="text-2xl lg:text-3xl">成為教師</div>
             <div class="flex items-center">
               <div class="w-4/5 lg:w-11/12">

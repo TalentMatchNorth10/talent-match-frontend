@@ -1,12 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import {
+  AfterViewChecked,
   AfterViewInit,
   CUSTOM_ELEMENTS_SCHEMA,
   Component,
   ElementRef,
   OnInit,
-  ViewChild
+  ViewChild,
+  inject
 } from '@angular/core';
 import { CardComponent } from '@tmf/libs-shared/components/card/card.component';
 import { CardData } from '@tmf/libs-shared/components/card/card.interface';
@@ -26,6 +28,11 @@ import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { VideoCardComponent } from '@tmf/libs-shared/components/video-card/video-card.component';
 import { Router } from '@angular/router';
 import { SwiperOptions } from 'swiper/types';
+import {
+  ApiHomeCourseVideosAllGetRequestParams,
+  CommonService,
+  HomeService
+} from 'libs/openapi/src';
 
 @Component({
   selector: 'app-home-page',
@@ -47,22 +54,23 @@ import { SwiperOptions } from 'swiper/types';
   styleUrl: './home-page.component.scss',
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export default class HomePageComponent implements OnInit, AfterViewInit {
+export default class HomePageComponent
+  implements OnInit, AfterViewInit, AfterViewChecked
+{
+  private commonService = inject(CommonService);
+  private homeService = inject(HomeService);
+
   readonly InputType = InputType;
 
   public shortsSubjectOptions: string[] = [
-    '全部',
-    '烹飪料理',
-    '理財投資',
-    '藝術創作',
-    '手作工藝'
+    '全部'
+    // '烹飪料理',
+    // '理財投資',
+    // '藝術創作',
+    // '手作工藝'
   ];
   public selectedSubjectOption: string | null = null;
   transitionEnabled: any;
-
-  public selectSubjectOption(option: string): void {
-    this.selectedSubjectOption = option;
-  }
 
   public videoDataSource: VideoCardData[] = [];
   public courseDataSource: CardData[] = [];
@@ -223,58 +231,74 @@ export default class HomePageComponent implements OnInit, AfterViewInit {
   ) {}
 
   public ngOnInit() {
-    this.videoDataSource = FakeVideos;
+    this.selectSubjectOption('全部');
     this.courseDataSource = FakeCardData;
     this.reviewDataSource = FakeReviewData;
 
-    this.breakpointObserver
-      .observe([Breakpoints.Handset, Breakpoints.Tablet, Breakpoints.Web])
-      .subscribe((result) => {
-        // this.updateValueBasedOnBreakpoints(result.breakpoints);
-        const initialBreakpoints = {
-          [Breakpoints.Handset]: window.matchMedia(Breakpoints.Handset).matches,
-          [Breakpoints.Tablet]: window.matchMedia(Breakpoints.Tablet).matches,
-          [Breakpoints.Web]: window.matchMedia(Breakpoints.Web).matches
-        };
-        this.updateValueBasedOnBreakpoints(initialBreakpoints);
-      });
+    this.getTags();
   }
 
   ngAfterViewInit(): void {
     this.initSwiper();
   }
 
+  ngAfterViewChecked(): void {
+    // this.swiperElement.nativeElement.update();
+    // this.swiperElement.nativeElement.swiper.destroy();
+    // this.swiperElement.nativeElement.initialized = false;
+    // this.initSwiper();
+  }
+
   initSwiper() {
     try {
       Object.assign(this.swiperElement.nativeElement, this.swiperConfig);
+      if (this.swiperElement.nativeElement.initialized) {
+        this.swiperElement.nativeElement.swiper.destroy();
+        this.swiperElement.nativeElement.initialized = false;
+      }
       this.swiperElement.nativeElement.initialize();
       Object.assign(
         this.swiperElementCourse.nativeElement,
         this.courseSwiperConfig
       );
+      if (this.swiperElementCourse.nativeElement.initialized) {
+        this.swiperElementCourse.nativeElement.swiper.destroy();
+        this.swiperElementCourse.nativeElement.initialized = false;
+      }
       this.swiperElementCourse.nativeElement.initialize();
     } catch (error) {
       console.error('Swiper initialization failed', error);
     }
   }
 
-  public updateValueBasedOnBreakpoints(breakpoints: {
-    [key: string]: boolean;
-  }) {
-    if (breakpoints[Breakpoints.Handset]) {
-      // Do something for small screens
-      this.currentWindowSize = 'Handset';
+  getTags() {
+    this.commonService.apiCommonTagGet().subscribe((res) => {
+      res.data.forEach((item) =>
+        this.shortsSubjectOptions.push(item.main_category as string)
+      );
+    });
+  }
 
-      // console.log('Handset');
-    } else if (breakpoints[Breakpoints.Tablet]) {
-      // Do something for medium screens
-      this.currentWindowSize = 'Tablet';
+  public selectSubjectOption(option: string): void {
+    this.selectedSubjectOption = option;
 
-      // console.log('Tablet');
-    } else if (breakpoints[Breakpoints.Web]) {
-      // Do something for large screens
-      this.currentWindowSize = 'Web';
-      // console.log('Web');
+    const params: ApiHomeCourseVideosAllGetRequestParams = {};
+
+    if (option === '全部') {
+      this.homeService.apiHomeCourseVideosAllGet(params).subscribe((res) => {
+        this.videoDataSource = res.data;
+        // this.swiperElement.nativeElement.swiper.destroy();
+        // this.swiperElement.nativeElement.initialized = false;
+        this.initSwiper();
+      });
+    } else {
+      params.mainCategory = option;
+      this.homeService.apiHomeCourseVideosAllGet(params).subscribe((res) => {
+        this.videoDataSource = res.data;
+        // this.swiperElement.nativeElement.swiper.destroy();
+        // this.swiperElement.nativeElement.initialized = false;
+        this.initSwiper();
+      });
     }
   }
 
