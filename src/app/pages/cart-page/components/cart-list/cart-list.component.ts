@@ -2,7 +2,10 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { CartTableComponent } from '../cart-table/cart-table.component';
 import { CardData } from '@tmf/libs-shared/components/card/card.interface';
-import { GetCartItemsResponseModelDataInner } from 'libs/openapi/src';
+import {
+  FavoritesService,
+  GetCartItemsResponseModelDataInner
+} from 'libs/openapi/src';
 import { CardComponent } from '@tmf/libs-shared/components/card/card.component';
 import { Router } from '@angular/router';
 
@@ -15,6 +18,7 @@ import { Router } from '@angular/router';
 })
 export class CartListComponent {
   private router = inject(Router);
+  private FavoritesService = inject(FavoritesService);
 
   @Input() cartDataSource: GetCartItemsResponseModelDataInner[] = [];
   @Input() courseDataSource: CardData[] = [];
@@ -39,6 +43,10 @@ export class CartListComponent {
       .toLocaleString();
   }
 
+  ngOnInit(): void {
+    this.getFavoriteList();
+  }
+
   handleSelectedChange(selectedArr: GetCartItemsResponseModelDataInner[]) {
     this.selectedArr = selectedArr;
     this.selectChange.emit(selectedArr);
@@ -55,5 +63,25 @@ export class CartListComponent {
 
   continueShopping() {
     this.router.navigate(['/result-tag']);
+  }
+
+  getFavoriteList() {
+    this.FavoritesService.apiFavoritesGet().subscribe((res) => {
+      this.courseDataSource =
+        res.data?.favorites?.map((favorite) => ({
+          course_id: favorite.course_id || '',
+          mainImg: favorite.main_image || '',
+          title: favorite.name || '',
+          content: favorite.content || '',
+          avatar: favorite.teacher_avatar || '',
+          name: favorite.teacher_name || '',
+          price: favorite.price_quantity![0].price || 0,
+          quantity: favorite.price_quantity![0].quantity || 0,
+          main_category: favorite.main_category || '',
+          sub_category: favorite.sub_category || '',
+          rating: favorite.rate || 0,
+          ratingCount: favorite.review_count || 0
+        })) || [];
+    });
   }
 }
