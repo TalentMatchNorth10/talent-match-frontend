@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { CheckoutFormKey, OrderInfoData } from '../../cart-page.model';
 import { ShopService } from 'libs/openapi/src';
+import { InvoiceWayOptions, PurchaseWayOptions } from '../../cart-page.const';
 
 @Component({
   selector: 'app-order-info-dialog',
@@ -59,15 +60,11 @@ import { ShopService } from 'libs/openapi/src';
     >
       <p>
         <span class="text-[14px] leading-5">付款方式：</span>
-        <span class="text-[14px] leading-5">{{
-          this.dialogData.fieldData[CheckoutFormKey.PURCHASE_WAY]
-        }}</span>
+        <span class="text-[14px] leading-5">{{ purchaseWay }}</span>
       </p>
       <p>
         <span class="text-[14px] leading-5">發票選項：</span>
-        <span class="text-[14px] leading-5">{{
-          this.dialogData.fieldData[CheckoutFormKey.INVOICE]
-        }}</span>
+        <span class="text-[14px] leading-5">{{ invoiceWay }}</span>
       </p>
       <p>
         <span class="text-[14px] leading-5">付款人電話：</span>
@@ -105,6 +102,26 @@ export class OrderInfoDialogComponent {
   dialogData: OrderInfoData = inject(DIALOG_DATA);
 
   readonly CheckoutFormKey = CheckoutFormKey;
+
+  get purchaseWay() {
+    return (
+      PurchaseWayOptions.find(
+        (option) =>
+          option.value ===
+          this.dialogData.fieldData[CheckoutFormKey.PURCHASE_WAY]
+      )!.label || ''
+    );
+  }
+
+  get invoiceWay() {
+    return (
+      InvoiceWayOptions.find(
+        (option) =>
+          option.value ===
+          this.dialogData.fieldData[CheckoutFormKey.INVOICE_WAY]
+      )!.label || ''
+    );
+  }
 
   close() {
     this.dialog.close();
