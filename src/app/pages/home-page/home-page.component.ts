@@ -303,7 +303,7 @@ export default class HomePageComponent
   }
 
   search(event: SearchType) {
-    this.router.navigateByUrl(`/result-keyword?keyword=${event.value}`);
+    this.router.navigateByUrl(`/result-keyword?keyword=${event.value.trim()}`);
   }
 
   navigateToSignUp() {

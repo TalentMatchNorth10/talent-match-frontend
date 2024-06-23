@@ -48,10 +48,13 @@ import { ReplaySubject, filter, map, tap } from 'rxjs';
           @if (canCity) {
             <div class="m-auto w-40 shrink-0 sm:m-0">
               <tmf-select
-                label="地區"
+                [icon]="'pin_drop'"
                 [(ngModel)]="cityId"
+                placeholder="探索全部"
                 (selectChange)="cityIdChange.emit($event)"
               >
+                <tmf-option [value]="'all'" [label]="'探索全部'"></tmf-option>
+
                 @for (option of cityOptions; track option) {
                   <tmf-option
                     [value]="option.value"
@@ -63,30 +66,44 @@ import { ReplaySubject, filter, map, tap } from 'rxjs';
           }
           @if (data.total) {
             <div class="shrink-0 grow text-center sm:text-right">
-              <span
-                [ngClass]="{
-                  'sort-active':
-                    query.sort != SortType.HIT && query.sort != SortType.CHEAP
-                }"
-                class="border-r border-tmf-gray-5 p-[4px_16px] text-base font-normal text-tmf-gray-3"
-                (click)="sortChange.emit(SortType.NEW)"
-              >
-                最新課程
-              </span>
-              <span
-                [ngClass]="{ 'sort-active': query.sort === SortType.HIT }"
-                class="border-r border-tmf-gray-5 p-[4px_16px] text-base font-normal text-tmf-gray-3 active:font-bold"
-                (click)="sortChange.emit(SortType.HIT)"
-              >
-                最高人氣
-              </span>
-              <span
-                [ngClass]="{ 'sort-active': query.sort === SortType.CHEAP }"
-                class="p-[4px_16px] text-base font-normal text-tmf-gray-3"
-                (click)="sortChange.emit(SortType.CHEAP)"
-              >
-                最低價格
-              </span>
+              <div class="inline-block border-r border-tmf-gray-5 p-[4px_16px]">
+                <span
+                  [ngClass]="{
+                    'sort-active':
+                      query.sort != SortType.HIT &&
+                      query.sort != SortType.CHEAP,
+                    'cursor-pointer': query.sort != SortType.NEW
+                  }"
+                  class="text-base font-normal text-tmf-gray-3"
+                  (click)="sortChange.emit(SortType.NEW)"
+                >
+                  最新課程
+                </span>
+              </div>
+              <div class="inline-block border-r border-tmf-gray-5 p-[4px_16px]">
+                <span
+                  [ngClass]="{
+                    'sort-active': query.sort === SortType.HIT,
+                    'cursor-pointer': query.sort != SortType.HIT
+                  }"
+                  class="text-base font-normal text-tmf-gray-3 active:font-bold"
+                  (click)="sortChange.emit(SortType.HIT)"
+                >
+                  最高人氣
+                </span>
+              </div>
+              <div class="inline-block p-[4px_16px]">
+                <span
+                  [ngClass]="{
+                    'sort-active': query.sort === SortType.CHEAP,
+                    'cursor-pointer': query.sort != SortType.CHEAP
+                  }"
+                  class="text-base font-normal text-tmf-gray-3"
+                  (click)="sortChange.emit(SortType.CHEAP)"
+                >
+                  最低價格
+                </span>
+              </div>
             </div>
           }
         </div>

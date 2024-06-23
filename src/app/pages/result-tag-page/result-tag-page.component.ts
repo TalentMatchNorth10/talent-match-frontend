@@ -67,6 +67,7 @@ export default class ResultTagPageComponent extends ResultKeywordPageComponent {
   }
 
   cityId(cityId: string | null) {
+    cityId = cityId === 'all' ? null : cityId;
     this.router.navigate([], {
       relativeTo: this.route,
       queryParams: { cityId },
