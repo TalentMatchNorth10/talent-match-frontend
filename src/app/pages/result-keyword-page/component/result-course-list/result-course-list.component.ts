@@ -123,7 +123,7 @@ import { ReplaySubject, filter, map, tap } from 'rxjs';
               [config]="{
                 totalItems: data.total,
                 itemsPerPage: query.size || 10,
-                currentPage: query.page || 1,
+                currentPage: toInt(query.page) || 1,
                 showFirstButton: true,
                 showLastButton: true,
                 showPrevButton: true,
@@ -209,5 +209,8 @@ export class ResultCourseListComponent {
           this.cityId = cityId;
         });
     }
+  }
+  toInt(page: any) {
+    return Number(page);
   }
 }
