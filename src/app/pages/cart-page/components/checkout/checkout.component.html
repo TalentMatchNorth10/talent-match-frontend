@@ -250,12 +250,12 @@
           <li class="flex items-center">
             <div class="mr-3 h-[60px] w-[120px] shrink-0">
               <img
-                class="h-full object-cover"
+                class="h-full w-full object-cover"
                 [src]="item.image"
                 alt="main_image"
               />
             </div>
-            <p class="line-clamp-2 text-sm">{{ item.content }}</p>
+            <p class="line-clamp-3 text-sm" [innerHTML]="item.content || ''"></p>
           </li>
         }
       </ul>
@@ -338,12 +338,12 @@
             <li class="flex items-center">
               <div class="mr-3 h-[60px] w-[120px] shrink-0">
                 <img
-                  class="h-full object-cover"
+                  class="h-full w-full object-cover"
                   [src]="item.image"
                   alt="main_image"
                 />
               </div>
-              <p class="line-clamp-2 text-sm">{{ item.content }}</p>
+              <p class="line-clamp-2 text-sm" [innerHTML]="item.content || ''"></p>
             </li>
           }
         </ul>

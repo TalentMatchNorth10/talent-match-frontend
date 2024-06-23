@@ -204,10 +204,14 @@ import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
                     >
                       <div class="h-[48px] w-[84px] bg-tmf-gray-3">
                         @if (cartItem.image) {
-                          <img class="h-full w-full" src="" alt="" />
+                          <img
+                            class="h-full w-full"
+                            [src]="cartItem.image"
+                            alt=""
+                          />
                         }
                       </div>
-                      <div class="flex flex-col">
+                      <div class="flex flex-grow flex-col">
                         <!-- 標籤列 -->
                         <div class="mb-1 flex flex-wrap gap-2">
                           <div
@@ -244,7 +248,7 @@ import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
                       共計 {{ cartTotal.courseCount }} 項課程
                     </p>
                     <div
-                      class="flex w-full items-center justify-between text-[16px] leading-6"
+                      class="flex w-full items-center justify-between self-end text-[16px] leading-6"
                     >
                       <p>總計 NT$ {{ cartTotal.total }}</p>
                       <button
