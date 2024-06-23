@@ -65,7 +65,7 @@ export class ReserveComponent {
   private dialogService = inject(DialogService);
 
   constructor(
-    public dialogRef: DialogRef<ReserveComponent>,
+    public dialogRef: DialogRef<boolean,ReserveComponent>,
     @Inject(DIALOG_DATA)
     public data: {
       student_id: string;
@@ -227,7 +227,7 @@ export class ReserveComponent {
       .apiStudentReservationReserveCoursePost(body)
       .pipe(
         switchMap(() => {
-          this.dialogRef.close();
+          this.dialogRef.close(true);
           const reserve_time = this.selectedReseveTime().split('T').join(' ');
           return this.dialogService.openAlertDialog({
             icon: 'check',
@@ -249,6 +249,6 @@ export class ReserveComponent {
   }
 
   close() {
-    this.dialogRef.close();
+    this.dialogRef.close(false);
   }
 }

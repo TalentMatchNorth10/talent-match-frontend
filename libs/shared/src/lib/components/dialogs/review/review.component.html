@@ -1,0 +1,43 @@
+<div class="w-[800px] rounded-lg bg-white p-6 text-tmf-gray-1">
+  <div class="flex h-full flex-col gap-2">
+    <div class="flex items-center justify-between gap-4">
+      <p class="text-2xl font-bold">{{ data.purchasedCourse.course_name }}</p>
+      <span
+        class="material-symbols-outlined cursor-pointer text-2xl leading-6"
+        (click)="dialogRef.close()"
+      >
+        close
+      </span>
+    </div>
+
+    <p class="text-lg">授課老師：{{ data.purchasedCourse.teacher_name }}</p>
+    <p class="text-lg">
+      預約時間： {{ data.reserve.reserve_time | tmfDateTime }}
+    </p>
+    <div class="flex items-center gap-2">
+      <p class="text-lg">評分</p>
+      <div class="star-rating h-8">
+        @for (rateCount of [1, 2, 3, 4, 5]; track $index) {
+          <span
+            (click)="rate(rateCount)"
+            [class.filled]="rating() >= rateCount"
+            class="material-icons text-[32px] leading-8"
+          >
+            star
+          </span>
+        }
+      </div>
+    </div>
+    <tmf-quill-editor (contentChangeEvent)="contentChange($event)"></tmf-quill-editor>
+    <button
+      [ngClass]="{
+        'cursor-pointer bg-tmf-orange-1': !btnDisabled(),
+        'cursor-not-allowed bg-tmf-gray-5': btnDisabled()
+      }"
+      class="rounded-lg px-4 py-2 text-white"
+      (click)="submitReview()"
+    >
+      送出
+    </button>
+  </div>
+</div>
