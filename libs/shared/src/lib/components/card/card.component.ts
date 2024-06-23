@@ -14,7 +14,7 @@ import { Router } from '@angular/router';
         class="group relative m-auto w-[320px] overflow-hidden rounded-xl bg-white shadow-lg md:w-[320px] lg:w-[302px]"
       >
         <div class="h-[180px] w-full bg-tmf-gray-4">
-          @if (data.avatar) {
+          @if (data.mainImg) {
             <img
               class="h-full w-full object-cover"
               [src]="data.mainImg"
@@ -28,11 +28,10 @@ import { Router } from '@angular/router';
           >
             {{ data.title ? data.title : '' }}
           </h3>
-          <p
+          <div
             class="line-clamp-3 min-h-[60px] text-[14px] leading-5 text-tmf-gray-3 md:min-h-[72px] md:text-[16px] md:leading-6"
-          >
-            {{ data.content ? data.content : '' }}
-          </p>
+            [innerHTML]="data.content ? data.content : ''"
+          ></div>
         </div>
         <div class="flex items-center border-y border-tmf-gray-5 p-4">
           <div
