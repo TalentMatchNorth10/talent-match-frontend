@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import {
   CommonService,
   GetCartItemsResponseModelDataInner,
@@ -136,6 +136,7 @@ import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
           </div>
           @if (!isIndex) {
             <tmf-input
+              class="invisible w-[200px] xl:visible"
               [inputType]="InputType.Search"
               [(ngModel)]="searchInputControl"
               placeholder="快速搜尋"
@@ -365,6 +366,7 @@ import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
             class="!w-full max-w-[180px]"
             [formControl]="selectCityControl"
             [icon]="'pin_drop'"
+            (selectChange)="searchCity($event); toggleSidenav()"
           >
             @for (option of cityOptions; track option) {
               <tmf-option
@@ -393,7 +395,7 @@ import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
               <ul class="max-h-[300px] overflow-auto">
                 @for (sub of option.sub_category; track sub) {
                   <li
-                    (click)="currentTag = sub"
+                    (click)="searchTag(sub); toggleSidenav()"
                     [ngClass]="{
                       'bg-tmf-orange-1 text-white': currentTag === sub
                     }"
@@ -521,9 +523,16 @@ export class HeaderComponent implements OnInit {
         this.user = null;
       }
     });
-    this.route.url.subscribe(() => {
-      this.isIndex = window.location.pathname === '/home';
+    this.setIsIndex(window.location.pathname);
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        this.setIsIndex(event.url);
+      }
     });
+  }
+
+  setIsIndex(url: string) {
+    this.isIndex = url === '/home';
   }
 
   getOptions() {
@@ -614,10 +623,14 @@ export class HeaderComponent implements OnInit {
   }
 
   search(e: SearchType) {
-    this.router.navigateByUrl(`/result-keyword?keyword=${e.value}`);
+    this.router.navigateByUrl(`/result-keyword?keyword=${e.value.trim()}`);
   }
 
   searchCity(cityId: string) {
+    if (cityId === 'all') {
+      this.router.navigateByUrl(`/result-tag`);
+      return;
+    }
     this.router.navigateByUrl(`/result-tag?cityId=${cityId}`);
   }
 
