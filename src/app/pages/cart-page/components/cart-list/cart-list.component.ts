@@ -1,9 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { CartTableComponent } from '../cart-table/cart-table.component';
 import { CardData } from '@tmf/libs-shared/components/card/card.interface';
 import { GetCartItemsResponseModelDataInner } from 'libs/openapi/src';
 import { CardComponent } from '@tmf/libs-shared/components/card/card.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-cart-list',
@@ -13,6 +14,8 @@ import { CardComponent } from '@tmf/libs-shared/components/card/card.component';
   styleUrl: './cart-list.component.css'
 })
 export class CartListComponent {
+  private router = inject(Router);
+
   @Input() cartDataSource: GetCartItemsResponseModelDataInner[] = [];
   @Input() courseDataSource: CardData[] = [];
 
@@ -48,5 +51,9 @@ export class CartListComponent {
   checkout() {
     if (!this.selectedArr || this.selectedArr?.length === 0) return;
     this.stepChange.emit();
+  }
+
+  continueShopping() {
+    this.router.navigate(['/result-tag']);
   }
 }

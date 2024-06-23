@@ -1,1 +1,5 @@
-export type OptionType<T = any> = { label: string; value: T };
+export type OptionType<T = any> = {
+  label: string;
+  value: T;
+  disabled?: boolean;
+};

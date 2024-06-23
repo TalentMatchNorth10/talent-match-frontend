@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, OnInit, Output, inject } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import {
   OrderDetailResponseModelDataInner,
   ShopService
@@ -16,6 +16,7 @@ import {
 export class OrderCompletedComponent implements OnInit {
   private shopService = inject(ShopService);
   private route = inject(ActivatedRoute);
+  private router = inject(Router);
 
   orderId: string | null = null;
   orderList: OrderDetailResponseModelDataInner[] = [];
@@ -37,5 +38,13 @@ export class OrderCompletedComponent implements OnInit {
       .subscribe((res) => {
         this.orderList = res.data;
       });
+  }
+
+  continueShopping() {
+    this.router.navigate(['/result-tag']);
+  }
+
+  courseReservation() {
+    this.router.navigate(['/student/courses']);
   }
 }

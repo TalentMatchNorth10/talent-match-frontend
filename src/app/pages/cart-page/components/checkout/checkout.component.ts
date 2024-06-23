@@ -168,7 +168,16 @@ export class CheckoutComponent implements OnInit {
 
   setOptions() {
     this.commonService.apiCommonOptionsPaymentWayGet().subscribe((res) => {
-      this.purchaseWayOptions = res.data;
+      this.purchaseWayOptions = res.data.map((item) => {
+        if (item.label === 'LINE_PAY') {
+          return {
+            ...item,
+            disabled: true
+          };
+        } else {
+          return item;
+        }
+      });
     });
     this.commonService.apiCommonOptionsInvoiceGet().subscribe((res) => {
       this.invoiceOptions = res.data;

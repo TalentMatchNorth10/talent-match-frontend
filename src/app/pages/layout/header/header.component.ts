@@ -177,11 +177,13 @@ import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
                 <span class="material-icons-outlined cursor-pointer"
                   >shopping_cart</span
                 >
-                <div
-                  class="absolute right-2 top-1 flex h-4 w-4 items-center justify-center rounded-full border-2 border-white bg-tmf-orange-1 text-[10px] font-semibold text-white"
-                >
-                  1
-                </div>
+                @if (cartList && cartList.length > 0) {
+                  <div
+                    class="absolute right-2 top-1 flex h-4 w-4 items-center justify-center rounded-full border-2 border-white bg-tmf-orange-1 text-[10px] font-semibold text-white"
+                  >
+                    {{ cartList.length }}
+                  </div>
+                }
               </button>
               <!-- 購物車下拉 -->
               <div
@@ -458,31 +460,27 @@ export class HeaderComponent implements OnInit {
     [
       {
         icon: 'face',
-        label: '學生個人管理'
+        label: '基本資訊管理'
       },
       {
-        icon: 'face',
-        label: '教師資訊管理'
+        icon: 'favorite',
+        label: '收藏課程'
       },
       {
-        icon: 'smart_display',
-        label: '影片管理'
+        icon: 'calendar_today',
+        label: '行事曆'
       },
       {
-        icon: 'edit_calendar',
-        label: '行事曆管理'
-      },
-      {
-        icon: 'description',
-        label: '課程管理'
+        icon: 'book',
+        label: '已購買課程'
       },
       {
         icon: 'account_balance_wallet',
         label: '交易紀錄'
       },
       {
-        icon: 'settings',
-        label: '帳戶管理'
+        icon: 'favorite_border',
+        label: '喜好類別'
       }
     ],
     [
@@ -598,11 +596,23 @@ export class HeaderComponent implements OnInit {
 
   handleMenuClick(menuItem: UserMenuItem) {
     switch (menuItem.label) {
-      case '學生個人管理':
-        this.router.navigate(['/student']);
+      case '基本資訊管理':
+        this.router.navigate(['/student/info']);
         break;
-      case '教師資訊管理':
-        this.router.navigate(['/teacher']);
+      case '收藏課程':
+        this.router.navigate(['/student/favorites']);
+        break;
+      case '行事曆':
+        this.router.navigate(['/student/calendar']);
+        break;
+      case '已購買課程':
+        this.router.navigate(['/student/courses']);
+        break;
+      case '交易紀錄':
+        this.router.navigate(['/student/record']);
+        break;
+      case '喜好類別':
+        this.router.navigate(['/student/preference']);
         break;
       case '登出':
         this.authStatusService.logout();
