@@ -5,7 +5,7 @@
       <div class="flex gap-4">
         <img
           class="h-[166px] w-[250px] rounded-md"
-          src="./assets/images/guitar-course.png"
+          [src]="purchasedCourse.main_image"
           alt=""
         />
         <div class="flex flex-grow flex-col gap-1">
@@ -16,8 +16,11 @@
             {{ purchasedCourse.main_category }}｜{{ purchasedCourse.city_id }}
           </p>
           <div class="flex items-center gap-2">
-            <p>王太郎</p>
-            <tmf-star-rating [rating]="5"></tmf-star-rating>
+            <p>{{ purchasedCourse.teacher_name }}</p>
+            <div class="felx items-center">
+              <tmf-star-rating [starSize]="'20px'" [rating]="purchasedCourse.course_rate!"></tmf-star-rating>
+            </div>
+            <p>( {{purchasedCourse.review_count}} )</p>
           </div>
           <p class="text-right text-lg">
             剩餘 {{ purchasedCourse.remain_quantity }} 堂
@@ -49,55 +52,66 @@
             @for (course of purchasedCourse.reserved_course; track $index) {
               <li class="flex items-center justify-between">
                 <p class="min-w-[9.375rem]">
-                  {{ course.reserve_time| tmfDateTime }}
+                  {{ course.reserve_time | tmfDateTime }}
                 </p>
-                <p class="min-w-[3.75rem]">已預約</p>
-                <p class="min-w-24"></p>
+                <p class="min-w-[3.75rem]">
+                  @if (
+                    course.teacher_status === 'completed' &&
+                    course.student_status === 'reserved'
+                  ) {
+                    待確認
+                  } @else if (
+                    course.teacher_status === 'completed' &&
+                    course.student_status === 'completed' &&
+                    !course.review
+                  ) {
+                    已完課
+                  } @else if (
+                    course.teacher_status === 'completed' &&
+                    course.student_status === 'completed' &&
+                    course.review
+                  ) {
+                    已評價
+                  } @else {
+                    已預約
+                  }
+                </p>
+                @if (
+                  course.teacher_status !== 'reserved' &&
+                  course.student_status === 'reserved'
+                ) {
+                  <button
+                    class="min-w-24 rounded-md bg-tmf-orange-1 px-4 py-1 text-center text-white"
+                    (click)="completeCourse(course.reserve_id!,purchasedCourse)"
+                  >
+                    完成課程
+                  </button>
+                } @else if (
+                  course.teacher_status !== 'reserved' &&
+                  course.student_status !== 'reserved' &&
+                  !course.review
+                ) {
+                  <button
+                    class="min-w-24 rounded-md bg-tmf-purple px-4 py-1 text-center text-white"
+                    (click)="openReviewDialog(purchasedCourse,course)"
+                  >
+                    給予評價
+                  </button>
+                } @else {
+                  <p class="min-w-24"></p>
+                }
               </li>
             } @empty {
               <li class="flex items-center justify-center">
                 <p>尚無預約課程</p>
               </li>
             }
-            <!-- 等待老師管理-行事曆管理頁面完成候補 -->
-            <!-- <li class="flex items-center justify-between">
-              <p class="min-w-[9.375rem]">2024-04-05 20:00</p>
-              <p class="min-w-[3.75rem]">已預約</p>
-              <p class="min-w-24"></p>
-            </li>
-            <li class="flex items-center justify-between">
-              <p class="min-w-[9.375rem]">2024-04-05 20:00</p>
-              <p class="min-w-[3.75rem]">已完課</p>
-              <button
-                class="min-w-24 rounded-md bg-tmf-orange-1 px-4 py-1 text-center text-white"
-              >
-                完成課程
-              </button>
-            </li>
-            <li class="flex items-center justify-between">
-              <p class="min-w-[9.375rem]">2024-04-05 20:00</p>
-              <p class="min-w-[3.75rem]">已完課</p>
-              <button
-                class="min-w-24 rounded-md bg-tmf-purple px-4 py-1 text-center text-white"
-              >
-                給予評價
-              </button>
-            </li>
-            <li class="flex items-center justify-between">
-              <p class="min-w-[9.375rem]">2024-04-05 20:00</p>
-              <p class="min-w-[3.75rem]">已完課</p>
-              <p
-                class="min-w-24 rounded-md bg-tmf-gray-5 px-4 py-1 text-center text-white"
-              >
-                已評價
-              </p>
-            </li> -->
           </ul>
         </div>
       </div>
       <div
         (click)="purchasedCourse.isExpanded = !purchasedCourse.isExpanded"
-        class="absolute -bottom-4 left-1/2 h-8 w-8 -translate-x-1/2 rounded-full border border-tmf-gray-4 bg-white"
+        class="absolute cursor-pointer -bottom-4 left-1/2 h-8 w-8 -translate-x-1/2 rounded-full border border-tmf-gray-4 bg-white"
       >
         <div class="flex h-full w-full items-center justify-center">
           @if (purchasedCourse.isExpanded) {
@@ -114,3 +128,5 @@
     </div>
   }
 </div>
+
+

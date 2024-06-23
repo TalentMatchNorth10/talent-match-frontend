@@ -1,0 +1,16 @@
+.star-rating {
+  color: lightgray;
+  cursor: pointer;
+}
+
+.star-rating .filled {
+  color: gold;
+}
+
+::ng-deep .ql-container {
+  height: 150px !important;
+}
+
+::ng-deep .ql-editor {
+  font-size: 18px;
+}

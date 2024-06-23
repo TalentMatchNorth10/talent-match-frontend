@@ -9,6 +9,7 @@ import {
   TmfConfirmConfig
 } from '@tmf/libs-shared/components/dialogs/dialogs.obj';
 import { ReserveComponent } from '@tmf/libs-shared/components/dialogs/reserve/reserve.component';
+import { ReviewComponent } from '@tmf/libs-shared/components/dialogs/review/review.component';
 
 @Injectable({
   providedIn: 'root'
@@ -44,8 +45,15 @@ export class DialogService {
     });
   }
 
-  openReserveDialog<D>(dialogData?: D) {
+  openReserveDialog<D>(dialogData?: D): Observable<boolean> {
     return this.dialog.open(ReserveComponent, {
+      autoFocus: 'none',
+      data: dialogData
+    }).closed as Observable<boolean>;
+  }
+
+  openReviewDialog<D>(dialogData?: D) {
+    return this.dialog.open(ReviewComponent, {
       autoFocus: 'none',
       data: dialogData
     });
