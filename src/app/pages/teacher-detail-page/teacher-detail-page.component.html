@@ -6,20 +6,20 @@
   <section class="m-auto w-10/12 lg:ml-32 lg:w-2/3">
     <div class="flex flex-col items-center gap-6 lg:flex-row">
       <img
-        class="h-[200px] w-[200px] rounded-full border border-tmf-gray-6"
-        src="https://fakeimg.pl/200/"
+        class="h-[200px] w-[200px] rounded-full border border-tmf-gray-6 object-cover"
+        [src]="data?.avator_image"
         alt=""
       />
       <div class="flex flex-col gap-4">
-        <div class="text-lg">Eric Clapton</div>
-        <div class="text-lg">累計完成123堂課程</div>
+        <div class="text-4xl">{{data?.name}}</div>
+        <div class="text-lg">累計完成10堂課程</div>
         <!-- <div class="flex items-center justify-start gap-1">
           <span class="material-symbols-outlined text-xl leading-5">
             face
           </span>
           <p>120 人學習</p>
         </div> -->
-        <button
+        <!-- <button
           class="gap-1 rounded-lg border border-tmf-orange-1 bg-white px-4 py-2 text-tmf-orange-1"
         >
           <div class="flex items-center justify-center">
@@ -28,7 +28,7 @@
             </span>
             <p class="text-sm">關注老師</p>
           </div>
-        </button>
+        </button> -->
       </div>
     </div>
   </section>
@@ -60,12 +60,12 @@
         />
         <h2 class="text-xl font-bold xl:text-2xl">自我介紹</h2>
       </div>
-      <p class="mb-4 text-sm text-tmf-gray-2 xl:text-base">
+      <div class="mb-4 text-sm text-tmf-gray-2 xl:text-base" [innerHTML]="data?.introduction">
         這是一個針對初學者或有一定基礎的學生設計的木吉他家教課程。課程旨在提供一個融合理論與實踐的學習環境，讓學生能夠全面地掌握木吉他演奏的基本技巧和音樂知識。<br /><br />
         課程將從基礎開始，介紹木吉他的構造和功能,讓學生了解木吉他的不同部分及其作用。隨後,課程將重點放在基本的彈奏技巧上，包括手指的姿勢、和弦的彈奏和選擇等。透過簡單易懂的示範和練習，學生將逐步培養出良好的演奏習慣和技巧。<br /><br />
         除了技巧訓練，課程還將注重音樂理論的學習。學生將學習基本的樂理知識，包括音階、和弦結構、節奏等，並將這些知識應用到實際的演奏中。通過理論與實踐的結合，學生將更深入地理解音樂，並能夠更靈活地運用在演奏中。<br />
         課程還將根據學生的興趣和目標,量身定制教學內容。無論是流行音樂、古典音樂還是爵士樂，學生都將有機會學習到自己喜愛的音樂風格。
-      </p>
+      </div>
     </section>
     <!-- 教師履歷 -->
     <section>
@@ -112,7 +112,7 @@
       </p> -->
     </section>
     <!-- 課程瀏覽 -->
-    <section>
+    <section *ngIf="data &&data?.courses?.length">
       <div class="mb-4 flex items-center justify-start gap-2">
         <img
           class="h-5 w-5 xl:h-6 xl:w-6"
