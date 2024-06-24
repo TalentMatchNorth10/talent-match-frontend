@@ -75,7 +75,7 @@ export default class CartPageComponent implements OnInit {
 const FakeCardData: CardData[] = [
   {
     course_id: '1',
-    mainImg: 'https://fakeimg.pl/300/',
+    main_image: 'https://fakeimg.pl/300/',
     title: '課程名稱1',
     content: '課程內容1',
     avatar: 'https://fakeimg.pl/300/',
@@ -89,7 +89,7 @@ const FakeCardData: CardData[] = [
   },
   {
     course_id: '2',
-    mainImg: 'https://fakeimg.pl/300/',
+    main_image: 'https://fakeimg.pl/300/',
     title: '課程名稱2',
     content: '課程內容2',
     avatar: 'https://fakeimg.pl/300/',
@@ -103,7 +103,7 @@ const FakeCardData: CardData[] = [
   },
   {
     course_id: '3',
-    mainImg: 'https://fakeimg.pl/300/',
+    main_image: 'https://fakeimg.pl/300/',
     title: '課程名稱2',
     content:
       '課程內容2課程內容2課程內容2課程內容2課程內容2課程內容2課程內容2課程內容2課程內容2課程內容2課程內容2課程內容2課程內容2課程內容2課程內容2',
@@ -118,7 +118,7 @@ const FakeCardData: CardData[] = [
   },
   {
     course_id: '4',
-    mainImg: 'https://fakeimg.pl/300/',
+    main_image: 'https://fakeimg.pl/300/',
     title: '課程名稱2',
     content: '課程內容2',
     avatar: 'https://fakeimg.pl/300/',
@@ -132,7 +132,7 @@ const FakeCardData: CardData[] = [
   },
   {
     course_id: '5',
-    mainImg: 'https://fakeimg.pl/300/',
+    main_image: 'https://fakeimg.pl/300/',
     title: '課程名稱2',
     content: '課程內容2',
     avatar: 'https://fakeimg.pl/300/',

@@ -32,7 +32,7 @@ export default class StudentFavoritesPageComponent implements OnInit {
       this.favoriteList =
         res.data?.favorites?.map((favorite) => ({
           course_id: favorite.course_id || '',
-          mainImg: favorite.main_image || '',
+          main_image: favorite.main_image || '',
           title: favorite.name || '',
           content: favorite.content || '',
           avatar: favorite.teacher_avatar || '',
