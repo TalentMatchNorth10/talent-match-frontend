@@ -637,7 +637,13 @@ export class HeaderComponent implements OnInit {
   }
 
   search(e: SearchType) {
-    this.router.navigateByUrl(`/result-keyword?keyword=${e.value.trim()}`);
+    // 關鍵字搜尋
+    const searchText = e.value.trim();
+    if (searchText) {
+      this.router.navigateByUrl(`/result-keyword?keyword=${searchText}`);
+    } else {
+      this.router.navigateByUrl(`/result-tag`);
+    }
   }
 
   searchCity(cityId: string) {

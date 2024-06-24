@@ -19,6 +19,7 @@ import {
   OptionType,
   ReviewCardComponent,
   SearchType,
+  SearchTypeEnum,
   SelectComponent,
   ShortVideoCardComponent
 } from 'libs/shared/src';
@@ -33,8 +34,10 @@ import {
   ApiHomeCourseVideosAllGetRequestParams,
   ApiHomeCoursesAllGetRequestParams,
   CommonService,
-  HomeService
+  HomeService,
+  TagsResponseModelDataInner
 } from 'libs/openapi/src';
+import { ReplaySubject, tap } from 'rxjs';
 
 @Component({
   selector: 'app-home-page',
@@ -71,6 +74,7 @@ export default class HomePageComponent
     // '手作工藝'
   ];
   public selectedSubjectOption: string | null = null;
+  tags$ = new ReplaySubject<TagsResponseModelDataInner[]>();
   transitionEnabled: any;
 
   public cityOptions: OptionType[] = [];
@@ -87,11 +91,11 @@ export default class HomePageComponent
 
   public currentWindowSize: string = '';
 
-  control = new FormControl('準備好啟程了嗎？', [Validators.required]);
+  control = new FormControl('', [Validators.required]);
 
   items = [
-    { label: '依關鍵字', value: 1 },
-    { label: '依類別', value: 2 }
+    { label: '依關鍵字', value: SearchTypeEnum.KEYWORD },
+    { label: '依類別', value: SearchTypeEnum.CATEGORY }
   ];
 
   @ViewChild('swiperElement')
@@ -274,11 +278,14 @@ export default class HomePageComponent
   }
 
   getTags() {
-    this.commonService.apiCommonTagGet().subscribe((res) => {
-      res.data.forEach((item) =>
-        this.shortsSubjectOptions.push(item.main_category as string)
-      );
-    });
+    this.commonService
+      .apiCommonTagGet()
+      .pipe(tap((data) => this.tags$.next(data.data)))
+      .subscribe((res) => {
+        res.data.forEach((item) =>
+          this.shortsSubjectOptions.push(item.main_category as string)
+        );
+      });
   }
 
   public selectSubjectOption(option: string): void {
@@ -346,7 +353,51 @@ export default class HomePageComponent
   }
 
   search(event: SearchType) {
-    this.router.navigateByUrl(`/result-keyword?keyword=${event.value.trim()}`);
+    const searchText = event.value.trim();
+    if (event.type === SearchTypeEnum.CATEGORY) {
+      // 類別搜尋
+      this.tags$.subscribe((tag) => {
+        const mainCategories = tag.map((item) => item.main_category);
+        const subCategories: { main: string | undefined; sub: string }[] = [];
+        tag.forEach((item) => {
+          if (item.sub_category) {
+            item.sub_category.forEach((sub_category) => {
+              subCategories.push({
+                main: item.main_category,
+                sub: sub_category
+              });
+            });
+          }
+        });
+
+        if (mainCategories.find((mc) => mc === searchText)) {
+          this.router.navigateByUrl(`/result-tag?mainCategory=${searchText}`);
+          return;
+        }
+
+        const f = subCategories.find((sc) => sc.sub === searchText);
+        if (f) {
+          const mainCategory = this.router.navigateByUrl(
+            `/result-tag?mainCategory=${f.main}&subCategory=${f.sub}`
+          );
+          return;
+        }
+
+        // 關鍵字搜尋
+        if (searchText) {
+          this.router.navigateByUrl(`/result-keyword?keyword=${searchText}`);
+        } else {
+          this.router.navigateByUrl(`/result-tag`);
+        }
+      });
+    } else {
+      // 關鍵字搜尋
+      if (searchText) {
+        this.router.navigateByUrl(`/result-keyword?keyword=${searchText}`);
+      } else {
+        this.router.navigateByUrl(`/result-tag`);
+      }
+    }
   }
 
   navigateToSignUp() {

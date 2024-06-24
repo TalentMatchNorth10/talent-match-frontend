@@ -3,11 +3,12 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { StarRatingComponent } from '../star-rating/star-rating.component';
 import { CardData, HoverButton, HoverButtonClickEvent } from './card.interface';
 import { Router } from '@angular/router';
+import { HideOnErrorDirective } from 'src/app/shared/directive/hide-on-error.directive';
 
 @Component({
   selector: 'tmf-card',
   standalone: true,
-  imports: [CommonModule, StarRatingComponent],
+  imports: [CommonModule, StarRatingComponent, HideOnErrorDirective],
   template: `
     @if (data) {
       <div
@@ -16,6 +17,7 @@ import { Router } from '@angular/router';
         <div class="h-[180px] w-full bg-tmf-gray-4">
           @if (data.mainImg) {
             <img
+              appHideOnError
               class="h-full w-full object-cover"
               [src]="data.mainImg"
               alt=""
@@ -39,6 +41,7 @@ import { Router } from '@angular/router';
           >
             @if (data.avatar) {
               <img
+                appHideOnError
                 class="h-full w-full cursor-pointer object-cover"
                 [src]="data.avatar"
                 alt="avator_image"
