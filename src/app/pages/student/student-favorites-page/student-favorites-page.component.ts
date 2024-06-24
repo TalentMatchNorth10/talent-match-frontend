@@ -41,7 +41,7 @@ export default class StudentFavoritesPageComponent implements OnInit {
           quantity: favorite.price_quantity![0].quantity || 0,
           main_category: favorite.main_category || '',
           sub_category: favorite.sub_category || '',
-          rating: favorite.rate || 0,
+          rate: favorite.rate || 0,
           ratingCount: favorite.review_count || 0
         })) || [];
     });

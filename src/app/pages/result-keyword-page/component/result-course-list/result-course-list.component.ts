@@ -183,7 +183,7 @@ export class ResultCourseListComponent {
       name: course.teacher_name,
       avatar: course.avator_image,
       price: course.price_unit,
-      rating: course.rate_avg,
+      rate: course.rate_avg,
       ratingCount: course.review_count || 0
     };
   }

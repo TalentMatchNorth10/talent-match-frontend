@@ -16,6 +16,7 @@ import {
   InputComponent,
   InputType,
   OptionComponent,
+  OptionType,
   ReviewCardComponent,
   SearchType,
   SelectComponent,
@@ -30,6 +31,7 @@ import { Router } from '@angular/router';
 import { SwiperOptions } from 'swiper/types';
 import {
   ApiHomeCourseVideosAllGetRequestParams,
+  ApiHomeCoursesAllGetRequestParams,
   CommonService,
   HomeService
 } from 'libs/openapi/src';
@@ -40,7 +42,6 @@ import {
   imports: [
     CommonModule,
     ReactiveFormsModule,
-
     ShortVideoCardComponent,
     CardComponent,
     StarRatingComponent,
@@ -71,6 +72,8 @@ export default class HomePageComponent
   ];
   public selectedSubjectOption: string | null = null;
   transitionEnabled: any;
+
+  public cityOptions: OptionType[] = [];
 
   public videoDataSource: VideoCardData[] = [];
   public courseDataSource: CardData[] = [];
@@ -232,10 +235,12 @@ export default class HomePageComponent
 
   public ngOnInit() {
     this.selectSubjectOption('全部');
-    this.courseDataSource = FakeCardData;
+    this.selectCourseCity('all');
+    // this.courseDataSource = FakeCardData;
     this.reviewDataSource = FakeReviewData;
 
     this.getTags();
+    this.getCityOptions();
   }
 
   ngAfterViewInit(): void {
@@ -243,9 +248,6 @@ export default class HomePageComponent
   }
 
   ngAfterViewChecked(): void {
-    // this.swiperElement.nativeElement.update();
-    // this.swiperElement.nativeElement.swiper.destroy();
-    // this.swiperElement.nativeElement.initialized = false;
     // this.initSwiper();
   }
 
@@ -284,22 +286,63 @@ export default class HomePageComponent
 
     const params: ApiHomeCourseVideosAllGetRequestParams = {};
 
-    if (option === '全部') {
-      this.homeService.apiHomeCourseVideosAllGet(params).subscribe((res) => {
-        this.videoDataSource = res.data;
-        // this.swiperElement.nativeElement.swiper.destroy();
-        // this.swiperElement.nativeElement.initialized = false;
-        this.initSwiper();
-      });
-    } else {
+    // if (option === '全部') {
+    //   this.homeService.apiHomeCourseVideosAllGet(params).subscribe((res) => {
+    //     this.videoDataSource = res.data;
+    //     // this.swiperElement.nativeElement.swiper.destroy();
+    //     // this.swiperElement.nativeElement.initialized = false;
+    //     this.initSwiper();
+    //   });
+    // } else {
+    //   params.mainCategory = option;
+    //   this.homeService.apiHomeCourseVideosAllGet(params).subscribe((res) => {
+    //     this.videoDataSource = res.data;
+    //     // this.swiperElement.nativeElement.swiper.destroy();
+    //     // this.swiperElement.nativeElement.initialized = false;
+    //     this.initSwiper();
+    //   });
+    // }
+
+    if (option !== '全部') {
       params.mainCategory = option;
-      this.homeService.apiHomeCourseVideosAllGet(params).subscribe((res) => {
-        this.videoDataSource = res.data;
-        // this.swiperElement.nativeElement.swiper.destroy();
-        // this.swiperElement.nativeElement.initialized = false;
-        this.initSwiper();
-      });
     }
+
+    this.homeService.apiHomeCourseVideosAllGet(params).subscribe((res) => {
+      this.videoDataSource = res.data;
+      this.initSwiper();
+    });
+  }
+
+  public getCityOptions() {
+    this.commonService
+      .apiCommonOptionsCityPost({
+        cityRequestModel: {
+          is_oversea: false
+        }
+      })
+      .subscribe((res) => {
+        this.cityOptions = [
+          {
+            label: '探索全部',
+            value: 'all'
+          },
+          ...res.data
+        ];
+        // this.toggleSelectCity(this.cityOptions[0]);
+      });
+  }
+
+  public selectCourseCity(option: string) {
+    // console.log(option);
+    const params: ApiHomeCoursesAllGetRequestParams = {};
+    if (option !== 'all') {
+      params.cityId = option;
+    }
+    this.homeService.apiHomeCoursesAllGet(params).subscribe((res) => {
+      // console.log(params, res);
+      this.courseDataSource = res.data;
+      this.initSwiper();
+    });
   }
 
   search(event: SearchType) {
@@ -397,80 +440,6 @@ const FakeVideos: VideoCardData[] = [
     url: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4',
     teacher_id: 't-8',
     course_id: 'c-8'
-  }
-];
-
-const FakeCardData: CardData[] = [
-  {
-    course_id: '1',
-    mainImg: 'https://fakeimg.pl/300/',
-    title: '課程名稱1',
-    content: '課程內容1',
-    avatar: 'https://fakeimg.pl/300/',
-    name: '老師名稱1',
-    price: 1000,
-    quantity: 1,
-    main_category: '主分類1',
-    sub_category: '次分類1',
-    rating: 4.5,
-    ratingCount: 100
-  },
-  {
-    course_id: '2',
-    mainImg: 'https://fakeimg.pl/300/',
-    title: '課程名稱2',
-    content: '課程內容2',
-    avatar: 'https://fakeimg.pl/300/',
-    name: '老師名稱2',
-    price: 2000,
-    quantity: 2,
-    main_category: '主分類2',
-    sub_category: '次分類2',
-    rating: 4.5,
-    ratingCount: 100
-  },
-  {
-    course_id: '3',
-    mainImg: 'https://fakeimg.pl/300/',
-    title: '課程名稱2',
-    content:
-      '課程內容2課程內容2課程內容2課程內容2課程內容2課程內容2課程內容2課程內容2課程內容2課程內容2課程內容2課程內容2課程內容2課程內容2課程內容2',
-    avatar: 'https://fakeimg.pl/300/',
-    name: '老師名稱2',
-    price: 2000,
-    quantity: 2,
-    main_category: '主分類2',
-    sub_category: '次分類2',
-    rating: 4.5,
-    ratingCount: 100
-  },
-  {
-    course_id: '4',
-    mainImg: 'https://fakeimg.pl/300/',
-    title: '課程名稱2',
-    content: '課程內容2',
-    avatar: 'https://fakeimg.pl/300/',
-    name: '老師名稱2',
-    price: 2000,
-    quantity: 2,
-    main_category: '主分類2',
-    sub_category: '次分類2',
-    rating: 4.5,
-    ratingCount: 100
-  },
-  {
-    course_id: '5',
-    mainImg: 'https://fakeimg.pl/300/',
-    title: '課程名稱2',
-    content: '課程內容2',
-    avatar: 'https://fakeimg.pl/300/',
-    name: '老師名稱2',
-    price: 2000,
-    quantity: 2,
-    main_category: '主分類2',
-    sub_category: '次分類2',
-    rating: 4.5,
-    ratingCount: 100
   }
 ];
 

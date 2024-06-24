@@ -71,13 +71,11 @@ import { Router } from '@angular/router';
           <div class="mr-4 flex flex-col items-start text-[14px] leading-5">
             <p class="text-tmf-gray-4">評分</p>
             <div class="flex items-center gap-1">
-              <tmf-star-rating [rating]="data.rating"></tmf-star-rating>
+              <tmf-star-rating [rating]="data.rate"></tmf-star-rating>
               <p
                 class="flex items-center gap-1 pb-[2px] text-[14px] font-medium leading-5"
               >
-                <span class="text-black">{{
-                  data.rating ? data.rating : ''
-                }}</span>
+                <span class="text-black">{{ data.rate ? data.rate : '' }}</span>
                 <span class="text-tmf-gray-3"
                   >({{ data.ratingCount ? data.ratingCount : 0 }})</span
                 >
