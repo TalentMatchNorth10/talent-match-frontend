@@ -4,6 +4,8 @@
   <app-cart-table
     (selectChange)="handleSelectedChange($event)"
     (removeItem)="handleRemoveItem($event)"
+    (addFavorite)="handleAddFavorite($event)"
+    (itemClick)="handleItemClick($event)"
     [dataSource]="cartDataSource"
     class="flex-grow"
   ></app-cart-table>
@@ -57,7 +59,7 @@
     </div>
     <div class="flex w-full gap-4 overflow-auto md:gap-6">
       @for (courseItem of courseDataSource; track courseItem) {
-        <tmf-card [data]="courseItem"></tmf-card>
+        <tmf-card (hoverButtonClick)="handleFavoriteClick($event)" [data]="courseItem"></tmf-card>
       }
     </div>
   </div>
