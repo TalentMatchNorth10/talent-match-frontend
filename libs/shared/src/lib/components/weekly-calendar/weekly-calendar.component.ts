@@ -1,6 +1,7 @@
 import { CommonModule, NgClass } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ReserveTagComponent } from './reserve-tag.component';
+import { TmfWeekPipe } from 'src/app/shared/pipes/tmf-date.pipe';
 
 type Status = 'unavailable' | 'available' | 'reserved';
 
@@ -18,7 +19,7 @@ interface DaySchedule {
 @Component({
   selector: 'tmf-weekly-calendar',
   standalone: true,
-  imports: [CommonModule, NgClass, ReserveTagComponent],
+  imports: [CommonModule, NgClass, ReserveTagComponent, TmfWeekPipe],
   templateUrl: './weekly-calendar.component.html',
   styleUrl: './weekly-calendar.component.css'
 })
@@ -36,120 +37,7 @@ export class WeeklyCalendarComponent {
     '20:00'
   ];
 
-  schedule: DaySchedule[] = [
-    {
-      week: '週日',
-      date: '2024-03-31',
-      slots: [
-        { time: '09:00', status: 'unavailable' },
-        { time: '10:00', status: 'available' },
-        { time: '11:00', status: 'available' },
-        { time: '13:00', status: 'available' },
-        { time: '14:00', status: 'available' },
-        { time: '15:00', status: 'available' },
-        { time: '16:00', status: 'available' },
-        { time: '17:00', status: 'unavailable' },
-        { time: '19:00', status: 'unavailable' },
-        { time: '20:00', status: 'unavailable' }
-      ]
-    },
-    {
-      week: '週一',
-      date: '2024-04-01',
-      slots: [
-        { time: '09:00', status: 'unavailable' },
-        { time: '10:00', status: 'available' },
-        { time: '11:00', status: 'available' },
-        { time: '13:00', status: 'available' },
-        { time: '14:00', status: 'available' },
-        { time: '15:00', status: 'available' },
-        { time: '16:00', status: 'available' },
-        { time: '17:00', status: 'unavailable' },
-        { time: '19:00', status: 'unavailable' },
-        { time: '20:00', status: 'unavailable' }
-      ]
-    },
-    {
-      week: '週二',
-      date: '2024-04-02',
-      slots: [
-        { time: '09:00', status: 'unavailable' },
-        { time: '10:00', status: 'available' },
-        { time: '11:00', status: 'reserved' },
-        { time: '13:00', status: 'reserved' },
-        { time: '14:00', status: 'reserved' },
-        { time: '15:00', status: 'available' },
-        { time: '16:00', status: 'available' },
-        { time: '17:00', status: 'available' },
-        { time: '19:00', status: 'unavailable' },
-        { time: '20:00', status: 'unavailable' }
-      ]
-    },
-    {
-      week: '週三',
-      date: '2024-04-03',
-      slots: [
-        { time: '09:00', status: 'available' },
-        { time: '10:00', status: 'available' },
-        { time: '11:00', status: 'available' },
-        { time: '13:00', status: 'available' },
-        { time: '14:00', status: 'available' },
-        { time: '15:00', status: 'available' },
-        { time: '16:00', status: 'available' },
-        { time: '17:00', status: 'available' },
-        { time: '19:00', status: 'unavailable' },
-        { time: '20:00', status: 'unavailable' }
-      ]
-    },
-    {
-      week: '週四',
-      date: '2024-04-04',
-      slots: [
-        { time: '09:00', status: 'available' },
-        { time: '10:00', status: 'available' },
-        { time: '11:00', status: 'available' },
-        { time: '13:00', status: 'available' },
-        { time: '14:00', status: 'available' },
-        { time: '15:00', status: 'available' },
-        { time: '16:00', status: 'available' },
-        { time: '17:00', status: 'available' },
-        { time: '19:00', status: 'unavailable' },
-        { time: '20:00', status: 'unavailable' }
-      ]
-    },
-    {
-      week: '週五',
-      date: '2024-04-05',
-      slots: [
-        { time: '09:00', status: 'available' },
-        { time: '10:00', status: 'available' },
-        { time: '11:00', status: 'reserved' },
-        { time: '13:00', status: 'reserved' },
-        { time: '14:00', status: 'reserved' },
-        { time: '15:00', status: 'available' },
-        { time: '16:00', status: 'available' },
-        { time: '17:00', status: 'available' },
-        { time: '19:00', status: 'unavailable' },
-        { time: '20:00', status: 'unavailable' }
-      ]
-    },
-    {
-      week: '週六',
-      date: '2024-04-06',
-      slots: [
-        { time: '09:00', status: 'unavailable' },
-        { time: '10:00', status: 'available' },
-        { time: '11:00', status: 'available' },
-        { time: '13:00', status: 'available' },
-        { time: '14:00', status: 'available' },
-        { time: '15:00', status: 'available' },
-        { time: '16:00', status: 'available' },
-        { time: '17:00', status: 'available' },
-        { time: '19:00', status: 'unavailable' },
-        { time: '20:00', status: 'unavailable' }
-      ]
-    }
-  ];
+  @Input() schedule: any[] = [];
 
   preprocessedSchedule: {
     time: string;
@@ -178,7 +66,7 @@ export class WeeklyCalendarComponent {
     this.preprocessedSchedule = times.map((time) => ({
       time,
       statuses: this.schedule.map((day) => {
-        const slot = day.slots.find((slot) => slot.time === time);
+        const slot = day.slots.find((slot: any) => slot.time === time);
         const status = slot ? slot.status : ('available' as Status);
         return { status };
       })
