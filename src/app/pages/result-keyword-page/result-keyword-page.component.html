@@ -10,8 +10,10 @@
       </div>
       <div class="pt-6 flex gap-6">
         @for (item of data.teachers; track $index) {
-          <div class="px-[16.5px]">
-            <img class="w-40 h-40 rounded-full object-cover" [src]="item.avator_image" alt="">
+          <div class="px-[16.5px] group cursor-pointer" [routerLink]="['/teacher-detail',item._id]">
+            <div class="w-40 h-40 rounded-full  overflow-hidden">
+              <img class="object-cover duration-300 w-full h-full group-hover:scale-110" [src]="item.avator_image" alt="">
+            </div>
             <div class="text-center font-bold text-lg mt-3">{{item.name}}</div>
             <div class="flex items-center justify-center gap-1">
                 <tmf-star-rating [rating]="item.rate_avg"></tmf-star-rating>
