@@ -1,1 +1,0 @@
-import{U as a,f as r}from"./chunk-EN3TI6TH.js";var s=(()=>{let t=class t{constructor(){this._cartChange$=new r}get cartChange$(){return this._cartChange$.asObservable()}update(){this._cartChange$.next("")}};t.\u0275fac=function(n){return new(n||t)},t.\u0275prov=a({token:t,factory:t.\u0275fac,providedIn:"root"});let e=t;return e})();export{s as a};
