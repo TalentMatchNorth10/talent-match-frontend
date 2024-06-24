@@ -9,7 +9,7 @@ export interface CardData {
   quantity?: number;
   main_category: string;
   sub_category: string;
-  rating: number;
+  rate: number;
   ratingCount: number;
 }
 

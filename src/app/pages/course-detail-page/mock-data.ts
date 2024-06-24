@@ -97,7 +97,7 @@ export const CourseData = [
     quantity: 1,
     main_category: '主分類1',
     sub_category: '次分類1',
-    rating: 4.5,
+    rate: 4.5,
     ratingCount: 100
   },
   {
@@ -111,7 +111,7 @@ export const CourseData = [
     quantity: 2,
     main_category: '主分類2',
     sub_category: '次分類2',
-    rating: 4.5,
+    rate: 4.5,
     ratingCount: 100
   },
   {
@@ -126,7 +126,7 @@ export const CourseData = [
     quantity: 2,
     main_category: '主分類2',
     sub_category: '次分類2',
-    rating: 4.5,
+    rate: 4.5,
     ratingCount: 100
   },
   {
@@ -140,7 +140,7 @@ export const CourseData = [
     quantity: 2,
     main_category: '主分類2',
     sub_category: '次分類2',
-    rating: 4.5,
+    rate: 4.5,
     ratingCount: 100
   }
 ];

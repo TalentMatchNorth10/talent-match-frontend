@@ -74,6 +74,7 @@
   </section>
   <section class="mt-5 bg-orange-100 py-10 lg:skew-y-1">
     <div class="lg:-skew-y-1">
+      <div class="flex flex-col gap-4">
       <div
         class="w-full bg-top bg-no-repeat pt-[1.5rem] text-center text-4xl"
         style="
@@ -82,7 +83,22 @@
       >
         推薦課程
       </div>
-      <div class="mt-8 py-8">
+        <div class="w-full flex justify-center">
+          <div class="w-1/6">
+            <tmf-select
+              class="bg-white text-gray-700"            
+              [multiSelect]="false"
+              [icon]="'pin_drop'"
+              (selectChange)="selectCourseCity($event)"
+            >
+              <tmf-option
+                *ngFor="let item of cityOptions"
+                [value]="item.value"
+                [label]="item.label"
+              ></tmf-option>
+            </tmf-select>
+          </div>
+        </div>
         <div class="h-full w-full overflow-hidden">
           <div class="lg:w-9:12 m-auto w-10/12">
             <swiper-container
