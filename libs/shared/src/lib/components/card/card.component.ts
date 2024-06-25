@@ -15,11 +15,11 @@ import { HideOnErrorDirective } from 'src/app/shared/directive/hide-on-error.dir
         class="group relative m-auto w-[320px] overflow-hidden rounded-xl bg-white shadow-lg md:w-[320px] lg:w-[302px]"
       >
         <div class="h-[180px] w-full bg-tmf-gray-4">
-          @if (data.mainImg) {
+          @if (data.main_image) {
             <img
               appHideOnError
               class="h-full w-full object-cover"
-              [src]="data.mainImg"
+              [src]="data.main_image"
               alt=""
             />
           }
@@ -50,22 +50,30 @@ import { HideOnErrorDirective } from 'src/app/shared/directive/hide-on-error.dir
             }
           </div>
           <p
-            class="mr-[31px] cursor-pointer text-[14px] font-medium leading-5 text-tmf-gray-3 md:text-[16px] md:leading-6"
+            class="mr-[31px] cursor-pointer whitespace-nowrap text-[14px] font-medium leading-5 text-tmf-gray-3 md:text-[16px] md:leading-6"
             (click)="navigateToTeacherPage(data)"
           >
             {{ data.name ? data.name : '' }}
           </p>
           <p class="text-[16px] leading-6 text-tmf-orange-1">
-            NT$ {{ data.price ? data.price.toLocaleString() : '' }}
+            NT$
+            {{
+              data.min_price?.price
+                ? data.min_price?.price?.toLocaleString()
+                : ''
+            }}
             <span class="mr-1 text-[14px] leading-5 text-tmf-gray-2"
-              >/ {{ data.quantity ? data.quantity : '' }}堂</span
+              >/
+              {{
+                data.min_price?.quantity ? data.min_price?.quantity : ''
+              }}堂</span
             >
           </p>
         </div>
         <div class="flex items-center justify-start p-4">
           <div class="mr-4 flex flex-col items-start text-[14px] leading-5">
             <p class="text-tmf-gray-4">類型</p>
-            <p class="font-bold text-black">
+            <p class="text-xs font-bold text-black">
               {{ data.main_category ? data.main_category : '' }}－{{
                 data.sub_category ? data.sub_category : ''
               }}

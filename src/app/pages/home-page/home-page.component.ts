@@ -245,6 +245,18 @@ export default class HomePageComponent
 
     this.getTags();
     this.getCityOptions();
+
+    this.breakpointObserver
+      .observe([Breakpoints.Handset, Breakpoints.Tablet, Breakpoints.Web])
+      .subscribe((result) => {
+        // this.updateValueBasedOnBreakpoints(result.breakpoints);
+        const initialBreakpoints = {
+          [Breakpoints.Handset]: window.matchMedia(Breakpoints.Handset).matches,
+          [Breakpoints.Tablet]: window.matchMedia(Breakpoints.Tablet).matches,
+          [Breakpoints.Web]: window.matchMedia(Breakpoints.Web).matches
+        };
+        this.updateValueBasedOnBreakpoints(initialBreakpoints);
+      });
   }
 
   ngAfterViewInit(): void {
@@ -253,6 +265,26 @@ export default class HomePageComponent
 
   ngAfterViewChecked(): void {
     // this.initSwiper();
+  }
+
+  public updateValueBasedOnBreakpoints(breakpoints: { [x: string]: any }) {
+    if (breakpoints[Breakpoints.Handset]) {
+      // Do something for small screens
+      this.currentWindowSize = 'Handset';
+
+      // console.log('Handset');
+    } else if (breakpoints[Breakpoints.Tablet]) {
+      // Do something for medium screens
+      this.currentWindowSize = 'Tablet';
+
+      // console.log('Tablet');
+    } else if (breakpoints[Breakpoints.Web]) {
+      // Do something for large screens
+      this.currentWindowSize = 'Web';
+      // console.log('Web');
+    }
+
+    // console.log(this.currentWindowSize);
   }
 
   initSwiper() {
@@ -292,23 +324,6 @@ export default class HomePageComponent
     this.selectedSubjectOption = option;
 
     const params: ApiHomeCourseVideosAllGetRequestParams = {};
-
-    // if (option === '全部') {
-    //   this.homeService.apiHomeCourseVideosAllGet(params).subscribe((res) => {
-    //     this.videoDataSource = res.data;
-    //     // this.swiperElement.nativeElement.swiper.destroy();
-    //     // this.swiperElement.nativeElement.initialized = false;
-    //     this.initSwiper();
-    //   });
-    // } else {
-    //   params.mainCategory = option;
-    //   this.homeService.apiHomeCourseVideosAllGet(params).subscribe((res) => {
-    //     this.videoDataSource = res.data;
-    //     // this.swiperElement.nativeElement.swiper.destroy();
-    //     // this.swiperElement.nativeElement.initialized = false;
-    //     this.initSwiper();
-    //   });
-    // }
 
     if (option !== '全部') {
       params.mainCategory = option;

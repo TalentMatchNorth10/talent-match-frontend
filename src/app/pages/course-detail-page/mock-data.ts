@@ -88,7 +88,7 @@ export const FakeVideos: VideoCardData[] = [
 export const CourseData = [
   {
     course_id: '1',
-    mainImg: 'https://fakeimg.pl/300/',
+    main_image: 'https://fakeimg.pl/300/',
     title: '課程名稱1',
     content: '課程內容1',
     avatar: 'https://fakeimg.pl/300/',
@@ -98,11 +98,15 @@ export const CourseData = [
     main_category: '主分類1',
     sub_category: '次分類1',
     rate: 4.5,
-    ratingCount: 100
+    ratingCount: 100,
+    min_price: {
+      price: 260,
+      quantity: 1
+    }
   },
   {
     course_id: '1',
-    mainImg: 'https://fakeimg.pl/300/',
+    main_image: 'https://fakeimg.pl/300/',
     title: '課程名稱2',
     content: '課程內容2',
     avatar: 'https://fakeimg.pl/300/',
@@ -112,11 +116,15 @@ export const CourseData = [
     main_category: '主分類2',
     sub_category: '次分類2',
     rate: 4.5,
-    ratingCount: 100
+    ratingCount: 100,
+    min_price: {
+      price: 260,
+      quantity: 1
+    }
   },
   {
     course_id: '1',
-    mainImg: 'https://fakeimg.pl/300/',
+    main_image: 'https://fakeimg.pl/300/',
     title: '課程名稱2',
     content:
       '課程內容2課程內容2課程內容2課程內容2課程內容2課程內容2課程內容2課程內容2課程內容2課程內容2課程內容2課程內容2課程內容2課程內容2課程內容2',
@@ -127,11 +135,15 @@ export const CourseData = [
     main_category: '主分類2',
     sub_category: '次分類2',
     rate: 4.5,
-    ratingCount: 100
+    ratingCount: 100,
+    min_price: {
+      price: 260,
+      quantity: 1
+    }
   },
   {
     course_id: '1',
-    mainImg: 'https://fakeimg.pl/300/',
+    main_image: 'https://fakeimg.pl/300/',
     title: '課程名稱2',
     content: '課程內容2',
     avatar: 'https://fakeimg.pl/300/',
@@ -141,6 +153,10 @@ export const CourseData = [
     main_category: '主分類2',
     sub_category: '次分類2',
     rate: 4.5,
-    ratingCount: 100
+    ratingCount: 100,
+    min_price: {
+      price: 260,
+      quantity: 1
+    }
   }
 ];

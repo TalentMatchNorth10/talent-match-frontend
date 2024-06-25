@@ -1,6 +1,6 @@
 export interface CardData {
   course_id: string;
-  mainImg: string;
+  main_image: string;
   title: string;
   content: string;
   avatar: string;
@@ -11,6 +11,7 @@ export interface CardData {
   sub_category: string;
   rate: number;
   ratingCount: number;
+  min_price?: PriceQuantity;
 }
 
 export interface HoverButton {
@@ -22,4 +23,9 @@ export interface HoverButton {
 export interface HoverButtonClickEvent {
   eventType: string;
   data: CardData;
+}
+
+export interface PriceQuantity {
+  price: number;
+  quantity: number;
 }
