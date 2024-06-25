@@ -14,3 +14,8 @@ export interface SearchType {
   type: string | null;
   value: string;
 }
+
+export enum SearchTypeEnum {
+  KEYWORD = '1',
+  CATEGORY = '2'
+}

@@ -52,7 +52,8 @@ export default class ResultTagPageComponent extends ResultKeywordPageComponent {
       relativeTo: this.route,
       queryParams: {
         mainCategory: tag.main_category,
-        subCategory: null
+        subCategory: null,
+        page: 1
       },
       queryParamsHandling: 'merge'
     });
@@ -61,7 +62,7 @@ export default class ResultTagPageComponent extends ResultKeywordPageComponent {
   subCategory(subTag: string | null) {
     this.router.navigate([], {
       relativeTo: this.route,
-      queryParams: { subCategory: subTag },
+      queryParams: { subCategory: subTag, page: 1 },
       queryParamsHandling: 'merge'
     });
   }
@@ -70,7 +71,7 @@ export default class ResultTagPageComponent extends ResultKeywordPageComponent {
     cityId = cityId === 'all' ? null : cityId;
     this.router.navigate([], {
       relativeTo: this.route,
-      queryParams: { cityId },
+      queryParams: { cityId, page: 1 },
       queryParamsHandling: 'merge'
     });
   }
@@ -81,7 +82,8 @@ export default class ResultTagPageComponent extends ResultKeywordPageComponent {
       relativeTo: this.route,
       queryParams: {
         mainCategory: null,
-        subCategory: null
+        subCategory: null,
+        page: 1
       },
       queryParamsHandling: 'merge'
     });

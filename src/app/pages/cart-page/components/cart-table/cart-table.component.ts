@@ -101,6 +101,7 @@ import { GetCartItemsResponseModelDataInner } from 'libs/openapi/src';
                   <span class="material-symbols-outlined">delete</span>
                 </button>
                 <button
+                  (click)="addToFavorite(rowData)"
                   class="flex items-center justify-center text-tmf-gray-3 duration-100 active:origin-center active:scale-90"
                 >
                   <span class="material-symbols-outlined">heart_plus</span>
@@ -151,7 +152,10 @@ import { GetCartItemsResponseModelDataInner } from 'libs/openapi/src';
                     {{ rowData.sub_category }}
                   </div>
                 </div>
-                <div class="flex gap-3">
+                <div
+                  (click)="itemClick.emit(rowData.course_id)"
+                  class="flex cursor-pointer gap-3"
+                >
                   <div
                     class="h-[68px] w-[120px] overflow-hidden rounded-lg md:h-[102px] md:w-[180px]"
                   >
@@ -186,6 +190,7 @@ import { GetCartItemsResponseModelDataInner } from 'libs/openapi/src';
                       <span class="material-symbols-outlined">delete</span>
                     </button>
                     <button
+                      (click)="addToFavorite(rowData)"
                       class="flex items-center justify-center text-tmf-gray-3 duration-100 active:origin-center active:scale-90"
                     >
                       <span class="material-symbols-outlined">heart_plus</span>
@@ -252,11 +257,16 @@ export class CartTableComponent implements OnChanges, OnInit {
   private fb = inject(FormBuilder);
 
   selectedCheckboxs: any[] = [];
-  removeStage: string[] = [];
+  removeStage: {
+    course_id: string;
+    purchase_item_id: string;
+  }[] = [];
 
   @Input() dataSource: GetCartItemsResponseModelDataInner[] = [];
   @Output() selectChange = new EventEmitter<any>();
   @Output() removeItem = new EventEmitter<string>();
+  @Output() addFavorite = new EventEmitter<any>();
+  @Output() itemClick = new EventEmitter<string>();
 
   control = new FormControl(null);
 
@@ -312,23 +322,37 @@ export class CartTableComponent implements OnChanges, OnInit {
   }
 
   addToRemoveStage(rowData: GetCartItemsResponseModelDataInner) {
-    this.removeStage.push(rowData.purchase_item_id);
+    this.removeStage.push({
+      course_id: rowData.course_id,
+      purchase_item_id: rowData.purchase_item_id
+    });
+  }
+
+  addToFavorite(rowData: GetCartItemsResponseModelDataInner) {
+    this.addFavorite.emit(rowData);
   }
 
   remove(rowData: GetCartItemsResponseModelDataInner) {
     this.removeItem.emit(rowData.purchase_item_id);
-    this.removeStage = this.removeStage.filter(
-      (id) => id !== rowData.purchase_item_id
-    );
+    this.cancel(rowData);
   }
 
   cancel(rowData: GetCartItemsResponseModelDataInner) {
     this.removeStage = this.removeStage.filter(
-      (id) => id !== rowData.purchase_item_id
+      (item) =>
+        !(
+          item.course_id === rowData.course_id &&
+          item.purchase_item_id === rowData.purchase_item_id
+        )
     );
   }
 
   isRemoveStageItem(rowData: GetCartItemsResponseModelDataInner) {
-    return this.removeStage.includes(rowData.purchase_item_id);
+    return this.removeStage.find((item) => {
+      return (
+        item.course_id === rowData.course_id &&
+        item.purchase_item_id === rowData.purchase_item_id
+      );
+    });
   }
 }

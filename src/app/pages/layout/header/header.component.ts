@@ -21,6 +21,7 @@ import {
   SelectComponent
 } from '@tmf/libs-shared/components';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CartService } from 'src/app/shared/services/cart.service';
 
 @Component({
   selector: 'app-header',
@@ -451,7 +452,8 @@ export class HeaderComponent implements OnInit {
   private authStatusService = inject(AuthStatusService);
   private shopService = inject(ShopService);
   private commonService = inject(CommonService);
-  private route = inject(ActivatedRoute);
+  private cartService = inject(CartService);
+
   user: UserInfoResponseModelData | null = null;
   cityOptions: OptionType[] = [];
   selectCity!: OptionType | null;
@@ -531,6 +533,9 @@ export class HeaderComponent implements OnInit {
         this.setIsIndex(event.url);
       }
     });
+    this.cartService.cartChange$.subscribe(() => {
+      this.getCartList();
+    });
   }
 
   setIsIndex(url: string) {
@@ -573,7 +578,7 @@ export class HeaderComponent implements OnInit {
 
   getCartList() {
     this.shopService.apiShopCartGet().subscribe((res) => {
-      this.cartList = res.data;
+      this.cartList = [...res.data];
       this.cartTotal = {
         courseCount: res.data.length,
         total: res.data.reduce((acc, cur) => acc + cur.price, 0)
@@ -637,7 +642,13 @@ export class HeaderComponent implements OnInit {
   }
 
   search(e: SearchType) {
-    this.router.navigateByUrl(`/result-keyword?keyword=${e.value.trim()}`);
+    // 關鍵字搜尋
+    const searchText = e.value.trim();
+    if (searchText) {
+      this.router.navigateByUrl(`/result-keyword?keyword=${searchText}`);
+    } else {
+      this.router.navigateByUrl(`/result-tag`);
+    }
   }
 
   searchCity(cityId: string) {

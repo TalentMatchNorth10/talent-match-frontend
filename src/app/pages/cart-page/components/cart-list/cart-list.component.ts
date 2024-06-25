@@ -1,13 +1,17 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { CartTableComponent } from '../cart-table/cart-table.component';
-import { CardData } from '@tmf/libs-shared/components/card/card.interface';
+import {
+  CardData,
+  HoverButtonClickEvent
+} from '@tmf/libs-shared/components/card/card.interface';
 import {
   FavoritesService,
   GetCartItemsResponseModelDataInner
 } from 'libs/openapi/src';
 import { CardComponent } from '@tmf/libs-shared/components/card/card.component';
 import { Router } from '@angular/router';
+import { CartService } from 'src/app/shared/services/cart.service';
 
 @Component({
   selector: 'app-cart-list',
@@ -19,6 +23,7 @@ import { Router } from '@angular/router';
 export class CartListComponent {
   private router = inject(Router);
   private FavoritesService = inject(FavoritesService);
+  private cartService = inject(CartService);
 
   @Input() cartDataSource: GetCartItemsResponseModelDataInner[] = [];
   @Input() courseDataSource: CardData[] = [];
@@ -47,6 +52,10 @@ export class CartListComponent {
     this.getFavoriteList();
   }
 
+  handleItemClick(course_id: string) {
+    this.router.navigate([`course-detail/${course_id}`]);
+  }
+
   handleSelectedChange(selectedArr: GetCartItemsResponseModelDataInner[]) {
     this.selectedArr = selectedArr;
     this.selectChange.emit(selectedArr);
@@ -54,6 +63,26 @@ export class CartListComponent {
 
   handleRemoveItem(purchase_item_id: string) {
     this.removeItem.emit(purchase_item_id);
+    this.cartService.update();
+  }
+
+  handleAddFavorite(item: GetCartItemsResponseModelDataInner) {
+    this.FavoritesService.apiFavoritesPost({
+      favoriteRequestModel: { course_id: item.course_id }
+    }).subscribe(() => {
+      this.getFavoriteList();
+    });
+  }
+
+  handleFavoriteClick(event: HoverButtonClickEvent) {
+    switch (event.eventType) {
+      case 'view':
+        this.handleItemClick(event.data.course_id);
+        break;
+      case 'remove':
+        this.removeFavorite(event.data.course_id);
+        break;
+    }
   }
 
   checkout() {
@@ -82,6 +111,16 @@ export class CartListComponent {
           rate: favorite.rate || 0,
           ratingCount: favorite.review_count || 0
         })) || [];
+    });
+  }
+
+  removeFavorite(course_id: string) {
+    this.FavoritesService.apiFavoritesDelete({
+      favoriteRequestModel: {
+        course_id
+      }
+    }).subscribe(() => {
+      this.getFavoriteList();
     });
   }
 }

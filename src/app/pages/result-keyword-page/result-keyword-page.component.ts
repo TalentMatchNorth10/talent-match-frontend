@@ -79,7 +79,7 @@ export default class ResultKeywordPageComponent implements OnInit {
   sort(sortType: SortType) {
     this.router.navigate([], {
       relativeTo: this.route,
-      queryParams: { sort: sortType },
+      queryParams: { sort: sortType, page: 1 },
       queryParamsHandling: 'merge'
     });
   }
