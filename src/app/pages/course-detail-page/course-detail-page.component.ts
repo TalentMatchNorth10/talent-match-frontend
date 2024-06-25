@@ -19,6 +19,7 @@ import {
   RouterLink
 } from '@angular/router';
 import { CardComponent } from '@tmf/libs-shared/components/card/card.component';
+import { CardData } from '@tmf/libs-shared/components/card/card.interface';
 import { VideoCardData } from '@tmf/libs-shared/components/short-video-card/video-card.interface';
 import { StarRatingComponent } from '@tmf/libs-shared/components/star-rating/star-rating.component';
 import { VideoCardComponent } from '@tmf/libs-shared/components/video-card/video-card.component';
@@ -78,6 +79,7 @@ export default class CourseDetailPageComponent {
         })
       ),
       map((response) => response.data),
+      tap(() => window.scrollTo(0, 0)),
       shareReplay(1)
     );
 
@@ -93,6 +95,35 @@ export default class CourseDetailPageComponent {
       tap((data) => console.log('weekly_calendar', data)),
       shareReplay(1)
     );
+
+  recommendCourse$: Observable<CardData[]> = this.route.paramMap.pipe(
+    map((params) => params.get('id')),
+    switchMap((id) =>
+      this.courseDetailService.apiCourseDetailRecommendCoursesCourseIdGet({
+        courseId: id || ''
+      })
+    ),
+    map((response) => response.data),
+    map((data) => {
+      return data.recommendCourses.map((course) => {
+        return {
+          course_id: course.course_id,
+          main_image: course.main_image,
+          title: course.course_name,
+          content: course.content || '',
+          avatar: course.teacher_avatar,
+          name: course.teacher_name,
+          price: course.price_quantity.price,
+          main_category: course.main_category,
+          sub_category: course.sub_category,
+          rate: course.rate,
+          ratingCount: course.total_reviews_count,
+          min_price: course.price_quantity
+        };
+      });
+    }),
+    shareReplay(1)
+  );
 
   ngOnInit(): void {
     this.router.events.subscribe((event) => {
