@@ -182,9 +182,10 @@ export class ResultCourseListComponent {
       title: course.name,
       name: course.teacher_name,
       avatar: course.avator_image,
-      price: course.price_unit,
+      price: course.price_quantity[0].price,
       rate: course.rate_avg,
-      ratingCount: course.review_count || 0
+      ratingCount: course.review_count || 0,
+      quantity: course.price_quantity[0].quantity
     };
   }
   ngOnInit(): void {
