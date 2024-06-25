@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import {
-  AfterViewChecked,
   AfterViewInit,
   CUSTOM_ELEMENTS_SCHEMA,
   Component,
@@ -58,9 +57,7 @@ import { ReplaySubject, tap } from 'rxjs';
   styleUrl: './home-page.component.scss',
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export default class HomePageComponent
-  implements OnInit, AfterViewInit, AfterViewChecked
-{
+export default class HomePageComponent implements OnInit, AfterViewInit {
   private commonService = inject(CommonService);
   private homeService = inject(HomeService);
 
@@ -115,7 +112,7 @@ export default class HomePageComponent
         }
       },
       600: {
-        //当屏幕宽度大于等于320
+        //當螢幕寬度大於等於320
         slidesPerView: 3,
         spaceBetween: 10,
         navigation: {
@@ -130,7 +127,7 @@ export default class HomePageComponent
         }
       },
       1080: {
-        //当屏幕宽度大于等于768
+        //當螢幕寬度大於等於768
         slidesPerView: 3,
         spaceBetween: 10,
         navigation: {
@@ -138,7 +135,7 @@ export default class HomePageComponent
         }
       },
       1460: {
-        //当屏幕宽度大于等于1460
+        //當螢幕寬度大於等於1460
         slidesPerView: 4,
         spaceBetween: 10,
         navigation: {
@@ -182,7 +179,7 @@ export default class HomePageComponent
     // init: true,
     breakpoints: {
       0: {
-        //当屏幕宽度大于等于0
+        //當螢幕寬度大於等於0
         slidesPerView: 1,
         spaceBetween: 10,
         navigation: {
@@ -190,12 +187,12 @@ export default class HomePageComponent
         }
       },
       1080: {
-        //当屏幕宽度大于等于768
+        //當螢幕寬度大於等於768
         slidesPerView: 3,
         spaceBetween: 10
       },
       1460: {
-        //当屏幕宽度大于等于1460
+        //當螢幕寬度大於等於1460
         slidesPerView: 4,
         spaceBetween: 10
       }
@@ -240,7 +237,6 @@ export default class HomePageComponent
   public ngOnInit() {
     this.selectSubjectOption('全部');
     this.selectCourseCity('all');
-    // this.courseDataSource = FakeCardData;
     this.reviewDataSource = FakeReviewData;
 
     this.getTags();
@@ -249,7 +245,6 @@ export default class HomePageComponent
     this.breakpointObserver
       .observe([Breakpoints.Handset, Breakpoints.Tablet, Breakpoints.Web])
       .subscribe((result) => {
-        // this.updateValueBasedOnBreakpoints(result.breakpoints);
         const initialBreakpoints = {
           [Breakpoints.Handset]: window.matchMedia(Breakpoints.Handset).matches,
           [Breakpoints.Tablet]: window.matchMedia(Breakpoints.Tablet).matches,
@@ -263,28 +258,17 @@ export default class HomePageComponent
     this.initSwiper();
   }
 
-  ngAfterViewChecked(): void {
-    // this.initSwiper();
-  }
-
   public updateValueBasedOnBreakpoints(breakpoints: { [x: string]: any }) {
     if (breakpoints[Breakpoints.Handset]) {
       // Do something for small screens
       this.currentWindowSize = 'Handset';
-
-      // console.log('Handset');
     } else if (breakpoints[Breakpoints.Tablet]) {
       // Do something for medium screens
       this.currentWindowSize = 'Tablet';
-
-      // console.log('Tablet');
     } else if (breakpoints[Breakpoints.Web]) {
       // Do something for large screens
       this.currentWindowSize = 'Web';
-      // console.log('Web');
     }
-
-    // console.log(this.currentWindowSize);
   }
 
   initSwiper() {
@@ -305,7 +289,7 @@ export default class HomePageComponent
       }
       this.swiperElementCourse.nativeElement.initialize();
     } catch (error) {
-      console.error('Swiper initialization failed', error);
+      // console.error('Swiper initialization failed', error);
     }
   }
 
@@ -350,21 +334,15 @@ export default class HomePageComponent
           },
           ...res.data
         ];
-        // this.toggleSelectCity(this.cityOptions[0]);
       });
   }
 
   public selectCourseCity(option: string) {
-    // console.log(option);
     const params: ApiHomeCoursesAllGetRequestParams = {};
     if (option !== 'all') {
       params.cityId = option;
     }
     this.homeService.apiHomeCoursesAllGet(params).subscribe((res) => {
-      // console.log(params, res);
-      // res.data.forEach((data: CoursesResponseModel) => {
-      //   data.course_id = data._id;
-      // });
       this.courseDataSource = res.data;
       this.initSwiper();
     });
@@ -429,59 +407,45 @@ export default class HomePageComponent
 
 export const FakeReviewData = [
   {
-    nick_name: 'andersonlisa',
+    nick_name: '安德森麗莎',
     avator_image: 'https://dummyimage.com/636x651',
     rate: 4.8,
-    comment: 'Start small myself teacher set.',
+    comment: '從小就開始學習，老師的設置。',
     create_datetime: new Date('2024-05-27T08:22:50')
   },
   {
-    nick_name: 'garzakara',
+    nick_name: '卡拉加爾札',
     avator_image: 'https://dummyimage.com/636x651',
     rate: 4.9,
-    comment: 'Hard body reason partner treatment.',
+    comment: '堅強的體魄是合作夥伴治療的理由。',
     create_datetime: new Date('2024-02-11T19:41:12')
   },
   {
-    nick_name: 'kellerkimberly',
+    nick_name: '金伯利凱勒',
     avator_image: 'https://dummyimage.com/636x651',
     rate: 5.0,
-    comment: 'Marriage someone society how new family individual.',
+    comment: '婚姻是社會新家庭的一部分。',
     create_datetime: new Date('2024-02-21T01:07:07')
   },
   {
-    nick_name: 'zstanley',
+    nick_name: '斯坦利',
     avator_image: 'https://dummyimage.com/636x651',
     rate: 4.8,
-    comment: 'Upon never suggest institution I professor wish.',
+    comment: '我從來不建議在學院中這樣做。',
     create_datetime: new Date('2024-01-06T09:10:48')
   },
   {
-    nick_name: 'garzajessica',
+    nick_name: '潔西卡加爾札',
     avator_image: 'https://dummyimage.com/21x441',
     rate: 5.0,
-    comment: 'Move drop create discover seat become.',
+    comment: '創造並發現新機遇的過程中移動。',
     create_datetime: new Date('2024-05-27T18:11:08')
   },
   {
-    nick_name: 'jgarza',
+    nick_name: '加爾札',
     avator_image: 'https://dummyimage.com/636x651',
     rate: 4.9,
-    comment: 'Left order talk management condition receive.',
+    comment: '管理條件的談話中留下秩序。',
     create_datetime: new Date('2024-04-06T23:52:02')
   }
-  // {
-  //   nick_name: 'scott59',
-  //   avator_image: 'https://dummyimage.com/636x651',
-  //   rate: 4.7,
-  //   comment: 'Hundred want room begin box raise.',
-  //   create_datetime: new Date('2024-04-16T23:52:28')
-  // },
-  // {
-  //   nick_name: 'martinezlaura',
-  //   avator_image: 'https://dummyimage.com/636x651',
-  //   rate: 4.8,
-  //   comment: 'Option price suddenly.',
-  //   create_datetime: new Date('2024-01-15T20:49:07')
-  // }
 ];

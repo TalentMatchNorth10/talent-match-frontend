@@ -8,6 +8,7 @@ import {
 } from './reset-password.model';
 import { AuthService } from 'libs/openapi/src';
 import { ActivatedRoute, Router } from '@angular/router';
+import { DialogService } from 'src/app/shared/services/dialog.service';
 
 @Component({
   selector: 'app-reset-password',
@@ -61,6 +62,7 @@ export class ResetPasswordComponent implements OnInit {
   private authService = inject(AuthService);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
+  private dialogService = inject(DialogService);
 
   resetPasswordToken: string | null = null;
 
@@ -103,7 +105,10 @@ export class ResetPasswordComponent implements OnInit {
             this.router.navigate(['/login']);
           },
           error: (err) => {
-            console.error(err);
+            this.dialogService.openAlertDialog({
+              title: '重設密碼失敗',
+              content: err.error.message
+            });
           }
         });
     }

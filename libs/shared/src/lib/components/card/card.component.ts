@@ -92,7 +92,7 @@ import { HideOnErrorDirective } from 'src/app/shared/directive/hide-on-error.dir
           </div>
           <div class="flex h-full flex-grow justify-end">
             <span
-              class="material-icons-outlined cursor-pointer text-[20px] text-tmf-gray-4"
+              class="material-icons-outlined origin-center cursor-pointer text-[20px] text-tmf-gray-4 duration-100 active:!scale-95 group-hover:scale-[110%] group-hover:text-tmf-orange-1"
               (click)="navigateToCoursePage(data)"
             >
               east
@@ -159,12 +159,10 @@ export class CardComponent {
   constructor(protected readonly router: Router) {}
 
   navigateToCoursePage(data: CardData): void {
-    // console.log(data.course_id)
     this.router.navigate([`course-detail/${data.course_id}`]);
   }
 
   navigateToTeacherPage(data: CardData): void {
-    // console.log(data.course_id)
     this.router.navigate([`teacher-detail/{data.teacher_id}`]);
   }
 }

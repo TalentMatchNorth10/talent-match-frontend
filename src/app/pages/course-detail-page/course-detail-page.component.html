@@ -35,7 +35,7 @@
               <img
                 class="h-8 w-8 rounded-full border border-tmf-gray-6"
                 [src]="course.teacher.avatar"
-                alt=""
+                alt="teacher avatar"
               />
               <p
                 class="cursor-pointer text-base font-medium text-white"
@@ -441,7 +441,7 @@
               或許你想在上課前先諮詢教師
             </p>
             <button
-              class="w-full rounded-lg border border-tmf-purple bg-white py-[0.6875rem] text-base text-tmf-purple xl:text-lg"
+              class="w-full rounded-lg border border-tmf-purple bg-white py-[0.6875rem] text-base text-tmf-purple hover:bg-tmf-purple hover:text-white duration-100  xl:text-lg"
               (click)="openSurvey(course.survey_url!)"
             >
               填寫課前諮詢問卷

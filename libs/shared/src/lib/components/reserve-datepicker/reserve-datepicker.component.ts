@@ -147,7 +147,5 @@ export class ReserveDatepickerComponent {
     this.currentTime.set(null);
   }
 
-  bookNow(): void {
-    console.log(this.selectedReseveTime());
-  }
+  bookNow(): void {}
 }

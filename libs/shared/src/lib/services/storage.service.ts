@@ -9,7 +9,7 @@ export class StorageService {
     try {
       return item ? JSON.parse(item) : null;
     } catch (error) {
-      console.error('Error parsing storage item', key, error);
+      // console.error('Error parsing storage item', key, error);
       return item;
     }
   }
@@ -18,7 +18,7 @@ export class StorageService {
     try {
       storage.setItem(key, JSON.stringify(value));
     } catch (error) {
-      console.error('Error saving to storage', key, value, error);
+      // console.error('Error saving to storage', key, value, error);
     }
   }
 
@@ -26,7 +26,7 @@ export class StorageService {
     try {
       storage.removeItem(key);
     } catch (error) {
-      console.error('Error removing storage item', key, error);
+      // console.error('Error removing storage item', key, error);
     }
   }
 
@@ -58,7 +58,7 @@ export class StorageService {
     try {
       sessionStorage.clear();
     } catch (error) {
-      console.error('Error clearing sessionStorage', error);
+      // console.error('Error clearing sessionStorage', error);
     }
   }
 
@@ -66,7 +66,7 @@ export class StorageService {
     try {
       localStorage.clear();
     } catch (error) {
-      console.error('Error clearing localStorage', error);
+      // console.error('Error clearing localStorage', error);
     }
   }
 }

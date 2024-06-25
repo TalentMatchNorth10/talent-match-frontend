@@ -32,7 +32,7 @@ export class VideoCardComponent {
     const video = this.videoPlayer.nativeElement;
     if (play) {
       this.isPlaying.set(true);
-      video.play();
+      video.play().catch(() => this.isPlaying.set(false));
     } else {
       this.isPlaying.set(false);
       video.pause();
@@ -59,7 +59,7 @@ export class VideoCardComponent {
   }
 
   openVideoDialog() {
-    this.dialogService.openVideoDialog(VideoDialogComponent,this.data);
+    this.dialogService.openVideoDialog(VideoDialogComponent, this.data);
     this.videoPlayer.nativeElement.pause();
     this.isPlaying.set(false);
   }

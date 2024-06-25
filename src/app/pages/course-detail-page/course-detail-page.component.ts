@@ -1,6 +1,6 @@
 import { CourseDetailService } from './../../../../libs/openapi/src/api/course-detail.service';
 import { CourseData, FakeVideos } from './mock-data';
-import { CommonModule, NgClass } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import {
   Component,
   ElementRef,
@@ -26,13 +26,13 @@ import { VideoCardComponent } from '@tmf/libs-shared/components/video-card/video
 import { WeeklyCalendarComponent } from '@tmf/libs-shared/components/weekly-calendar/weekly-calendar.component';
 import {
   FavoritesService,
-  GetCourseDetailResponseModel,
   GetCourseDetailResponseModelData,
   GetCourseDetailResponseModelDataReviewsInner,
   GetWeeklyCanlendarResponseModelDataInner,
   ShopService
 } from 'libs/openapi/src';
 import { Observable, map, shareReplay, switchMap, tap } from 'rxjs';
+import { CartService } from 'src/app/shared/services/cart.service';
 import { DialogService } from 'src/app/shared/services/dialog.service';
 
 @Component({
@@ -60,6 +60,7 @@ export default class CourseDetailPageComponent {
   private favoritesService = inject(FavoritesService);
   private fb = inject(FormBuilder);
   private dialogService = inject(DialogService);
+  private cartService = inject(CartService);
 
   activeSection: WritableSignal<string> = signal('sectionA');
   cardData = CourseData;
@@ -92,7 +93,6 @@ export default class CourseDetailPageComponent {
         })
       ),
       map((response) => response.data),
-      tap((data) => console.log('weekly_calendar', data)),
       shareReplay(1)
     );
 
@@ -136,7 +136,6 @@ export default class CourseDetailPageComponent {
     });
     this.route.paramMap.subscribe((params) => {
       this.course_id = params.get('id') || '';
-      console.log('course_id', this.course_id);
     });
   }
 
@@ -149,17 +148,10 @@ export default class CourseDetailPageComponent {
           purchase_item_id: this.formGroup.get('purchase_item_id')!.value!
         }
       })
-      .subscribe({
-        next: (response) => {
-          if (toCart) {
-            this.router.navigate(['/cart']);
-          }
-        },
-        error: (error) => {
-          if (error.status === 401) {
-            this.router.navigate(['/login']);
-          }
-          console.error('error', error);
+      .subscribe(() => {
+        this.cartService.update();
+        if (toCart) {
+          this.router.navigate(['/cart']);
         }
       });
   }
@@ -168,24 +160,13 @@ export default class CourseDetailPageComponent {
     window.open(url, '_blank');
   }
   addFavorite(): void {
-    console.log('test');
     this.favoritesService
       .apiFavoritesPost({
         favoriteRequestModel: {
           course_id: this.course_id
         }
       })
-      .subscribe({
-        next: (response) => {
-          console.log('response', response);
-        },
-        error: (error) => {
-          console.error('error', error);
-          if (error.status === 401) {
-            this.router.navigate(['/login']);
-          }
-        }
-      });
+      .subscribe();
   }
 
   openAllReviews(
