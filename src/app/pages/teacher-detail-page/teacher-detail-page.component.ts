@@ -70,7 +70,7 @@ export default class TeacherDetailPageComponent implements OnInit {
     return {
       ...course,
       course_id: course._id,
-      mainImg: course.main_image,
+      main_image: course.main_image,
       title: course.name,
       name: data.name,
       avatar: this.data?.avator_image || '',
