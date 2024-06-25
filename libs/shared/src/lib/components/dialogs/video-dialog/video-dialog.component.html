@@ -22,10 +22,10 @@
           <div class="flex items-center gap-2">
             <img
               class="w-6 h-6 rounded-full border border-tmf-gray-6"
-              src="https://fakeimg.pl/24/"
+              [src]="data.teacher_avatar_url"
               alt=""
             />
-            <p class="text-base font-medium text-white">文文</p>
+            <p class="text-base font-medium text-white">{{data.teacher_name}}</p>
           </div>
           <p class="text-base text-white">
             {{data.intro}}
@@ -72,7 +72,7 @@
         </div>
         <img
           class="w-10 h-10 rounded-full border bg-tmf-gray-6 xl:w-12 xl:h-12"
-          src="https://fakeimg.pl/48/"
+          [src]="data.teacher_avatar_url"
           alt=""
           (click)="navigateToCoursePage(data)"
         />

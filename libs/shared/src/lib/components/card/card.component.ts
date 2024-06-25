@@ -57,16 +57,9 @@ import { HideOnErrorDirective } from 'src/app/shared/directive/hide-on-error.dir
           </p>
           <p class="text-[16px] leading-6 text-tmf-orange-1">
             NT$
-            {{
-              data.min_price?.price
-                ? data.min_price?.price?.toLocaleString()
-                : ''
-            }}
+            {{ data.price ? data.price.toLocaleString() : '' }}
             <span class="mr-1 text-[14px] leading-5 text-tmf-gray-2"
-              >/
-              {{
-                data.min_price?.quantity ? data.min_price?.quantity : ''
-              }}堂</span
+              >/ {{ data.quantity ? data.quantity : '' }}堂</span
             >
           </p>
         </div>

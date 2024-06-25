@@ -11,7 +11,6 @@ export interface CardData {
   sub_category: string;
   rate: number;
   ratingCount: number;
-  min_price?: PriceQuantity;
 }
 
 export interface HoverButton {
@@ -23,9 +22,4 @@ export interface HoverButton {
 export interface HoverButtonClickEvent {
   eventType: string;
   data: CardData;
-}
-
-export interface PriceQuantity {
-  price: number;
-  quantity: number;
 }
