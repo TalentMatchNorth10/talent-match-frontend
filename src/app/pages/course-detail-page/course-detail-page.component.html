@@ -484,8 +484,10 @@
           <h2 class="text-xl font-bold xl:text-2xl">其他推薦課程</h2>
         </div>
         <div class="flex gap-6">
-          @for (card of cardData; track card.title) {
-            <tmf-card [hoverEffect]="false" [data]="card"></tmf-card>
+          @if(recommendCourse$ | async; as recommendCourses) {
+            @for (recommendCourse of recommendCourses; track recommendCourse.course_id) {
+              <tmf-card [hoverEffect]="false" [data]="recommendCourse!"></tmf-card>
+            }
           }
         </div>
       </div>
