@@ -26,7 +26,7 @@ import { HideOnErrorDirective } from 'src/app/shared/directive/hide-on-error.dir
         </div>
         <div class="p-4">
           <h3
-            class="mb-2 text-[18px] font-bold leading-7 text-tmf-gray-2 md:text-[24px] md:leading-8"
+            class="w mb-2 line-clamp-2 h-[64px] text-[18px] font-bold leading-7 text-tmf-gray-2 md:text-[24px] md:leading-8"
           >
             {{ data.title ? data.title : '' }}
           </h3>
@@ -35,38 +35,35 @@ import { HideOnErrorDirective } from 'src/app/shared/directive/hide-on-error.dir
             [innerHTML]="data.content ? data.content : ''"
           ></div>
         </div>
-        <div class="flex items-center border-y border-tmf-gray-5 p-4">
-          <div
-            class="mr-2 h-8 w-8 shrink-0 overflow-hidden rounded-full bg-tmf-gray-4"
-          >
-            @if (data.avatar) {
-              <img
-                appHideOnError
-                class="h-full w-full cursor-pointer object-cover"
-                [src]="data.avatar"
-                alt="avator_image"
-                (click)="navigateToTeacherPage(data)"
-              />
-            }
-          </div>
-          <p
-            class="mr-[31px] cursor-pointer whitespace-nowrap text-[14px] font-medium leading-5 text-tmf-gray-3 md:text-[16px] md:leading-6"
-            (click)="navigateToTeacherPage(data)"
-          >
-            {{ data.name ? data.name : '' }}
-          </p>
+        <div
+          class="flex items-center justify-between border-y border-tmf-gray-5 p-4"
+        >
+          <span class="flex items-center">
+            <div
+              class="mr-2 h-8 w-8 shrink-0 overflow-hidden rounded-full bg-tmf-gray-4"
+            >
+              @if (data.avatar) {
+                <img
+                  appHideOnError
+                  class="h-full w-full cursor-pointer object-cover"
+                  [src]="data.avatar"
+                  alt="avator_image"
+                  (click)="navigateToTeacherPage(data)"
+                />
+              }
+            </div>
+            <p
+              class="mr-[31px] cursor-pointer whitespace-nowrap text-[14px] font-medium leading-5 text-tmf-gray-3 md:text-[16px] md:leading-6"
+              (click)="navigateToTeacherPage(data)"
+            >
+              {{ data.name ? data.name : '' }}
+            </p>
+          </span>
           <p class="text-[16px] leading-6 text-tmf-orange-1">
             NT$
-            {{
-              data.min_price?.price
-                ? data.min_price?.price?.toLocaleString()
-                : ''
-            }}
+            {{ data.price ? data.price.toLocaleString() : '' }}
             <span class="mr-1 text-[14px] leading-5 text-tmf-gray-2"
-              >/
-              {{
-                data.min_price?.quantity ? data.min_price?.quantity : ''
-              }}堂</span
+              >/ {{ data.quantity ? data.quantity : '' }}堂</span
             >
           </p>
         </div>

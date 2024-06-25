@@ -7,4 +7,6 @@ export interface VideoCardData {
   url: string;
   teacher_id: string;
   course_id: string;
+  teacher_name?: string;
+  teacher_avatar_url?: string;
 }
