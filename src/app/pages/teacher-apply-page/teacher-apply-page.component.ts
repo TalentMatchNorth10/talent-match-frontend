@@ -78,13 +78,8 @@ export default class TeacherApplyPageComponent implements OnInit {
   }
 
   getUserInfo() {
-    this.userService.apiUserUserInfoGet().subscribe({
-      next: (res) => {
-        this.user = res.data;
-      },
-      error: (err) => {
-        console.error(err);
-      }
+    this.userService.apiUserUserInfoGet().subscribe((res) => {
+      this.user = res.data;
     });
   }
 
@@ -140,7 +135,7 @@ export default class TeacherApplyPageComponent implements OnInit {
   // Teacher Form
   onSubmit() {
     if (this.teacherForm.valid) {
-      console.log(this.teacherForm.value);
+      // TODO: Submit form
     }
   }
 
@@ -173,7 +168,6 @@ export default class TeacherApplyPageComponent implements OnInit {
   }
 
   addWorkExperience() {
-    console.log('add workExperience');
     this.work_experiences.push(this.teacherFormService.createWorkExperience());
   }
 

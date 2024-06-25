@@ -1,7 +1,7 @@
 <div class="flex min-h-[100vh] flex-col">
   <app-header class="relative z-50"></app-header>
   @if (identity() === 'default') {
-    <main class="relative z-40 flex-grow">
+    <main class="relative z-40 flex-grow min-h-screen">
       <router-outlet></router-outlet>
     </main>
   } @else {
@@ -40,8 +40,7 @@
         </ul>
 
         <a
-          class="flex cursor-pointer items-center justify-between gap-3 rounded-xl p-4 text-tmf-gray-2 hover:bg-tmf-orange-1 hover:text-white"
-          [routerLink]="changeIdentity().path"
+          class="flex items-center justify-between gap-3 rounded-xl p-4 bg-tmf-gray-5 text-tmf-gray-4 cursor-not-allowed"
         >
           <span class="material-icons-outlined">restart_alt</span>
           <p class="grow">切換為{{ changeIdentity().text }}</p>

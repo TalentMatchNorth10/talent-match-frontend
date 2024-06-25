@@ -50,18 +50,11 @@ export default class StudentInfoPageComponent {
   });
 
   ngOnInit(): void {
-    this.studentInfoService.apiStudentInfoBasicInfoGet().subscribe({
-      next: (res) => {
-        if (res.status) {
-          this.studentInfo = res.data!;
-          this.updateFormControls(this.studentInfo);
-          this.formGroup.disable();
-        } else {
-          console.error(res);
-        }
-      },
-      error: (err) => {
-        console.error(err);
+    this.studentInfoService.apiStudentInfoBasicInfoGet().subscribe((res) => {
+      if (res.status) {
+        this.studentInfo = res.data!;
+        this.updateFormControls(this.studentInfo);
+        this.formGroup.disable();
       }
     });
   }
@@ -91,7 +84,6 @@ export default class StudentInfoPageComponent {
         next: (res) => {
           if (res.status) {
             this.studentInfo = res.data!;
-            console.log(this.studentInfo);
             this.updateFormControls(this.studentInfo);
             this.isEditMode.set(false);
           }
@@ -100,19 +92,14 @@ export default class StudentInfoPageComponent {
   }
 
   uploadImage(event: any) {
-    console.log(event);
     this.uploadService
       .apiUploadFilePost({
-        file: event.target.files[0],
-        path: 'user'
+        fileType: 'image',
+        path: 'user',
+        file: event.target.files[0]
       })
-      .subscribe({
-        next: (res) => {
-          this.formGroup.controls.avator_image.setValue(res.fileUrl);
-        },
-        error: (err) => {
-          console.error(err);
-        }
+      .subscribe((res) => {
+        this.formGroup.controls.avator_image.setValue(res.fileUrl);
       });
   }
 

@@ -147,7 +147,6 @@ export class SelectComponent
         this._selectedOptions.splice(index, 1);
       }
       this.value = this._selectedOptions.map((opt) => opt.value);
-      // console.log([this.multiSelect, this._selectedOptions, this.value]);
     } else {
       this._selectedOptions = [option];
       this.value = option.value;
@@ -180,20 +179,10 @@ export class SelectComponent
     if (this.value !== modelValue && this.optionComponents) {
       this.value = modelValue;
       if (this.multiSelect) {
-        // console.log([
-        //   this.multiSelect,
-        //   this.optionComponents,
-        //   this._selectedOptions
-        // ]);
         this._selectedOptions = this.optionComponents.filter((option) =>
           modelValue.includes(option.value)
         );
       } else {
-        // console.log([
-        //   this.multiSelect,
-        //   this.optionComponents,
-        //   this._selectedOptions
-        // ]);
         this._selectedOptions = this.optionComponents.filter(
           (option) => option.value === modelValue
         );

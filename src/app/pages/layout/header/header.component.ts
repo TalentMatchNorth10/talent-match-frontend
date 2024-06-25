@@ -237,7 +237,9 @@ import { CartService } from 'src/app/shared/services/cart.service';
                           <p class="text-tmf-gray-3">
                             {{ cartItem.quantity }}堂課程
                           </p>
-                          <p class="font-medium">NT$：{{ cartItem.price }}</p>
+                          <p class="font-medium">
+                            NT$：{{ cartItem.price.toLocaleString() }}
+                          </p>
                         </div>
                       </div>
                     </li>
@@ -251,7 +253,7 @@ import { CartService } from 'src/app/shared/services/cart.service';
                     <div
                       class="flex w-full items-center justify-between self-end text-[16px] leading-6"
                     >
-                      <p>總計 NT$ {{ cartTotal.total }}</p>
+                      <p>總計 NT$ {{ cartTotal.total.toLocaleString() }}</p>
                       <button
                         (click)="redirect('/cart')"
                         class="cursor-pointer rounded-lg bg-tmf-orange-1 px-4 py-2 font-bold text-white"
@@ -566,13 +568,8 @@ export class HeaderComponent implements OnInit {
   }
 
   getUserInfo() {
-    this.userService.apiUserUserInfoGet().subscribe({
-      next: (res) => {
-        this.user = res.data;
-      },
-      error: (err) => {
-        console.error(err);
-      }
+    this.userService.apiUserUserInfoGet().subscribe((res) => {
+      this.user = res.data;
     });
   }
 
