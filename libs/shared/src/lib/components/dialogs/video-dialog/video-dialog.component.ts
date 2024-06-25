@@ -61,4 +61,10 @@ export class VideoDialogComponent {
     this.router.navigate([`course-detail/${data.course_id}`]);
     this.close();
   }
+
+  public navigateToTeacherPage(data: VideoCardData): void {
+    // console.log(data.course_id)
+    this.router.navigate([`teacher-detail/${data.teacher_id}`]);
+    this.close();
+  }
 }
