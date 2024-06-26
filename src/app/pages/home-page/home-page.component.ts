@@ -24,7 +24,7 @@ import {
 } from 'libs/shared/src';
 import { VideoCardData } from '@tmf/libs-shared/components/short-video-card/video-card.interface';
 import { StarRatingComponent } from '@tmf/libs-shared/components/star-rating/star-rating.component';
-import { ReviewData } from '@tmf/libs-shared/components/review-card/review.interface';
+// import { ReviewData } from '@tmf/libs-shared/components/review-card/review.interface';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { VideoCardComponent } from '@tmf/libs-shared/components/video-card/video-card.component';
 import { Router } from '@angular/router';
@@ -37,6 +37,7 @@ import {
   TagsResponseModelDataInner
 } from 'libs/openapi/src';
 import { ReplaySubject, tap } from 'rxjs';
+import { ReviewData } from '@tmf/libs-shared/components/review-card/review.interface';
 
 @Component({
   selector: 'app-home-page',
@@ -315,7 +316,9 @@ export default class HomePageComponent implements OnInit, AfterViewInit {
 
     this.homeService.apiHomeCourseVideosAllGet(params).subscribe((res) => {
       this.videoDataSource = res.data;
-      this.initSwiper();
+      setTimeout(() => {
+        this.initSwiper();
+      }, 1);
     });
   }
 
@@ -344,7 +347,9 @@ export default class HomePageComponent implements OnInit, AfterViewInit {
     }
     this.homeService.apiHomeCoursesAllGet(params).subscribe((res) => {
       this.courseDataSource = res.data;
-      this.initSwiper();
+      setTimeout(() => {
+        this.initSwiper();
+      }, 1);
     });
   }
 
@@ -405,47 +410,67 @@ export default class HomePageComponent implements OnInit, AfterViewInit {
   }
 }
 
-export const FakeReviewData = [
+export const FakeReviewData: ReviewData[] = [
   {
     nick_name: '安德森麗莎',
     avator_image: 'https://dummyimage.com/636x651',
     rate: 4.8,
-    comment: '從小就開始學習，老師的設置。',
+    comment:
+      '很棒的課程，學到很多實用的知識。老師總是耐心回答大家的問題，感覺學到了很多。',
     create_datetime: new Date('2024-05-27T08:22:50')
   },
   {
-    nick_name: '卡拉加爾札',
+    nick_name: 'garzakara',
     avator_image: 'https://dummyimage.com/636x651',
     rate: 4.9,
-    comment: '堅強的體魄是合作夥伴治療的理由。',
+    comment:
+      '這門課幫我解答了好多疑問，非常推薦。老師的講解方式很適合初學者，真的很有幫助。',
     create_datetime: new Date('2024-02-11T19:41:12')
   },
   {
-    nick_name: '金伯利凱勒',
+    nick_name: 'kellerkimberly',
     avator_image: 'https://dummyimage.com/636x651',
     rate: 5.0,
-    comment: '婚姻是社會新家庭的一部分。',
+    comment:
+      '課程內容實用，老師教學效果很好。學到的知識可以直接應用到工作中，真的很實用。',
     create_datetime: new Date('2024-02-21T01:07:07')
   },
   {
-    nick_name: '斯坦利',
+    nick_name: 'zstanley',
     avator_image: 'https://dummyimage.com/636x651',
     rate: 4.8,
-    comment: '我從來不建議在學院中這樣做。',
+    comment:
+      '老師講解得很詳細，真的學到了很多！每個步驟都講得很清楚，讓我可以一步一步跟著學習，真的很棒。',
     create_datetime: new Date('2024-01-06T09:10:48')
   },
   {
-    nick_name: '潔西卡加爾札',
+    nick_name: 'garzajessica',
     avator_image: 'https://dummyimage.com/21x441',
     rate: 5.0,
-    comment: '創造並發現新機遇的過程中移動。',
+    comment:
+      '老師很用心，課程內容也很豐富。每個單元都有很多實例，讓人學得很扎實。',
     create_datetime: new Date('2024-05-27T18:11:08')
   },
   {
-    nick_name: '加爾札',
+    nick_name: 'jgarza',
     avator_image: 'https://dummyimage.com/636x651',
     rate: 4.9,
-    comment: '管理條件的談話中留下秩序。',
+    comment:
+      '老師很有親和力，課堂氣氛很好。大家都很活躍，學習氛圍非常棒，讓人感覺很放鬆。',
     create_datetime: new Date('2024-04-06T23:52:02')
   }
+  // {
+  //   nick_name: 'scott59',
+  //   avator_image: 'https://dummyimage.com/636x651',
+  //   rate: 4.7,
+  //   comment: 'Hundred want room begin box raise.',
+  //   create_datetime: new Date('2024-04-16T23:52:28')
+  // },
+  // {
+  //   nick_name: 'martinezlaura',
+  //   avator_image: 'https://dummyimage.com/636x651',
+  //   rate: 4.8,
+  //   comment: 'Option price suddenly.',
+  //   create_datetime: new Date('2024-01-15T20:49:07')
+  // }
 ];

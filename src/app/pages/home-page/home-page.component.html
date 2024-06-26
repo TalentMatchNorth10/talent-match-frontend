@@ -56,20 +56,18 @@
     </div>
     <div class="flex h-full w-full justify-center overflow-hidden">
       <div class="lg:w-9:12 w-10/12">
-        <swiper-container
-          #swiperElement
-          init="false"
-          slides-per-view="4"
-          navigation="true"
-        >
-          <ng-container *ngFor="let video of videoDataSource">
-            <swiper-slide>
-              <!-- <div class="h-auto w-auto"> -->
-                <tmf-video-card [data]="video"></tmf-video-card>
-              <!-- </div> -->
-            </swiper-slide>
-          </ng-container>
-        </swiper-container>
+          <swiper-container
+            #swiperElement
+            init="false"
+            slides-per-view="4"
+            navigation="true"
+          >
+            <ng-container *ngFor="let video of videoDataSource">
+              <swiper-slide>
+                  <tmf-video-card [data]="video"></tmf-video-card>
+              </swiper-slide>
+            </ng-container>
+          </swiper-container>
       </div>
     </div>
   </section>
