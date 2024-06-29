@@ -40,12 +40,12 @@
       <div class="custom-scrollbar flex gap-2 overflow-x-auto py-4 lg:gap-4">
         <!-- 自我介紹影片 -->
         <div class="flex flex-col gap-4">
-          <tmf-video-card [data]="introductionData"></tmf-video-card>
+          <tmf-video-card [data]="introductionData" *ngIf="introductionData"></tmf-video-card>
           <div>自我介紹影片</div>
         </div>
         <!-- 教學優勢影片 -->
         <div class="flex flex-col gap-4">
-          <tmf-video-card [data]="advantagesData"></tmf-video-card>
+          <tmf-video-card [data]="advantagesData" *ngIf="advantagesData"></tmf-video-card>
           <div>教學優勢影片</div>
         </div>
       </div>
