@@ -17,7 +17,9 @@ import { CardData } from '@tmf/libs-shared/components/card/card.interface';
 import {
   CommonService,
   GetTeacherDetailResponseModelData,
+  GetTeacherDetailResponseModelDataAdvantageVideo,
   GetTeacherDetailResponseModelDataCoursesInner,
+  GetTeacherDetailResponseModelDataIntroVideo,
   TeacherDetailService
 } from 'libs/openapi/src';
 
@@ -58,10 +60,18 @@ export default class TeacherDetailPageComponent implements OnInit {
         this.recommendedCourseData = this.data.courses.map((course) =>
           this.transformToCardData(data.data, course)
         );
+        this.introductionData = this.transformToVideoCardData(
+          this.data,
+          this.data?.intro_video
+        );
+        this.advantagesData = this.transformToVideoCardData(
+          this.data,
+          this.data
+            .advantage_video as GetTeacherDetailResponseModelDataAdvantageVideo
+        );
       });
 
-    this.introductionData = FakeVideos[0];
-    this.advantagesData = FakeVideos[1];
+    // this.advantagesData = FakeVideos[1];
   }
   transformToCardData(
     data: GetTeacherDetailResponseModelData,
@@ -79,5 +89,25 @@ export default class TeacherDetailPageComponent implements OnInit {
       rate: 0,
       ratingCount: 0
     };
+  }
+
+  transformToVideoCardData(
+    data: GetTeacherDetailResponseModelData,
+    video:
+      | GetTeacherDetailResponseModelDataIntroVideo
+      | GetTeacherDetailResponseModelDataAdvantageVideo
+  ): VideoCardData {
+    const videoCard: VideoCardData = {
+      video_id: video._id,
+      name: video.name,
+      category: video.category,
+      intro: video.intro,
+      video_type: video.video_type,
+      url: video.url,
+      teacher_id: video.teacher_id,
+      teacher_name: data.name,
+      teacher_avatar_url: data.avator_image
+    };
+    return videoCard;
   }
 }

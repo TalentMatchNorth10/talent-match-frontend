@@ -163,6 +163,6 @@ export class CardComponent {
   }
 
   navigateToTeacherPage(data: CardData): void {
-    this.router.navigate([`teacher-detail/{data.teacher_id}`]);
+    this.router.navigate([`teacher-detail/${data.teacher_id}`]);
   }
 }
