@@ -17,8 +17,11 @@ import { CardData } from '@tmf/libs-shared/components/card/card.interface';
 import {
   CommonService,
   GetTeacherDetailResponseModelData,
+  GetTeacherDetailResponseModelDataAdvantageVideo,
   GetTeacherDetailResponseModelDataCoursesInner,
+
   GetTeacherDetailResponseModelDataIntroVideoInnerVideoId,
+
   TeacherDetailService
 } from 'libs/openapi/src';
 
@@ -58,6 +61,7 @@ export default class TeacherDetailPageComponent implements OnInit {
         this.recommendedCourseData = this.data.courses.map((course) =>
           this.transformToCardData(data.data, course)
         );
+
         this.data.intro_video.map((video) => {
           const introVideo: TeacherIntroVideo = {
             title: video.title,
@@ -74,6 +78,7 @@ export default class TeacherDetailPageComponent implements OnInit {
         //   this.data
         //     .advantage_video as GetTeacherDetailResponseModelDataAdvantageVideo
         // );
+
       });
 
     // this.advantagesData = FakeVideos[1];
@@ -99,6 +104,7 @@ export default class TeacherDetailPageComponent implements OnInit {
   transformToVideoCardData(
     data: GetTeacherDetailResponseModelData,
     video: GetTeacherDetailResponseModelDataIntroVideoInnerVideoId
+
   ): VideoCardData {
     const videoCard: VideoCardData = {
       video_id: video._id,
@@ -113,9 +119,11 @@ export default class TeacherDetailPageComponent implements OnInit {
     };
     return videoCard;
   }
+
 }
 
 interface TeacherIntroVideo {
   title: string;
   video: VideoCardData;
+
 }
