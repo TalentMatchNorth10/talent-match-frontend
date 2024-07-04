@@ -39,15 +39,14 @@
     <section>
       <div class="custom-scrollbar flex gap-2 overflow-x-auto py-4 lg:gap-4">
         <!-- 自我介紹影片 -->
-        <div class="flex flex-col gap-4">
-          <tmf-video-card [data]="introductionData" *ngIf="introductionData"></tmf-video-card>
-          <div>自我介紹影片</div>
-        </div>
-        <!-- 教學優勢影片 -->
-        <div class="flex flex-col gap-4">
-          <tmf-video-card [data]="advantagesData" *ngIf="advantagesData"></tmf-video-card>
-          <div>教學優勢影片</div>
-        </div>
+         <ng-container *ngFor="let teacherVideo of teacherVideosData">
+           <div class="flex flex-col gap-4">
+             <tmf-video-card [data]="teacherVideo.video" *ngIf="teacherVideo.video"></tmf-video-card>
+             <div>{{teacherVideo.title}}</div>
+           </div>
+         </ng-container>
+
+
       </div>
     </section>
     <!-- 自我介紹 -->
