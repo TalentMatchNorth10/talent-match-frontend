@@ -1,27 +1,16 @@
 import { CommonModule, NgClass } from '@angular/common';
-import {
-  Component,
-  OnInit,
-  WritableSignal,
-  inject,
-  signal
-} from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { CardComponent } from '@tmf/libs-shared/components/card/card.component';
 import { VideoCardData } from '@tmf/libs-shared/components/short-video-card/video-card.interface';
 import { StarRatingComponent } from '@tmf/libs-shared/components/star-rating/star-rating.component';
 import { VideoCardComponent } from '@tmf/libs-shared/components/video-card/video-card.component';
 import { WeeklyCalendarComponent } from '@tmf/libs-shared/components/weekly-calendar/weekly-calendar.component';
-import { CourseData, FakeVideos } from '../course-detail-page/mock-data';
 import { CardData } from '@tmf/libs-shared/components/card/card.interface';
 import {
-  CommonService,
   GetTeacherDetailResponseModelData,
-  GetTeacherDetailResponseModelDataAdvantageVideo,
   GetTeacherDetailResponseModelDataCoursesInner,
-
   GetTeacherDetailResponseModelDataIntroVideoInnerVideoId,
-
   TeacherDetailService
 } from 'libs/openapi/src';
 
@@ -69,19 +58,7 @@ export default class TeacherDetailPageComponent implements OnInit {
           };
           this.teacherVideosData.push(introVideo);
         });
-        // this.introductionData = this.transformToVideoCardData(
-        //   this.data,
-        //   this.data?.intro_video
-        // );
-        // this.advantagesData = this.transformToVideoCardData(
-        //   this.data,
-        //   this.data
-        //     .advantage_video as GetTeacherDetailResponseModelDataAdvantageVideo
-        // );
-
       });
-
-    // this.advantagesData = FakeVideos[1];
   }
   transformToCardData(
     data: GetTeacherDetailResponseModelData,
@@ -104,7 +81,6 @@ export default class TeacherDetailPageComponent implements OnInit {
   transformToVideoCardData(
     data: GetTeacherDetailResponseModelData,
     video: GetTeacherDetailResponseModelDataIntroVideoInnerVideoId
-
   ): VideoCardData {
     const videoCard: VideoCardData = {
       video_id: video._id,
@@ -119,11 +95,9 @@ export default class TeacherDetailPageComponent implements OnInit {
     };
     return videoCard;
   }
-
 }
 
 interface TeacherIntroVideo {
   title: string;
   video: VideoCardData;
-
 }
