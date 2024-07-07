@@ -130,7 +130,6 @@ export default class StudentCalendarPageComponent {
   }
 
   private calculateEndTime(startTime: string): string {
-    console.log('startTime', startTime);
     const start = new Date(startTime);
     start.setHours(start.getHours() + 1);
     const end = start.toLocaleTimeString('en-US', { hour12: false });

@@ -155,7 +155,6 @@ export class ReservedBlockComponent {
       })
       .subscribe((res) => {
         const { reserves, totalCount } = res.data!;
-        console.log('reserves', reserves, 'totalCount', totalCount);
         this.tableReserves.set(reserves!);
         this.tableCount.set(totalCount!);
         this.isLoading.set(false);
@@ -223,7 +222,6 @@ export class ReservedBlockComponent {
   }
 
   private calculateEndTime(startTime: string): string {
-    console.log('startTime', startTime);
     const start = new Date(startTime);
     start.setHours(start.getHours() + 1);
     const end = start.toLocaleTimeString('en-US', { hour12: false });
