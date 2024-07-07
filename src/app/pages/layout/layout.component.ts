@@ -36,7 +36,7 @@ export default class LayoutComponent {
         const url = (event as NavigationEnd).url;
         if (url.startsWith('/student')) {
           this.menuService.updateMenuList('student');
-        } else if (url.startsWith('/teacher/')) {
+        } else if (url.startsWith('/teacher')) {
           this.menuService.updateMenuList('teacher');
         } else {
           this.menuService.updateMenuList('default');

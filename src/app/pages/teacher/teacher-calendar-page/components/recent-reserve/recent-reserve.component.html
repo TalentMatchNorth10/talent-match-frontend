@@ -1,0 +1,52 @@
+<div class="rounded-lg border border-tmf-gray-2 p-4 shadow-md">
+  <div class="mb-4 flex items-center gap-4" [formGroup]="fg">
+    <h2 class="text-2xl font-bold">近期預約</h2>
+    <tmf-select formControlName="range" class="!w-[180px]">
+      <tmf-option [label]="'近兩天'" [value]="'twoDays'"> </tmf-option>
+      <tmf-option [label]="'近一週'" [value]="'week'"> </tmf-option>
+      <tmf-option [label]="'近一個月'" [value]="'month'"> </tmf-option>
+    </tmf-select>
+    <tmf-select formControlName="course" class="!w-[250px]">
+      <tmf-option [label]="'全部'" [value]="'all'"> </tmf-option>
+      @for (course of courseList; track course._id) {
+        <tmf-option [label]="course.name!" [value]="course._id"> </tmf-option>
+      }
+    </tmf-select>
+    <button
+      class="box-border rounded-md border border-tmf-gray-2 bg-white px-4 py-[7px] text-center text-tmf-gray-2"
+      (click)="searchReserves()"
+    >
+      查詢
+    </button>
+  </div>
+  @if (!isLoading()) {
+    @if (totalCount() > 0) {
+      <div class="mb-5 flex flex-wrap gap-5 min-h-[654px]">
+        @for (reserve of reserves(); track reserve._id) {
+          <tmf-reserve-card [reserve]="reserve"></tmf-reserve-card>
+        }
+      </div>
+      <div class="flex justify-center">
+        <tmf-pagination
+          class="mx-auto"
+          [config]="{
+            itemsPerPage: 6,
+            totalItems: totalCount(),
+            currentPage: currentPage(),
+            showFirstButton: false,
+            showLastButton: false
+          }"
+          (pageChange)="pageChange($event)"
+        ></tmf-pagination>
+      </div>
+    }
+  } @else {
+    <div class="flex items-center justify-center space-x-2 h-[722px]">
+      <div class="relative">
+        <div
+          class="spin h-20 w-20 rounded-full border-[10px] border-solid border-tmf-orange-1"
+        ></div>
+      </div>
+    </div>
+  }
+</div>

@@ -1,1 +1,19 @@
-<p>teacher-calendar-page works!</p>
+<h1 class="mb-6 text-3xl font-bold text-tmf-gray-1">課程預約管理</h1>
+<div class="flex flex-col gap-3">
+  <!-- 近期預約 -->
+  <tmf-recent-reserve [courseList]="courseList"></tmf-recent-reserve>
+  <!-- 已逾期預約 -->
+  <tmf-expired-reserve
+    [courseList]="courseList"
+    [studentList]="studentList"
+  ></tmf-expired-reserve>
+  <!-- 已預約時段 -->
+  <div class="rounded-lg border border-tmf-gray-2 p-4 shadow-md">
+    <tmf-reserved-block
+      [courseList]="courseList"
+      [studentList]="studentList"
+    ></tmf-reserved-block>
+    <!-- 可預約時段 -->
+    <tmf-can-reserve-time></tmf-can-reserve-time>
+  </div>
+</div>

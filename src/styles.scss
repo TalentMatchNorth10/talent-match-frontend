@@ -10,3 +10,123 @@
 .video-mask {
   @apply bg-tmf-gray-1;
 }
+
+.fc-h-event .fc-event-main-frame {
+  display: block; /* for make fc-event-title-container expand */
+}
+.fc-month-view span.fc-title {
+  white-space: normal;
+}
+// .fc {
+//   width: 880px; /* 設定固定寬度 */
+//   height: 720px; /* 設定固定高度 */
+//   overflow: auto;
+// }
+
+// /* 覆蓋 FullCalendar 的響應式 CSS */
+// .fc .fc-toolbar.fc-header-toolbar {
+//   flex-wrap: nowrap;
+// }
+
+// .fc .fc-view-harness {
+//   min-width: auto;
+// }
+
+// .fc .fc-dayGridMonth-view,
+// .fc .fc-timeGridWeek-view,
+// .fc .fc-timeGridDay-view {
+//   min-width: auto;
+//   width: 100%;
+// }
+
+// .fc .fc-col-header-cell {
+//   white-space: nowrap;
+// }
+
+// .fc .fc-scrollgrid {
+//   overflow: visible;
+// }
+
+// .fc .fc-scrollgrid-sync-inner {
+//   display: block;
+// }
+
+@media (min-width: 1280px) {
+  .fc-event.fc-event-start.fc-event-end.fc-event-future.fc-timegrid-event.fc-v-event {
+    font-size: 10px;
+  }
+}
+
+@media (max-width: 1280px) {
+  .fc-header-toolbar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .fc-event.fc-event-start.fc-event-end.fc-event-future.fc-timegrid-event.fc-v-event {
+    font-size: 8px;
+  }
+  .fc-daygrid-day-events {
+    font-size: 12px;
+  }
+  .fc-daygrid-more-link.fc-more-link {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .fc-daygrid-more-link.fc-more-link {
+    font-size: 10px;
+  }
+}
+
+@media (max-width: 768px) {
+  /* 縱向排列 headerToolbar */
+  .fc-header-toolbar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .fc-daygrid-day-events {
+    bottom: 0;
+  }
+
+  .fc-col-header-cell.fc-day {
+    font-size: 12px;
+  }
+
+  .fc-daygrid-day-number {
+    font-size: 12px;
+    height: 40px;
+  }
+
+  .fc-daygrid-more-link.fc-more-link {
+    font-size: 8px;
+  }
+
+  .fc-toolbar-chunk {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin: 5px 0;
+  }
+}
+// month view event font size
+.fc-event.fc-daygrid-event.fc-daygrid-dot-event {
+  font-size: 12px;
+}
+// week view event font size
+.fc-event.fc-timegrid-event.fc-v-event {
+  font-size: 10px;
+}
+
+// 取消 FullCalendar 按鈕的 focus 樣式
+.fc .fc-button:focus {
+  outline: none;
+  box-shadow: none;
+}
+.fc .fc-button-primary:not(:disabled).fc-button-active:focus {
+  outline: none;
+  box-shadow: none;
+}
