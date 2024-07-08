@@ -1,0 +1,59 @@
+@if (!isLoading() && totalCount() > 0) {
+  <div class="mb-5 h-[286px]">
+    <table class="reserved_table w-full">
+      <thead
+        class="border-b border-tmf-gray-5 text-base font-normal text-tmf-gray-2"
+      >
+        <tr>
+          <th>課程</th>
+          <th>學生</th>
+          <th>預約堂次</th>
+          <th>日期</th>
+          <th>時間</th>
+          <th>學生聯絡資料</th>
+        </tr>
+      </thead>
+      <tbody class="text-center">
+        @for (
+          reserve of tableReserves();
+          track $index;
+          let odd = $odd;
+          let even = $even
+        ) {
+          <tr
+            [ngClass]="{ 'bg-white': even, 'bg-tmf-gray-7': odd }"
+            class="border-b border-tmf-gray-5"
+          >
+            <td>{{ reserve.course_name }}</td>
+            <td>{{ reserve.student?.nick_name }}</td>
+            <td>{{ reserve.reserved_amount }}/{{ reserve.total }}</td>
+            <td>{{ reserve.reserve_date }}</td>
+            <td>{{ reserve.reserve_time }}</td>
+            <td>{{ reserve.student?.email }}</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+  <div class="flex justify-center">
+    <tmf-pagination
+      class="mx-auto"
+      [config]="{
+        itemsPerPage: 5,
+        totalItems: totalCount(),
+        currentPage: currentPage(),
+        showFirstButton: false,
+        showLastButton: false
+      }"
+      (pageChange)="pageChange($event)"
+    ></tmf-pagination>
+  </div>
+} @else {
+  <div class="flex h-[354px] items-center justify-center space-x-2">
+    <div class="relative">
+      <div
+        class="spin h-20 w-20 rounded-full border-[10px] border-solid border-tmf-orange-1"
+      ></div>
+    </div>
+  </div>
+}

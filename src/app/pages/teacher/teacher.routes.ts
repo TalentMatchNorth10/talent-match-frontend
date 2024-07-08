@@ -21,8 +21,8 @@ export const routes: Routes = [
     data: { state: 'teacher' }
   },
   {
-    // 老師行事曆管理頁
-    path: 'calendar',
+    // 老師課程預約管理頁
+    path: 'course-reservation',
     loadComponent: () =>
       import('./teacher-calendar-page/teacher-calendar-page.component'),
     data: { state: 'teacher' }

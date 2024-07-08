@@ -33,6 +33,7 @@ export class VideoCardComponent {
     if (play) {
       this.isPlaying.set(true);
       video.play().catch(() => this.isPlaying.set(false));
+      video.muted = true;
     } else {
       this.isPlaying.set(false);
       video.pause();

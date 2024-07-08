@@ -34,6 +34,7 @@ export class DialogService {
   openConfirmDialog(config?: TmfConfirmConfig): Observable<boolean> {
     const data = config || new TmfConfirmConfig();
     return this.dialog.open(ConfirmComponent, {
+      autoFocus: 'none',
       data
     }).closed as Observable<boolean>;
   }

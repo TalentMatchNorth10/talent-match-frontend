@@ -60,8 +60,8 @@ export class MenuService {
           },
           {
             icon: 'edit_calendar',
-            path: '/teacher/calendar',
-            title: '行事曆管理'
+            path: '/teacher/course-reservation',
+            title: '課程預約管理'
           },
           {
             icon: 'description',

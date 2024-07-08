@@ -1,0 +1,84 @@
+<div
+  class="w-[280px] rounded-md p-6 shadow-md"
+  [ngClass]="{
+    'cursor-pointer':
+      reserve.teacher_status === 'reserved' &&
+      reserve.student_status === 'reserved'
+  }"
+>
+  <div class="flex items-center justify-between border-b pb-2">
+    <p class="text text-lg font-bold">
+      {{ reserve.course_name }}
+    </p>
+    @if (expired) {
+      <p
+        class="min-w-[74px] rounded-xl px-4 py-1 text-sm text-white"
+        [ngClass]="{
+          'bg-tmf-purple':
+            reserve.teacher_status === 'reserved' &&
+            reserve.student_status === 'reserved',
+          'bg-tmf-blue-2':
+            reserve.teacher_status === 'completed' &&
+            reserve.student_status === 'reserved'
+        }"
+      >
+        {{
+          reserve.teacher_status === 'reserved' &&
+          reserve.student_status === 'reserved'
+            ? '待完成'
+            : '待確認'
+        }}
+      </p>
+    } @else {
+      <p
+        class="min-w-[74px] rounded-xl bg-green-500 px-4 py-1 text-sm text-white"
+      >
+        已預約
+      </p>
+    }
+  </div>
+  <div class="flex flex-col gap-4 pt-2">
+    <div class="flex items-center gap-2">
+      <span class="material-icons text-2xl leading-6 text-tmf-gray-2"
+        >person</span
+      >
+      <p>學生：{{ reserve.student?.nick_name || reserve.student?.name }}</p>
+    </div>
+    <div class="flex items-center gap-2">
+      <span class="material-icons text-2xl leading-6 text-tmf-gray-2"
+        >library_books</span
+      >
+      <p>堂次：{{ reserve.reserved_amount! }}/{{ reserve.total! }}</p>
+    </div>
+    <div class="flex items-center gap-2">
+      <span class="material-icons text-2xl leading-6 text-tmf-gray-2"
+        >calendar_month</span
+      >
+      <p>日期：{{ reserve.reserve_date }}</p>
+    </div>
+    <div class="flex items-center gap-2">
+      <span class="material-icons-outlined text-2xl leading-6 text-tmf-gray-2"
+        >timer</span
+      >
+      <p>時間：{{ reserve.reserve_time }}</p>
+    </div>
+    <div class="flex items-center gap-2">
+      <span class="material-icons-outlined text-2xl leading-6 text-tmf-gray-2"
+        >mail</span
+      >
+      <p class="overflow-hidden text-ellipsis whitespace-nowrap">
+        信箱：{{ reserve.student?.email }}
+      </p>
+    </div>
+    <div class="flex items-center gap-2">
+      <span class="material-icons-outlined text-2xl leading-6 text-tmf-gray-2"
+        >smartphone</span
+      >
+      <p class="overflow-hidden text-ellipsis whitespace-nowrap">
+        電話：{{
+          reserve.student?.contact_phone ? reserve.student?.contact_phone : '-'
+        }}
+      </p>
+    </div>
+  </div>
+</div>

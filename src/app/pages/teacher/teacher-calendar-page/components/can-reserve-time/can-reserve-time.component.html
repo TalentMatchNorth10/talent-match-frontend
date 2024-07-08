@@ -1,0 +1,75 @@
+<div class="mb-4 flex items-center justify-between gap-4">
+  <h2 class="text-2xl font-bold">可預約時段</h2>
+  @if (!isEditMode()) {
+    <button
+      class="box-border rounded-md border border-tmf-gray-2 bg-white px-4 py-[7px] text-center text-tmf-gray-2"
+      (click)="toggleEditMode()"
+    >
+      編輯
+    </button>
+  } @else {
+    <div class="flex items-center gap-2">
+      <button
+        class="box-border rounded-md border border-tmf-gray-2 bg-white px-4 py-[7px] text-center text-tmf-gray-2"
+        (click)="toggleEditMode()"
+      >
+        取消
+      </button>
+
+      <button
+        class="box-border rounded-md border border-tmf-gray-2 bg-white px-4 py-[7px] text-center text-tmf-gray-2"
+        (click)="saveCanReserveTime()"
+      >
+        儲存
+      </button>
+    </div>
+  }
+</div>
+<div class="w-full overflow-x-auto">
+  <table class="w-full select-none border border-tmf-orange-1">
+    <thead>
+      <tr>
+        <th class="w-[60px] bg-tmf-orange-4 px-3 py-2"></th>
+        @for (day of days; track $index) {
+          <th class="bg-tmf-orange-4 px-3 py-2">
+            {{ day }}
+          </th>
+        }
+      </tr>
+    </thead>
+    <tbody>
+      @for (item of can_reserve_time; track item.time; let index = $index) {
+        <tr class="text-center">
+          <td class="bg-tmf-orange-4 py-2.5">
+            <p class="text-base font-bold">{{ index + 1 }}</p>
+            <p class="text-sm font-bold text-tmf-orange-1">
+              {{ item.time }}
+            </p>
+          </td>
+          @for (day of item.statues; track $index) {
+            <td class="p-2">
+              <div
+                [ngClass]="{
+                  'bg-tmf-gray-4': !day.status,
+                  'bg-green-300': day.status,
+                  'cursor-pointer': isEditMode(),
+                  'cursor-not-allowed': !isEditMode()
+                }"
+                class="flex items-center justify-center rounded-lg py-3 xl:px-3"
+                (mousedown)="startSelection(day.day, day)"
+                (mouseover)="continueSelection(day.day, day)"
+                (mouseup)="endSelection(day.day, day)"
+              >
+                <span
+                  class="material-icons-outlined text-base leading-4 text-white xl:text-[24px] xl:leading-6"
+                >
+                  {{ day.status ? 'done' : 'do_not_disturb_on' }}
+                </span>
+              </div>
+            </td>
+          }
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>
