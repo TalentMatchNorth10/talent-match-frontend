@@ -272,6 +272,7 @@ export class InputComponent
 
   setDisabledState(disabled: boolean): void {
     this._disabled = disabled;
+    this.control[disabled ? 'disable' : 'enable']();
     if (disabled) {
       this.panelOpen = false;
     }

@@ -16,6 +16,7 @@
     muted
     class="h-full w-full object-cover"
     [src]="data.url"
+    [preload]="true"
     (timeupdate)="updateProgress()"
     (loadedmetadata)="initializeVideo()"
   ></video>
