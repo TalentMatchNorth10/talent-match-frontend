@@ -20,7 +20,7 @@
         </div>
 
         <tmf-input
-        placeholder="準備好啟程了嗎？"
+          placeholder="準備好啟程了嗎？"
           [formControl]="control"
           [inputType]="InputType.SearchByType"
           [options]="items"
@@ -51,39 +51,38 @@
         >
           {{ option }}
         </button>
-
       </div>
     </div>
     <div class="flex h-full w-full justify-center overflow-hidden">
       <div class="lg:w-9:12 w-10/12">
-          <swiper-container
-            #swiperElement
-            init="false"
-            slides-per-view="4"
-            navigation="true"
-          >
-            <ng-container *ngFor="let video of videoDataSource">
-              <swiper-slide>
-                  <tmf-video-card [data]="video"></tmf-video-card>
-              </swiper-slide>
-            </ng-container>
-          </swiper-container>
+        <swiper-container
+          #swiperElement
+          init="false"
+          slides-per-view="4"
+          navigation="true"
+        >
+          <ng-container *ngFor="let video of videoDataSource">
+            <swiper-slide>
+              <tmf-video-card [data]="video"></tmf-video-card>
+            </swiper-slide>
+          </ng-container>
+        </swiper-container>
       </div>
     </div>
   </section>
   <section class="mt-5 bg-orange-100 py-10 lg:skew-y-1">
     <div class="lg:-skew-y-1">
       <div class="flex flex-col gap-4">
-      <div
-        class="w-full bg-top bg-no-repeat pt-[1.5rem] text-center text-4xl"
-        style="
-          background-image: url('./assets/images/home-page/orange-80-decorate.svg');
-        "
-      >
-        推薦課程
-      </div>
-        <div class="w-full flex justify-center">
-          <div class="lg:w-1/6 w-1/2">
+        <div
+          class="w-full bg-top bg-no-repeat pt-[1.5rem] text-center text-4xl"
+          style="
+            background-image: url('./assets/images/home-page/orange-80-decorate.svg');
+          "
+        >
+          推薦課程
+        </div>
+        <div class="flex w-full justify-center">
+          <div class="w-1/2 lg:w-1/6">
             <tmf-select
               class="bg-white text-gray-700"
               [multiSelect]="false"
@@ -315,8 +314,8 @@
     <div
       class="flex w-full flex-col items-center justify-center gap-6 md:flex-row lg:flex-row"
     >
-      <div
-        class="lg:bg-[size: 100%] z-[999] h-[190px] w-[325px] rounded-2xl bg-white bg-[url('./assets/images/home-page/cta/cta-signup.svg')] bg-[size:60%] bg-right-top bg-no-repeat shadow-md lg:h-[225px] lg:w-[520px] lg:bg-auto"
+      <button
+        class="lg:bg-[size: 100%] z-[999] h-[190px] w-[325px] cursor-pointer rounded-2xl bg-white bg-[url('./assets/images/home-page/cta/cta-signup.svg')] bg-[size:60%] bg-right-top bg-no-repeat shadow-md lg:h-[225px] lg:w-[520px] lg:bg-auto"
       >
         <div class="h-full px-5 py-6">
           <div
@@ -339,9 +338,9 @@
             </div>
           </div>
         </div>
-      </div>
-      <div
-        class="lg:bg-[size: 100%] z-[999] h-[190px] w-[325px] rounded-2xl bg-white bg-[url('./assets/images/home-page/cta/cta-teach.svg')] bg-[size:60%] bg-right-top bg-no-repeat shadow-md lg:h-[225px] lg:w-[520px]"
+      </button>
+      <button
+        class="lg:bg-[size: 100%] z-[999] h-[190px] w-[325px] cursor-pointer rounded-2xl bg-white bg-[url('./assets/images/home-page/cta/cta-teach.svg')] bg-[size:60%] bg-right-top bg-no-repeat shadow-md lg:h-[225px] lg:w-[520px]"
       >
         <div class="h-full px-5 py-6">
           <div
@@ -364,7 +363,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </button>
     </div>
   </section>
 </div>
