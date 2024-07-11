@@ -48,6 +48,8 @@ export default class ResultKeywordPageComponent implements OnInit {
     return this.query$.value;
   }
 
+  size = 12;
+
   ngOnInit(): void {
     this.route.queryParams.subscribe((qp) => {
       this.query$.next(this.getQuery(qp));
@@ -63,7 +65,12 @@ export default class ResultKeywordPageComponent implements OnInit {
           (prev, curr) => JSON.stringify(prev) === JSON.stringify(curr)
         ),
         tap(() => delete this.data),
-        switchMap((q) => this.commonService.apiCommonSearchResultAllGet(q))
+        switchMap((q) =>
+          this.commonService.apiCommonSearchResultAllGet({
+            ...q,
+            size: this.size
+          })
+        )
       )
       .subscribe((data) => (this.data = data.data));
   }
