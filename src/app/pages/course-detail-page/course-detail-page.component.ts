@@ -178,7 +178,7 @@ export default class CourseDetailPageComponent {
   }
 
   openTeacherDetailPage(teacher_id: string): void {
-    this.router.navigate([`teacher-detail/${teacher_id}`]);
+    this.router.navigate([`detail-teacher/${teacher_id}`]);
   }
 
   @HostListener('window:scroll', ['$event'])
@@ -218,6 +218,6 @@ export default class CourseDetailPageComponent {
   }
 
   navigateToTeacherDetail(id: string): void {
-    this.router.navigate([`teacher-detail/${id}`]);
+    this.router.navigate([`detail-teacher/${id}`]);
   }
 }

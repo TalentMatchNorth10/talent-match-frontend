@@ -10,7 +10,7 @@
       </div>
       <div class="pt-6 flex gap-6">
         @for (item of data.teachers; track $index) {
-          <div class="px-[16.5px] group cursor-pointer" [routerLink]="['/teacher-detail',item._id]">
+          <div class="px-[16.5px] group cursor-pointer" [routerLink]="['/detail-teacher',item._id]">
             <div class="w-40 h-40 rounded-full  overflow-hidden">
               <img class="object-cover duration-300 w-full h-full group-hover:scale-110" [src]="item.avator_image" alt="">
             </div>
