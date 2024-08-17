@@ -1,4 +1,6 @@
-<h1 class="mb-10 text-[30px] font-bold leading-9">交易紀錄</h1>
+<h1 class="mb-10 text-[22px] font-bold leading-9 md:text-[26px] lg:text-[30px]">
+  交易紀錄
+</h1>
 <div class="min-h-[600px]">
   <cdk-accordion class="flex flex-col gap-y-5">
     @for (record of recordList; track record; let index = $index) {
@@ -10,13 +12,17 @@
             }"
             class="flex items-center gap-5 rounded-t-lg border-b border-tmf-gray-2 p-2 pb-3 text-tmf-gray-2 duration-100"
           >
-            <div class="flex-grow break-all">
+            <div class="flex-grow break-all text-[14px]">
               訂單編號：{{ record.order_id }}
             </div>
-            <div class="hidden min-w-[120px] shrink-0 break-all lg:block">
+            <div
+              class="hidden min-w-[120px] shrink-0 break-all text-[14px] lg:block"
+            >
               訂單日期：{{ record.date }}
             </div>
-            <div class="hidden min-w-[120px] shrink-0 break-all lg:block">
+            <div
+              class="hidden min-w-[120px] shrink-0 break-all text-[14px] lg:block"
+            >
               付款狀態：{{ stateTramsform(record.status) }}
             </div>
           </div>
@@ -66,10 +72,12 @@
             <div
               class="flex flex-col items-start justify-center gap-y-3 rounded-lg border border-tmf-orange-1 bg-white p-5"
             >
-              <p class="lg:hidden">訂單日期 {{ record.date }}</p>
-              <p class="lg:hidden">付款狀態 {{ stateTramsform(record.status) }}</p>
-              <p>付款金額 NT$ {{ getTotalPrice(record.purchase_items) }}</p>
-              <p>付款方式 {{ purchaseWayTransform(record.purchase_way) }}</p>
+              <p class="text-[14px] md:text-[16px] lg:hidden">訂單日期 {{ record.date }}</p>
+              <p class="text-[14px] md:text-[16px] lg:hidden">
+                付款狀態 {{ stateTramsform(record.status) }}
+              </p>
+              <p class="text-[14px] md:text-[16px]">付款金額 NT$ {{ getTotalPrice(record.purchase_items) }}</p>
+              <p class="text-[14px] md:text-[16px]">付款方式 {{ purchaseWayTransform(record.purchase_way) }}</p>
             </div>
           </div>
         }
