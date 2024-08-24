@@ -1,0 +1,12 @@
+:host {
+  display: block;
+}
+.input-container {
+  @apply relative flex w-full items-center border-tmf-gray-4 bg-white px-3 duration-75 focus-within:border-tmf-orange-1;
+}
+textarea:focus-visible {
+  outline: none;
+}
+.error-message {
+  @apply  text-[14px] text-red-500;
+}

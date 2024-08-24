@@ -21,7 +21,7 @@ import {
   OverlayModule,
   ViewportRuler
 } from '@angular/cdk/overlay';
-import { Subject, merge, startWith, takeUntil } from 'rxjs';
+import { Subject, merge, startWith, takeUntil, tap } from 'rxjs';
 import { SelectService } from './option/select.service';
 import { OptionComponent } from './option/option.component';
 
@@ -124,7 +124,6 @@ export class SelectComponent
         this.optionComponents.toArray().forEach((el) => {
           this.listOfContainerItemMap[`${el.value}`] = `${el.label}`;
         });
-
         this.cdr.markForCheck();
       });
   }
@@ -188,6 +187,8 @@ export class SelectComponent
         );
       }
       this.cdr.markForCheck();
+    } else {
+      this.value = modelValue;
     }
   }
 

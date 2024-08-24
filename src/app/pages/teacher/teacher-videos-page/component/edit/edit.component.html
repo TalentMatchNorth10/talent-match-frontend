@@ -1,0 +1,89 @@
+<div class="flex flex-col items-center justify-center">
+  <div class="mb-5 flex w-full justify-between">
+    <h1 class="text-[30px] font-bold leading-9">影片管理</h1>
+  </div>
+  <div class="w-full" *ngIf="videoCardData">
+    <div class="mb-4 flex w-full gap-2 pl-10" >
+      <tmf-video-card
+      [data]="videoCardData"
+      ></tmf-video-card>
+      <div class="grow">
+        <div class="flex gap-1 justify-end">
+          <button class="border-tmf-gray-3 p-[4px_8px] border rounded text-tmf-gray-3" [routerLink]="['../../']" routerLinkActive="router-link-active" >返回</button>
+          <button class="border-tmf-gray-3 p-[4px_8px] border rounded text-tmf-gray-3" (click)="save()">儲存</button>
+        </div>
+      <div class="grid grid-cols-[200px_auto] auto-rows-min gap-5 text-lg pl-5 pt-10" [formGroup]="formGroup">
+          <label>類別<font class="text-red-500">*</font></label>
+          <div>
+            @if (tagOptions.length) {
+            <tmf-select formControlName="category">
+              <tmf-option
+                *ngFor="let item of tagOptions"
+                [value]="item"
+                [label]="item"
+              ></tmf-option>
+            </tmf-select>
+            <div
+              *ngIf="category.invalid && (category.dirty || category.touched)"
+              class="alert alert-danger"
+            >
+              <div class="error-message" *ngIf="category.errors?.['required']">必填</div>
+            </div>
+          }
+          </div>
+          <label>標題<font class="text-red-500">*</font></label>
+          <div>
+            <tmf-input
+              placeholder="請輸入標題，上限30字"
+              formControlName="name"
+              [inputType]="InputType.Outline"
+            ></tmf-input>
+          </div>
+          <label for="intro">文字說明<font class="text-red-500">*</font></label>
+          <div>
+            <div class="border input-container rounded-lg ">
+              <textarea id="intro" formControlName="intro" rows="3" class="w-full resize-none text-[14px] leading-5 outline-none md:text-[16px] md:leading-6" placeholder="請輸入說明，上限30字" maxlength="30"></textarea>
+            </div>
+            <div
+              *ngIf="intro.invalid && (intro.dirty || intro.touched)"
+              class="alert alert-danger"
+            >
+              <div class="error-message" *ngIf="intro.errors?.['required']">必填</div>
+              <div class="error-message" *ngIf="intro.errors?.['maxlength']">上限30字</div>
+            </div>
+          </div>
+          <label for="">已關聯課程</label>
+          <div>
+            <tmf-select formControlName="course_id">
+              <tmf-option *ngIf="formGroup.get('course_id')?.value"
+              label="請選擇"
+              [value]="null"
+              ></tmf-option>
+              <tmf-option
+                *ngFor="let item of courseOptions"
+                [value]="item.value"
+                [label]="item.label"
+              ></tmf-option>
+            </tmf-select>
+          </div>
+          <div>
+            <label for="video"
+              class="rounded-lg border cursor-pointer border-tmf-gray-4 bg-white px-4 py-2 text-tmf-gray-2"
+            >
+              上傳影片
+          </label>
+            <input
+              id="video"
+              type="file"
+              name=""
+              accept="video/*"
+              class="hidden"
+              (change)="uploadVideo($event)"
+            />
+          </div>
+          <!-- {{formGroup.value | json}} -->
+      </div>
+      </div>
+    </div>
+</div>
+</div>

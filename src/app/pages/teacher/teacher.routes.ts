@@ -16,8 +16,7 @@ export const routes: Routes = [
   {
     // 老師影片管理頁
     path: 'videos',
-    loadComponent: () =>
-      import('./teacher-videos-page/teacher-videos-page.component'),
+    loadChildren: () => import('./teacher-videos-page/video.routes'),
     data: { state: 'teacher' }
   },
   {

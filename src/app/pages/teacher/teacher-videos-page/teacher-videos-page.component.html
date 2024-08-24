@@ -1,1 +1,36 @@
-<p>teacher-videos-page works!</p>
+<div class="flex flex-col items-center justify-center">
+  <div class="mb-5 flex w-full justify-between">
+    <h1 class="text-[30px] font-bold leading-9">影片管理</h1>
+      <button routerLink="./add"
+        class="flex items-center gap-2 rounded-md bg-tmf-orange-1 px-3 py-2 text-white"
+      >
+        <span class="material-symbols-outlined"> add </span>
+        新增影片
+      </button>
+
+  </div>
+  <div class="w-full" *ngIf="data">
+  @for (item of data; track $index) {
+    <div class="mb-4 flex w-full gap-2 pl-10" *ngIf="data">
+      <tmf-video-card
+      [data]="item"
+      ></tmf-video-card>
+      <div class="grow">
+        <div class="flex gap-1 justify-end">
+          <button class="border-tmf-gray-3 p-[4px_8px] border rounded text-tmf-gray-3"
+          routerLink="./edit/{{item.video_id}}" routerLinkActive="router-link-active" >編輯</button>
+          <button class="border-[red] p-[4px_8px] border rounded text-[red]" (click)="delete(item.video_id)">刪除</button>
+        </div>
+      <div class="grid grid-cols-[200px_auto] auto-rows-min gap-5 text-lg pl-5 pt-10">
+          <label for="">類別</label>
+          <div>{{item.category}}</div>
+          <label for="">文字說明</label>
+          <div>{{item.intro}}</div>
+          <label for="">已關聯課程</label>
+          <div>{{item.course_name || '無關聯課程'}}</div>
+      </div>
+      </div>
+    </div>
+  }
+</div>
+</div>
