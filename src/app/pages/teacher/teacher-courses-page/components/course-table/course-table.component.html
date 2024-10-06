@@ -1,0 +1,172 @@
+<div class="mb-5 flex w-full justify-between">
+    <h1 class="text-[22px] font-bold leading-9 md:text-[26px] lg:text-[30px]">
+      課程管理
+    </h1>
+    <div class="flex items-center gap-x-2">
+      <button
+          (click)="changeView.emit({mode: ViewMode.Create})"
+          class="flex items-center gap-2 rounded-md bg-tmf-orange-1 px-3 py-2 text-white"
+        >
+          <span class="material-symbols-outlined"> add </span>
+          新增課程
+        </button> 
+    </div>
+  </div>
+
+<div class="w-full overflow-auto">
+  <table class="w-full min-w-[768px]">
+    <thead>
+      <tr>
+        <th class="py-2">
+          <p class="flex justify-start">課程圖</p>
+        </th>
+        <th class="py-2">
+          <div class="flex justify-start">
+            <ng-container
+              *ngTemplateOutlet="
+                sortTh;
+                context: {
+                  $implicit: {
+                    text: '名稱',
+                    column: SortColumn.Name
+                  }
+                }
+              "
+            ></ng-container>
+          </div>
+        </th>
+        <th class="py-2">
+          <p class="flex justify-start">類別</p>
+        </th>
+        <th class="py-2">
+          <ng-container
+            *ngTemplateOutlet="
+              sortTh;
+              context: {
+                $implicit: {
+                  text: '上/下架',
+                  column: SortColumn.Published
+                }
+              }
+            "
+          ></ng-container>
+        </th>
+        <th class="py-2">
+          <p class="flex justify-center">操作</p>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (item of dataSource; track item; let index = $index) {
+        <tr>
+          <td class="py-[2px]">
+            <div class="flex justify-start h-[112px] w-[200px] bg-tmf-gray-5 rounded-md">
+              @if(item.main_image){
+                <img
+                  [src]="item.main_image"
+                  alt="課程圖"
+                  class="h-full w-full rounded-md object-cover"
+                />
+              }
+            </div>
+          </td>
+          <td class="py-[2px]">
+            <p class="flex justify-start text-[16px] leading-6 text-tmf-gray-2">
+              {{ item.name }}
+            </p>
+          </td>
+          <td class="py-[2px]">
+            <div class="flex justify-start gap-2">
+              @if(item.main_category){
+                <div class="rounded bg-tmf-gray-5 px-2 py-1">
+                  {{ item.main_category }}
+                </div>
+              }
+              @if(item.sub_category){
+                <div class="rounded bg-tmf-gray-5 px-2 py-1">
+                  {{ item.sub_category }}
+                </div>
+              }
+              @if(!(item.main_category && item.sub_category)){
+                <p>未選擇類別</p>
+              }
+            </div>
+          </td>
+          <td class="py-[2px]">
+            <div class="flex justify-center">
+              <tmf-switch
+                *ngIf="publishedArray.controls[index]"
+                (valeuChange)="togglePublished(index)"
+                [formControl]="publishedArray.controls[index]"
+              ></tmf-switch>
+            </div>
+          </td>
+          <td class="py-[2px]">
+            <div class="flex flex-col items-center gap-y-2">
+              <button
+                (click)="
+                  this.handleAction({
+                    type: ActionType.View,
+                    data: item
+                  })
+                "
+                class="rounded border border-tmf-gray-3 px-2 py-1 text-[14px] leading-5 text-tmf-gray-3 duration-100 hover:border-tmf-orange-1 hover:bg-tmf-orange-1 hover:text-white active:scale-95"
+              >
+                檢視
+              </button>
+              @if(item.status !== CourseStatus.PUBLISHED){
+                <button
+                  (click)="
+                    this.handleAction({
+                      type: ActionType.Edit,
+                      data: item
+                    })
+                  "
+                  class="rounded border border-tmf-gray-3 px-2 py-1 text-[14px] leading-5 text-tmf-gray-3 duration-100 hover:border-tmf-orange-1 hover:bg-tmf-orange-1 hover:text-white active:scale-95"
+                >
+                  編輯
+                </button>
+              }
+              <button
+                (click)="
+                  this.handleAction({
+                    type: ActionType.Delete,
+                    data: item
+                  })
+                "
+                class="rounded border border-red-500 px-2 py-1 text-[14px] leading-5 text-red-500 duration-100 hover:bg-red-500 hover:text-white active:scale-95"
+              >
+                刪除
+              </button>
+            </div>
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>
+
+<ng-template #sortTh let-data>
+  <div
+    (click)="
+      changeSort(
+        data.column,
+        !sort() ? 'asc' : sort()!.split('-')[1] === 'asc' ? 'desc' : 'asc'
+      )
+    "
+    class="flex cursor-pointer select-none justify-center"
+  >
+    <p class="flex justify-start">{{ data.text }}</p>
+    @switch (sort()) {
+      @case (data.column + '-' + 'asc') {
+        <span class="material-symbols-outlined"> arrow_upward_alt </span>
+      }
+      @case (data.column + '-' + 'desc') {
+        <span class="material-symbols-outlined"> arrow_downward_alt </span>
+      }
+      @default {
+        <span class="material-symbols-outlined"> swap_vert </span>
+      }
+    }
+  </div>
+</ng-template>

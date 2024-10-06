@@ -7,7 +7,7 @@
 }
 
 .input {
-  @apply flex-grow overflow-hidden text-ellipsis text-[14px] leading-5 outline-none md:text-[16px] md:leading-6;
+  @apply max-w-full flex-grow overflow-hidden text-ellipsis text-[14px] leading-5 outline-none md:text-[16px] md:leading-6;
 }
 
 .input-selectType-icon {

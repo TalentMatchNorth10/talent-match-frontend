@@ -12,7 +12,7 @@ import { HideOnErrorDirective } from 'src/app/shared/directive/hide-on-error.dir
   template: `
     @if (data) {
       <div
-        class="group relative m-auto w-[320px] overflow-hidden rounded-xl bg-white shadow-lg md:w-[320px] lg:w-[302px]"
+        class="group relative m-auto w-full overflow-hidden rounded-xl bg-white shadow-lg md:w-[320px] lg:w-[302px]"
       >
         <div class="h-[180px] w-full bg-tmf-gray-4">
           @if (data.main_image) {
@@ -26,7 +26,7 @@ import { HideOnErrorDirective } from 'src/app/shared/directive/hide-on-error.dir
         </div>
         <div class="p-4">
           <h3
-            class="w mb-2 line-clamp-2 h-[64px] text-[18px] font-bold leading-7 text-tmf-gray-2 md:text-[24px] md:leading-8"
+            class="mb-2 line-clamp-2 h-[40px] text-[18px] font-bold leading-7 text-tmf-gray-2 md:h-[64px] md:text-[24px] md:leading-8"
           >
             {{ data.title ? data.title : '' }}
           </h3>
@@ -68,7 +68,9 @@ import { HideOnErrorDirective } from 'src/app/shared/directive/hide-on-error.dir
           </p>
         </div>
         <div class="flex items-center justify-start p-4">
-          <div class="mr-4 flex flex-col items-start text-[14px] leading-5">
+          <div
+            class="mr-4 flex h-[42px] flex-col items-start justify-between text-[14px] leading-5"
+          >
             <p class="text-tmf-gray-4">類型</p>
             <p class="text-xs font-bold text-black">
               {{ data.main_category ? data.main_category : '' }}－{{
@@ -76,7 +78,9 @@ import { HideOnErrorDirective } from 'src/app/shared/directive/hide-on-error.dir
               }}
             </p>
           </div>
-          <div class="mr-4 flex flex-col items-start text-[14px] leading-5">
+          <div
+            class="mr-4 flex h-[42px] flex-col items-start justify-between text-[14px] leading-5"
+          >
             <p class="text-tmf-gray-4">評分</p>
             <div class="flex items-center gap-1">
               <tmf-star-rating [rating]="data.rate"></tmf-star-rating>

@@ -1,16 +1,16 @@
 <div class="flex min-h-[100vh] flex-col">
   <app-header class="relative z-50"></app-header>
   @if (identity() === 'default') {
-    <main class="relative z-40 flex-grow min-h-screen">
+    <main class="relative z-40 min-h-screen flex-grow">
       <router-outlet></router-outlet>
     </main>
   } @else {
     <main
-      class="container flex-grow relative z-40 mx-auto mb-12 mt-6 gap-6 sm:flex xl:max-w-screen-xl"
+      class="relative z-40 mx-auto mb-12 mt-6 w-full max-w-[1280px] flex-grow gap-6 px-6 md:flex"
     >
       <!-- 功能選單 -->
       <div
-        class="max-h-[768px] hidden rounded-xl bg-white p-6 shadow-lg sm:block sm:min-w-[13.25rem] xl:min-w-[18.875rem]"
+        class="hidden max-h-[768px] rounded-xl bg-white p-6 shadow-lg md:block md:min-w-[13.25rem]"
       >
         <div class="mb-6 flex items-center justify-between">
           <p class="text-xl font-bold">個人管理</p>
@@ -29,7 +29,7 @@
               [routerLinkActiveOptions]="{ exact: true }"
             >
               <a
-                class="flex items-center justify-between gap-3 p-4"
+                class="flex items-center justify-between gap-3 px-2 py-3"
                 [routerLink]="menuItem.path"
               >
                 <span class="material-icons-outlined">{{ menuItem.icon }}</span>
@@ -40,7 +40,8 @@
         </ul>
 
         <a
-          class="flex items-center justify-between gap-3 rounded-xl p-4 bg-tmf-gray-5 text-tmf-gray-4 cursor-not-allowed"
+          class="flex items-center justify-between gap-3 rounded-xl bg-tmf-orange-1 p-4 text-white"
+          [routerLink]="changeIdentity().path"
         >
           <span class="material-icons-outlined">restart_alt</span>
           <p class="grow">切換為{{ changeIdentity().text }}</p>
@@ -48,9 +49,10 @@
       </div>
       <!-- 功能頁面 -->
       <div
-        class="mx-3 rounded-2xl bg-white px-5 py-6 shadow-lg sm:mx-0 sm:w-full"
+        class="manage-content relative rounded-2xl bg-white px-5 py-6 shadow-lg"
       >
         <router-outlet></router-outlet>
+        <tmf-loading></tmf-loading>
       </div>
     </main>
   }

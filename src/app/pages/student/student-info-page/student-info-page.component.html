@@ -1,6 +1,6 @@
 <div class="flex flex-col items-center justify-center">
   <div class="mb-5 flex w-full justify-between">
-    <h1 class="text-[30px] font-bold leading-9">基本資料</h1>
+    <h1 class="text-[22px] md:text-[26px] lg:text-[30px] font-bold leading-9">基本資料</h1>
     @if (isEditMode()) {
       <div class="flex gap-2">
         <button
@@ -34,7 +34,7 @@
     >
       @if (!!formGroup.controls.avator_image.value) {
         <img
-          class="h-[200px] w-[200px] rounded-full"
+          class="h-[160px] w-[160px] md:h-[180px] md:w-[180px] lg:h-[200px] lg:w-[200px] rounded-full"
           [src]="formGroup.controls.avator_image.value"
           alt=""
         />

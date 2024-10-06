@@ -222,7 +222,7 @@ import { GetCartItemsResponseModelDataInner } from 'libs/openapi/src';
           />
         </div>
         <p
-          class="flex flex-col items-center text-[18px] font-bold leading-7 text-tmf-gray-2"
+          class="flex flex-col items-center text-[18px] font-bold leading-7 text-tmf-gray-3"
         >
           <span>購物車是空的 :(</span>
           <span>馬上去瞧瞧其他好課程！</span>
@@ -274,6 +274,10 @@ export class CartTableComponent implements OnChanges, OnInit {
     selectAll: this.fb.control(false),
     rows: this.fb.array<FormControl<boolean | null>>([])
   });
+
+  get selectAll() {
+    return this.form.controls[CartTableFormKey.SELECTALL];
+  }
 
   get rows() {
     return this.form.controls[CartTableFormKey.ROWS];

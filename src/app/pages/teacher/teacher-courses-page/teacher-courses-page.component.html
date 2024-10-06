@@ -1,1 +1,9 @@
-<p>teacher-courses-page works!</p>
+@if (this.mode() === ViewMode.List) {
+ <app-course-table (changeView)="handleChangeView($event)"></app-course-table>
+} @else {
+  <app-course-detail
+    [mode]="mode()"
+    [courseId]="currentCourseId()"
+    (changeView)="handleChangeView($event)"
+  ></app-course-detail>
+}

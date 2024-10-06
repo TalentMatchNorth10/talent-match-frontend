@@ -12,6 +12,7 @@ import { BASE_PATH } from 'libs/openapi/src';
 import { TokenInterceptor } from './shared/interceptors/token.interceptor';
 import { AuthInterceptor } from './shared/interceptors/auth.interceptor';
 import { provideAnimations } from '@angular/platform-browser/animations';
+import { LoadingInterceptor } from './shared/interceptors/loading.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -24,6 +25,11 @@ export const appConfig: ApplicationConfig = {
     ),
     provideAnimations(),
     provideHttpClient(withInterceptorsFromDi()),
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: LoadingInterceptor,
+      multi: true
+    },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,

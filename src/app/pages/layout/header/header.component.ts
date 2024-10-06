@@ -158,30 +158,32 @@ import { CartService } from 'src/app/shared/services/cart.service';
           alt="logo"
         />
         <!-- 使用者區塊 -->
-        <div class="flex items-center justify-end gap-x-10">
-          <div class="mt-2 flex justify-center gap-x-4">
+        <div class="flex items-center justify-end gap-x-3 md:gap-x-10">
+          <div
+            class="mt-[2px] flex items-center justify-center gap-x-3 md:gap-x-4"
+          >
             <!-- 公告 -->
             <div class="relative cursor-pointer">
               <button
-                class="flex h-[40px] w-[48px] cursor-pointer items-center justify-center rounded-lg p-2 duration-100 hover:bg-tmf-gray-6 active:bg-tmf-gray-5"
+                class="flex h-[32px] w-[32px] cursor-pointer items-center justify-center rounded-lg p-2 duration-100 hover:bg-tmf-gray-6 active:bg-tmf-gray-5 md:h-[40px] md:w-[48px]"
               >
                 <span class="material-icons-outlined">notifications</span>
                 <div
-                  class="absolute right-2 top-2 h-[6px] w-[6px] rounded-full bg-tmf-orange-1"
+                  class="absolute right-1 top-1 h-[4px] w-[4px] rounded-full bg-tmf-orange-1 md:right-2 md:top-2 md:h-[6px] md:w-[6px]"
                 ></div>
               </button>
             </div>
             <!-- 購物車 -->
-            <div class="group relative">
+            <div class="group md:relative">
               <button
-                class="flex h-[40px] w-[48px] cursor-pointer items-center justify-center rounded-lg p-2 duration-100 hover:bg-tmf-gray-6 active:bg-tmf-gray-5"
+                class="relative flex h-[32px] w-[32px] cursor-pointer items-center justify-center rounded-lg p-2 duration-100 hover:bg-tmf-gray-6 active:bg-tmf-gray-5 md:h-[40px] md:w-[48px]"
               >
                 <span class="material-icons-outlined cursor-pointer"
                   >shopping_cart</span
                 >
                 @if (cartList && cartList.length > 0) {
                   <div
-                    class="absolute right-2 top-1 flex h-4 w-4 items-center justify-center rounded-full border-2 border-white bg-tmf-orange-1 text-[10px] font-semibold text-white"
+                    class="absolute right-0 top-0 flex h-4 w-4 items-center justify-center rounded-full border-2 border-white bg-tmf-orange-1 text-[10px] font-semibold text-white md:right-2 md:top-1"
                   >
                     {{ cartList.length }}
                   </div>
@@ -189,10 +191,10 @@ import { CartService } from 'src/app/shared/services/cart.service';
               </button>
               <!-- 購物車下拉 -->
               <div
-                class="absolute right-0 top-full hidden bg-white pt-[8px] group-hover:block lg:left-0 lg:pt-[16px]"
+                class="absolute right-0 top-full hidden w-[320px] rounded-b-xl bg-white group-hover:block md:w-fit md:pt-[12px] lg:pt-[20px]"
               >
                 <ul
-                  class="w-[320px] rounded-b-[12px] border-t border-tmf-purple bg-white py-3 shadow-lg"
+                  class="w-full rounded-b-[12px] border-t border-tmf-purple bg-white py-3 shadow-lg md:w-[320px]"
                 >
                   @for (
                     cartItem of cartList;
@@ -295,7 +297,7 @@ import { CartService } from 'src/app/shared/services/cart.service';
             >
               <!-- 使用者頭像 -->
               <div
-                class="h-[44px] w-[44px] shrink-0 overflow-hidden rounded-full bg-tmf-gray-5"
+                class="h-[32px] w-[32px] shrink-0 overflow-hidden rounded-full bg-tmf-gray-5 md:h-[44px] md:w-[44px]"
               >
                 @if (user.avator_image) {
                   <img [src]="user.avator_image" alt="avator_image" />
@@ -307,7 +309,7 @@ import { CartService } from 'src/app/shared/services/cart.service';
               </p>
               <!-- 使用者選單 -->
               <div
-                class="absolute right-0 top-full hidden pt-[10px] group-hover:block lg:left-0 lg:pt-[18px]"
+                class="absolute right-0 top-full hidden pt-[16px] group-hover:block md:pt-[10px] lg:left-0 lg:pt-[18px]"
               >
                 <ul
                   class="w-[200px] rounded-b-[12px] border-t border-tmf-purple bg-white py-3 shadow-lg"

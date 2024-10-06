@@ -9,22 +9,19 @@ import { Component, Input, SimpleChanges } from '@angular/core';
     <div class="flex items-center">
       <span
         *ngFor="let star of fullStars"
-        class="material-icons-outlined text-tmf-yellow-1"
-        [ngClass]="starFontSize(starSize)"
+        class="material-icons-outlined text-[12px] text-tmf-yellow-1 md:text-[16px] lg:text-[20px]"
       >
         star
       </span>
       <span
         *ngIf="halfStars"
-        class="material-icons-outlined text-tmf-yellow-1"
-        [ngClass]="starFontSize(starSize)"
+        class="material-icons-outlined text-[12px] text-tmf-yellow-1 md:text-[16px] lg:text-[20px]"
       >
         star_half
       </span>
       <span
         *ngFor="let star of emptyStars"
-        class="material-icons-outlined"
-        [ngClass]="starFontSize(starSize)"
+        class="material-icons-outlined text-[12px] md:text-[16px] lg:text-[20px]"
       >
         star_border
       </span>
@@ -38,7 +35,6 @@ import { Component, Input, SimpleChanges } from '@angular/core';
 })
 export class StarRatingComponent {
   @Input() rating: number = 0;
-  @Input() starSize: string = '12px';
   fullStars: number[] = [];
   halfStars: number = 0;
   emptyStars: number[] = [];
@@ -54,6 +50,18 @@ export class StarRatingComponent {
   }
 
   updateStars(): void {
+    // 確保 rating 在 0 到 5 之間
+    if (this.rating < 0) {
+      this.rating = 0;
+    } else if (this.rating > 5) {
+      this.rating = 5;
+    }
+
+    // 確保 rating 是數字
+    if (isNaN(this.rating)) {
+      this.rating = 0;
+    }
+
     const fullStarsCount = Math.floor(this.rating);
     const decimalPart = this.rating - fullStarsCount;
 
