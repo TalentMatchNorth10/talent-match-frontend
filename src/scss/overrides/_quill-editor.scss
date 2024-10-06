@@ -1,0 +1,17 @@
+.ql-toolbar {
+  @apply rounded-t-md;
+}
+
+.ql-container {
+  @apply rounded-b-md;
+  .ql-editor {
+    ul,
+    ol {
+      @apply pl-0;
+    }
+
+    ul li::before {
+      @apply text-center;
+    }
+  }
+}

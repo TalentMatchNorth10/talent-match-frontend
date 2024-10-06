@@ -1,0 +1,11 @@
+:host {
+  display: block;
+}
+
+.file-container {
+  @apply relative flex h-[36px] items-center rounded-lg border border-tmf-gray-4 bg-white px-3 duration-75 md:h-[38px] lg:h-[40px];
+}
+
+.file-text {
+  @apply mr-1 w-full max-w-full flex-grow overflow-hidden text-ellipsis text-[14px] leading-5 outline-none md:text-[16px] md:leading-6;
+}

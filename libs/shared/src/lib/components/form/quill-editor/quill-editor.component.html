@@ -1,1 +1,14 @@
-<div id="quill" #quillContainer></div>
+<div class="mb-1 flex flex-col">
+  <p>
+    <span *ngIf="label" class="select-label">{{ label }}</span>
+    <span *ngIf="isRequired" class="text-red-500">*</span>
+  </p>
+  <p *ngIf="info" class="mb-2 ml-2 text-sm text-gray-500">{{ info }}</p>
+</div>
+<div class="relative">
+  <div id="quill" #quillContainer [style.height]="height ? height : null"></div>
+  <div
+    *ngIf="diabled"
+    class="absolute left-0 top-0 h-full w-full cursor-not-allowed rounded-md bg-tmf-gray-2/20"
+  ></div>
+</div>

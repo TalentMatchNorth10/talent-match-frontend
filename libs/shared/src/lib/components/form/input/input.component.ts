@@ -56,7 +56,7 @@ import { Subject, takeUntil } from 'rxjs';
         class="input-container"
         (keyup.enter)="search()"
         [ngClass]="{
-          'cursor-not-allowed !bg-tmf-gray-5': disabled,
+          'cursor-not-allowed !bg-tmf-gray-5 text-tmf-gray-3': disabled,
           'border-b placeholder:text-tmf-gray-3':
             inputType === InputType.Underline,
           'placeholder:text-tmf-gray-3': inputType === InputType.Outline,

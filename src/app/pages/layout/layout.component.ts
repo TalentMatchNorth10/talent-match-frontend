@@ -4,11 +4,12 @@ import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { MenuService } from 'src/app/shared/services/menu.service';
 import { filter } from 'rxjs';
+import { LoadingComponent } from '@tmf/libs-shared/components/loading/loading.component';
 
 @Component({
   selector: 'app-layout',
   standalone: true,
-  imports: [RouterModule, HeaderComponent, FooterComponent],
+  imports: [RouterModule, HeaderComponent, FooterComponent, LoadingComponent],
   templateUrl: './layout.component.html',
   styleUrl: './layout.component.scss'
 })

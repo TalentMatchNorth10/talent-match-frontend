@@ -10,7 +10,7 @@
     >
       <!-- 功能選單 -->
       <div
-        class="hidden max-h-[768px] rounded-xl bg-white p-6 shadow-lg md:block md:min-w-[13.25rem] xl:min-w-[18.875rem]"
+        class="hidden max-h-[768px] rounded-xl bg-white p-6 shadow-lg md:block md:min-w-[13.25rem]"
       >
         <div class="mb-6 flex items-center justify-between">
           <p class="text-xl font-bold">個人管理</p>
@@ -48,8 +48,11 @@
         </a>
       </div>
       <!-- 功能頁面 -->
-      <div class="rounded-2xl bg-white px-5 py-6 shadow-lg md:w-full">
+      <div
+        class="manage-content relative rounded-2xl bg-white px-5 py-6 shadow-lg"
+      >
         <router-outlet></router-outlet>
+        <tmf-loading></tmf-loading>
       </div>
     </main>
   }

@@ -1,0 +1,212 @@
+<div class="mb-5 flex w-full justify-between">
+  <h1 class="text-[22px] font-bold leading-9 md:text-[26px] lg:text-[30px]">
+    課程管理
+  </h1>
+  <div class="flex flex-col items-end gap-x-2 md:flex-row md:items-center">
+    @if (
+      (mode() === ViewMode.Edit || mode() === ViewMode.Create) && courseData
+    ) {
+      <p class="font-bold leading-9">
+        填寫狀態：
+        <span
+          [ngClass]="{
+            'text-green-500': courseData.is_valid,
+            'text-red-500': !courseData.is_valid
+          }"
+        >
+          {{ courseData.is_valid ? '驗證通過' : '驗證未通過' }}
+        </span>
+      </p>
+    }
+    <div class="flex h-full items-center gap-1">
+      <button
+        (click)="this.changeView.emit({ mode: ViewMode.List })"
+        class="flex items-center gap-2 rounded-md bg-tmf-orange-1 p-1 text-white md:px-3 md:py-2"
+      >
+        <span class="material-symbols-outlined text-[20px] md:text-[22px]">
+          reply
+        </span>
+        <span class="hidden lg:block"> 返回 </span>
+      </button>
+      @if (
+        mode() === ViewMode.View &&
+        courseData &&
+        courseData.status !== CourseStatus.PUBLISHED
+      ) {
+        <button
+          (click)="this.changeView.emit({ mode: ViewMode.Edit })"
+          class="flex items-center gap-2 rounded-md bg-tmf-orange-1 p-1 text-white md:px-3 md:py-2"
+        >
+          <span class="material-symbols-outlined text-[20px] md:text-[22px]">
+            edit_square
+          </span>
+          編輯
+        </button>
+      } @else if (mode() === ViewMode.Edit || mode() === ViewMode.Create) {
+        <button
+          (click)="reset()"
+          class="flex items-center gap-2 rounded-md bg-tmf-orange-1 p-1 text-white md:px-3 md:py-2"
+        >
+          <span
+            class="material-symbols-outlined -scale-x-100 text-[20px] md:text-[22px]"
+          >
+            refresh
+          </span>
+          <span class="hidden lg:block"> 重設 </span>
+        </button>
+        <button
+          (click)="save()"
+          class="flex items-center gap-2 rounded-md bg-tmf-orange-1 p-1 text-white md:px-3 md:py-2"
+        >
+          <span class="material-symbols-outlined text-[20px] md:text-[22px]">
+            save
+          </span>
+          <span class="hidden lg:block"> 儲存 </span>
+        </button>
+        @if (courseData && courseData.is_valid) {
+          <button
+            (click)="togglePublished()"
+            [ngClass]="{
+              'cursor-not-allowed !bg-tmf-gray-5 !text-white':
+                !courseData.is_valid
+            }"
+            class="flex items-center gap-2 rounded-md bg-tmf-orange-1 p-1 text-white md:px-3 md:py-2"
+          >
+            <span class="material-symbols-outlined text-[20px] md:text-[22px]">
+              {{
+                courseData.status === CourseStatus.UNPUBLISHED
+                  ? 'publish'
+                  : 'unpublished'
+              }}
+            </span>
+            <span class="hidden lg:block">
+              {{
+                courseData.status === CourseStatus.UNPUBLISHED ? '上架' : '下架'
+              }}
+            </span>
+          </button>
+        }
+      }
+    </div>
+  </div>
+</div>
+
+<form [formGroup]="formGroup">
+  <tmf-input
+    label="課程名稱"
+    placeholder="請輸入課程名稱"
+    [isRequired]="true"
+    [formControlName]="CourseDetailFormKey.NAME"
+    [inputType]="InputType.Outline"
+  ></tmf-input>
+  <app-dynamic-input-list
+    class="mb-6"
+    label="定價"
+    idKey="_id"
+    itemKey1="price"
+    itemLabel1="價格"
+    itemPlaceholder1="請輸入價格"
+    itemType1="number"
+    itemKey2="quantity"
+    itemLabel2="堂數"
+    itemPlaceholder2="請輸入堂數"
+    itemType2="number"
+    [isRequired]="true"
+    [formControlName]="CourseDetailFormKey.PRICE_QUANTITY"
+  ></app-dynamic-input-list>
+  <div class="mb-6 flex items-end gap-2">
+    <tmf-select
+      label="授課地點"
+      [isRequired]="true"
+      [formControlName]="CourseDetailFormKey.CITY_ID"
+    >
+      @for (option of cityOptions; track option) {
+        <tmf-option [value]="option.value" [label]="option.label"></tmf-option>
+      }
+    </tmf-select>
+    <tmf-select
+      [isRequired]="false"
+      [formControlName]="CourseDetailFormKey.DIST_ID"
+    >
+      @for (option of distOptions; track option) {
+        <tmf-option [value]="option.value" [label]="option.label"></tmf-option>
+      }
+    </tmf-select>
+  </div>
+  <div class="mb-6 flex items-end gap-2">
+    <tmf-select
+      label="課程類別"
+      [isRequired]="true"
+      [formControlName]="CourseDetailFormKey.MAIN_CATEGORY"
+    >
+      @for (item of tagOptions; track item) {
+        <tmf-option
+          [value]="item.main_category"
+          [label]="item.main_category || ''"
+        ></tmf-option>
+      }
+    </tmf-select>
+    <tmf-select
+      [isRequired]="false"
+      [formControlName]="CourseDetailFormKey.SUB_CATEGORY"
+    >
+      @for (tag of subTagOptions; track tag) {
+        <tmf-option [value]="tag" [label]="tag"></tmf-option>
+      }
+    </tmf-select>
+  </div>
+  <tmf-quill-editor
+    class="mb-6"
+    label="文章內文"
+    height="400px"
+    [isRequired]="true"
+    [diabled]="content.disabled"
+    [defaultContent]="courseData?.content || ''"
+    (contentChangeEvent)="content.setValue($event)"
+  ></tmf-quill-editor>
+  <app-video-list
+    class="mb-6"
+    label="課程短影片"
+    [disabled]="formGroup.get(CourseDetailFormKey.VIDEO_IDS)!.disabled"
+    [videoIds]="videoIds"
+    [courseId]="courseId() || ''"
+    [teacherId]="courseData?.teacher_id || ''"
+    (selectVideoChange)="handleSelectVideo($event)"
+  ></app-video-list>
+  <tmf-image-upload
+    class="mb-6"
+    label="文章封面圖片"
+    [isRequired]="true"
+    [formControlName]="CourseDetailFormKey.MAIN_IMAGE"
+  ></tmf-image-upload>
+  <tmf-textarea
+    class="mb-6"
+    label="購買成功訊息"
+    [isRequired]="true"
+    [formControlName]="CourseDetailFormKey.PURCHASE_MESSAGE"
+  ></tmf-textarea>
+  <app-file-uploader
+    class="mb-6"
+    label="課程檔案"
+    [formControlName]="CourseDetailFormKey.FILE_DETAILS"
+  ></app-file-uploader>
+  <app-dynamic-input-list
+    class="mb-6"
+    label="課程檔案連結"
+    idKey="id"
+    itemKey1="name"
+    itemLabel1="檔案名稱"
+    itemPlaceholder1="請輸入檔案名稱"
+    itemKey2="url"
+    itemLabel2="檔案連結"
+    itemPlaceholder2="請輸入檔案連結"
+    [formControlName]="CourseDetailFormKey.FILE_URL_DETAILS"
+  ></app-dynamic-input-list>
+  <tmf-input
+    label="課前諮詢問券連結"
+    placeholder="請輸入課前諮詢問券連結"
+    [isRequired]="true"
+    [formControlName]="CourseDetailFormKey.SURVEY_URL"
+    [inputType]="InputType.Outline"
+  ></tmf-input>
+</form>

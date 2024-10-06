@@ -1,8 +1,6 @@
 import { DialogRef, DIALOG_DATA } from '@angular/cdk/dialog';
 import { Component, Inject } from '@angular/core';
-import { ReviewComponent } from '../review/review.component';
 import { StarRatingComponent } from '../../star-rating/star-rating.component';
-import { GetCourseDetailResponseModelDataReviewsInner } from 'libs/openapi/src';
 import { DatePipe } from '@angular/common';
 
 @Component({

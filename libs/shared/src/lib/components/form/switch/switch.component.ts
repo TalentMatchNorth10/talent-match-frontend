@@ -1,5 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component, forwardRef, Input } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  forwardRef,
+  Input,
+  Output
+} from '@angular/core';
 import {
   ControlValueAccessor,
   NG_VALUE_ACCESSOR,
@@ -39,6 +45,8 @@ export class SwitchComponent implements ControlValueAccessor {
     });
   }
 
+  @Output() valeuChange = new EventEmitter<boolean>();
+
   private _disabled: boolean = false;
   value: boolean = false;
 
@@ -65,6 +73,7 @@ export class SwitchComponent implements ControlValueAccessor {
   toggleSwitch() {
     if (!this.isDisabled) {
       this.value = !this.value;
+      this.valeuChange.emit(this.value);
       this.onChange(this.value);
       this.onTouched();
     }

@@ -6,5 +6,8 @@ export const PROTECTED_PATHS = [
   { pattern: '/api/student_reservation/reserve_course', methods: ['POST'] },
   { pattern: '/api/student_reservation/reserves_time', methods: ['POST'] },
   { pattern: '/api/favorites', methods: ['POST'] },
-  { pattern: '/api/upload/file', methods: ['POST'] }
+  { pattern: '/api/upload/file', methods: ['POST'] },
+  { pattern: '/api/teacher_course', methods: ['GET', 'POST'] },
+  { pattern: '/api/teacher_video', methods: ['GET', 'POST'] },
+  { pattern: '/api/file', methods: ['POST', 'GET', 'DELETE'] }
 ];
