@@ -25,8 +25,7 @@ jobs:
       - run: npm install
       - run: npm run openapi:client
   deploy:
-    needs:
-      - lint
+    needs: [lint, openapi-generate]
     runs-on: ubuntu-latest
     steps:
       - name: Deploy
