@@ -1,14 +1,17 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, inject, signal } from '@angular/core';
 import {
-  FormArray,
   FormBuilder,
   FormControl,
   FormGroup,
   ReactiveFormsModule
 } from '@angular/forms';
 import { CheckboxComponent } from '@tmf/libs-shared/components';
-import { CommonService, TagsResponseModelDataInner } from 'libs/openapi/src';
+import {
+  CommonService,
+  StudentPreferenceService,
+  TagsResponseModelDataInner
+} from 'libs/openapi/src';
 
 @Component({
   selector: 'app-student-preference-page',
@@ -20,10 +23,12 @@ import { CommonService, TagsResponseModelDataInner } from 'libs/openapi/src';
 export default class StudentPreferencePageComponent implements OnInit {
   private commonService = inject(CommonService);
   private fb = inject(FormBuilder);
+  private studentPreferenceService = inject(StudentPreferenceService);
 
   tags: TagsResponseModelDataInner[] = [];
   tagsFormArray = this.fb.array<
     FormGroup<{
+      id: FormControl<string | null>;
       main_category: FormControl<boolean | null>;
       sub_category: FormControl<string[] | null>;
     }>
@@ -36,13 +41,17 @@ export default class StudentPreferencePageComponent implements OnInit {
       this.tags.forEach((tag) => {
         this.tagsFormArray.push(
           this.fb.group({
+            id: this.fb.control(tag._id),
             main_category: this.fb.control(false),
             sub_category: this.fb.control<string[]>([])
           })
         );
       });
       this.cancelEditMode();
+      this.getPreferences();
     });
+
+    this.getPreferences();
   }
 
   openEditMode() {
@@ -55,8 +64,44 @@ export default class StudentPreferencePageComponent implements OnInit {
     this.tagsFormArray.disable();
   }
 
-  updatePreference() {
-    // TODO: update preference
+  getPreferences() {
+    this.studentPreferenceService.apiStudentPreferenceGet().subscribe((res) => {
+      const preferences = res.data;
+      this.tagsFormArray.controls.forEach((control, index) => {
+        const preference = preferences?.find(
+          (preference) => preference.preference_id === control.get('id')?.value
+        );
+
+        if (preference) {
+          control.patchValue({
+            main_category:
+              preference.preference_tags?.length ===
+              this.tags[index].sub_category?.length,
+            sub_category: preference.preference_tags
+          });
+        }
+      });
+    });
+  }
+
+  updatePreferences() {
+    const preferences = this.tagsFormArray.value
+      .filter((item) => item.sub_category && item.sub_category.length)
+      .map((tag) => {
+        return {
+          preference_id: tag.id!,
+          preference_tags: tag.sub_category!
+        };
+      });
+
+    this.studentPreferenceService
+      .apiStudentPreferencePost({
+        updateStudentPreferencesRequestModelInner: preferences
+      })
+      .subscribe((res) => {
+        this.cancelEditMode();
+        this.getPreferences();
+      });
   }
 
   getSubTagOptions(sub_category: string[]) {
