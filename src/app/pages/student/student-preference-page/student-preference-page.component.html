@@ -3,7 +3,7 @@
   @if (isEditMode()) {
     <div class="flex gap-2">
       <button
-        (click)="updatePreference()"
+        (click)="updatePreferences()"
         class="rounded-md bg-tmf-orange-1 px-5 py-2 text-white"
       >
         儲存
@@ -29,7 +29,7 @@
     <div class="mb-5 flex flex-col items-start gap-3">
       <tmf-checkbox
         (checkedChange)="handleMainCategoryChange($event, index)"
-        [label]="tag.main_category ?? ''"
+        [label]="tag.main_category"
         [direct]="'horizontal'"
         [formControl]="tagsFormArray.at(index).controls.main_category"
       ></tmf-checkbox>
@@ -38,7 +38,7 @@
           (checkedChange)="handleSubCategoryChange($event, index)"
           [formControl]="tagsFormArray.at(index).controls.sub_category"
           [single]="false"
-          [options]="getSubTagOptions(tag.sub_category ?? [])"
+          [options]="getSubTagOptions(tag.sub_category)"
         ></tmf-checkbox>
       </div>
     </div>
