@@ -1,6 +1,6 @@
 <div class="flex min-h-[100vh] flex-col">
-  <app-header class="relative z-50"></app-header>
-  @if (identity() === 'default') {
+  <app-header class="relative z-50" [user]="user()"></app-header>
+  @if (identity() === IdentityType.DEFAULT) {
     <main class="relative z-40 min-h-screen flex-grow">
       <router-outlet></router-outlet>
     </main>
@@ -39,13 +39,15 @@
           }
         </ul>
 
-        <a
-          class="flex items-center justify-between gap-3 rounded-xl bg-tmf-orange-1 p-4 text-white"
-          [routerLink]="changeIdentity().path"
-        >
-          <span class="material-icons-outlined">restart_alt</span>
-          <p class="grow">切換為{{ changeIdentity().text }}</p>
-        </a>
+        @if(user()?.is_teacher){
+          <a
+            class="flex items-center justify-between gap-3 rounded-xl bg-tmf-orange-1 p-4 text-white"
+            [routerLink]="changeIdentity().path"
+          >
+            <span class="material-icons-outlined">restart_alt</span>
+            <p class="grow">切換為{{ changeIdentity().text }}</p>
+          </a>
+        }
       </div>
       <!-- 功能頁面 -->
       <div

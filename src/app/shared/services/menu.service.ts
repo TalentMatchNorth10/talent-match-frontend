@@ -1,18 +1,23 @@
 import { Injectable, WritableSignal, signal } from '@angular/core';
 
+export enum IdentityType {
+  STUDENT = 'STUDENT',
+  TEACHER = 'TEACHER',
+  DEFAULT = 'DEFAULT'
+}
 @Injectable({
   providedIn: 'root'
 })
 export class MenuService {
   private menuList: WritableSignal<any> = signal([]);
-  private identity: WritableSignal<string> = signal('');
+  private identity: WritableSignal<IdentityType> = signal(IdentityType.DEFAULT);
   menuListSig = this.menuList.asReadonly();
   identitySig = this.identity.asReadonly();
 
-  updateMenuList(identity: 'student' | 'teacher' | 'default'): void {
+  updateMenuList(identity: IdentityType): void {
     this.identity.set(identity);
     switch (identity) {
-      case 'student':
+      case IdentityType.STUDENT:
         this.menuList.set([
           {
             icon: 'face',
@@ -46,7 +51,7 @@ export class MenuService {
           }
         ]);
         break;
-      case 'teacher':
+      case IdentityType.TEACHER:
         this.menuList.set([
           {
             icon: 'face',

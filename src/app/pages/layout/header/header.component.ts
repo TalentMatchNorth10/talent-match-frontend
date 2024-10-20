@@ -1,13 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, inject } from '@angular/core';
-import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
+import { Component, OnInit, inject, input } from '@angular/core';
+import { Router, NavigationEnd } from '@angular/router';
 import {
   CommonService,
   GetCartItemsResponseModelDataInner,
   ShopService,
   TagsResponseModelDataInner,
-  UserInfoResponseModelData,
-  UserService
+  UserInfoResponseModelData
 } from 'libs/openapi/src';
 import { AuthStatusService } from 'src/app/shared/services/authStatus.service';
 import { CartTotal, UserMenuItem } from './header.model';
@@ -299,13 +298,13 @@ import { CartService } from 'src/app/shared/services/cart.service';
               <div
                 class="h-[32px] w-[32px] shrink-0 overflow-hidden rounded-full bg-tmf-gray-5 md:h-[44px] md:w-[44px]"
               >
-                @if (user.avator_image) {
-                  <img [src]="user.avator_image" alt="avator_image" />
+                @if (user()?.avator_image) {
+                  <img [src]="user()?.avator_image" alt="avator_image" />
                 }
               </div>
               <!-- 使用者名稱 -->
               <p class="hidden text-[18px] font-medium leading-7 lg:block">
-                {{ user.nick_name }}
+                {{ user()?.nick_name }}
               </p>
               <!-- 使用者選單 -->
               <div
@@ -451,14 +450,13 @@ import { CartService } from 'src/app/shared/services/cart.service';
   animations: [Animations.sidenavAnimation, Animations.backdropAnimation]
 })
 export class HeaderComponent implements OnInit {
-  private userService = inject(UserService);
   private router = inject(Router);
   private authStatusService = inject(AuthStatusService);
   private shopService = inject(ShopService);
   private commonService = inject(CommonService);
   private cartService = inject(CartService);
 
-  user: UserInfoResponseModelData | null = null;
+  user = input<UserInfoResponseModelData | null>(null);
   cityOptions: OptionType[] = [];
   selectCity!: OptionType | null;
   selectCityControl = new FormControl();
@@ -525,10 +523,7 @@ export class HeaderComponent implements OnInit {
     this.getOptions();
     this.authStatusService.loginStatus$().subscribe((status) => {
       if (status) {
-        this.getUserInfo();
         this.getCartList();
-      } else {
-        this.user = null;
       }
     });
     this.setIsIndex(window.location.pathname);
@@ -566,12 +561,6 @@ export class HeaderComponent implements OnInit {
 
     this.commonService.apiCommonTagGet().subscribe((res) => {
       this.tagOptions = res.data;
-    });
-  }
-
-  getUserInfo() {
-    this.userService.apiUserUserInfoGet().subscribe((res) => {
-      this.user = res.data;
     });
   }
 
