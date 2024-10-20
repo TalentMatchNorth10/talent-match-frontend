@@ -1,4 +1,4 @@
-import { MenuService } from './shared/services/menu.service';
+import { IdentityType, MenuService } from './shared/services/menu.service';
 import {
   CUSTOM_ELEMENTS_SCHEMA,
   Component,
@@ -29,9 +29,9 @@ export class AppComponent implements OnInit {
         if (event instanceof NavigationEnd) {
           const url = event.url;
           if (url.startsWith('/layout2/student')) {
-            this.menuService.updateMenuList('student');
+            this.menuService.updateMenuList(IdentityType.STUDENT);
           } else if (url.startsWith('/layout2/teacher')) {
-            this.menuService.updateMenuList('teacher');
+            this.menuService.updateMenuList(IdentityType.TEACHER);
           }
         }
       });
