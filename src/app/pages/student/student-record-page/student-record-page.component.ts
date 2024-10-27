@@ -1,6 +1,11 @@
 import { CdkAccordionModule } from '@angular/cdk/accordion';
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
+import {
+  OrdersResponseModelDataInner,
+  OrdersResponseModelDataInnerPurchaseItemsInner,
+  StudentService
+} from 'libs/openapi/src';
 
 @Component({
   selector: 'app-student-record-page',
@@ -10,106 +15,19 @@ import { Component } from '@angular/core';
   styleUrl: './student-record-page.component.scss'
 })
 export default class StudentRecordPageComponent {
-  recordList = [
-    {
-      status: '1',
-      date: '2024-06-15',
-      order_id: '6651b351e36e83ec16fc345f',
-      purchase_way: 2,
-      purchase_items: [
-        {
-          course_id: '1',
-          mainImg: 'https://fakeimg.pl/300/',
-          title: '課程名稱1',
-          price: 1000,
-          main_category: '主分類1',
-          sub_category: '次分類1'
-        },
-        {
-          course_id: '1',
-          mainImg: 'https://fakeimg.pl/300/',
-          title: '課程名稱1',
-          price: 1000,
-          main_category: '主分類1',
-          sub_category: '次分類1'
-        }
-      ]
-    },
-    {
-      status: '1',
-      date: '2024-06-15',
-      order_id: '6651b351e36e83ec16fc345f',
-      purchase_way: 2,
-      purchase_items: [
-        {
-          course_id: '1',
-          mainImg: 'https://fakeimg.pl/300/',
-          title: '課程名稱1',
-          price: 1000,
-          main_category: '主分類1',
-          sub_category: '次分類1'
-        },
-        {
-          course_id: '1',
-          mainImg: 'https://fakeimg.pl/300/',
-          title: '課程名稱1',
-          price: 1000,
-          main_category: '主分類1',
-          sub_category: '次分類1'
-        }
-      ]
-    },
-    {
-      status: '1',
-      date: '2024-06-15',
-      order_id: '6651b351e36e83ec16fc345f',
-      purchase_way: 2,
-      purchase_items: [
-        {
-          course_id: '1',
-          mainImg: 'https://fakeimg.pl/300/',
-          title: '課程名稱1',
-          price: 1000,
-          main_category: '主分類1',
-          sub_category: '次分類1'
-        },
-        {
-          course_id: '1',
-          mainImg: 'https://fakeimg.pl/300/',
-          title: '課程名稱1',
-          price: 1000,
-          main_category: '主分類1',
-          sub_category: '次分類1'
-        }
-      ]
-    }
-  ];
+  orderList = signal<OrdersResponseModelDataInner[]>([]);
 
-  stateTramsform(status: string) {
-    switch (status) {
-      case '1':
-        return '處理中';
-      case '2':
-        return '已完成';
-      case '3':
-        return '已失敗';
-      default:
-        return '';
-    }
+  constructor(private studentService: StudentService) {
+    this.studentService.apiStudentOrdersGet().subscribe((res) => {
+      this.orderList.set(res.data || []);
+    });
   }
 
-  purchaseWayTransform(purchaseWay: number) {
-    switch (purchaseWay) {
-      case 1:
-        return 'LINE PAY';
-      case 2:
-        return '信用卡';
-      default:
-        return '';
-    }
-  }
-
-  getTotalPrice(purchaseItems: any[]) {
-    return purchaseItems.reduce((acc, cur) => acc + cur.price, 0);
+  getTotalPrice(
+    purchaseItems: OrdersResponseModelDataInnerPurchaseItemsInner[]
+  ) {
+    return purchaseItems.reduce((acc, item) => {
+      return acc + (item.price || 0);
+    }, 0);
   }
 }

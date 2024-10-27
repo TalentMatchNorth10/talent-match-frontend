@@ -117,8 +117,7 @@ export class CheckoutComponent implements OnInit {
       CheckoutFormKey.CITY,
       CheckoutFormKey.DISTRICT,
       CheckoutFormKey.ADDRESS,
-      CheckoutFormKey.INVOICE,
-      CheckoutFormKey.INVOICE_WAY
+      CheckoutFormKey.INVOICE
     ];
 
     const { invoice, invoice_way } = this.checkoutForm.getRawValue();

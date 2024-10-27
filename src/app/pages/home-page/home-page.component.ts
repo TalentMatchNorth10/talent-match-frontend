@@ -315,7 +315,7 @@ export default class HomePageComponent implements OnInit, AfterViewInit {
     }
 
     this.homeService.apiHomeCourseVideosAllGet(params).subscribe((res) => {
-      this.videoDataSource = res.data;
+      this.videoDataSource = res.data as VideoCardData[];
       setTimeout(() => {
         this.initSwiper();
       }, 1);
@@ -346,7 +346,7 @@ export default class HomePageComponent implements OnInit, AfterViewInit {
       params.cityId = option;
     }
     this.homeService.apiHomeCoursesAllGet(params).subscribe((res) => {
-      this.courseDataSource = res.data;
+      this.courseDataSource = res.data as CardData[];
       setTimeout(() => {
         this.initSwiper();
       }, 1);
