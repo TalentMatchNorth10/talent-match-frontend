@@ -269,7 +269,7 @@ import { CartService } from 'src/app/shared/services/cart.service';
           </div>
 
           <!-- 未登入顯示 -->
-          @if (!user) {
+          @if (!user()) {
             <div class="hidden items-center justify-center gap-x-4 lg:flex">
               <button
                 class="flex h-[40px] w-[120px] items-center justify-center gap-x-1 rounded-lg border-2 border-tmf-orange-1 text-tmf-orange-1 duration-100 hover:bg-tmf-orange-1 hover:text-white active:bg-tmf-orange-2 active:text-white"
@@ -418,7 +418,7 @@ import { CartService } from 'src/app/shared/services/cart.service';
             }
           }
         </ul>
-        @if (!user) {
+        @if (!user()) {
           <div class="flex flex-col items-center justify-center gap-4">
             <button
               class="flex h-[50px] w-full items-center justify-center gap-x-1 rounded-lg border-2 border-tmf-orange-1 text-tmf-orange-1 duration-100 hover:bg-tmf-orange-1 hover:text-white active:bg-tmf-orange-2 active:text-white"

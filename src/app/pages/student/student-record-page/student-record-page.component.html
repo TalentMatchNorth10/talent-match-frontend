@@ -3,7 +3,7 @@
 </h1>
 <div class="min-h-[600px]">
   <cdk-accordion class="flex flex-col gap-y-5">
-    @for (record of recordList; track record; let index = $index) {
+    @for (order of orderList(); track order; let index = $index) {
       <cdk-accordion-item #accordionItem="cdkAccordionItem">
         <div (click)="accordionItem.toggle()" class="relative cursor-pointer">
           <div
@@ -13,17 +13,17 @@
             class="flex items-center gap-5 rounded-t-lg border-b border-tmf-gray-2 p-2 pb-3 text-tmf-gray-2 duration-100"
           >
             <div class="flex-grow break-all text-[14px]">
-              訂單編號：{{ record.order_id }}
+              訂單編號：{{ order.order_id }}
             </div>
             <div
               class="hidden min-w-[120px] shrink-0 break-all text-[14px] lg:block"
             >
-              訂單日期：{{ record.date }}
+              訂單日期：{{ order.order_time }}
             </div>
             <div
               class="hidden min-w-[120px] shrink-0 break-all text-[14px] lg:block"
             >
-              付款狀態：{{ stateTramsform(record.status) }}
+              付款狀態：{{ order.status }}
             </div>
           </div>
           <span
@@ -39,7 +39,7 @@
           >
             <div class="flex flex-grow flex-col gap-y-3">
               @for (
-                item of record.purchase_items;
+                item of order.purchase_items;
                 track item;
                 let index = $index
               ) {
@@ -47,12 +47,12 @@
                   <div class="h-[60px] w-[120px]">
                     <img
                       class="h-full w-full object-cover"
-                      [src]="item.mainImg"
+                      [src]="item.main_image"
                       alt=""
                     />
                   </div>
                   <div class="flex flex-col gap-y-1">
-                    <p class="text-tmf-gray-2">{{ item.title }}</p>
+                    <p class="text-tmf-gray-2">{{ item.name }}</p>
                     <div class="flex gap-1">
                       <div class="rounded-md bg-tmf-gray-3 px-[6px] py-1">
                         <p class="text-[12px] leading-4 text-white">
@@ -72,12 +72,18 @@
             <div
               class="flex flex-col items-start justify-center gap-y-3 rounded-lg border border-tmf-orange-1 bg-white p-5"
             >
-              <p class="text-[14px] md:text-[16px] lg:hidden">訂單日期 {{ record.date }}</p>
               <p class="text-[14px] md:text-[16px] lg:hidden">
-                付款狀態 {{ stateTramsform(record.status) }}
+                訂單日期 {{ order.order_time }}
               </p>
-              <p class="text-[14px] md:text-[16px]">付款金額 NT$ {{ getTotalPrice(record.purchase_items) }}</p>
-              <p class="text-[14px] md:text-[16px]">付款方式 {{ purchaseWayTransform(record.purchase_way) }}</p>
+              <p class="text-[14px] md:text-[16px] lg:hidden">
+                付款狀態 {{ order.status }}
+              </p>
+              <p class="text-[14px] md:text-[16px]">
+                付款金額 NT$ {{ getTotalPrice(order.purchase_items || []) }}
+              </p>
+              <p class="text-[14px] md:text-[16px]">
+                付款方式 {{ order.purchase_way }}
+              </p>
             </div>
           </div>
         }
