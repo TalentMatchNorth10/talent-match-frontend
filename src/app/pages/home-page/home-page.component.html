@@ -21,7 +21,7 @@
 
         <tmf-input
           placeholder="準備好啟程了嗎？"
-          [formControl]="control"
+          [formControl]="searchControl"
           [inputType]="InputType.SearchByType"
           [options]="items"
           (clickSearch)="search($event)"
@@ -87,6 +87,7 @@
               class="bg-white text-gray-700"
               [multiSelect]="false"
               [icon]="'pin_drop'"
+              [formControl]="recommendControl"
               (selectChange)="selectCourseCity($event)"
             >
               <tmf-option
@@ -344,7 +345,7 @@
             class="flex h-full flex-col justify-end gap-4"
             (click)="navigateToTeacherApply()"
           >
-            <div class="text-2xl lg:text-3xl">成為教師</div>
+            <div class="text-2xl lg:text-2xl">成為教師</div>
             <div class="flex items-center">
               <div class="w-4/5 lg:w-11/12">
                 每個人都有擅長的知識技能，足夠的熱情創造更多附加價值，一起將這些技能分享給全世界吧！

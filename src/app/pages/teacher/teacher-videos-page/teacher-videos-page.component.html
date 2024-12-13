@@ -1,1 +1,156 @@
-<p>teacher-videos-page works!</p>
+<div class="mb-5 flex w-full justify-between">
+  <h1 class="text-[22px] font-bold leading-9 md:text-[26px] lg:text-[30px]">
+    影片管理
+  </h1>
+  <div class="flex items-center gap-x-2">
+    @if (mode() === ViewMode.List) {
+      <button
+        (click)="changeView(ViewMode.Create)"
+        class="flex items-center gap-2 rounded-md bg-tmf-orange-1 px-3 py-2 text-white"
+      >
+        <span class="material-symbols-outlined"> add </span>
+        新增影片
+      </button>
+    } @else {
+      <button
+        (click)="changeView(ViewMode.List)"
+        class="flex items-center gap-2 rounded-md bg-tmf-orange-1 p-1 text-white md:px-3 md:py-2"
+      >
+        <span class="material-symbols-outlined text-[20px] md:text-[22px]">
+          reply
+        </span>
+        <span class="hidden lg:block"> 返回 </span>
+      </button>
+      <button
+        (click)="save()"
+        class="flex items-center gap-2 rounded-md bg-tmf-orange-1 p-1 text-white md:px-3 md:py-2"
+      >
+        <span class="material-symbols-outlined text-[20px] md:text-[22px]">
+          {{ mode() === ViewMode.Create ? 'add' : 'save' }}
+        </span>
+        <span class="hidden lg:block">
+          {{ mode() === ViewMode.Create ? '創建' : '儲存' }}
+        </span>
+      </button>
+    }
+  </div>
+</div>
+
+@if (mode() === ViewMode.List) {
+  <div class="flex flex-col gap-3">
+    @for (video of videos; track video; let idx = $index) {
+      <div class="flex w-full items-center gap-3 rounded-lg border p-3 md:p-5">
+        <div class="flex w-full flex-col gap-5 lg:flex-row">
+          <tmf-video-card
+            class="order-2 lg:order-1"
+            [data]="video"
+          ></tmf-video-card>
+          <div class="order-1 flex-grow lg:order-2">
+            <div class="mb-3 flex justify-end gap-3">
+              <button
+                (click)="changeView(ViewMode.Edit, video)"
+                class="flex items-center gap-2 rounded-md bg-tmf-orange-1 p-1 text-white md:px-3 md:py-2"
+              >
+                <span
+                  class="material-symbols-outlined text-[20px] md:text-[22px]"
+                >
+                  edit_square
+                </span>
+              </button>
+              <button
+                (click)="deleteVideo(video)"
+                class="flex items-center gap-2 rounded-md bg-tmf-orange-1 p-1 text-white md:px-3 md:py-2"
+              >
+                <span
+                  class="material-symbols-outlined text-[20px] md:text-[22px]"
+                >
+                  delete
+                </span>
+              </button>
+            </div>
+            <div class="flex flex-col gap-3">
+              <p>
+                <span class="text-base text-gray-500 md:text-lg">名稱：</span>
+                <span class="text-sm md:text-base">{{ video.name }}</span>
+              </p>
+              <p>
+                <span class="text-base text-gray-500 md:text-lg">類別：</span>
+                <span class="text-sm md:text-base">{{ video.category }}</span>
+              </p>
+              <p>
+                <span class="text-base text-gray-500 md:text-lg">簡介：</span>
+                <span class="text-sm md:text-base">{{ video.intro }}</span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+} @else {
+  <div [formGroup]="uploadForm" class="flex flex-col overflow-auto">
+    <tmf-input
+      label="課程名稱"
+      placeholder="請輸入課程名稱"
+      [isRequired]="true"
+      [formControlName]="UploadFormKey.NAME"
+      [inputType]="InputType.Outline"
+    ></tmf-input>
+    <tmf-select
+      class="mb-6"
+      label="影片類別"
+      [isRequired]="true"
+      [formControlName]="UploadFormKey.CATEGORY"
+    >
+      @for (option of categoryOptions; track option) {
+        <tmf-option
+          [value]="option.main_category"
+          [label]="option.main_category || ''"
+        ></tmf-option>
+      }
+    </tmf-select>
+    <tmf-textarea
+      label="影片簡介"
+      placeholder="請輸入影片簡介"
+      [isRequired]="true"
+      [formControlName]="UploadFormKey.INTRO"
+    ></tmf-textarea>
+    <div class="mb-6 flex flex-col">
+      <p class="mb-1">
+        <span class="select-label">影片為外部連結</span>
+        <span class="text-red-500">*</span>
+      </p>
+      <tmf-switch [formControlName]="UploadFormKey.VIDEO_TYPE"></tmf-switch>
+    </div>
+    @if (videoType.value) {
+      <tmf-input
+        label="影片連結"
+        placeholder="請輸入影片連結"
+        [isRequired]="true"
+        [formControlName]="UploadFormKey.URL"
+        [inputType]="InputType.Outline"
+      ></tmf-input>
+    } @else {
+      <p class="mb-1">
+        <span class="select-label">影片檔案</span>
+        <span class="text-red-500">*</span>
+      </p>
+      <div class="flex items-center gap-1">
+        <button
+          (click)="file.click()"
+          class="w-[100px] rounded-md bg-tmf-orange-1 py-1 text-white"
+        >
+          上傳檔案
+        </button>
+        <p>{{ currentFile?.name }}</p>
+      </div>
+      <input
+        #file
+        type="file"
+        hidden
+        accept="video/*"
+        (change)="hanldeVideoChange($event)"
+      />
+    }
+  </div>
+}

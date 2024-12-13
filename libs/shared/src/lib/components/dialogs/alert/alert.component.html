@@ -1,24 +1,24 @@
 <div
-  class="px-10 py-8 flex justify-center bg-white w-[360px] md:w-[400px] lg:w-[440px] xl:w-[480px] rounded-xl shadow-lg"
+  class="flex w-[360px] max-w-[90%] justify-center rounded-xl bg-white px-10 py-8 shadow-lg md:w-[400px] lg:w-[440px] xl:w-[480px]"
 >
   <div class="flex flex-col gap-6">
-    <div class="flex justify-center items-center gap-2">
+    <div class="flex items-center justify-center gap-2">
       @if (data.icon) {
-        <span class="text-2xl leading-6 text-tmf-orange-1 material-icons">
+        <span class="material-icons text-2xl leading-6 text-tmf-orange-1">
           {{ data.icon }}
         </span>
       }
-      <p class="text-lg text-center text-tmf-gray-1 font-bold">
+      <p class="text-center text-lg font-bold text-tmf-gray-1">
         {{ data.title }}
       </p>
     </div>
-    <p class="text-sm text-center text-tmf-gray-1">
+    <p class="text-center text-sm text-tmf-gray-1">
       {{ data.content }}
     </p>
     <div class="inline-flex justify-center">
       <button
         (click)="close()"
-        class="px-4 py-2 bg-tmf-orange-1 text-white text-sm leading-6 rounded-lg"
+        class="rounded-lg bg-tmf-orange-1 px-4 py-2 text-sm leading-6 text-white"
       >
         關閉
       </button>

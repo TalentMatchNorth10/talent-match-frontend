@@ -12,10 +12,17 @@ import {
   forwardRef,
   QueryList,
   ContentChildren,
-  inject
+  inject,
+  Injector,
+  Self,
+  Optional
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import {
+  ControlValueAccessor,
+  NG_VALUE_ACCESSOR,
+  NgControl
+} from '@angular/forms';
 import {
   CdkOverlayOrigin,
   OverlayModule,
@@ -48,6 +55,7 @@ import { OptionComponent } from './option/option.component';
 export class SelectComponent
   implements ControlValueAccessor, OnInit, OnDestroy
 {
+  private inj = inject(Injector);
   private viewportRuler = inject(ViewportRuler);
   private cdr = inject(ChangeDetectorRef);
   private selectService = inject(SelectService);
@@ -64,7 +72,8 @@ export class SelectComponent
   @Input() invalid = false;
   @Input() isRequired: boolean = false;
   @Input() icon: string = '';
-  @Input() multiSelect: boolean = false; // Add this line
+  @Input() multiSelect: boolean = false;
+  @Input() maxSelected: number | null = null;
   @Output() selectChange = new EventEmitter<any>();
   @Output() tmfBlur = new EventEmitter<void>();
 
@@ -77,6 +86,7 @@ export class SelectComponent
   private _disabled = false;
   private readonly destory$ = new Subject<void>();
 
+  ngControl!: NgControl;
   value: any;
 
   get panelOpen(): boolean {
@@ -105,6 +115,7 @@ export class SelectComponent
   }
 
   ngOnInit(): void {
+    this.ngControl = this.inj.get(NgControl);
     this.viewportRuler
       .change()
       .pipe(takeUntil(this.destory$))
@@ -125,6 +136,12 @@ export class SelectComponent
           this.listOfContainerItemMap[`${el.value}`] = `${el.label}`;
         });
 
+        if (this.value !== this.ngControl?.control?.value) {
+          setTimeout(() => {
+            this.writeValue(this.ngControl?.control?.value);
+          });
+        }
+
         this.cdr.markForCheck();
       });
   }
@@ -141,7 +158,14 @@ export class SelectComponent
   onSelect(option: OptionComponent) {
     if (this.multiSelect) {
       const index = this._selectedOptions.indexOf(option);
+
       if (index === -1) {
+        if (
+          this.maxSelected &&
+          this._selectedOptions.length >= this.maxSelected
+        ) {
+          return;
+        }
         this._selectedOptions.push(option);
       } else {
         this._selectedOptions.splice(index, 1);

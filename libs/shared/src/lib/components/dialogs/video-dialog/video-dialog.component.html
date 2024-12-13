@@ -1,34 +1,36 @@
 <div
-  class="relative w-[375px] h-screen flex justify-between items-center xl:w-[472px] xl:h-[712px]"
+  class="relative flex h-screen w-full max-w-[375px] items-center justify-between xl:h-[712px] xl:w-[472px]"
 >
   <div
-    class="relative w-full h-full overflow-hidden shadow-2xl cursor-pointer xl:w-[25rem] xl:rounded-xl"
+    class="relative h-full w-full cursor-pointer overflow-hidden shadow-2xl xl:w-[25rem] xl:rounded-xl"
   >
     <div
-      class="text-sm font-bold bg-tmf-gray-1 text-tmf-yellow-1 px-3 py-1 rounded-lg absolute top-3 left-3"
+      class="absolute left-3 top-3 rounded-lg bg-tmf-gray-1 px-3 py-1 text-sm font-bold text-tmf-yellow-1"
     >
-      {{data.category}}
+      {{ data.category }}
     </div>
     <video
       #videoPlayer
-      class="w-full h-full object-cover"
+      class="h-full w-full object-cover"
       [src]="data.url"
       (timeupdate)="updateProgress()"
       (loadedmetadata)="initializeVideo()"
     ></video>
-    <div class="absolute bottom-0 w-full h-[168px] mask">
-      <div class="h-full flex items-end">
-        <div class="w-full flex flex-col gap-4 px-4 pb-6">
+    <div class="mask absolute bottom-0 h-[168px] w-full">
+      <div class="flex h-full items-end">
+        <div class="flex w-full flex-col gap-4 px-4 pb-6">
           <div class="flex items-center gap-2">
             <img
-              class="w-6 h-6 rounded-full border border-tmf-gray-6"
+              class="h-6 w-6 rounded-full border border-tmf-gray-6"
               [src]="data.teacher_avatar_url"
               alt=""
             />
-            <p class="text-base font-medium text-white">{{data.teacher_name}}</p>
+            <p class="text-base font-medium text-white">
+              {{ data.teacher_name }}
+            </p>
           </div>
           <p class="text-base text-white">
-            {{data.intro}}
+            {{ data.intro }}
             <!-- 只要五分鐘，讓您彷彿擁有專業主廚的刀工！ -->
           </p>
         </div>
@@ -44,43 +46,43 @@
     </div>
   </div>
   <div class="absolute bottom-0 right-0 h-full">
-    <div class="flex flex-col justify-between items-end h-full">
+    <div class="flex h-full flex-col items-end justify-between">
       <span
-        class="text-4xl leading-9 text-white material-icons cursor-pointer xl:text-[2.5rem] xl:leading-[2.5rem]"
+        class="material-icons cursor-pointer text-4xl leading-9 text-white xl:text-[2.5rem] xl:leading-[2.5rem]"
         (click)="close()"
         >close</span
       >
       <div class="flex flex-col gap-6 pb-[88px] pr-1 xl:p-0">
         <div
-          class="flex justify-center items-center w-10 h-10 rounded-full bg-white text-tmf-orange-1 cursor-pointer xl:w-12 xl:h-12"
+          class="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-white text-tmf-orange-1 xl:h-12 xl:w-12"
           (click)="navigateToTeacherPage(data)"
         >
           <span
-            class="text-xl leading-5 material-symbols-outlined xl:text-[24px] xl:leading-6"
+            class="material-symbols-outlined text-xl leading-5 xl:text-[24px] xl:leading-6"
           >
             arrow_right_alt
           </span>
         </div>
         <div
-          class="flex justify-center items-center w-10 h-10 rounded-full bg-white text-tmf-orange-1 cursor-pointer xl:w-12 xl:h-12"
+          class="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-white text-tmf-orange-1 xl:h-12 xl:w-12"
         >
           <span
-            class="text-xl leading-5 material-symbols-outlined xl:text-[24px] xl:leading-6"
+            class="material-symbols-outlined text-xl leading-5 xl:text-[24px] xl:leading-6"
           >
             share
           </span>
         </div>
         <img
-          class="w-10 h-10 rounded-full border bg-tmf-gray-6 xl:w-12 xl:h-12"
+          class="h-10 w-10 rounded-full border bg-tmf-gray-6 xl:h-12 xl:w-12"
           [src]="data.teacher_avatar_url"
           alt=""
           (click)="navigateToTeacherPage(data)"
         />
         <div
-          class="flex justify-center items-center w-10 h-10 rounded-full bg-white text-tmf-orange-1 cursor-pointer xl:w-12 xl:h-12"
+          class="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-white text-tmf-orange-1 xl:h-12 xl:w-12"
         >
           <span
-            class="text-xl leading-5 material-symbols-outlined xl:text-[24px] xl:leading-6"
+            class="material-symbols-outlined text-xl leading-5 xl:text-[24px] xl:leading-6"
           >
             bookmark
           </span>

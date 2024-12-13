@@ -51,7 +51,7 @@ export const routes: Routes = [
   },
   {
     // 申請成為老師頁
-    path: 'teacher-apply',
+    path: 'apply-teacher',
     loadComponent: () =>
       import('../teacher-apply-page/teacher-apply-page.component')
   },
