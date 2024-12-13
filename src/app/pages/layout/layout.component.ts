@@ -10,6 +10,7 @@ import { filter } from 'rxjs';
 import { LoadingComponent } from '@tmf/libs-shared/components/loading/loading.component';
 import { UserInfoResponseModelData, UserService } from 'libs/openapi/src';
 import { AuthStatusService } from 'src/app/shared/services/authStatus.service';
+import { UserInfoService } from 'src/app/shared/services/userInfo.service';
 
 @Component({
   selector: 'app-layout',
@@ -23,6 +24,7 @@ export default class LayoutComponent {
   private menuService = inject(MenuService);
   private authStatusService = inject(AuthStatusService);
   private userService = inject(UserService);
+  private userInfoService = inject(UserInfoService);
 
   user = signal<UserInfoResponseModelData | null>(null);
   state: string | null = null;
@@ -58,6 +60,7 @@ export default class LayoutComponent {
       if (status) {
         this.userService.apiUserUserInfoGet().subscribe((res) => {
           this.user.set(res.data);
+          this.userInfoService.updateUserInfo(res.data);
           this.menuService.updateMenuList(
             !res.data.is_teacher && this.identity() === IdentityType.TEACHER
               ? IdentityType.STUDENT

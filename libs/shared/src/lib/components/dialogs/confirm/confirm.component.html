@@ -1,31 +1,31 @@
 <div
-  class="px-10 py-8 flex justify-center bg-white w-[360px] md:w-[400px] lg:w-[440px] xl:w-[480px] rounded-xl shadow-lg"
+  class="flex w-[360px] max-w-[90%] justify-center rounded-xl bg-white px-10 py-8 shadow-lg md:w-[400px] lg:w-[440px] xl:w-[480px]"
 >
   <div class="flex flex-col gap-6">
-    <div class="flex justify-center items-center gap-2">
+    <div class="flex items-center justify-center gap-2">
       @if (data.icon) {
-        <span class="text-2xl leading-6 text-tmf-orange-1 material-icons">
+        <span class="material-icons text-2xl leading-6 text-tmf-orange-1">
           {{ data.icon }}
         </span>
       }
-      <p class="text-lg text-center text-tmf-gray-1 font-bold">
+      <p class="text-center text-lg font-bold text-tmf-gray-1">
         {{ data.title }}
       </p>
     </div>
-    <p class="text-sm text-center text-tmf-gray-1">
+    <p class="text-center text-sm text-tmf-gray-1">
       {{ data.content }}
     </p>
-    <div class="inline-flex justify-center items-center gap-4">
+    <div class="inline-flex items-center justify-center gap-4">
       <button
         (click)="onCancel()"
-        class="px-4 py-[0.4375rem] bg-white box-border border border-tmf-gray-4 text-tmf-gray-4 text-sm leading-6 rounded-lg"
+        class="box-border rounded-lg border border-tmf-gray-4 bg-white px-4 py-[0.4375rem] text-sm leading-6 text-tmf-gray-4"
       >
         取消
       </button>
       <button
-        class="px-4 py-2 text-sm leading-6 rounded-lg text-white"
+        class="rounded-lg px-4 py-2 text-sm leading-6 text-white"
         [ngClass]="{
-          'bg-tmf-orange-1': data.btnType === 'primary',
+          'bg-tmf-orange-1': data.btnType === 'primary' || !data.btnType,
           'bg-[#FF0000]': data.btnType === 'danger'
         }"
         (click)="onConfirm()"

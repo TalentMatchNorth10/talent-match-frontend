@@ -262,7 +262,7 @@ export class CourseDetailComponent implements OnInit {
               path: 'course',
               file: mainImage as File
             })
-            .pipe(tap((res) => (formValue.main_image = res.fileUrl)))
+            .pipe(tap((res) => (formValue.main_image = res.fileUrl || null)))
         : of(null);
 
     const forkSources = [

@@ -9,3 +9,7 @@
 :host:hover {
   @apply bg-tmf-orange-4;
 }
+
+:host.selected {
+  @apply bg-tmf-orange-1 text-white;
+}

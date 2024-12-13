@@ -19,8 +19,7 @@ import {
   ReviewCardComponent,
   SearchType,
   SearchTypeEnum,
-  SelectComponent,
-  ShortVideoCardComponent
+  SelectComponent
 } from 'libs/shared/src';
 import { VideoCardData } from '@tmf/libs-shared/components/short-video-card/video-card.interface';
 import { StarRatingComponent } from '@tmf/libs-shared/components/star-rating/star-rating.component';
@@ -38,6 +37,8 @@ import {
 } from 'libs/openapi/src';
 import { ReplaySubject, tap } from 'rxjs';
 import { ReviewData } from '@tmf/libs-shared/components/review-card/review.interface';
+import { UserInfoService } from 'src/app/shared/services/userInfo.service';
+import { DialogService } from 'src/app/shared/services/dialog.service';
 
 @Component({
   selector: 'app-home-page',
@@ -45,7 +46,6 @@ import { ReviewData } from '@tmf/libs-shared/components/review-card/review.inter
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    ShortVideoCardComponent,
     CardComponent,
     StarRatingComponent,
     ReviewCardComponent,
@@ -61,6 +61,8 @@ import { ReviewData } from '@tmf/libs-shared/components/review-card/review.inter
 export default class HomePageComponent implements OnInit, AfterViewInit {
   private commonService = inject(CommonService);
   private homeService = inject(HomeService);
+  private userInfoService = inject(UserInfoService);
+  private dialogService = inject(DialogService);
 
   readonly InputType = InputType;
 
@@ -89,7 +91,8 @@ export default class HomePageComponent implements OnInit, AfterViewInit {
 
   public currentWindowSize: string = '';
 
-  control = new FormControl('', [Validators.required]);
+  searchControl = new FormControl('', [Validators.required]);
+  recommendControl = new FormControl('', [Validators.required]);
 
   items = [
     { label: '依關鍵字', value: SearchTypeEnum.KEYWORD },
@@ -406,7 +409,15 @@ export default class HomePageComponent implements OnInit, AfterViewInit {
   }
 
   navigateToTeacherApply() {
-    this.router.navigate(['teacher-apply']);
+    const userInfo = this.userInfoService.getCurrentUserInfo();
+    if (userInfo?.is_teacher) {
+      this.dialogService.openAlertDialog({
+        title: '無法申請',
+        content: '您已是老師，無需再次申請。'
+      });
+      return;
+    }
+    this.router.navigate(['apply-teacher']);
   }
 }
 
@@ -459,18 +470,4 @@ export const FakeReviewData: ReviewData[] = [
       '老師很有親和力，課堂氣氛很好。大家都很活躍，學習氛圍非常棒，讓人感覺很放鬆。',
     create_datetime: new Date('2024-04-06T23:52:02')
   }
-  // {
-  //   nick_name: 'scott59',
-  //   avator_image: 'https://dummyimage.com/636x651',
-  //   rate: 4.7,
-  //   comment: 'Hundred want room begin box raise.',
-  //   create_datetime: new Date('2024-04-16T23:52:28')
-  // },
-  // {
-  //   nick_name: 'martinezlaura',
-  //   avator_image: 'https://dummyimage.com/636x651',
-  //   rate: 4.8,
-  //   comment: 'Option price suddenly.',
-  //   create_datetime: new Date('2024-01-15T20:49:07')
-  // }
 ];

@@ -1,17 +1,17 @@
 <div class="mb-5 flex w-full justify-between">
-    <h1 class="text-[22px] font-bold leading-9 md:text-[26px] lg:text-[30px]">
-      課程管理
-    </h1>
-    <div class="flex items-center gap-x-2">
-      <button
-          (click)="changeView.emit({mode: ViewMode.Create})"
-          class="flex items-center gap-2 rounded-md bg-tmf-orange-1 px-3 py-2 text-white"
-        >
-          <span class="material-symbols-outlined"> add </span>
-          新增課程
-        </button> 
-    </div>
+  <h1 class="text-[22px] font-bold leading-9 md:text-[26px] lg:text-[30px]">
+    課程管理
+  </h1>
+  <div class="flex items-center gap-x-2">
+    <button
+        (click)="changeView.emit({mode: ViewMode.Create})"
+        class="flex items-center gap-2 rounded-md bg-tmf-orange-1 px-3 py-2 text-white"
+      >
+        <span class="material-symbols-outlined"> add </span>
+        新增課程
+      </button> 
   </div>
+</div>
 
 <div class="w-full overflow-auto">
   <table class="w-full min-w-[768px]">

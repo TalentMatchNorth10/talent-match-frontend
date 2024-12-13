@@ -99,7 +99,7 @@ export default class StudentInfoPageComponent {
         file: event.target.files[0]
       })
       .subscribe((res) => {
-        this.formGroup.controls.avator_image.setValue(res.fileUrl);
+        this.formGroup.controls.avator_image.setValue(res.fileUrl || '');
       });
   }
 

@@ -8,7 +8,10 @@ import { NgClass } from '@angular/common';
   selector: 'tmf-confirm',
   standalone: true,
   imports: [NgClass],
-  templateUrl: './confirm.component.html'
+  templateUrl: './confirm.component.html',
+  host: {
+    class: 'flex justify-center items-center'
+  }
 })
 export class ConfirmComponent {
   constructor(

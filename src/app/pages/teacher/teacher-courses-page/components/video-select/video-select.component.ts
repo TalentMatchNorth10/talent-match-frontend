@@ -68,7 +68,7 @@ enum UploadFormKey {
       @if (mode === VideoSelectMode.Select) {
         @if (chks) {
           <div
-            class="flex h-[400px] flex-col gap-3 overflow-auto rounded-xl border bg-tmf-orange-4 p-5"
+            class="flex flex-col gap-3 overflow-auto rounded-xl border bg-tmf-orange-4 p-5"
           >
             @for (video of videos; track video; let idx = $index) {
               <div class="flex items-center gap-3">
@@ -95,10 +95,7 @@ enum UploadFormKey {
           </div>
         }
       } @else {
-        <div
-          [formGroup]="uploadForm"
-          class="flex h-[400px] flex-col overflow-auto"
-        >
+        <div [formGroup]="uploadForm" class="flex flex-col overflow-auto">
           <tmf-input
             label="課程名稱"
             placeholder="請輸入課程名稱"
@@ -201,7 +198,7 @@ export class VideoSelectComponent implements OnInit {
     [UploadFormKey.CATEGORY]: this.fb.control(null, [Validators.required]),
     [UploadFormKey.INTRO]: this.fb.control(null, [Validators.required]),
     [UploadFormKey.VIDEO_TYPE]: this.fb.control(false, [Validators.required]),
-    [UploadFormKey.URL]: this.fb.control(null)
+    [UploadFormKey.URL]: this.fb.control<string | null>(null)
   });
   currentFile: File | null = null;
 
@@ -298,7 +295,7 @@ export class VideoSelectComponent implements OnInit {
             file: this.currentFile
           })
           .subscribe(({ fileUrl }) => {
-            this.uploadForm.controls[UploadFormKey.URL].setValue(fileUrl);
+            this.uploadForm.controls[UploadFormKey.URL].setValue(fileUrl || '');
             uploadVideo();
           });
       } else {

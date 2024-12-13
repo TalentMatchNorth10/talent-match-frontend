@@ -6,7 +6,10 @@ import { TmfAlertConfig } from '../dialogs.obj';
   selector: 'tmf-alert',
   standalone: true,
   imports: [],
-  templateUrl: './alert.component.html'
+  templateUrl: './alert.component.html',
+  host: {
+    class: 'flex justify-center items-center'
+  }
 })
 export class AlertComponent {
   constructor(

@@ -1,5 +1,5 @@
 <div
-  class="relative md:h-[537px] md:w-[302px] h-[298px] w-[168px] cursor-pointer overflow-hidden rounded-xl border border-tmf-gray-6 shadow-lg xl:h-[33.75rem] xl:w-[18.875rem]"
+  class="relative h-[298px] w-[168px] cursor-pointer overflow-hidden rounded-xl border border-tmf-gray-6 shadow-lg md:h-[537px] md:w-[302px] xl:h-[33.75rem] xl:w-[18.875rem]"
   (mouseenter)="togglePlay(true)"
   (mouseleave)="togglePlay(false)"
   (click)="openVideoDialog()"
@@ -8,7 +8,7 @@
     class="absolute left-3 top-3 rounded-lg bg-tmf-gray-1 px-3 py-1 text-sm font-bold text-tmf-yellow-1"
   >
     <!-- 烹飪料理 -->
-    {{data.category}}
+    {{ data.category }}
   </div>
   <video
     #videoPlayer
@@ -22,7 +22,7 @@
   ></video>
   <div class="mask absolute bottom-0 h-[140px] w-full">
     <div class="flex h-full w-full items-end">
-      <p class="px-3 pb-3 text-sm text-white xl:px-4 xl:pb-6 xl:text-base">
+      <p class="px-3 pb-3 text-sm text-white xl:px-4 xl:pb-6 xl:text-base line-clamp-3">
         {{ data.intro }}
         <!-- 只要五分鐘，讓您彷彿擁有專業主廚的刀工！ -->
       </p>
