@@ -63,7 +63,7 @@ import { CartService } from 'src/app/shared/services/cart.service';
                 ) {
                   <li
                     (click)="searchCity(option.value)"
-                    class="flex w-full cursor-pointer items-start justify-start gap-x-3 bg-white px-[16px] py-2 duration-100 hover:bg-tmf-orange-3 active:bg-tmf-orange-2"
+                    class="flex w-full cursor-pointer items-start justify-start gap-x-3 bg-white px-[16px] py-2 duration-100 hover:bg-tmf-orange-3 hover:text-tmf-orange-1 active:bg-tmf-orange-2"
                   >
                     <p>{{ option.label }}</p>
                   </li>
@@ -99,7 +99,8 @@ import { CartService } from 'src/app/shared/services/cart.service';
                     <p
                       (click)="selectTag = option"
                       [ngClass]="{
-                        'bg-tmf-orange-3': selectTag === option
+                        'bg-tmf-orange-3 text-tmf-orange-1':
+                          selectTag === option
                       }"
                       class="flex items-center gap-2 px-[16px] py-3 active:bg-tmf-orange-2"
                     >
@@ -107,7 +108,7 @@ import { CartService } from 'src/app/shared/services/cart.service';
 
                       <span
                         [ngClass]="{
-                          '-rotate-90': selectTag === option
+                          '-rotate-90 text-tmf-orange-1': selectTag === option
                         }"
                         class="material-icons-outlined text-tmf-gray-4 duration-100"
                         >expand_more</span
@@ -152,7 +153,7 @@ import { CartService } from 'src/app/shared/services/cart.service';
         <!-- Logo圖片 -->
         <img
           (click)="redirect('/home')"
-          class="h-[33px] cursor-pointer lg:absolute lg:left-[50%] lg:h-[54px] lg:-translate-x-[50%]"
+          class="z-10 h-[33px] cursor-pointer lg:absolute lg:left-[50%] lg:h-[54px] lg:-translate-x-[50%]"
           src="assets/images/logo.svg"
           alt="logo"
         />
@@ -272,6 +273,7 @@ import { CartService } from 'src/app/shared/services/cart.service';
           @if (!user()) {
             <div class="hidden items-center justify-center gap-x-4 lg:flex">
               <button
+                (click)="redirect('/apply-teacher')"
                 class="flex h-[40px] w-[120px] items-center justify-center gap-x-1 rounded-lg border-2 border-tmf-orange-1 text-tmf-orange-1 duration-100 hover:bg-tmf-orange-1 hover:text-white active:bg-tmf-orange-2 active:text-white"
               >
                 <span class="material-icons-outlined !text-[18px]"
@@ -321,7 +323,8 @@ import { CartService } from 'src/app/shared/services/cart.service';
                     @for (
                       menuItem of menuGroup;
                       track menuItem;
-                      let lastItem = $last
+                      let lastItem = $last;
+                      let index = $index
                     ) {
                       <li
                         (click)="handleMenuClick(menuItem)"
@@ -329,11 +332,12 @@ import { CartService } from 'src/app/shared/services/cart.service';
                           'mb-2 border-b border-tmf-gray-5':
                             lastItem && !lastGroup
                         }"
-                        class="flex h-[48px] w-full cursor-pointer items-center justify-start gap-x-2 px-[26px] duration-100 hover:bg-tmf-orange-3 active:bg-tmf-orange-2"
+                        class="group/item flex h-[48px] w-full cursor-pointer items-center justify-start gap-x-2 px-[26px] duration-100 hover:bg-tmf-orange-3 hover:text-tmf-orange-1 active:text-tmf-orange-1"
                       >
-                        <span class="material-icons-outlined text-tmf-gray-4">{{
-                          menuItem.icon
-                        }}</span>
+                        <span
+                          class="material-icons-outlined text-tmf-gray-4 group-hover/item:!text-tmf-orange-1"
+                          >{{ menuItem.icon }}</span
+                        >
                         <p>{{ menuItem.label }}</p>
                       </li>
                     }
@@ -390,7 +394,7 @@ import { CartService } from 'src/app/shared/services/cart.service';
           @for (option of tagOptions; track option; let lastCartItem = $last) {
             <li
               (click)="toggleSelectTag(option)"
-              class="flex h-[48px] flex-shrink-0 items-center justify-between border-b border-tmf-gray-6"
+              class="flex h-[48px] flex-shrink-0 cursor-pointer items-center justify-between border-b border-tmf-gray-6"
             >
               {{ option.main_category }}
               <span
@@ -409,7 +413,7 @@ import { CartService } from 'src/app/shared/services/cart.service';
                     [ngClass]="{
                       'bg-tmf-orange-1 text-white': currentTag === sub
                     }"
-                    class="flex h-[48px] items-center justify-between border-b border-tmf-gray-6 px-2 duration-100 hover:bg-tmf-orange-3 active:bg-tmf-orange-2"
+                    class="flex h-[48px] cursor-pointer items-center justify-between border-b border-tmf-gray-6 px-2 duration-100 hover:bg-tmf-orange-3 active:bg-tmf-orange-2"
                   >
                     {{ sub }}
                   </li>
@@ -421,6 +425,7 @@ import { CartService } from 'src/app/shared/services/cart.service';
         @if (!user()) {
           <div class="flex flex-col items-center justify-center gap-4">
             <button
+              (click)="redirect('/apply-teacher')"
               class="flex h-[50px] w-full items-center justify-center gap-x-1 rounded-lg border-2 border-tmf-orange-1 text-tmf-orange-1 duration-100 hover:bg-tmf-orange-1 hover:text-white active:bg-tmf-orange-2 active:text-white"
             >
               <span class="material-icons-outlined !text-[18px]"

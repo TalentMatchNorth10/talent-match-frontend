@@ -169,6 +169,26 @@ export default class CourseDetailPageComponent {
       .subscribe();
   }
 
+  copyToClipboard() {
+    if (navigator.clipboard) {
+      const currentUrl = window.location.href; // 獲取當前頁面 URL
+      navigator.clipboard
+        .writeText(currentUrl)
+        .then(() => {
+          this.dialogService.openAlertDialog({
+            title: '分享成功',
+            content: '已將網址複製到剪貼簿，請分享給您的朋友！'
+          });
+        })
+        .catch((err) => {
+          this.dialogService.openAlertDialog({
+            title: '分享失敗',
+            content: '複製網址失敗，請手動複製網址！'
+          });
+        });
+    }
+  }
+
   openAllReviews(
     reviews: GetCourseDetailResponseModelDataReviewsInner[]
   ): void {
