@@ -1,34 +1,28 @@
 <div
-  class="w-full bg-gray-50 bg-[url('./assets/images/home-page/section-bg-decorate.svg')] bg-center py-12"
+  class="w-full bg-gray-50 bg-[url('./assets/images/home-page/section-bg-decorate.svg')] bg-center py-8"
   style="-webkit-mask: linear-gradient(180deg, #000 90%, transparent)"
 >
   <!-- 教師頭像、名字 -->
   <section class="m-auto w-10/12 lg:ml-32 lg:w-2/3">
     <div class="flex flex-col items-center gap-6 lg:flex-row">
-      <img
-        class="h-[200px] w-[200px] rounded-full border border-tmf-gray-6 object-cover"
-        [src]="data?.avator_image"
-        alt=""
-      />
-      <div class="flex flex-col gap-4">
-        <div class="text-4xl">{{data?.name}}</div>
-        <div class="text-lg">累計完成10堂課程</div>
-        <!-- <div class="flex items-center justify-start gap-1">
-          <span class="material-symbols-outlined text-xl leading-5">
-            face
-          </span>
-          <p>120 人學習</p>
-        </div> -->
-        <!-- <button
-          class="gap-1 rounded-lg border border-tmf-orange-1 bg-white px-4 py-2 text-tmf-orange-1"
-        >
-          <div class="flex items-center justify-center">
-            <span class="material-symbols-outlined text-xl leading-5">
-              add
-            </span>
-            <p class="text-sm">關注老師</p>
-          </div>
-        </button> -->
+      <div
+        [ngClass]="{
+          'flex items-center justify-center': !data?.avator_image,
+          'flex items-center justify-center rounded-full bg-tmf-gray-4':
+            data?.avator_image
+        }"
+      >
+        <img
+          class="h-[200px] w-[200px] rounded-full border border-tmf-gray-6 object-cover"
+          [src]="data?.avator_image"
+          alt=""
+        />
+      </div>
+      <div class="flex flex-col items-center gap-4 lg:items-start">
+        <div class="text-4xl">{{ data?.name }}</div>
+        <div class="text-lg">
+          累計開設{{ data?.courses?.length || 0 }}堂課程
+        </div>
       </div>
     </div>
   </section>
@@ -36,17 +30,35 @@
 <div class="m-auto w-10/12 py-12 lg:ml-32 lg:w-2/3">
   <div class="flex h-full w-full flex-col gap-8">
     <!-- 教師短影片 -->
-    <section>
-      <div class="custom-scrollbar flex gap-2 overflow-x-auto py-4 lg:gap-4">
-        <!-- 自我介紹影片 -->
-         <ng-container *ngFor="let teacherVideo of teacherVideosData">
-           <div class="flex flex-col gap-4">
-             <tmf-video-card [data]="teacherVideo.video" *ngIf="teacherVideo.video"></tmf-video-card>
-             <div>{{teacherVideo.title}}</div>
-           </div>
-         </ng-container>
-      </div>
-    </section>
+    @if (teacherVideosData.length) {
+      <section>
+        <div class="mb-4 flex items-center justify-start gap-2">
+          <img
+            class="h-5 w-5 xl:h-6 xl:w-6"
+            src="assets/images/cart-collect.png"
+            alt=""
+          />
+          <h2 class="text-xl font-bold xl:text-2xl">介紹影片</h2>
+        </div>
+        <div class="custom-scrollbar flex gap-2 overflow-x-auto lg:gap-4">
+          <!-- 自我介紹影片 -->
+          <ng-container *ngFor="let teacherVideo of teacherVideosData">
+            <div class="flex flex-col gap-4">
+              <div class="flex items-center text-lg font-medium">
+                <span class="material-symbols-outlined rotate-180">
+                  double_arrow </span
+                >{{ teacherVideo.title }}
+                <span class="material-symbols-outlined"> double_arrow </span>
+              </div>
+              <tmf-video-card
+                [data]="teacherVideo.video"
+                *ngIf="teacherVideo.video"
+              ></tmf-video-card>
+            </div>
+          </ng-container>
+        </div>
+      </section>
+    }
     <!-- 自我介紹 -->
     <section>
       <div class="mb-4 flex items-center justify-start gap-2">
@@ -57,12 +69,10 @@
         />
         <h2 class="text-xl font-bold xl:text-2xl">自我介紹</h2>
       </div>
-      <div class="mb-4 text-sm text-tmf-gray-2 xl:text-base" [innerHTML]="data?.introduction">
-        這是一個針對初學者或有一定基礎的學生設計的木吉他家教課程。課程旨在提供一個融合理論與實踐的學習環境，讓學生能夠全面地掌握木吉他演奏的基本技巧和音樂知識。<br /><br />
-        課程將從基礎開始，介紹木吉他的構造和功能,讓學生了解木吉他的不同部分及其作用。隨後,課程將重點放在基本的彈奏技巧上，包括手指的姿勢、和弦的彈奏和選擇等。透過簡單易懂的示範和練習，學生將逐步培養出良好的演奏習慣和技巧。<br /><br />
-        除了技巧訓練，課程還將注重音樂理論的學習。學生將學習基本的樂理知識，包括音階、和弦結構、節奏等，並將這些知識應用到實際的演奏中。通過理論與實踐的結合，學生將更深入地理解音樂，並能夠更靈活地運用在演奏中。<br />
-        課程還將根據學生的興趣和目標,量身定制教學內容。無論是流行音樂、古典音樂還是爵士樂，學生都將有機會學習到自己喜愛的音樂風格。
-      </div>
+      <div
+        class="mb-4 text-base text-tmf-gray-2"
+        [innerHTML]="data?.introduction"
+      ></div>
     </section>
     <!-- 教師履歷 -->
     <section>
@@ -74,42 +84,96 @@
         />
         <h2 class="text-xl font-bold xl:text-2xl">教師履歷</h2>
       </div>
-      <div>
-            <p class=" text-tmf-gray-4 mb-1 ">工作經驗</p>
-            <ul
-              class="list-disc pl-6 font-medium text-tmf-gray-2 "
-            >
-              <li>2024-至今 | 好棒音樂有限公司 | 歌曲演唱表演人員</li>
-            </ul>
+      <!-- 工作經驗 -->
+      @if (data?.work_experiences) {
+        <div>
+          <p class="mb-1 text-tmf-gray-4">工作經驗</p>
+          <ul class="list-disc pl-6 font-medium text-tmf-gray-2">
+            @for (experience of data?.work_experiences; track experience) {
+              <li class="flex items-center gap-1">
+                <p>
+                  <span>{{ experience.start_year }}</span
+                  >/<span>{{ experience.start_month }}</span>
+                </p>
+                -
+                <p>
+                  @if (experience.end_year && experience.end_month) {
+                    <span>{{ experience.end_year }}</span
+                    >/<span>{{ experience.end_month }}</span>
+                  } @else {
+                    <span>至今</span>
+                  }
+                </p>
+                |
+                <p>{{ experience.company_name }}</p>
+                |
+                <p>{{ experience.job_title }}</p>
+              </li>
+            }
+          </ul>
+        </div>
+      }
+      <!-- 教育背景 -->
+      @if (data?.learning_experience) {
+        <div>
+          <p class="mb-1 text-tmf-gray-4">教育背景</p>
+          <div class="flex items-center gap-1 pl-6 font-medium text-tmf-gray-2">
+            <p>
+              <span>{{ data?.learning_experience?.start_year }}</span
+              >/<span>{{ data?.learning_experience?.start_month }}</span>
+            </p>
+            -
+            <p>
+              @if (
+                data?.learning_experience?.end_year &&
+                data?.learning_experience?.end_month
+              ) {
+                <span>{{ data?.learning_experience?.end_year }}</span
+                >/<span>{{ data?.learning_experience?.end_month }}</span>
+              } @else {
+                <span>至今</span>
+              }
+            </p>
+            |
+            <p>
+              <span>{{ data?.learning_experience?.name }}</span>
+              -
+              <span>{{ data?.learning_experience?.department }}</span>
+            </p>
+            |
+            <p>{{ data?.learning_experience?.degree }}</p>
           </div>
-          <!-- 教育背景 -->
-          <div>
-            <p class=" text-tmf-gray-4 mb-1 ">教育背景</p>
-            <ul
-              class="list-disc pl-6 font-medium text-tmf-gray-2 "
-            >
-              <li>2018-2022｜國立台灣藝術大學－音樂學系｜學士</li>
-              <li>2022-2024｜國立台灣師範大學－音樂學系｜碩士</li>
-            </ul>
-          </div>
-          <!-- 證照證書 -->
-          <div>
-            <p class=" text-tmf-gray-4 mb-1 ">證照證書</p>
-            <ul
-              class="list-disc pl-6  font-medium text-tmf-gray-2 "
-            >
-              <li>ISO 9001國際品質認證布拉格音樂機構晉級檢定合格證書</li>
-            </ul>
-          </div>
-      <!-- <p class="mb-4 text-sm text-tmf-gray-2 xl:text-base">
-        這是一個針對初學者或有一定基礎的學生設計的木吉他家教課程。課程旨在提供一個融合理論與實踐的學習環境，讓學生能夠全面地掌握木吉他演奏的基本技巧和音樂知識。<br /><br />
-        課程將從基礎開始，介紹木吉他的構造和功能,讓學生了解木吉他的不同部分及其作用。隨後,課程將重點放在基本的彈奏技巧上，包括手指的姿勢、和弦的彈奏和選擇等。透過簡單易懂的示範和練習，學生將逐步培養出良好的演奏習慣和技巧。<br /><br />
-        除了技巧訓練，課程還將注重音樂理論的學習。學生將學習基本的樂理知識，包括音階、和弦結構、節奏等，並將這些知識應用到實際的演奏中。通過理論與實踐的結合，學生將更深入地理解音樂，並能夠更靈活地運用在演奏中。<br />
-        課程還將根據學生的興趣和目標,量身定制教學內容。無論是流行音樂、古典音樂還是爵士樂，學生都將有機會學習到自己喜愛的音樂風格。
-      </p> -->
+        </div>
+      }
+      <!-- 證照證書 -->
+      @if (data?.teaching_certificates) {
+        <div>
+          <p class="mb-1 text-tmf-gray-4">證照證書</p>
+          <ul class="list-disc pl-6 font-medium text-tmf-gray-2">
+            @for (
+              certificate of data?.teaching_certificates;
+              track certificate
+            ) {
+              <li class="flex items-center gap-1">
+                <p>
+                  <span>{{ certificate.category }}</span>
+                  -
+                  <span>{{ certificate.subject }}</span>
+                </p>
+                |
+                <p>
+                  <span>{{ certificate.verifying_institution }}</span>
+                  -
+                  <span>{{ certificate.license_name }}</span>
+                </p>
+              </li>
+            }
+          </ul>
+        </div>
+      }
     </section>
     <!-- 課程瀏覽 -->
-    <section *ngIf="data &&data?.courses?.length">
+    <section *ngIf="data && data?.courses?.length">
       <div class="mb-4 flex items-center justify-start gap-2">
         <img
           class="h-5 w-5 xl:h-6 xl:w-6"

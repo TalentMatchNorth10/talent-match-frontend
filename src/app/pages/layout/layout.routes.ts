@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { checkUserLogin } from '@tmf/shared';
 
 export const routes: Routes = [
   {
@@ -31,6 +32,7 @@ export const routes: Routes = [
   {
     // 購物車
     path: 'cart',
+    canActivate: [checkUserLogin('提示', '請先登入會員')],
     loadComponent: () => import('../cart-page/cart-page.component')
   },
   {
@@ -52,17 +54,20 @@ export const routes: Routes = [
   {
     // 申請成為老師頁
     path: 'apply-teacher',
+    canActivate: [checkUserLogin('提示', '請先登入會員')],
     loadComponent: () =>
       import('../teacher-apply-page/teacher-apply-page.component')
   },
   /** ==================================  使用者管理 ========================================= */
   {
     path: 'student',
+    canActivate: [checkUserLogin('提示', '請先登入會員')],
     loadChildren: () => import('../student/student.routes'),
     data: { state: 'student' }
   },
   {
     path: 'teacher',
+    canActivate: [checkUserLogin('提示', '請先登入會員')],
     loadChildren: () => import('../teacher/teacher.routes'),
     data: { state: 'teacher' }
   }

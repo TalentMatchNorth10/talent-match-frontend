@@ -60,6 +60,8 @@
     <div class="flex w-full gap-4 overflow-auto md:gap-6">
       @for (courseItem of courseDataSource; track courseItem) {
         <tmf-card (hoverButtonClick)="handleFavoriteClick($event)" [data]="courseItem"></tmf-card>
+      }@empty {
+        <div class="w-full h-[300px]"></div>
       }
     </div>
   </div>

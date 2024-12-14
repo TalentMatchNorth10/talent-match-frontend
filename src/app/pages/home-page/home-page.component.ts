@@ -115,6 +115,13 @@ export default class HomePageComponent implements OnInit, AfterViewInit {
           enabled: false
         }
       },
+      320: {
+        slidesPerView: 2,
+        spaceBetween: 50,
+        navigation: {
+          enabled: false
+        }
+      },
       600: {
         //當螢幕寬度大於等於320
         slidesPerView: 3,
