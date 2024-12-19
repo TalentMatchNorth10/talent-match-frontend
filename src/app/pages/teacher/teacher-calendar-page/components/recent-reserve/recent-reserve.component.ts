@@ -32,26 +32,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
     ReactiveFormsModule,
     ReserveCardComponent
   ],
-  templateUrl: './recent-reserve.component.html',
-  styles: `
-    @keyframes spin {
-      0% {
-        transform: rotate(0deg);
-      }
-      100% {
-        transform: rotate(360deg);
-      }
-    }
-    .spin {
-      animation: spin 1s linear infinite;
-      border-top-color: transparent;
-    }
-    .afterimage {
-      animation: spin 1s linear infinite;
-      opacity: 0.5;
-      border-top-color: transparent;
-    }
-  `
+  templateUrl: './recent-reserve.component.html'
 })
 export class RecentReserveComponent {
   private teacherReserveService = inject(TeacherReserveService);
@@ -69,7 +50,6 @@ export class RecentReserveComponent {
   rangeSig = toSignal(this.fg.controls.range.valueChanges);
   courseSig = toSignal(this.fg.controls.course.valueChanges);
   currentPage = signal(1);
-  isLoading = signal(false);
 
   /** 取得近期預約 */
   reserves: WritableSignal<Array<GetReservesResponseModelDataReservesInner>> =
@@ -90,21 +70,15 @@ export class RecentReserveComponent {
   }
 
   fetchReserves() {
-    this.isLoading.set(true);
     this.teacherReserveService
       .apiTeacherReservesReservesGet({
         courseId: this.courseSig() === 'all' ? '' : this.courseSig()!,
         range: this.rangeSig()!,
         page: this.currentPage()
       })
-      .subscribe({
-        next: (res) => {
-          this.reserves.set(res.data?.reserves || []);
-          this.totalCount.set(res.data?.totalCount || 0);
-        },
-        complete: () => {
-          this.isLoading.set(false);
-        }
+      .subscribe((res) => {
+        this.reserves.set(res.data?.reserves || []);
+        this.totalCount.set(res.data?.totalCount || 0);
       });
   }
 }

@@ -22,7 +22,7 @@
         <span class="hidden lg:block"> 返回 </span>
       </button>
       <button
-        (click)="save()"
+        (click)="mode() === ViewMode.Create ? save() : update()"
         class="flex items-center gap-2 rounded-md bg-tmf-orange-1 p-1 text-white md:px-3 md:py-2"
       >
         <span class="material-symbols-outlined text-[20px] md:text-[22px]">

@@ -11,7 +11,6 @@ import { GetExpiredReservesResponseModelDataExpiredReservesInner } from 'libs/op
   styleUrl: './reserve-table.component.scss'
 })
 export class ReserveTableComponent {
-  isLoading = input.required<boolean>();
   totalCount = input.required<number>();
   tableReserves =
     input.required<GetExpiredReservesResponseModelDataExpiredReservesInner[]>();

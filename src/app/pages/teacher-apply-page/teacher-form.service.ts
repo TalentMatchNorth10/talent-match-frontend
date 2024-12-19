@@ -3,8 +3,11 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {
   learningExperienceForm,
   TeacherApplyForm,
+  TeacherInfoForm,
   teachingCertificateForm,
-  workExperiencesForm
+  teachingCertificateInfoForm,
+  workExperiencesForm,
+  workExperiencesInfoForm
 } from './teacher-apply-page.model';
 
 @Injectable({
@@ -15,8 +18,10 @@ export class TeacherFormService {
 
   constructor() {}
 
-  createTeacherForm(): FormGroup {
-    const form = this.fb.group<TeacherApplyForm>({
+  createTeacherForm(mode: 'apply'): FormGroup<TeacherApplyForm>;
+  createTeacherForm(mode: 'info'): FormGroup<TeacherInfoForm>;
+  createTeacherForm(mode: 'apply' | 'info'): FormGroup<any> {
+    const baseControls = {
       categories: this.fb.array([
         this.fb.group({
           category_id: this.fb.control('', [Validators.required]),
@@ -28,17 +33,34 @@ export class TeacherFormService {
       ]),
       nationality: this.fb.control('', [Validators.required]),
       introduction: this.fb.control(null),
-      work_experiences: this.fb.array([this.createWorkExperience()]),
-      learning_experience: this.createLearningExperience(),
-      teaching_certificates: this.fb.array([this.createTeachingCertificate()])
-    });
+      learning_experience: this.createLearningExperience()
+    };
 
-    form.controls.categories.clear();
-    return form;
+    baseControls.categories.clear();
+
+    if (mode === 'info') {
+      return this.fb.group<TeacherInfoForm>({
+        ...baseControls,
+        work_experiences: this.fb.array([this.createWorkExperience('info')]),
+        teaching_certificates: this.fb.array([
+          this.createTeachingCertificate('info')
+        ])
+      });
+    } else {
+      return this.fb.group<TeacherApplyForm>({
+        ...baseControls,
+        work_experiences: this.fb.array([this.createWorkExperience('apply')]),
+        teaching_certificates: this.fb.array([
+          this.createTeachingCertificate('apply')
+        ])
+      });
+    }
   }
 
-  createWorkExperience(): FormGroup {
-    return this.fb.group<workExperiencesForm>({
+  createWorkExperience(mode: 'apply'): FormGroup<workExperiencesForm>;
+  createWorkExperience(mode: 'info'): FormGroup<workExperiencesInfoForm>;
+  createWorkExperience(mode: 'apply' | 'info'): FormGroup<any> {
+    const baseControls = {
       is_working: this.fb.control(false, [Validators.required]),
       company_name: this.fb.control('', [Validators.required]),
       workplace: this.fb.control('', [Validators.required]),
@@ -48,7 +70,16 @@ export class TeacherFormService {
       start_month: this.fb.control(null, [Validators.required]),
       end_year: this.fb.control(null, [Validators.required]),
       end_month: this.fb.control(null, [Validators.required])
-    });
+    };
+
+    if (mode === 'info') {
+      return this.fb.group<workExperiencesInfoForm>({
+        ...baseControls,
+        _id: this.fb.control('')
+      });
+    }
+
+    return this.fb.group(baseControls) as FormGroup<workExperiencesForm>;
   }
 
   createLearningExperience(): FormGroup {
@@ -66,8 +97,12 @@ export class TeacherFormService {
     });
   }
 
-  createTeachingCertificate(): FormGroup {
-    return this.fb.group<teachingCertificateForm>({
+  createTeachingCertificate(mode: 'apply'): FormGroup<teachingCertificateForm>;
+  createTeachingCertificate(
+    mode: 'info'
+  ): FormGroup<teachingCertificateInfoForm>;
+  createTeachingCertificate(mode: 'apply' | 'info'): FormGroup<any> {
+    const baseControls = {
       verifying_institution: this.fb.control('', [Validators.required]),
       license_name: this.fb.control('', [Validators.required]),
       name: this.fb.control('', [Validators.required]),
@@ -75,6 +110,15 @@ export class TeacherFormService {
       file: this.fb.control('', [Validators.required]),
       category_id: this.fb.control('', [Validators.required]),
       subject: this.fb.control('', [Validators.required])
-    });
+    };
+
+    if (mode === 'info') {
+      return this.fb.group<teachingCertificateInfoForm>({
+        ...baseControls,
+        _id: this.fb.control('')
+      });
+    }
+
+    return this.fb.group<teachingCertificateForm>(baseControls);
   }
 }

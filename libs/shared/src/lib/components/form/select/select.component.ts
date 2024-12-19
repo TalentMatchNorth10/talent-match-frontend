@@ -136,11 +136,9 @@ export class SelectComponent
           this.listOfContainerItemMap[`${el.value}`] = `${el.label}`;
         });
 
-        if (this.value !== this.ngControl?.control?.value) {
-          setTimeout(() => {
-            this.writeValue(this.ngControl?.control?.value);
-          });
-        }
+        setTimeout(() => {
+          this.writeValue(this.ngControl?.control?.value);
+        });
 
         this.cdr.markForCheck();
       });
@@ -200,13 +198,14 @@ export class SelectComponent
   }
 
   writeValue(modelValue: any): void {
-    if (this.value !== modelValue && this.optionComponents) {
+    if (this.optionComponents) {
       this.value = modelValue;
       if (this.multiSelect) {
         this._selectedOptions = this.optionComponents.filter((option) =>
           modelValue.includes(option.value)
         );
       } else {
+        if (this.value !== modelValue) return;
         this._selectedOptions = this.optionComponents.filter(
           (option) => option.value === modelValue
         );

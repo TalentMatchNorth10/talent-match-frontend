@@ -42,7 +42,9 @@ export class QuillEditorComponent implements OnChanges, AfterViewInit {
       changes['defaultContent'].currentValue &&
       this.quillEditor
     ) {
-      this.updateContent(this.defaultContent);
+      setTimeout(() => {
+        this.updateContent(this.defaultContent);
+      });
     }
   }
 

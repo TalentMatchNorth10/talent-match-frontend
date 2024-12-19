@@ -60,7 +60,6 @@ export class ReservedBlockComponent {
     )
   );
   studentSig = toSignal(this.fg.controls.student.valueChanges);
-  isLoading = signal(false);
 
   filterStudentList = computed(() => {
     const courseId = this.courseSig();
@@ -146,7 +145,6 @@ export class ReservedBlockComponent {
   }
 
   fetchReserveTable(page: number = 1) {
-    this.isLoading.set(true);
     this.teacherReserveService
       .apiTeacherReservesListGet({
         studentId: this.studentSig() === 'all' ? '' : this.studentSig()!,
@@ -157,7 +155,6 @@ export class ReservedBlockComponent {
         const { reserves, totalCount } = res.data!;
         this.tableReserves.set(reserves!);
         this.tableCount.set(totalCount!);
-        this.isLoading.set(false);
       });
   }
 

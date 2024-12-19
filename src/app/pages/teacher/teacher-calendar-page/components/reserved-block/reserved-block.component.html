@@ -1,8 +1,8 @@
-<div class="pb-8">
-  <div class="mb-4 flex items-center justify-between">
-    <h2 class="text-2xl font-bold">已預約時段</h2>
+<div class="w-full overflow-auto">
+  <div class="flex min-w-[900px] items-center justify-between">
+    <h2 class="whitespace-nowrap text-2xl font-bold">已預約時段</h2>
     @if (fg.controls.viewMode.value === 'table') {
-      <div class="flex items-center gap-4" [formGroup]="fg">
+      <div class="flex items-center justify-end gap-4" [formGroup]="fg">
         <tmf-select formControlName="course" class="!w-[250px]">
           <tmf-option [label]="'全部'" [value]="'all'"> </tmf-option>
           @for (course of courseList; track course._id) {
@@ -10,7 +10,7 @@
             </tmf-option>
           }
         </tmf-select>
-        <tmf-select formControlName="student" class="!w-[200px]">
+        <tmf-select formControlName="student" class="!w-[250px]">
           <tmf-option [label]="'全部'" [value]="'all'"> </tmf-option>
           @for (student of filterStudentList(); track student._id) {
             <tmf-option [label]="student.nick_name!" [value]="student._id">
@@ -18,7 +18,7 @@
           }
         </tmf-select>
         <button
-          class="box-border rounded-md border border-tmf-gray-2 bg-white px-4 py-[7px] text-center text-tmf-gray-2"
+          class="whitespace-nowrap rounded-md bg-tmf-orange-1 px-4 py-[6px] text-center text-white"
           (click)="fetchReserveTable()"
         >
           查詢
@@ -52,7 +52,6 @@
   @switch (fg.controls.viewMode.value) {
     @case ('table') {
       <tmf-reserve-table
-        [isLoading]="isLoading()"
         [totalCount]="tableCount()"
         [tableReserves]="tableReserves()"
         (changePageEvent)="changeTablePage($event)"

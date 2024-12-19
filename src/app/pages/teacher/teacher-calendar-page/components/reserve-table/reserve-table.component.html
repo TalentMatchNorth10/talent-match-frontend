@@ -1,4 +1,4 @@
-@if (!isLoading() && totalCount() > 0) {
+@if (totalCount() > 0) {
   <div class="mb-5 h-[286px]">
     <table class="reserved_table w-full">
       <thead
@@ -47,8 +47,5 @@
       }"
       (pageChange)="pageChange($event)"
     ></tmf-pagination>
-  </div>
-} @else {
-  <div class="flex h-[354px] items-center justify-center space-x-2">
   </div>
 }

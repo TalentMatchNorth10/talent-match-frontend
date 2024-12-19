@@ -1,8 +1,8 @@
 <div class="mb-4 flex items-center justify-between gap-4">
-  <h2 class="text-2xl font-bold">可預約時段</h2>
+  <h2 class="text-2xl font-bold whitespace-nowrap">可預約時段</h2>
   @if (!isEditMode()) {
     <button
-      class="box-border rounded-md border border-tmf-gray-2 bg-white px-4 py-[7px] text-center text-tmf-gray-2"
+      class="box-border rounded-md border border-tmf-gray-2 bg-white px-4 py-[6px] text-center text-tmf-gray-2"
       (click)="toggleEditMode()"
     >
       編輯
@@ -10,14 +10,14 @@
   } @else {
     <div class="flex items-center gap-2">
       <button
-        class="box-border rounded-md border border-tmf-gray-2 bg-white px-4 py-[7px] text-center text-tmf-gray-2"
+        class="rounded-md border border-tmf-gray-2 bg-white px-4 py-[6px] text-center text-tmf-gray-2 whitespace-nowrap"
         (click)="toggleEditMode()"
       >
         取消
       </button>
 
       <button
-        class="box-border rounded-md border border-tmf-orange-1 bg-tmf-orange-1 px-4 py-[7px] text-center text-white"
+        class="rounded-md bg-tmf-orange-1 px-4 py-[6px] text-center text-white whitespace-nowrap"
         (click)="saveCanReserveTime()"
       >
         儲存
@@ -26,7 +26,7 @@
   }
 </div>
 <div class="w-full overflow-x-auto">
-  <table class="w-full select-none border border-tmf-orange-1">
+  <table class="w-full select-none border border-tmf-orange-1 min-w-[768px]">
     <thead>
       <tr>
         <th class="w-[60px] bg-tmf-orange-4 px-3 py-2"></th>

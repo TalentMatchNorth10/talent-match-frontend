@@ -121,13 +121,8 @@ export default class TeacherApplyPageComponent implements OnInit {
 
   currentStepIndex = 0;
 
-  items: OptionType[] = [
-    { label: 'A', value: 1 },
-    { label: 'B', value: 2 }
-  ];
-
   ngOnInit(): void {
-    this.teacherForm = this.teacherFormService.createTeacherForm();
+    this.teacherForm = this.teacherFormService.createTeacherForm('apply');
     this.getOptions();
   }
 
@@ -304,12 +299,12 @@ export default class TeacherApplyPageComponent implements OnInit {
     switch (type) {
       case 'work_experience':
         this.work_experiences.push(
-          this.teacherFormService.createWorkExperience()
+          this.teacherFormService.createWorkExperience('apply')
         );
         break;
       case 'teaching_certificate':
         this.teaching_certificates.push(
-          this.teacherFormService.createTeachingCertificate()
+          this.teacherFormService.createTeachingCertificate('apply')
         );
         break;
     }

@@ -76,6 +76,7 @@ export default class TeacherVideosPageComponent implements OnInit {
     ]),
     [UploadFormKey.URL]: this.fb.control<string | null>(null)
   });
+  currentVideo: VideoCardData | null = null;
   currentFile: File | null = null;
 
   get videoType() {
@@ -114,6 +115,7 @@ export default class TeacherVideosPageComponent implements OnInit {
       this.uploadForm.reset();
       this.currentFile = null;
     } else if (mode === ViewMode.Edit) {
+      this.currentVideo = video || null;
       this.uploadForm.patchValue({
         [UploadFormKey.NAME]: video?.name || '',
         [UploadFormKey.CATEGORY]: video?.category || '',
@@ -182,6 +184,32 @@ export default class TeacherVideosPageComponent implements OnInit {
         });
     } else {
       uploadVideo();
+    }
+  }
+
+  update() {
+    if (this.currentVideo && this.currentVideo.video_id) {
+      this.teacherVideoService
+        .apiTeacherVideoVideoIdPost({
+          videoId: this.currentVideo.video_id,
+          updateTeacherVideoRequestModel: {
+            name: this.uploadForm.controls[UploadFormKey.NAME].value || '',
+            category:
+              this.uploadForm.controls[UploadFormKey.CATEGORY].value || '',
+            intro: this.uploadForm.controls[UploadFormKey.INTRO].value || '',
+            url: this.uploadForm.controls[UploadFormKey.URL].value || '',
+            video_type: this.uploadForm.controls[UploadFormKey.VIDEO_TYPE].value
+              ? 'youtube'
+              : 'storage'
+          }
+        })
+        .subscribe(() => {
+          this.getVideoList();
+          this.uploadForm.reset();
+          this.currentFile = null;
+          this.currentVideo = null;
+          this.changeView(ViewMode.List);
+        });
     }
   }
 
