@@ -310,7 +310,7 @@ import { CartService } from 'src/app/shared/services/cart.service';
               </p>
               <!-- 使用者選單 -->
               <div
-                class="absolute right-0 top-full hidden pt-[16px] group-hover:block md:pt-[10px] lg:left-0 lg:pt-[18px]"
+                class="absolute right-0 top-full hidden pt-[16px] group-hover:block md:pt-[10px] lg:pt-[18px]"
               >
                 <ul
                   class="w-[200px] rounded-b-[12px] border-t border-tmf-purple bg-white py-3 shadow-lg"

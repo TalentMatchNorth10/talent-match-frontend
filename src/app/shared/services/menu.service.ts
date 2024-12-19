@@ -56,7 +56,7 @@ export class MenuService {
           {
             icon: 'face',
             path: '/teacher/info',
-            title: '老師個人資訊'
+            title: '教師資訊管理'
           },
           {
             icon: 'smart_display',

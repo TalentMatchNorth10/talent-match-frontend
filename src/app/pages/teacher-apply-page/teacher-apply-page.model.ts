@@ -1,5 +1,7 @@
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import {
+  PatchTeacherInfoCertificateRequestModelInner,
+  PatchTeacherInfoWorkRequestModelInner,
   PostTeacherInfoRequestModel,
   PostTeacherInfoRequestModelLearningExperience,
   PostTeacherInfoRequestModelTeachingCertificatesInner,
@@ -20,6 +22,7 @@ type ToFormGroup<T> = {
       : FormControl<RequiredType<T>[P] | null>; // 基本型別 -> FormControl<... | null>
 };
 
+// TeacherApply
 export type workExperiencesForm =
   ToFormGroup<PostTeacherInfoRequestModelWorkExperiencesInner>;
 export type learningExperienceForm =
@@ -27,6 +30,21 @@ export type learningExperienceForm =
 export type teachingCertificateForm =
   ToFormGroup<PostTeacherInfoRequestModelTeachingCertificatesInner>;
 export type TeacherApplyForm = ToFormGroup<PostTeacherInfoRequestModel>;
+// TeacherInfo
+export type workExperiencesInfoForm =
+  ToFormGroup<PatchTeacherInfoWorkRequestModelInner>;
+export type teachingCertificateInfoForm =
+  ToFormGroup<PatchTeacherInfoCertificateRequestModelInner>;
+
+type withOutWorkExperiencesAndTeachingCertificate = Omit<
+  TeacherApplyForm,
+  'work_experiences' | 'teaching_certificates'
+>;
+
+export type TeacherInfoForm = withOutWorkExperiencesAndTeachingCertificate & {
+  work_experiences: FormArray<FormGroup<workExperiencesInfoForm>>;
+  teaching_certificates: FormArray<FormGroup<teachingCertificateInfoForm>>;
+};
 
 export interface TagOption {
   value: string;

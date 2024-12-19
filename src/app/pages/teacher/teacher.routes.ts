@@ -7,7 +7,7 @@ export const routes: Routes = [
     pathMatch: 'full'
   },
   {
-    // 老師個人資訊管理頁
+    // 教師資訊管理管理頁
     path: 'info',
     loadComponent: () =>
       import('./teacher-info-page/teacher-info-page.component'),

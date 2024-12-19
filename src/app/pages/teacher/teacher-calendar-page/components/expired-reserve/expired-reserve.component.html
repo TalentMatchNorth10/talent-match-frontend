@@ -1,6 +1,8 @@
-<div class="rounded-lg border border-tmf-gray-2 p-4 shadow-md">
-  <div class="mb-4 flex items-center gap-4" [formGroup]="fg">
-    <h2 class="text-2xl font-bold">已逾期預約</h2>
+<div
+  class="w-full overflow-auto rounded-lg border border-tmf-gray-2 p-4 shadow-md"
+>
+  <div class="flex min-w-[768px] items-center gap-4" [class.mb-4]="totalCount()" [formGroup]="fg">
+    <h2 class="whitespace-nowrap text-2xl font-bold">已逾期預約</h2>
     <tmf-select formControlName="course" class="!w-[250px]">
       <tmf-option [label]="'全部'" [value]="'all'"> </tmf-option>
       @for (course of courseList; track course._id) {
@@ -15,44 +17,34 @@
       }
     </tmf-select>
     <button
-      class="box-border rounded-md border border-tmf-gray-2 bg-white px-4 py-[7px] text-center text-tmf-gray-2"
+      class="whitespace-nowrap rounded-md bg-tmf-orange-1 px-4 py-[6px] text-center text-white"
       (click)="searchReserves()"
     >
       查詢
     </button>
   </div>
-  @if (!isLoading()) {
-    @if (totalCount() > 0) {
-      <div class="mb-5 flex flex-wrap gap-5 min-h-[654px]">
-        @for (expired_reserve of expired_reserves(); track $index) {
-          <tmf-reserve-card
-            [reserve]="expired_reserve"
-            [expired]="true"
-            (click)="completeReserve(expired_reserve)"
-          ></tmf-reserve-card>
-        }
-      </div>
-      <div class="flex justify-center">
-        <tmf-pagination
-          class="mx-auto"
-          [config]="{
-            itemsPerPage: 6,
-            totalItems: totalCount(),
-            currentPage: currentPage(),
-            showFirstButton: false,
-            showLastButton: false
-          }"
-          (pageChange)="pageChange($event)"
-        ></tmf-pagination>
-      </div>
-    }
-  } @else {
-    <div class="flex items-center justify-center space-x-2 h-[722px]">
-      <div class="relative">
-        <div
-          class="spin h-20 w-20 rounded-full border-[10px] border-solid border-tmf-orange-1"
-        ></div>
-      </div>
+  @if (totalCount() > 0) {
+    <div class="mb-5 flex min-h-[654px] flex-wrap gap-5">
+      @for (expired_reserve of expired_reserves(); track $index) {
+        <tmf-reserve-card
+          [reserve]="expired_reserve"
+          [expired]="true"
+          (click)="completeReserve(expired_reserve)"
+        ></tmf-reserve-card>
+      }
+    </div>
+    <div class="flex justify-center">
+      <tmf-pagination
+        class="mx-auto"
+        [config]="{
+          itemsPerPage: 6,
+          totalItems: totalCount(),
+          currentPage: currentPage(),
+          showFirstButton: false,
+          showLastButton: false
+        }"
+        (pageChange)="pageChange($event)"
+      ></tmf-pagination>
     </div>
   }
 </div>

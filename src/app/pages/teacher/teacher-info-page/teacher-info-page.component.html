@@ -1,322 +1,592 @@
-<h1 class="mb-6 text-3xl font-bold text-tmf-gray-1">老師個人資訊</h1>
-<div class="container mx-auto max-w-7xl px-6">
-  <!-- 基本資料區塊 -->
-  <div class="mb-6 rounded-lg bg-white p-6 shadow-md">
-    <div
-      class="mb-4 flex cursor-pointer items-center justify-between"
-      (click)="toggleSection('basicInfo')"
+<h1 class="mb-6 text-3xl font-bold text-tmf-gray-1">教師資訊管理</h1>
+
+<cdk-accordion class="accordion" [formGroup]="teacherForm">
+  @for (item of items; track item; let index = $index) {
+    <cdk-accordion-item
+      #accordionItem="cdkAccordionItem"
+      class="accordion-item"
     >
-      <h2 class="text-lg font-bold">基本資料</h2>
-      <div class="flex items-center">
-        @if (!editMode().basicInfo) {
-          <button
-            class="mr-2 rounded bg-gray-100 px-4 py-2 hover:bg-gray-200"
-            (click)="handleEditMode($event, 'basicInfo')"
-          >
-            編輯
-          </button>
-        } @else {
-          <div class="flex items-center">
+      <div class="accordion-item-header" (click)="accordionItem.toggle()">
+        <div class="flex items-center gap-2">
+          <p>{{ item.title }}</p>
+          @if (item.isEditMode) {
             <button
-              class="mr-2 rounded bg-tmf-orange-1 px-4 py-2 text-white"
-              (click)="handleSave($event, 'basicInfo')"
-            >
-              儲存
-            </button>
-            <button
-              class="mr-2 rounded bg-gray-100 px-4 py-2 hover:bg-gray-200"
-              (click)="handleCancel($event, 'basicInfo')"
+              (click)="changeMode(item, false); $event.stopPropagation()"
+              class="rounded-md bg-tmf-gray-3 px-2 py-1 text-sm text-white"
             >
               取消
             </button>
-          </div>
-        }
-        <svg
-          [class.rotate-180]="!expandedSections['basicInfo']"
-          class="h-6 w-6 transition-transform duration-200"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M19 9l-7 7-7-7"
-          />
-        </svg>
-      </div>
-    </div>
-
-    <div
-      class="space-y-4"
-      *ngIf="expandedSections['basicInfo']"
-      [formGroup]="fg"
-    >
-      <div class="flex">
-        <label class="min-w-[120px] font-medium">國籍</label>
-        @if (!editMode().basicInfo) {
-          <span>{{ baseInfo().nationality }}</span>
-        } @else {
-          <tmf-select
-            class="bg-white text-gray-700"
-            label="國家"
-            formControlName="nationality"
-            [isRequired]="true"
-            [multiSelect]="false"
-          >
-            <tmf-option
-              *ngFor="let item of nationOptions"
-              [value]="item.value"
-              [label]="item.label"
-            ></tmf-option>
-          </tmf-select>
-        }
-      </div>
-      <div class="flex">
-        <label class="min-w-[120px] font-medium">教學專長</label>
-        @if (!editMode().basicInfo) {
-          <ul>
-            @for (item of baseInfo().categories; track $index) {
-              <li>
-                <span>{{ item.category_id! | tmfCategory }}</span
-                >：<span>{{ item.sub_categories?.join(', ') }}</span>
-              </li>
-            }
-            </ul>
-        } @else {
-          <div>
-            <tmf-select
-              class="bg-white text-gray-700"
-              label="教授科目"
-              info="*您最多只能教授三種科目"
-              [formControl]="fg.controls.topicControl"
-              [isRequired]="true"
-              [multiSelect]="true"
-              [maxSelected]="3"
-              (selectChange)="handleCategoryChange($event)"
+            <button
+              (click)="save(item); $event.stopPropagation()"
+              class="rounded-md bg-tmf-orange-1 px-2 py-1 text-sm text-white"
             >
-              <tmf-option
-                *ngFor="let item of tagOptions"
-                [class.selected]="
-                  fg.controls.topicControl.value?.includes(item.value)
-                "
-                [value]="item.value"
-                [label]="item.main_category"
-              ></tmf-option>
-            </tmf-select>
-            <div class="flex flex-col">
-              <span
-                class="mb-1 ml-1 inline-block text-sm font-medium text-tmf-gray-2 md:text-[15px] md:leading-6"
-                >教學專長</span
-              >
-              <span class="mb-2 ml-1 text-sm text-gray-500"
-                >*盡可能選擇熱門專長，以獲得更多招生機會(3項/科目)。</span
-              >
-            </div>
-            <ng-container *ngFor="let group of fg.controls.categories.controls">
+              儲存
+            </button>
+          } @else {
+            <button
+              (click)="changeMode(item, true); $event.stopPropagation()"
+              class="flex items-center gap-2 rounded-md bg-tmf-orange-1 px-2 py-1 text-sm text-white"
+            >
+              <span class="material-symbols-outlined text-sm">
+                edit_square
+              </span>
+              編輯
+            </button>
+          }
+        </div>
+        <span
+          class="material-symbols-outlined duration-75"
+          [class.rotate-180]="accordionItem.expanded"
+        >
+          keyboard_arrow_down
+        </span>
+      </div>
+      <div class="accordion-item-body" [class.closed]="!accordionItem.expanded">
+        <div class="accordion-item-content">
+          @switch (item.id) {
+            @case (GroupType.Info) {
               <tmf-select
                 class="bg-white text-gray-700"
-                [label]="getCategoryLabel(group.controls.category_id.value!)"
-                [multiSelect]="true"
-                [maxSelected]="3"
+                label="國家"
+                formControlName="nationality"
                 [isRequired]="true"
-                [formControl]="group.controls.sub_categories"
+                [multiSelect]="false"
               >
                 <tmf-option
-                  *ngFor="
-                    let tagName of getSubCategoryOptions(
-                      group.controls.category_id.value!
-                    );
-                    let i = index
-                  "
-                  [class.selected]="
-                    group.controls.sub_categories.value?.includes(tagName)
-                  "
-                  [value]="tagName"
-                  [label]="tagName"
+                  *ngFor="let item of nationOptions"
+                  [value]="item.value"
+                  [label]="item.label"
                 ></tmf-option>
               </tmf-select>
-            </ng-container>
-          </div>
-        }
-      </div>
-      <div class="flex">
-        <label class="min-w-[120px] font-medium">自我介紹</label>
-        @if (!editMode().basicInfo) {
-          <p
-            [innerHTML]="baseInfo().introduction"
-            class="whitespace-pre-line leading-relaxed"
-          ></p>
-        } @else {
-          <tmf-quill-editor
-            class="mb-6"
-            label="文章內文"
-            height="400px"
-            [isRequired]="true"
-            [diabled]="!editMode().basicInfo"
-            [defaultContent]="baseInfo().introduction"
-            (contentChangeEvent)="fg.controls.introduction.setValue($event)"
-          ></tmf-quill-editor>
-        }
-      </div>
-    </div>
-  </div>
+              <tmf-select
+                class="bg-white text-gray-700"
+                label="教授科目"
+                info="*您最多只能教授三種科目"
+                [formControl]="topicControl"
+                [isRequired]="true"
+                [multiSelect]="true"
+                [maxSelected]="3"
+                (selectChange)="handleCategoryChange($event)"
+              >
+                <tmf-option
+                  *ngFor="let item of tagOptions"
+                  [class.selected]="topicControl.value?.includes(item.value)"
+                  [value]="item.value"
+                  [label]="item.main_category"
+                ></tmf-option>
+              </tmf-select>
+              <div class="flex flex-col">
+                <span
+                  class="mb-1 ml-1 inline-block text-sm font-medium text-tmf-gray-2 md:text-[15px] md:leading-6"
+                  >教學專長</span
+                >
+                <span class="mb-2 ml-1 text-sm text-gray-500"
+                  >*盡可能選擇熱門專長，以獲得更多招生機會(3項/科目)。</span
+                >
+              </div>
+              <ng-container *ngFor="let group of categoriesFormArray.controls">
+                <tmf-select
+                  class="bg-white text-gray-700"
+                  [label]="getCategoryLabel(group.controls.category_id.value!)"
+                  [multiSelect]="true"
+                  [maxSelected]="3"
+                  [isRequired]="true"
+                  [formControl]="group.controls.sub_categories"
+                >
+                  <tmf-option
+                    *ngFor="
+                      let tagName of getSubCategoryOptions(
+                        group.controls.category_id.value!
+                      );
+                      let i = index
+                    "
+                    [class.selected]="
+                      group.controls.sub_categories.value?.includes(tagName)
+                    "
+                    [value]="tagName"
+                    [label]="tagName"
+                  ></tmf-option>
+                </tmf-select>
+              </ng-container>
 
-  <div class="mb-6 rounded-lg bg-white p-6 shadow-md">
-    <div
-      class="mb-4 flex cursor-pointer items-center justify-between"
-      (click)="toggleSection('workExperience')"
-    >
-      <h2 class="text-lg font-bold">工作經驗</h2>
-      <div class="flex items-center">
-        <button class="mr-2 rounded bg-gray-100 px-4 py-2 hover:bg-gray-200">
-          編輯
-        </button>
-        <svg
-          [class.rotate-180]="!expandedSections['workExperience']"
-          class="h-6 w-6 transition-transform duration-200"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M19 9l-7 7-7-7"
-          />
-        </svg>
+              <tmf-quill-editor
+                class="mb-6"
+                label="自我介紹"
+                height="400px"
+                [isRequired]="true"
+                [diabled]="introduceControl.disabled"
+                [defaultContent]="introduceControl.value || ''"
+                (contentChangeEvent)="introduceControl.setValue($event)"
+              ></tmf-quill-editor>
+            }
+            @case (GroupType.Learning_experience) {
+              <div [formGroupName]="'learning_experience'">
+                <div class="mb-6 flex">
+                  <tmf-checkbox
+                    [formControlName]="'is_in_school'"
+                    label="我是在校生，目前就讀中"
+                    direct="horizontal"
+                    (checkedChange)="handleIsInSchoolChange($event)"
+                  ></tmf-checkbox>
+                </div>
+                <div
+                  class="mb-6 flex flex-col justify-between gap-6 md:flex-row"
+                >
+                  <div class="flex flex-1 flex-col gap-2">
+                    <div>開始時間<span class="text-red-500">*</span></div>
+                    <div
+                      class="flex flex-col justify-between gap-4 md:flex-row"
+                    >
+                      <tmf-select
+                        class="bg-white text-gray-700"
+                        [multiSelect]="false"
+                        [formControlName]="'start_year'"
+                        placeholder="年份"
+                      >
+                        <tmf-option
+                          *ngFor="let item of yearOptions"
+                          [value]="item.value"
+                          [label]="item.label"
+                        ></tmf-option>
+                      </tmf-select>
+                      <tmf-select
+                        class="bg-white text-gray-700"
+                        [multiSelect]="false"
+                        [formControlName]="'start_month'"
+                        placeholder="月份"
+                      >
+                        <tmf-option
+                          *ngFor="let item of monthOptions"
+                          [value]="item.value"
+                          [label]="item.label"
+                        ></tmf-option>
+                      </tmf-select>
+                    </div>
+                  </div>
+                  <div class="flex flex-1 flex-col gap-2">
+                    <div>
+                      結束時間
+                      @if (!learning_experience.get('is_in_school')?.value) {
+                        <span class="text-red-500">*</span>
+                      }
+                    </div>
+                    <div
+                      class="flex flex-col justify-between gap-4 md:flex-row"
+                    >
+                      <tmf-select
+                        class="bg-white text-gray-700"
+                        [multiSelect]="false"
+                        [formControlName]="'end_year'"
+                        placeholder="年份"
+                      >
+                        <tmf-option
+                          *ngFor="let item of yearOptions"
+                          [value]="item.value"
+                          [label]="item.label"
+                        ></tmf-option>
+                      </tmf-select>
+                      <tmf-select
+                        class="bg-white text-gray-700"
+                        [multiSelect]="false"
+                        [formControlName]="'end_month'"
+                        placeholder="月份"
+                      >
+                        <tmf-option
+                          *ngFor="let item of monthOptions"
+                          [value]="item.value"
+                          [label]="item.label"
+                        ></tmf-option>
+                      </tmf-select>
+                    </div>
+                  </div>
+                </div>
+                <tmf-select
+                  class="mb-6 bg-white text-gray-700"
+                  label="地點"
+                  [isRequired]="true"
+                  [multiSelect]="false"
+                  [formControlName]="'region'"
+                >
+                  <tmf-option
+                    *ngFor="let item of regionOptions"
+                    [value]="item.value"
+                    [label]="item.label"
+                  ></tmf-option>
+                </tmf-select>
+                <tmf-input
+                  class="w-full"
+                  [label]="'學校名稱'"
+                  [isRequired]="true"
+                  [inputType]="InputType.Outline"
+                  [formControlName]="'name'"
+                ></tmf-input>
+                <tmf-input
+                  class="w-full"
+                  [label]="'科系名稱'"
+                  [isRequired]="true"
+                  [inputType]="InputType.Outline"
+                  [formControlName]="'department'"
+                ></tmf-input>
+                <tmf-select
+                  class="mb-6 bg-white text-gray-700"
+                  label="學位"
+                  [isRequired]="true"
+                  [multiSelect]="false"
+                  [formControlName]="'degree'"
+                >
+                  <tmf-option
+                    *ngFor="let item of degreeOptions"
+                    [value]="item.value"
+                    [label]="item.label"
+                  ></tmf-option>
+                </tmf-select>
+                <div class="flex flex-col gap-2">
+                  <span
+                    class="inline-block text-sm font-medium text-tmf-gray-2 md:text-[15px] md:leading-6"
+                    >上傳學位證書<span class="text-red-500">*</span></span
+                  >
+                  <input
+                    #learningExperienceFile
+                    type="file"
+                    hidden
+                    (change)="
+                      handleFileChange(
+                        $event,
+                        learning_experience.controls.file!,
+                        'degree'
+                      )
+                    "
+                  />
+                  <button
+                    (click)="learningExperienceFile.click()"
+                    [disabled]="learning_experience.get('file')?.disabled"
+                    class="shadow-white-1/10 hover:shadow-white-1/20 select-none rounded-lg border bg-white px-6 py-3 text-center align-middle font-sans text-xs font-bold uppercase text-black shadow-md transition-all hover:shadow-lg focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:cursor-not-allowed disabled:opacity-50 disabled:shadow-none"
+                    type="button"
+                  >
+                    {{
+                      learning_experience.get('file')?.value
+                        ? '已上傳'
+                        : '選擇檔案'
+                    }}
+                  </button>
+                </div>
+              </div>
+            }
+            @case (GroupType.Work_experience) {
+              <div
+                class="flex flex-col gap-y-5"
+                formArrayName="work_experiences"
+              >
+                @for (
+                  workExperience of work_experiences.controls;
+                  track workExperience;
+                  let i = $index
+                ) {
+                  <div [formGroupName]="i" class="rounded-lg border p-4">
+                    <div class="flex flex-col">
+                      <div class="mb-6 flex justify-between">
+                        <tmf-checkbox
+                          formControlName="is_working"
+                          label="是否在職中"
+                          direct="horizontal"
+                          (checkedChange)="handleIsWorkingChange($event, i)"
+                        ></tmf-checkbox>
+                        <button
+                          class="h-6 w-6 rounded-full bg-red-500 hover:bg-red-700 disabled:cursor-not-allowed disabled:bg-tmf-gray-2"
+                          [disabled]="work_experiences.disabled"
+                          (click)="removeGroup(GroupType.Work_experience, i)"
+                        >
+                          <span class="material-icons-outlined text-white"
+                            >close</span
+                          >
+                        </button>
+                      </div>
+                      <tmf-input
+                        class="w-full"
+                        label="公司名稱"
+                        [isRequired]="true"
+                        [inputType]="InputType.Outline"
+                        [formControlName]="'company_name'"
+                      ></tmf-input>
+                      <tmf-input
+                        class="w-full"
+                        [label]="'工作地點'"
+                        [isRequired]="true"
+                        [inputType]="InputType.Outline"
+                        [formControlName]="'workplace'"
+                      ></tmf-input>
+                      <tmf-select
+                        class="mb-6 bg-white text-gray-700"
+                        label="職務類別"
+                        [isRequired]="true"
+                        [multiSelect]="false"
+                        [formControlName]="'job_category'"
+                      >
+                        <tmf-option
+                          *ngFor="let item of jobCategoryOptions"
+                          [value]="item.value"
+                          [label]="item.label"
+                        ></tmf-option>
+                      </tmf-select>
+                      <tmf-input
+                        class="w-full"
+                        [label]="'職位名稱'"
+                        [isRequired]="true"
+                        [inputType]="InputType.Outline"
+                        [formControlName]="'job_title'"
+                      ></tmf-input>
+                      <div
+                        class="flex flex-col justify-between gap-3 md:flex-row"
+                      >
+                        <div class="flex flex-1 flex-col gap-2">
+                          <div>開始時間<span class="text-red-500">*</span></div>
+                          <div
+                            class="flex flex-col justify-between gap-4 md:flex-row"
+                          >
+                            <tmf-select
+                              class="bg-white text-gray-700"
+                              [multiSelect]="false"
+                              [formControlName]="'start_year'"
+                              placeholder="年份"
+                            >
+                              <tmf-option
+                                *ngFor="let item of yearOptions"
+                                [value]="item.value"
+                                [label]="item.label"
+                              ></tmf-option>
+                            </tmf-select>
+                            <tmf-select
+                              class="bg-white text-gray-700"
+                              [multiSelect]="false"
+                              [formControlName]="'start_month'"
+                              placeholder="月份"
+                            >
+                              <tmf-option
+                                *ngFor="let item of monthOptions"
+                                [value]="item.value"
+                                [label]="item.label"
+                              ></tmf-option>
+                            </tmf-select>
+                          </div>
+                        </div>
+                        <div class="flex flex-1 flex-col gap-2">
+                          <div>
+                            結束時間
+                            @if (!workExperience.get('is_working')?.value) {
+                              <span class="text-red-500">*</span>
+                            }
+                          </div>
+                          <div
+                            class="flex flex-col justify-between gap-4 md:flex-row"
+                          >
+                            <tmf-select
+                              class="bg-white text-gray-700"
+                              [multiSelect]="false"
+                              [formControlName]="'end_year'"
+                              placeholder="年份"
+                            >
+                              <tmf-option
+                                *ngFor="let item of yearOptions"
+                                [value]="item.value"
+                                [label]="item.label"
+                              ></tmf-option>
+                            </tmf-select>
+                            <tmf-select
+                              class="bg-white text-gray-700"
+                              [multiSelect]="false"
+                              [formControlName]="'end_month'"
+                              placeholder="月份"
+                            >
+                              <tmf-option
+                                *ngFor="let item of monthOptions"
+                                [value]="item.value"
+                                [label]="item.label"
+                              ></tmf-option>
+                            </tmf-select>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                }
+                <span
+                  class="flex cursor-pointer items-center text-tmf-orange-1"
+                  [ngClass]="{
+                    '!cursor-not-allowed !text-tmf-gray-2':
+                      work_experiences.disabled
+                  }"
+                  (click)="
+                    !work_experiences.disabled
+                      ? addGroup(GroupType.Work_experience)
+                      : null
+                  "
+                  ><span class="material-icons-outlined">add</span
+                  >新增工作經歷</span
+                >
+              </div>
+            }
+            @case (GroupType.Teaching_certificate) {
+              @if (teaching_certificates.controls.length > 0) {
+                <div
+                  formArrayName="teaching_certificates"
+                  class="flex flex-col gap-y-5"
+                >
+                  <ng-container
+                    *ngFor="
+                      let teaching_certificate of teaching_certificates.controls;
+                      let i = index
+                    "
+                  >
+                    <div [formGroupName]="i" class="rounded-lg border p-4">
+                      <div class="flex flex-col gap-2">
+                        <div class="flex justify-end">
+                          <button
+                            class="h-6 w-6 rounded-full bg-red-500 hover:bg-red-700 disabled:cursor-not-allowed disabled:bg-tmf-gray-2"
+                            [disabled]="teaching_certificates.disabled"
+                            (click)="
+                              removeGroup(GroupType.Teaching_certificate, i)
+                            "
+                          >
+                            <span class="material-icons-outlined text-white"
+                              >close</span
+                            >
+                          </button>
+                        </div>
+                        <tmf-select
+                          class="mb-6 bg-white text-gray-700"
+                          [multiSelect]="false"
+                          [formControlName]="'category_id'"
+                          [isRequired]="true"
+                          label="證照科目"
+                        >
+                          <tmf-option
+                            *ngFor="let item of tagOptions"
+                            [value]="item.value"
+                            [label]="item.main_category"
+                          ></tmf-option>
+                        </tmf-select>
+                        @if (
+                          teaching_certificates.controls[i].get('category_id')
+                            ?.value
+                        ) {
+                          <tmf-select
+                            class="mb-6 bg-white text-gray-700"
+                            [multiSelect]="false"
+                            [formControlName]="'subject'"
+                            [isRequired]="true"
+                            label="證照類別"
+                          >
+                            <tmf-option
+                              *ngFor="
+                                let tagName of getSubCategoryOptions(
+                                  teaching_certificates.controls[i].get(
+                                    'category_id'
+                                  )?.value!
+                                )
+                              "
+                              [value]="tagName"
+                              [label]="tagName"
+                            ></tmf-option>
+                          </tmf-select>
+                        }
+                        <tmf-input
+                          class="w-full"
+                          [label]="'認證機構'"
+                          [isRequired]="true"
+                          [inputType]="InputType.Outline"
+                          [formControlName]="'verifying_institution'"
+                        ></tmf-input>
+                        <tmf-input
+                          class="w-full"
+                          [label]="'證照名稱'"
+                          [isRequired]="true"
+                          [inputType]="InputType.Outline"
+                          [formControlName]="'license_name'"
+                        ></tmf-input>
+                        <tmf-input
+                          class="w-full"
+                          [label]="'證照申請姓名'"
+                          [isRequired]="true"
+                          [inputType]="InputType.Outline"
+                          [formControlName]="'name'"
+                        ></tmf-input>
+                        <tmf-input
+                          class="w-full"
+                          [label]="'證照序號(限輸入英數)'"
+                          [isRequired]="true"
+                          [inputType]="InputType.Outline"
+                          [formControlName]="'license_number'"
+                        ></tmf-input>
+                        <div class="flex flex-col gap-2">
+                          <span
+                            class="inline-block text-sm font-medium text-tmf-gray-2 md:text-[15px] md:leading-6"
+                            >上傳證照<span class="text-red-500">*</span></span
+                          >
+                          <input
+                            #certificateFile
+                            type="file"
+                            hidden
+                            (change)="
+                              handleFileChange(
+                                $event,
+                                teaching_certificate.controls.file,
+                                'certificate'
+                              )
+                            "
+                          />
+                          <button
+                            (click)="certificateFile.click()"
+                            [disabled]="
+                              teaching_certificate.get('file')?.disabled
+                            "
+                            class="shadow-white-1/10 hover:shadow-white-1/20 select-none rounded-lg border bg-white px-6 py-3 text-center align-middle font-sans text-xs font-bold uppercase text-black shadow-md transition-all hover:shadow-lg focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                            type="button"
+                          >
+                            {{
+                              teaching_certificate.get('file')?.value
+                                ? '已上傳'
+                                : '選擇檔案'
+                            }}
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </ng-container>
+                </div>
+              }
+              <span
+                class="flex cursor-pointer items-center text-tmf-orange-1"
+                [ngClass]="{
+                  '!cursor-not-allowed !text-tmf-gray-2':
+                    teaching_certificates.disabled
+                }"
+                (click)="
+                  !teaching_certificates.disabled
+                    ? addGroup(GroupType.Teaching_certificate)
+                    : null
+                "
+                ><span class="material-icons-outlined">add</span
+                >新增教學證照</span
+              >
+            }
+            @case (GroupType.Video) {
+              <tmf-select
+                class="mb-6 bg-white text-gray-700"
+                label="影片"
+                [isRequired]="true"
+                [multiSelect]="true"
+                [formControl]="videoControl"
+              >
+                <tmf-option
+                  *ngFor="let item of videoList"
+                  [value]="item._id"
+                  [label]="item.name"
+                ></tmf-option>
+              </tmf-select>
+            }
+          }
+        </div>
       </div>
-    </div>
-
-    <div class="flex" *ngIf="expandedSections['workExperience']">
-      <div class="min-w-[200px] space-x-2">
-        <span>2018 年 9 月</span>
-        <span>至</span>
-        <span>2020年6月</span>
-      </div>
-      <div class="space-y-2">
-        <div>台北</div>
-        <div>崇音創藝音樂工作室</div>
-        <div>音樂教育</div>
-        <div>吉他講師</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="mb-6 rounded-lg bg-white p-6 shadow-md">
-    <div
-      class="mb-4 flex cursor-pointer items-center justify-between"
-      (click)="toggleSection('education')"
-    >
-      <h2 class="text-lg font-bold">學歷背景</h2>
-      <div class="flex items-center">
-        <button class="mr-2 rounded bg-gray-100 px-4 py-2 hover:bg-gray-200">
-          編輯
-        </button>
-        <svg
-          [class.rotate-180]="!expandedSections['education']"
-          class="h-6 w-6 transition-transform duration-200"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M19 9l-7 7-7-7"
-          />
-        </svg>
-      </div>
-    </div>
-
-    <div class="flex" *ngIf="expandedSections['education']">
-      <div class="min-w-[200px] space-x-2">
-        <span>2018 年 9 月</span>
-        <span>至</span>
-        <span>2020年6月</span>
-      </div>
-      <div class="space-y-2">
-        <div>台北</div>
-        <div>國立台灣藝術大學</div>
-        <div>音樂學系</div>
-        <div>學士</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="mb-6 rounded-lg bg-white p-6 shadow-md">
-    <div
-      class="mb-4 flex cursor-pointer items-center justify-between"
-      (click)="toggleSection('teaching')"
-    >
-      <h2 class="text-lg font-bold">教學證照</h2>
-      <div class="flex items-center">
-        <button class="mr-2 rounded bg-gray-100 px-4 py-2 hover:bg-gray-200">
-          編輯
-        </button>
-        <svg
-          [class.rotate-180]="!expandedSections['teaching']"
-          class="h-6 w-6 transition-transform duration-200"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M19 9l-7 7-7-7"
-          />
-        </svg>
-      </div>
-    </div>
-
-    <div class="flex" *ngIf="expandedSections['teaching']">
-      <label class="min-w-[120px] font-medium">音樂</label>
-      <span>吉他</span>
-    </div>
-  </div>
-
-  <div class="mb-6 rounded-lg bg-white p-6 shadow-md">
-    <div
-      class="mb-4 flex cursor-pointer items-center justify-between"
-      (click)="toggleSection('video')"
-    >
-      <h2 class="text-lg font-bold">自我介紹影片</h2>
-      <div class="flex items-center">
-        <button class="mr-2 rounded bg-gray-100 px-4 py-2 hover:bg-gray-200">
-          編輯
-        </button>
-        <svg
-          [class.rotate-180]="!expandedSections['video']"
-          class="h-6 w-6 transition-transform duration-200"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M19 9l-7 7-7-7"
-          />
-        </svg>
-      </div>
-    </div>
-
-    <div
-      class="flex min-h-[200px] items-center justify-center rounded border-2 border-dashed border-gray-300"
-      *ngIf="expandedSections['video']"
-    >
-      <!-- 影片傳區域 -->
-    </div>
-  </div>
-</div>
+    </cdk-accordion-item>
+  }
+</cdk-accordion>

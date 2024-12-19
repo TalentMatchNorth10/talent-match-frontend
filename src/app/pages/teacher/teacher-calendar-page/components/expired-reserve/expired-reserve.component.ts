@@ -36,26 +36,7 @@ import { DialogService } from 'src/app/shared/services/dialog.service';
     ReactiveFormsModule,
     ReserveCardComponent
   ],
-  templateUrl: './expired-reserve.component.html',
-  styles: `
-    @keyframes spin {
-      0% {
-        transform: rotate(0deg);
-      }
-      100% {
-        transform: rotate(360deg);
-      }
-    }
-    .spin {
-      animation: spin 1s linear infinite;
-      border-top-color: transparent;
-    }
-    .afterimage {
-      animation: spin 1s linear infinite;
-      opacity: 0.5;
-      border-top-color: transparent;
-    }
-  `
+  templateUrl: './expired-reserve.component.html'
 })
 export class ExpiredReserveComponent {
   private teacherReserveService = inject(TeacherReserveService);
@@ -92,8 +73,6 @@ export class ExpiredReserveComponent {
     return studentList?.students || [];
   });
 
-  isLoading = signal(false);
-
   ngOnInit(): void {
     this.fetchExpiredReserves();
   }
@@ -109,21 +88,15 @@ export class ExpiredReserveComponent {
   }
 
   fetchExpiredReserves() {
-    this.isLoading.set(true);
     this.teacherReserveService
       .apiTeacherReservesExpiredReservesGet({
         page: this.currentPage(),
         courseId: this.courseSig() === 'all' ? '' : this.courseSig()!,
         studentId: this.studentSig() === 'all' ? '' : this.studentSig()!
       })
-      .subscribe({
-        next: (res) => {
-          this.expired_reserves.set(res.data?.expired_reserves || []);
-          this.totalCount.set(res.data?.totalCount || 0);
-        },
-        complete: () => {
-          this.isLoading.set(false);
-        }
+      .subscribe((res) => {
+        this.expired_reserves.set(res.data?.expired_reserves || []);
+        this.totalCount.set(res.data?.totalCount || 0);
       });
   }
 

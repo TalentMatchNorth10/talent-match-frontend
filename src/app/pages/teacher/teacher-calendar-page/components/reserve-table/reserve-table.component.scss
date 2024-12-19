@@ -15,21 +15,3 @@ table.reserved_table > thead > tr > th:last-child,
 table.reserved_table > tbody > tr > td:last-child {
   @apply pr-3;
 }
-
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-.spin {
-  animation: spin 1s linear infinite;
-  border-top-color: transparent;
-}
-.afterimage {
-  animation: spin 1s linear infinite;
-  opacity: 0.5;
-  border-top-color: transparent;
-}
