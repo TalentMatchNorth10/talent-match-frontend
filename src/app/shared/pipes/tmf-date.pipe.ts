@@ -65,3 +65,26 @@ export class TmfWeekPipe implements PipeTransform {
     }
   }
 }
+
+@Pipe({
+  name: 'tmfCategory',
+  standalone: true
+})
+export class TmfCategoryPipe implements PipeTransform {
+  transform(category_id: string): string {
+    switch (category_id) {
+      case '665482f25b0ab5aecf1a93b2':
+        return '舞蹈表演';
+      case '665482f25b0ab5aecf1a93b3':
+        return '藝術創作';
+      case '665482f25b0ab5aecf1a93b4':
+        return '手作工藝';
+      case '665482f25b0ab5aecf1a93b9':
+        return '烹飪料理';
+      case '6664076f6d3df1fb9a4a272a':
+        return '理財投資';
+      default:
+        return '';
+    }
+  }
+}

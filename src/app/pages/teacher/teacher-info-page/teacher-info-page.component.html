@@ -1,5 +1,6 @@
 <h1 class="mb-6 text-3xl font-bold text-tmf-gray-1">老師個人資訊</h1>
 <div class="container mx-auto max-w-7xl px-6">
+  <!-- 基本資料區塊 -->
   <div class="mb-6 rounded-lg bg-white p-6 shadow-md">
     <div
       class="mb-4 flex cursor-pointer items-center justify-between"
@@ -7,12 +8,29 @@
     >
       <h2 class="text-lg font-bold">基本資料</h2>
       <div class="flex items-center">
-        <button
-          class="mr-2 rounded bg-gray-100 px-4 py-2 hover:bg-gray-200"
-          (click)="handleEditMode($event, 'basicInfo')"
-        >
-          編輯
-        </button>
+        @if (!editMode().basicInfo) {
+          <button
+            class="mr-2 rounded bg-gray-100 px-4 py-2 hover:bg-gray-200"
+            (click)="handleEditMode($event, 'basicInfo')"
+          >
+            編輯
+          </button>
+        } @else {
+          <div class="flex items-center">
+            <button
+              class="mr-2 rounded bg-tmf-orange-1 px-4 py-2 text-white"
+              (click)="handleSave($event, 'basicInfo')"
+            >
+              儲存
+            </button>
+            <button
+              class="mr-2 rounded bg-gray-100 px-4 py-2 hover:bg-gray-200"
+              (click)="handleCancel($event, 'basicInfo')"
+            >
+              取消
+            </button>
+          </div>
+        }
         <svg
           [class.rotate-180]="!expandedSections['basicInfo']"
           class="h-6 w-6 transition-transform duration-200"
@@ -59,12 +77,14 @@
       <div class="flex">
         <label class="min-w-[120px] font-medium">教學專長</label>
         @if (!editMode().basicInfo) {
-          @for (item of baseInfo().categories; track $index) {
-            <div>
-              <span>{{ item.category }}</span
-              >&nbsp;<span>{{ item.sub_categories?.join(', ') }}</span>
-            </div>
-          }
+          <ul>
+            @for (item of baseInfo().categories; track $index) {
+              <li>
+                <span>{{ item.category_id! | tmfCategory }}</span
+                >：<span>{{ item.sub_categories?.join(', ') }}</span>
+              </li>
+            }
+            </ul>
         } @else {
           <div>
             <tmf-select
@@ -296,7 +316,7 @@
       class="flex min-h-[200px] items-center justify-center rounded border-2 border-dashed border-gray-300"
       *ngIf="expandedSections['video']"
     >
-      <!-- 影片上傳區域 -->
+      <!-- 影片傳區域 -->
     </div>
   </div>
 </div>

@@ -1,10 +1,8 @@
 import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
-  CommonService,
   GetTeacherInfoResponseModelData,
-  GetTeacherInfoResponseModelDataCategoriesInner,
-  TeacherInfoService
+  GetTeacherInfoResponseModelDataCategoriesInner
 } from 'libs/openapi/src';
 import {
   OptionComponent,
@@ -12,8 +10,23 @@ import {
   SelectComponent
 } from '@tmf/libs-shared/components';
 import { TagOption } from '../../teacher-apply-page/teacher-apply-page.model';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+  FormArray
+} from '@angular/forms';
 import { QuillEditorComponent } from '@tmf/libs-shared/components/form/quill-editor/quill-editor.component';
+import {
+  FormattedTeacherData,
+  TeacherInfoPageServiceService
+} from './teacher-info-page-service.service';
+import { forkJoin } from 'rxjs';
+import { switchMap, tap, catchError } from 'rxjs/operators';
+import { of } from 'rxjs';
+import { TmfCategoryPipe } from '@tmf/shared';
 
 @Component({
   selector: 'app-teacher-info-page',
@@ -23,17 +36,27 @@ import { QuillEditorComponent } from '@tmf/libs-shared/components/form/quill-edi
     SelectComponent,
     OptionComponent,
     ReactiveFormsModule,
-    QuillEditorComponent
+    QuillEditorComponent,
+    TmfCategoryPipe
   ],
   templateUrl: './teacher-info-page.component.html'
 })
 export default class TeacherInfoPageComponent {
-  private teacherService = inject(TeacherInfoService);
-  private commonService = inject(CommonService);
+  // ---------- Properties ----------
+  private teacherInfoPageService = inject(TeacherInfoPageServiceService);
+  private fb = inject(FormBuilder);
   tagOptions: TagOption[] = [];
   nationOptions: OptionType[] = [];
   teacherInfo!: GetTeacherInfoResponseModelData;
+  expandedSections: { [key: string]: boolean } = {
+    basicInfo: true,
+    workExperience: true,
+    education: true,
+    teaching: true,
+    video: true
+  };
 
+  // ---------- Signals ----------
   baseInfo = signal<{
     nationality: string;
     introduction: string;
@@ -44,14 +67,6 @@ export default class TeacherInfoPageComponent {
     categories: []
   });
 
-  expandedSections: { [key: string]: boolean } = {
-    basicInfo: true,
-    workExperience: true,
-    education: true,
-    teaching: true,
-    video: true
-  };
-
   editMode = signal({
     basicInfo: false,
     workExperience: false,
@@ -60,78 +75,113 @@ export default class TeacherInfoPageComponent {
     video: false
   });
 
-  private fb = inject(FormBuilder);
-
+  // ---------- Form ----------
   fg = this.fb.group({
-    introduction: this.fb.control(''),
-    nationality: this.fb.control(''),
-    topicControl: this.fb.control(['665482f25b0ab5aecf1a93b3']),
-    categories: this.fb.array([
-      this.fb.group({
-        category_id: this.fb.control('665482f25b0ab5aecf1a93b2'),
-        sub_categories: this.fb.control(['繪畫', '雕塑', '攝影'])
-      })
-    ])
+    introduction: [''],
+    nationality: [''],
+    topicControl: [[] as string[]],
+    categories: this.fb.array<
+      FormGroup<{
+        category_id: FormControl<string | null>;
+        sub_categories: FormControl<string[] | null>;
+      }>
+    >([])
   });
 
+  // ---------- Lifecycle ----------
   ngOnInit(): void {
-    this.getOptions();
-    this.teacherService.apiTeacherInfoGet().subscribe((teacher) => {
-      console.log(teacher);
-      this.teacherInfo = teacher.data;
+    forkJoin({
+      options: forkJoin({
+        tags: this.teacherInfoPageService.getTagOptions(),
+        nations: this.teacherInfoPageService.getNationOptions()
+      }),
+      teacherInfo: this.teacherInfoPageService.getTeacherInfo()
+    }).subscribe(({ options, teacherInfo }) => {
+      this.tagOptions = options.tags.map((tag) => ({
+        value: tag._id,
+        main_category: tag.main_category,
+        sub_category: tag.sub_category
+      }));
+      this.nationOptions = options.nations;
 
+      this.teacherInfo = teacherInfo;
       this.baseInfo.set({
         nationality: this.teacherInfo.nationality,
         introduction: this.teacherInfo.introduction,
         categories: this.teacherInfo.categories
       });
+
+      this.initForm();
     });
   }
 
-  toggleSection(section: string): void {
-    this.expandedSections[section] = !this.expandedSections[section];
+  // ---------- Form Methods ----------
+  initForm() {
+    const formData = this.prepareFormData();
+    this.updateFormValues(formData);
   }
 
-  getOptions() {
-    this.commonService.apiCommonTagGet().subscribe((res) => {
-      this.tagOptions = res.data.map((tag) => ({
-        value: tag._id,
-        main_category: tag.main_category,
-        sub_category: tag.sub_category
-      }));
+  private prepareFormData(): FormattedTeacherData {
+    return this.teacherInfoPageService.formatTeacherData(
+      this.teacherInfo,
+      this.tagOptions,
+      this.nationOptions
+    );
+  }
+
+  private updateFormValues(formData: FormattedTeacherData) {
+    this.fg.patchValue({
+      introduction: formData.introduction,
+      nationality: formData.nationality,
+      topicControl: formData.topicControl
     });
 
-    this.commonService.apiCommonOptionsNationGet().subscribe((res) => {
-      this.nationOptions = res.data;
+    this.handleCategoryChange(formData.topicControl);
+    this.updateSubCategories(formData.categories);
+  }
+
+  private updateSubCategories(
+    categories: GetTeacherInfoResponseModelDataCategoriesInner[]
+  ) {
+    categories.forEach((category) => {
+      const categoryId = this.transTopicNameToId(category.category_id!);
+      const categoryControl = this.fg.controls.categories.controls.find(
+        (control) => control.get('category_id')?.value === categoryId
+      );
+
+      if (categoryControl) {
+        categoryControl.patchValue({
+          sub_categories: category.sub_categories
+        });
+      }
     });
   }
 
-  getCategoryLabel(categoryId: string) {
-    const tag = this.tagOptions.find((tag) => tag.value === categoryId);
-    return tag?.main_category || '';
-  }
-
-  getSubCategoryOptions(categoryId: string) {
-    const category = this.tagOptions.find((tag) => tag.value === categoryId);
-    return category?.sub_category || [];
-  }
-
+  // ---------- Category Methods ----------
   handleCategoryChange(value: string[]) {
     const categories = this.fg.controls.categories;
     const valueSet = new Set(value);
 
     // 移除不在 value 中的 category
+    this.removeUnusedCategories(categories, valueSet);
+
+    // 添加新的 category
+    this.addNewCategories(value, categories);
+  }
+
+  private removeUnusedCategories(categories: FormArray, valueSet: Set<string>) {
     for (let i = categories.controls.length - 1; i >= 0; i--) {
-      const group = categories.controls[i];
-      if (!valueSet.has(group.controls.category_id.value!)) {
+      const group = categories.controls[i] as FormGroup;
+      if (!valueSet.has(group.get('category_id')?.value)) {
         categories.removeAt(i);
       }
     }
+  }
 
-    // 添加新的 category
+  private addNewCategories(value: string[], categories: FormArray) {
     value.forEach((id) => {
       const categoryExists = categories.controls.some(
-        (group) => group.controls.category_id.value === id
+        (group) => (group as FormGroup).get('category_id')?.value === id
       );
 
       if (!categoryExists) {
@@ -145,6 +195,59 @@ export default class TeacherInfoPageComponent {
           })
         );
       }
+    });
+  }
+
+  getCategoryLabel(categoryId: string) {
+    const tag = this.tagOptions.find((tag) => tag.value === categoryId);
+    return tag?.main_category || '';
+  }
+
+  getSubCategoryOptions(categoryId: string) {
+    const category = this.tagOptions.find((tag) => tag.value === categoryId);
+    return category?.sub_category || [];
+  }
+
+  private transTopicNameToId(name: string): string {
+    const topic = this.tagOptions.find((topic) => topic.value === name);
+    return topic?.value || '';
+  }
+
+  // ---------- UI Event Handlers ----------
+  toggleSection(section: string): void {
+    this.expandedSections[section] = !this.expandedSections[section];
+  }
+
+  handleSave(event: UIEvent, section: 'basicInfo') {
+    event.stopPropagation();
+    switch (section) {
+      case 'basicInfo':
+        this.teacherInfoPageService
+          .saveBaseInfo(this.fg.value, this.nationOptions)
+          .pipe(
+            // 儲存成功後切換到獲取教師資訊的流
+            switchMap(() => this.teacherInfoPageService.getTeacherInfo()),
+            // 更新本地狀態
+            tap((teacherInfo) => {
+              this.teacherInfo = teacherInfo;
+              this.baseInfo.set({
+                nationality: this.teacherInfo.nationality,
+                introduction: this.teacherInfo.introduction,
+                categories: this.teacherInfo.categories
+              });
+              this.handleCancel(event, 'basicInfo');
+            })
+          )
+          .subscribe();
+        break;
+    }
+  }
+
+  handleCancel(event: UIEvent, section: 'basicInfo') {
+    event.stopPropagation();
+    this.editMode.set({
+      ...this.editMode(),
+      [section]: false
     });
   }
 
