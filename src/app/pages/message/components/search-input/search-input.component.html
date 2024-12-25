@@ -1,0 +1,33 @@
+<div class="relative flex w-full items-center border">
+  <input
+    type="text"
+    placeholder="搜尋"
+    class="flex-grow p-3 pr-0 outline-none min-w-0"
+    [formControl]="control"
+    (focus)="isOpen = true"
+  />
+  <div
+    (click)="search()"
+    class="flex cursor-pointer items-center justify-center bg-tmf-gray-2 p-3 text-white duration-100 hover:bg-tmf-gray-1"
+  >
+    <span class="material-symbols-outlined"> search </span>
+  </div>
+  @if (options && options.length && isOpen) {
+    <ul class="absolute top-full w-full rounded-sm border bg-white shadow-md z-10">
+      <li
+        *ngFor="let option of options"
+        (click)="selectOption(option)"
+        class="cursor-pointer border-b p-3 hover:bg-tmf-gray-6"
+      >
+        <div class="flex items-center justify-between">
+          <p>{{ option.name }}</p>
+          @if (option.joined) {
+            <span class="material-symbols-outlined"> sms </span>
+          } @else {
+            <span class="material-symbols-outlined"> person_add </span>
+          }
+        </div>
+      </li>
+    </ul>
+  }
+</div>

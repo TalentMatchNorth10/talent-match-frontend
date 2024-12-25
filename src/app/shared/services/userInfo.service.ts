@@ -27,6 +27,6 @@ export class UserInfoService {
   }
 
   getCurrentUserInfo() {
-    return this.userInfo.getValue();
+    return this.userInfo.value;
   }
 }

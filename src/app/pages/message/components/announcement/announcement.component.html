@@ -1,0 +1,40 @@
+<div class="announcement">
+  <div class="mb-5 flex items-center justify-end flex-shrink-0">
+    <button
+      (click)="create()"
+      class="flex w-fit items-center gap-1 whitespace-nowrap rounded-md bg-tmf-orange-1 p-2 text-white"
+    >
+      <span class="material-symbols-outlined"> add </span>
+      發佈新公告
+    </button>
+  </div>
+
+  <table class="announcementTable">
+    <thead>
+      <tr>
+        <th>標題</th>
+        <th>發佈對象</th>
+        <th>發佈時間</th>
+        <th>內文</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (announcement of announcementList; track announcement) {
+        <tr>
+          <td class="text-center">{{ announcement.title }}</td>
+          <td class="text-center">{{ announcement.target }}</td>
+          <td class="text-center">
+            {{ announcement.createdAt | date: 'yyyy/MM/dd HH:MM' }}
+          </td>
+          <td>
+            <div [innerHTML]="announcement.text"></div>
+          </td>
+        </tr>
+      }@empty {
+        <tr class="h-full">
+          <td colspan="4" class="text-center h-full">尚無公告</td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>
