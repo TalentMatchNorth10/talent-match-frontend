@@ -1,0 +1,23 @@
+<div class="mx-auto w-full py-[50px] p-10 lg:max-w-[1200px]">
+  <div class="tabList">
+    <div
+      (click)="changeTab(Tab.CHAT)"
+      [class.active]="tab === Tab.CHAT"
+      class="tabItem"
+    >
+      <p>個人訊息</p>
+    </div>
+    <div
+      (click)="changeTab(Tab.ANNOUNCEMENT)"
+      [class.active]="tab === Tab.ANNOUNCEMENT"
+      class="tabItem"
+    >
+      <p>公告訊息</p>
+    </div>
+  </div>
+  @if (tab === Tab.CHAT) {
+    <app-chat [userInfo]="userInfo"></app-chat>
+  } @else {
+    <app-announcement></app-announcement>
+  }
+</div>

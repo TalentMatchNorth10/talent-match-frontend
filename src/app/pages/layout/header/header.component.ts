@@ -625,6 +625,9 @@ export class HeaderComponent implements OnInit {
       case '喜好類別':
         this.router.navigate(['/student/preference']);
         break;
+      case '訊息':
+        this.router.navigate(['/message']);
+        break;
       case '登出':
         this.authStatusService.logout();
         this.router.navigate(['/login']);

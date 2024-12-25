@@ -58,6 +58,12 @@ export const routes: Routes = [
     loadComponent: () =>
       import('../teacher-apply-page/teacher-apply-page.component')
   },
+  {
+    // 訊息頁
+    path: 'message',
+    canActivate: [checkUserLogin('提示', '請先登入會員')],
+    loadComponent: () => import('../message/message.component')
+  },
   /** ==================================  使用者管理 ========================================= */
   {
     path: 'student',

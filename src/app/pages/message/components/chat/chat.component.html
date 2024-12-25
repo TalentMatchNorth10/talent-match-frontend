@@ -1,0 +1,93 @@
+<div [formGroup]="chatForm" class="chat">
+  <div class="chatListContainer">
+    <app-search-input
+      (searchEvent)="getUserList($event)"
+      (selectEvent)="selectUser($event)"
+      formControlName="search"
+      [options]="chatUsers"
+    ></app-search-input>
+    <ul class="chatList">
+      @for (chat of chatList; track chat) {
+        <li (click)="selectChat(chat)" class="chatItem">
+          <div class="flex items-center pr-[50px]">
+            <div class="avator">
+              @if (chat.user.avatar) {
+                <img
+                  [src]="chat.user.avatar"
+                  alt="avatar"
+                  class="h-10 w-10 rounded-full"
+                />
+              } @else {
+                <div class="h-10 w-10 rounded-full bg-gray-300"></div>
+              }
+            </div>
+            <div class="chatContent">
+              <p class="chatName">{{ chat.user.name }}</p>
+              <p class="chatMessage" [innerHTML]="chat.latestMessage ? chat.latestMessage.text : ''">
+              </p>
+            </div>
+            @if(chat.unreadCount){
+              <div class="unreadCount">
+                <p>{{ chat.unreadCount }}</p>
+              </div>
+            }
+          </div>
+        </li>
+      }
+    </ul>
+  </div>
+
+  <div class="chatRoom">
+    @if(!currentChat){
+      <div class="emptyChat">
+        <p>尚未選擇聊天室</p>
+      </div>
+    } @else {
+      <div class="chatHeader">
+        <div class="avator">
+          @if (currentChat.user.avatar) {
+            <img
+              [src]="currentChat.user.avatar"
+              alt="avatar"
+              class="h-10 w-10 rounded-full"
+            />
+          } @else {
+            <div class="h-10 w-10 rounded-full bg-gray-300"></div>
+          }
+        </div>
+        <div class="userName">{{ currentChat.user.name }}</div>
+      </div>
+      <div class="chatContent">
+        @if (currentMessages.length === 0 || !currentMessages || !userInfo) {
+          <div class="emptyMessage">
+            <p>尚未有訊息</p>
+          </div>
+        } @else {
+          <div class="messages">
+            @for (message of currentMessages; track message) {
+              @if (message.senderId === userInfo.id) {
+                <div class="message message-right">
+                  <p [innerHTML]="message.text"></p>
+                  @if (message.readBy.includes(message.receiverId)) {
+                    <p class="messageOnRead">已讀</p>
+                  }
+                </div>
+              } @else {
+                <div class="message message-left">
+                  <p [innerHTML]="message.text"></p>
+                </div>
+              }
+            }
+          </div>
+        }
+      </div>
+      <div class="chatInput">
+        <tmf-quill-editor
+          [height]="'150px'"
+          (contentChangeEvent)="contentChange($event)"
+        ></tmf-quill-editor>
+        <button class="sendButton" (click)="sendMessage()">送出</button>
+      </div>
+    }
+  </div>
+</div>

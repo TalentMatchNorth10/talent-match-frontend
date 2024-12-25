@@ -1,0 +1,64 @@
+<div class="w-[350px] bg-white p-5 md:w-[600px]">
+  <div class="flex justify-center py-3">
+    <p class="text-lg font-semibold">新增公告</p>
+  </div>
+
+  <form [formGroup]="announcementForm">
+    <tmf-input
+      label="標題"
+      formControlName="title"
+      [inputType]="InputType.Outline"
+      [isRequired]="true"
+    ></tmf-input>
+    <tmf-select
+      class="mb-6"
+      label="發佈對象"
+      formControlName="target"
+      [isRequired]="true"
+      [multiSelect]="false"
+    >
+      <tmf-option
+        *ngFor="let item of targetOptions"
+        [value]="item.value"
+        [label]="item.label"
+      ></tmf-option>
+    </tmf-select>
+    <tmf-select
+      class="mb-6"
+      label="發佈課程"
+      formControlName="courseIds"
+      [isRequired]="true"
+      [multiSelect]="true"
+    >
+      <tmf-option
+        *ngFor="let item of courseOptions"
+        [value]="item.value"
+        [label]="item.label"
+      ></tmf-option>
+    </tmf-select>
+    <tmf-quill-editor
+      class="mb-6"
+      label="內文"
+      [isRequired]="true"
+      [height]="'150px'"
+      (contentChangeEvent)="contentChange($event)"
+    ></tmf-quill-editor>
+    <div class="flex justify-center gap-5">
+      <button
+        (click)="submit()"
+        type="button"
+        [disabled]="announcementForm.invalid"
+        class="w-[100px] rounded-md bg-tmf-orange-1 py-1 text-sm text-white disabled:opacity-50 cursor-not-allowed"
+      >
+        確認
+      </button>
+      <button
+        (click)="cancel()"
+        type="button"
+        class="w-[100px] rounded-md border py-1 text-tmf-gray-2"
+      >
+        取消
+      </button>
+    </div>
+  </form>
+</div>

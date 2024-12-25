@@ -1,0 +1,36 @@
+:host {
+  display: block;
+  overflow: auto;
+}
+
+.announcement {
+  @apply flex h-[800px] w-full min-w-[768px] flex-col border p-5;
+
+  .announcementTable {
+    @apply w-full flex-grow;
+
+    thead {
+      @apply border border-tmf-orange-1;
+
+      tr {
+        @apply bg-tmf-orange-1;
+
+        th {
+          @apply border-r p-2 text-lg font-semibold text-white last:border-r-0;
+        }
+      }
+    }
+
+    tbody {
+      @apply border;
+
+      tr {
+        @apply border-b;
+
+        td {
+          @apply border-r p-2 last:border-r-0;
+        }
+      }
+    }
+  }
+}

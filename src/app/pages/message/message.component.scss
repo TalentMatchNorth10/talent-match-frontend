@@ -1,0 +1,15 @@
+:host {
+  display: block;
+}
+
+.tabList {
+  @apply flex w-full items-center rounded-sm bg-white md:w-[400px];
+
+  .tabItem {
+    @apply flex flex-grow cursor-pointer justify-center border-t p-4 first:rounded-l-sm first:border-l last:rounded-r-sm last:border-r;
+
+    &.active {
+      @apply bg-tmf-orange-1 text-white;
+    }
+  }
+}
