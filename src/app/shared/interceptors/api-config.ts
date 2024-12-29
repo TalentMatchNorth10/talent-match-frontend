@@ -9,5 +9,7 @@ export const PROTECTED_PATHS = [
   { pattern: '/api/upload/file', methods: ['POST'] },
   { pattern: '/api/teacher_course', methods: ['GET', 'POST'] },
   { pattern: '/api/teacher_video', methods: ['GET', 'POST'] },
-  { pattern: '/api/file', methods: ['POST', 'GET', 'DELETE'] }
+  { pattern: '/api/file', methods: ['POST', 'GET', 'DELETE'] },
+  { pattern: '/api/announcement', methods: ['GET', 'POST', 'PUT'] },
+  { pattern: '/api/chat', methods: ['GET', 'POST', 'PUT'] }
 ];

@@ -13,7 +13,6 @@ export class WebSocketService {
 
   constructor() {
     const accessToken = this.storageService.getSessionItem('access_token');
-    console.log('accessToken', accessToken);
     this.socket = io(environment.webSocketPath, {
       extraHeaders: {
         Authorization: `Bearer ${accessToken}`

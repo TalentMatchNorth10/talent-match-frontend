@@ -1,10 +1,9 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import {
   AnnouncementListResponseModelDataInner,
   AnnouncementService
 } from 'libs/openapi/src';
-import { AnnouncementForm } from '../../message.model';
 import { CommonModule } from '@angular/common';
 import { Dialog } from '@angular/cdk/dialog';
 import { CreateAnnouncementDialogComponent } from '../create-announcement-dialog/create-announcement-dialog.component';
@@ -50,6 +49,13 @@ export class AnnouncementComponent implements OnInit {
     });
   }
 
+  getTargetText(target: string) {
+    const targetOption = this.targetOptions.find(
+      (option) => option.value === target
+    );
+    return targetOption ? targetOption.label : '';
+  }
+
   create() {
     this.dialog
       .open(CreateAnnouncementDialogComponent, {
@@ -58,6 +64,8 @@ export class AnnouncementComponent implements OnInit {
           targetOptions: this.targetOptions
         }
       })
-      .closed.subscribe();
+      .closed.subscribe(() => {
+        this.getList();
+      });
   }
 }
