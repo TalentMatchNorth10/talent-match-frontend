@@ -7,7 +7,7 @@
   @apply flex h-[800px] w-full min-w-[768px] flex-col border p-5;
 
   .announcementTable {
-    @apply w-full flex-grow;
+    @apply w-full;
 
     thead {
       @apply border border-tmf-orange-1;

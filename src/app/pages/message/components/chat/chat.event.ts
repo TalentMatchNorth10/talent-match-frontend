@@ -6,5 +6,7 @@ export enum ChatListen {
 
 export enum ChatEvent {
   'JOIN_ROOM' = 'joinRoom',
-  'LEAVE_ROOM' = 'leaveRoom'
+  'LEAVE_ROOM' = 'leaveRoom',
+  'JOIN_PERSONAL_ROOM' = 'joinPersonalRoom',
+  'LEAVE_PERSONAL_ROOM' = 'leavePersonalRoom'
 }

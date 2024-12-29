@@ -3,8 +3,11 @@ import {
   inject,
   Input,
   input,
+  OnChanges,
   OnDestroy,
-  OnInit
+  OnInit,
+  SimpleChanges,
+  ViewChild
 } from '@angular/core';
 import {
   ChatListResponseModelDataInner,
@@ -19,6 +22,7 @@ import { QuillEditorComponent } from '@tmf/libs-shared/components/form/quill-edi
 import { SearchInputComponent } from '../search-input/search-input.component';
 import { WebSocketService } from '@tmf/shared';
 import { ChatEvent, ChatListen } from './chat.event';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-chat',
@@ -27,23 +31,37 @@ import { ChatEvent, ChatListen } from './chat.event';
   templateUrl: './chat.component.html',
   styleUrl: './chat.component.scss'
 })
-export class ChatComponent implements OnInit, OnDestroy {
+export class ChatComponent implements OnInit, OnChanges, OnDestroy {
   private fb = inject(FormBuilder);
   private chatService = inject(ChatService);
   private websocketService = inject(WebSocketService);
 
   @Input() userInfo: UserInfoResponseModelData | null = null;
 
+  @ViewChild(QuillEditorComponent) quillEditor!: QuillEditorComponent;
+
   chatForm = this.fb.group<ChatForm>({
     message: this.fb.control(null),
     search: this.fb.control(null)
   });
+
+  get message() {
+    return this.chatForm.controls.message;
+  }
 
   chatUsers: ChatUsersResponseModelDataInner[] = [];
   chatList: ChatListResponseModelDataInner[] = [];
 
   currentChat: ChatListResponseModelDataInner | null = null;
   currentMessages: ChatMessagesResponseModelDataInner[] = [];
+
+  private subscribedEvents: Set<Subscription> = new Set();
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['userInfo']) {
+      this.initJoinPersonalRoom();
+    }
+  }
 
   ngOnInit(): void {
     this.getUserList();
@@ -52,31 +70,69 @@ export class ChatComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.cleanBindEvent();
+
     if (this.currentChat) {
       this.websocketService.emit(ChatEvent.LEAVE_ROOM, this.currentChat?.id);
+    }
+
+    if (this.userInfo) {
+      this.websocketService.emit(ChatEvent.LEAVE_PERSONAL_ROOM, '');
+    }
+  }
+
+  initJoinPersonalRoom() {
+    if (this.userInfo) {
+      this.websocketService.emit(ChatEvent.JOIN_PERSONAL_ROOM, '');
     }
   }
 
   initBindEvent() {
-    this.websocketService
-      .onEvent<ChatMessagesResponseModelDataInner>(ChatListen.MESSAGE_RECEIVED)
-      .subscribe((data) => {
-        console.log('MESSAGE_RECEIVED', data);
-      });
+    this.subscribedEvents.add(
+      this.websocketService
+        .onEvent<ChatMessagesResponseModelDataInner>(
+          ChatListen.MESSAGE_RECEIVED
+        )
+        .subscribe((data) => {
+          if (this.currentChat) {
+            this.currentMessages.push(data);
+            this.markRead();
+          }
+        })
+    );
 
-    this.websocketService
-      .onEvent(ChatListen.READ_STATUS_UPDATED)
-      .subscribe(() => {
-        if (this.currentChat) {
-          this.getMessageList(this.currentChat!.id);
-        }
-      });
+    this.subscribedEvents.add(
+      this.websocketService
+        .onEvent<{
+          chatId: string;
+          userId: string;
+        }>(ChatListen.READ_STATUS_UPDATED)
+        .subscribe((res) => {
+          if (this.currentChat && res.userId !== this.userInfo?.id) {
+            this.getMessageList(this.currentChat!.id);
+          }
+        })
+    );
 
-    this.websocketService
-      .onEvent<ChatListResponseModelDataInner>(ChatListen.CHAT_LIST_UPDATED)
-      .subscribe((chatListItem) => {
-        console.log('CHAT_LIST_UPDATED', chatListItem);
-      });
+    this.subscribedEvents.add(
+      this.websocketService
+        .onEvent<ChatListResponseModelDataInner>(ChatListen.CHAT_LIST_UPDATED)
+        .subscribe((chatListItem) => {
+          const chatItem = this.chatList.find(
+            (chat) => chat.id === chatListItem.id
+          );
+          if (chatItem) {
+            chatItem.latestMessage = chatListItem.latestMessage;
+            chatItem.unreadCount = chatListItem.unreadCount;
+          }
+        })
+    );
+  }
+
+  cleanBindEvent() {
+    this.subscribedEvents.forEach((event) => {
+      event.unsubscribe();
+    });
   }
 
   sendMessage() {
@@ -91,8 +147,22 @@ export class ChatComponent implements OnInit, OnDestroy {
           }
         })
         .subscribe(() => {
-          this.chatForm.controls.message.setValue(null);
+          this.chatForm.controls.message.setValue('');
+          this.quillEditor.updateContent('');
         });
+    }
+  }
+
+  markRead() {
+    if (this.currentChat) {
+      this.chatService
+        .apiChatChatIdMarkAsReadPut({
+          chatId: this.currentChat.id,
+          chatReadStatusRequestModel: {
+            userId: this.userInfo!.id
+          }
+        })
+        .subscribe();
     }
   }
 
@@ -140,10 +210,20 @@ export class ChatComponent implements OnInit, OnDestroy {
   }
 
   selectChat(chat: ChatListResponseModelDataInner) {
-    this.websocketService.emit(ChatEvent.LEAVE_ROOM, this.currentChat?.id);
+    if (this.currentChat) {
+      this.websocketService.emit(ChatEvent.LEAVE_ROOM, this.currentChat?.id);
+    }
     this.currentChat = chat;
     this.websocketService.emit(ChatEvent.JOIN_ROOM, chat.id);
     this.getMessageList(chat.id);
+    this.chatService
+      .apiChatChatIdMarkAsReadPut({
+        chatId: chat.id,
+        chatReadStatusRequestModel: {
+          userId: this.userInfo!.id
+        }
+      })
+      .subscribe();
   }
 
   contentChange(content: string): void {
