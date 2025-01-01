@@ -1,0 +1,1 @@
+import{W as i}from"./chunk-Y52VWUQN.js";var l=(()=>{let t=class t{downloadFile(n,o){let r=window.URL.createObjectURL(n),c=document.createElement("a");c.href=r,c.download=o,c.click(),window.URL.revokeObjectURL(r)}};t.\u0275fac=function(o){return new(o||t)},t.\u0275prov=i({token:t,factory:t.\u0275fac,providedIn:"root"});let e=t;return e})();export{l as a};
