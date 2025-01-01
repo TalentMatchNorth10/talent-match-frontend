@@ -11,6 +11,7 @@ import {
 import { ReserveComponent } from '@tmf/libs-shared/components/dialogs/reserve/reserve.component';
 import { ReviewComponent } from '@tmf/libs-shared/components/dialogs/review/review.component';
 import { CommentComponent } from '@tmf/libs-shared/components/dialogs/comment/comment.component';
+import { AccountComponent } from '@tmf/libs-shared/components/dialogs/account/account.component';
 
 @Injectable({
   providedIn: 'root'
@@ -63,6 +64,13 @@ export class DialogService {
 
   openCommentDialog<D>(dialogData?: D) {
     return this.dialog.open(CommentComponent, {
+      autoFocus: 'none',
+      data: dialogData
+    });
+  }
+
+  openAccountDialog<D>(dialogData?: D) {
+    return this.dialog.open(AccountComponent, {
       autoFocus: 'none',
       data: dialogData
     });

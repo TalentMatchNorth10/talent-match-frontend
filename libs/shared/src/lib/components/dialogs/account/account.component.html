@@ -1,0 +1,50 @@
+<div class="w-[800px] overflow-hidden rounded-xl bg-white">
+  <div class="flex items-center justify-between px-6 py-4">
+    <p class="flex-grow text-center text-2xl font-bold text-tmf-gray-1">
+      填寫匯款帳號
+    </p>
+    <span class="material-icons cursor-pointer" (click)="dialogRef.close()"
+      >close</span
+    >
+  </div>
+  <div [formGroup]="fg" class="flex flex-col gap-3 p-6">
+    <tmf-input
+      [isRequired]="true"
+      label="銀行"
+      [inputType]="InputType.Outline"
+      formControlName="bankCode"
+    />
+    <tmf-input
+      [isRequired]="true"
+      label="帳號"
+      [inputType]="InputType.Outline"
+      formControlName="bankAccount"
+    />
+    <tmf-input
+      [isRequired]="true"
+      label="戶名"
+      [inputType]="InputType.Outline"
+      formControlName="accountName"
+    />
+
+    <div class="flex w-full items-center justify-center gap-4">
+      <button
+        (click)="dialogRef.close()"
+        class="box-border rounded-lg border border-tmf-gray-4 bg-white px-4 py-[0.4375rem] text-sm leading-6 text-tmf-gray-4"
+      >
+        取消
+      </button>
+      <button
+        class="rounded-lg bg-tmf-orange-1 px-4 py-2 text-sm leading-6 text-white"
+        (click)="onSave()"
+      >
+        <p class="flex items-center gap-2">
+          <span>儲存</span>
+          <span class="material-symbols-outlined text-sm">
+            edit_square
+          </span>
+        </p>
+      </button>
+    </div>
+  </div>
+</div>
