@@ -1,1 +1,129 @@
-<p>teacher-record-page works!</p>
+<div class="mb-6 flex items-center justify-between">
+  <h1 class="text-3xl font-bold text-tmf-gray-1">交易紀錄</h1>
+  <div class="flex items-center gap-2">
+    <p class="text-sm text-green-500">填寫已完成</p>
+    <button
+      (click)="openAccountDialog()"
+      class="rounded-full border border-tmf-gray-1 px-3 py-1.5 text-sm hover:bg-gray-100"
+    >
+      <div class="flex items-center gap-2">
+        <span>填寫匯款帳號</span>
+        <span class="material-symbols-outlined text-[20px] md:text-[22px]">
+          edit_square
+        </span>
+      </div>
+    </button>
+  </div>
+</div>
+<div class="container mx-auto py-8">
+  <div class="mb-8">
+    <!-- 標題區塊 -->
+    <div class="mb-4 flex items-center justify-between">
+      <div class="flex items-center gap-4">
+        <h2 class="text-xl font-bold">本月已完成課程</h2>
+        <span class="text-gray-600">每月最後一日結算</span>
+      </div>
+      <button
+        (click)="downloadHistory()"
+        class="rounded-full border border-tmf-gray-1 px-3 py-1.5 text-sm hover:bg-gray-100"
+      >
+        下載歷史紀錄
+      </button>
+    </div>
+    <!-- 本月已完成課程 -->
+    <div class="overflow-x-auto">
+      <table class="w-full border-collapse">
+        <thead>
+          <tr class="border-b border-gray-200 bg-gray-50">
+            <th class="p-3 text-left">課程</th>
+            <th class="p-3 text-left">學生</th>
+            <th class="p-3 text-left">上課堂次</th>
+            <th class="p-3 text-left">日期</th>
+            <th class="p-3 text-left">時間</th>
+            <th class="p-3 text-left">學生聯絡資料</th>
+            <th class="p-3 text-left">收入</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (reserve of completed_reserves(); track reserve._id) {
+            <tr class="border-b border-gray-200">
+              <td class="p-3">{{ reserve.course_name }}</td>
+              <td class="p-3">{{ reserve.nick_name }}</td>
+              <td class="p-3">{{ reserve.sn }} / {{ reserve.total }}</td>
+              <td class="p-3">{{ reserve.reserve_date }}</td>
+              <td class="p-3">{{ reserve.reserve_time }}</td>
+              <td class="p-3">{{ reserve.email }}</td>
+              <td class="p-3">
+                {{ reserve.price! / reserve.total! | number: '1.2-2' }}
+              </td>
+            </tr>
+          } @empty {
+            <tr>
+              <td colspan="7" class="p-3 text-center">本月尚未有已完成課程</td>
+            </tr>
+          }
+        </tbody>
+        <tfoot>
+          @if (!!completed_reserves() && completed_reserves()!.length > 0) {
+            <tr>
+              <td colspan="6" class="p-3 text-right font-bold">總計</td>
+              <td class="p-3 font-bold">${{ total_income() }}</td>
+            </tr>
+          }
+        </tfoot>
+      </table>
+    </div>
+  </div>
+
+  <div>
+    <!-- 標題區塊 -->
+    <div class="mb-4 flex items-center justify-between">
+      <div class="flex items-center gap-4">
+        <h2 class="text-xl font-bold">待完成課程</h2>
+      </div>
+    </div>
+    <!-- 待完成課程 -->
+    <div class="overflow-x-auto">
+      <table class="w-full border-collapse">
+        <thead>
+          <tr class="border-b border-gray-200 bg-gray-50">
+            <th class="p-3 text-left">課程</th>
+            <th class="p-3 text-left">學生</th>
+            <th class="p-3 text-left">上課堂次</th>
+            <th class="p-3 text-left">日期</th>
+            <th class="p-3 text-left">時間</th>
+            <th class="p-3 text-left">學生聯絡資料</th>
+            <th class="p-3 text-left">預計收入</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (reserve of uncompleted_reserves(); track reserve._id) {
+            <tr class="border-b border-gray-200">
+              <td class="p-3">{{ reserve.course_name }}</td>
+              <td class="p-3">{{ reserve.nick_name }}</td>
+              <td class="p-3">{{ reserve.sn }} / {{ reserve.total }}</td>
+              <td class="p-3">{{ reserve.reserve_date }}</td>
+              <td class="p-3">{{ reserve.reserve_time }}</td>
+              <td class="p-3">{{ reserve.email }}</td>
+              <td class="p-3">
+                {{ reserve.price! / reserve.total! | number: '1.2-2' }}
+              </td>
+            </tr>
+          } @empty {
+            <tr>
+              <td colspan="7" class="p-3 text-center">本月尚未有待完成課程</td>
+            </tr>
+          }
+        </tbody>
+        <tfoot>
+          @if (!!uncompleted_reserves() && uncompleted_reserves()!.length > 0) {
+            <tr>
+              <td colspan="6" class="p-3 text-right font-bold">總計</td>
+              <td class="p-3 font-bold">${{ expected_income() }}</td>
+            </tr>
+          }
+        </tfoot>
+      </table>
+    </div>
+  </div>
+</div>

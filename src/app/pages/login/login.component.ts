@@ -139,11 +139,11 @@ export class LoginComponent implements OnInit {
   private dialogService = inject(DialogService);
 
   form = this.fb.group<LoginForm>({
-    [LoginFormKey.EMAIL]: this.fb.control(null, [
+    [LoginFormKey.EMAIL]: this.fb.control('example@gmail.com', [
       Validators.required,
       Validators.email
     ]),
-    [LoginFormKey.PASSWORD]: this.fb.control(null, [Validators.required])
+    [LoginFormKey.PASSWORD]: this.fb.control('12345678', [Validators.required])
   });
 
   readonly LoginFormKey = LoginFormKey;
