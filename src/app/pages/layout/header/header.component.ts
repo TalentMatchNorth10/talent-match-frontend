@@ -628,6 +628,9 @@ export class HeaderComponent implements OnInit {
       case '訊息':
         this.router.navigate(['/message']);
         break;
+      case '公告':
+        this.router.navigate(['/bulletin']);
+        break;
       case '登出':
         this.authStatusService.logout();
         this.router.navigate(['/login']);

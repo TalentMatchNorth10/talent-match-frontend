@@ -1,1 +1,126 @@
-<p>bulletin-page works!</p>
+<div class="mx-auto h-[900px] w-full p-10 py-[50px] lg:max-w-[1200px]">
+  <h1 class="mb-6 text-2xl text-tmf-gray-1">公告</h1>
+
+  <div class="flex h-full gap-6">
+    <!-- Left Sidebar -->
+    <div class="w-[300px] rounded-lg border border-tmf-gray-6 bg-white">
+      <!-- Category Tabs -->
+      <div class="flex border-b border-tmf-gray-6">
+        <div
+          [class]="
+            activeTab() === 'system' ? 'border-b-2 border-tmf-orange-1' : ''
+          "
+          class="flex-1 cursor-pointer py-3 text-center font-medium"
+          [class.text-tmf-gray-4]="activeTab() !== Tab.System"
+          (click)="switchTab(Tab.System)"
+        >
+          系統公告 ({{ systemAnnouncements.length }})
+        </div>
+        <div
+          [class]="
+            activeTab() === Tab.Course ? 'border-b-2 border-tmf-orange-1' : ''
+          "
+          class="flex-1 cursor-pointer py-3 text-center font-medium"
+          [class.text-tmf-gray-4]="activeTab() !== Tab.Course"
+          (click)="switchTab(Tab.Course)"
+        >
+          課程公告 ({{ courseAnnouncements.length }})
+        </div>
+      </div>
+
+      <!-- Announcement List -->
+      <div class="divide-y divide-tmf-gray-6">
+        @for (announcement of getActiveAnnouncements(); track announcement.id) {
+          <div
+            class="flex cursor-pointer gap-3 p-4"
+            [class.bg-tmf-yellow-1]="
+              selectedAnnouncement()?.id === announcement.id
+            "
+            (click)="selectAnnouncement(announcement)"
+          >
+            <div class="h-10 w-10 overflow-hidden rounded-full">
+              <img
+                [src]="
+                  activeTab() === Tab.Course
+                    ? announcement.user?.avatar
+                    : '/assets/images/og_image.png'
+                "
+                alt="logo"
+                class="h-full w-full object-cover"
+              />
+            </div>
+            <div>
+              <h3 class="font-medium text-tmf-gray-1">
+                {{ announcement.title }}
+              </h3>
+              <p class="text-sm text-tmf-gray-4">
+                {{ announcement.createdAt | date: 'yyyy/MM/dd' }}
+              </p>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+
+    <!-- Right Content -->
+    <div class="flex-1 rounded-lg border border-tmf-gray-6 bg-white p-6">
+      @if (selectedAnnouncement()) {
+        <div class="mb-4 flex items-center justify-between">
+          <div class="text-sm text-tmf-gray-4">
+            {{ selectedAnnouncement()?.createdAt | date: 'yyyy/MM/dd' }}
+          </div>
+          <div class="text-sm text-tmf-gray-4">
+            {{ selectedAnnouncement()?.createdAt | date: 'HH:mm' }}
+          </div>
+        </div>
+
+        <!-- Announcement Content -->
+        <div class="flex gap-4">
+          <div class="h-10 w-10 overflow-hidden rounded-full bg-tmf-gray-6">
+            <img
+              [src]="
+                activeTab() === Tab.Course
+                  ? selectedAnnouncement()?.user?.avatar
+                  : '/assets/images/og_image.png'
+              "
+              alt="logo"
+              class="h-full w-full object-cover"
+            />
+          </div>
+          <div class="flex-1 rounded-2xl border border-tmf-gray-6 p-6">
+            <div
+              class="whitespace-pre-line text-tmf-gray-2"
+              [innerHTML]="selectedAnnouncement()?.text"
+            ></div>
+          </div>
+        </div>
+      } @else {
+        <div
+          class="flex h-full flex-grow items-center justify-center text-tmf-gray-3"
+        >
+          尚未選擇公告
+        </div>
+      }
+    </div>
+  </div>
+</div>
+
+<!-- System Update Announcement -->
+<!-- <div class="flex gap-3 p-4">
+          <div class="h-10 w-10 overflow-hidden rounded-full bg-tmf-gray-6">
+            <img
+              src="/assets/images/og_image.png"
+              alt="logo"
+              class="h-full w-full object-cover"
+            />
+          </div>
+          <div class="flex flex-1 items-center justify-between">
+            <div>
+              <h3 class="font-medium text-tmf-gray-1">平台系統升級通知</h3>
+              <p class="text-sm text-tmf-gray-4">3天前</p>
+            </div>
+            <span class="rounded bg-tmf-yellow-1 px-2 py-1 text-xs"
+              >新消息</span
+            >
+          </div>
+        </div> -->
