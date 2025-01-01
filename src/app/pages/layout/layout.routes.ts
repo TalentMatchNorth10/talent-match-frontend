@@ -64,6 +64,12 @@ export const routes: Routes = [
     canActivate: [checkUserLogin('提示', '請先登入會員')],
     loadComponent: () => import('../message/message.component')
   },
+  {
+    // 公告頁
+    path: 'bulletin',
+    canActivate: [checkUserLogin('提示', '請先登入會員')],
+    loadComponent: () => import('../bulletin-page/bulletin-page.component')
+  },
   /** ==================================  使用者管理 ========================================= */
   {
     path: 'student',
