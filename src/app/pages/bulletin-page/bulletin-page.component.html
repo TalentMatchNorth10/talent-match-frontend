@@ -3,7 +3,7 @@
 
   <div class="flex h-full gap-6">
     <!-- Left Sidebar -->
-    <div class="w-[300px] rounded-lg border border-tmf-gray-6 bg-white">
+    <div class="w-[300px] rounded-lg border border-tmf-gray-6 bg-white overflow-y-auto">
       <!-- Category Tabs -->
       <div class="flex border-b border-tmf-gray-6">
         <div
@@ -14,7 +14,7 @@
           [class.text-tmf-gray-4]="activeTab() !== Tab.System"
           (click)="switchTab(Tab.System)"
         >
-          系統公告 ({{ systemAnnouncements.length }})
+          系統公告 ({{ systemAnnouncements()?.length }})
         </div>
         <div
           [class]="
@@ -24,40 +24,18 @@
           [class.text-tmf-gray-4]="activeTab() !== Tab.Course"
           (click)="switchTab(Tab.Course)"
         >
-          課程公告 ({{ courseAnnouncements.length }})
+          課程公告 ({{ courseAnnouncements()?.length }})
         </div>
       </div>
 
       <!-- Announcement List -->
       <div class="divide-y divide-tmf-gray-6">
-        @for (announcement of getActiveAnnouncements(); track announcement.id) {
-          <div
-            class="flex cursor-pointer gap-3 p-4"
-            [class.bg-tmf-yellow-1]="
-              selectedAnnouncement()?.id === announcement.id
-            "
-            (click)="selectAnnouncement(announcement)"
-          >
-            <div class="h-10 w-10 overflow-hidden rounded-full">
-              <img
-                [src]="
-                  activeTab() === Tab.Course
-                    ? announcement.user?.avatar
-                    : '/assets/images/og_image.png'
-                "
-                alt="logo"
-                class="h-full w-full object-cover"
-              />
-            </div>
-            <div>
-              <h3 class="font-medium text-tmf-gray-1">
-                {{ announcement.title }}
-              </h3>
-              <p class="text-sm text-tmf-gray-4">
-                {{ announcement.createdAt | date: 'yyyy/MM/dd' }}
-              </p>
-            </div>
-          </div>
+        @for (announcement of activeAnnouncements(); track announcement.id) {
+          <app-bulletin-item
+            [announcement]="announcement"
+            [selectId]="selectedAnnouncement()?.id"
+            (selectAnnouncementEvent)="onSelectAnnouncement($event)"
+          ></app-bulletin-item>
         }
       </div>
     </div>
@@ -78,12 +56,8 @@
         <div class="flex gap-4">
           <div class="h-10 w-10 overflow-hidden rounded-full bg-tmf-gray-6">
             <img
-              [src]="
-                activeTab() === Tab.Course
-                  ? selectedAnnouncement()?.user?.avatar
-                  : '/assets/images/og_image.png'
-              "
-              alt="logo"
+              [src]="selectedAnnouncementAvatar()"
+              [alt]="selectedAnnouncementAlt()"
               class="h-full w-full object-cover"
             />
           </div>
