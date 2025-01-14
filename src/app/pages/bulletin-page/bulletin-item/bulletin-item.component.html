@@ -1,0 +1,21 @@
+<div
+  class="flex cursor-pointer gap-3 p-4"
+  [class.bg-tmf-yellow-1]="selectId() === announcement().id"
+  (click)="selectAnnouncement()"
+>
+  <div class="h-10 w-10 overflow-hidden rounded-full">
+    <img
+      [src]="announcementAvatar()"
+      [alt]="announcementAlt()"
+      class="h-full w-full object-cover"
+    />
+  </div>
+  <div>
+    <h3 class="font-medium text-tmf-gray-1">
+      {{ announcement().title }}
+    </h3>
+    <p class="text-sm text-tmf-gray-4">
+      {{ announcement().createdAt | date: 'yyyy/MM/dd' }}
+    </p>
+  </div>
+</div>
