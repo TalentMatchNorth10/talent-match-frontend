@@ -165,12 +165,13 @@ import { CartService } from 'src/app/shared/services/cart.service';
             <!-- 公告 -->
             <div class="relative cursor-pointer">
               <button
+                (click)="redirect('/bulletin')"
                 class="flex h-[32px] w-[32px] cursor-pointer items-center justify-center rounded-lg p-2 duration-100 hover:bg-tmf-gray-6 active:bg-tmf-gray-5 md:h-[40px] md:w-[48px]"
               >
                 <span class="material-icons-outlined">notifications</span>
-                <div
+                <!-- <div
                   class="absolute right-1 top-1 h-[4px] w-[4px] rounded-full bg-tmf-orange-1 md:right-2 md:top-2 md:h-[6px] md:w-[6px]"
-                ></div>
+                ></div> -->
               </button>
             </div>
             <!-- 購物車 -->

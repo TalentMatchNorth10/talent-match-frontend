@@ -27,7 +27,7 @@ interface Day {
 @Component({
   selector: 'tmf-reserve',
   standalone: true,
-  imports: [NgClass, ReserveDatepickerComponent],
+  imports: [NgClass],
   templateUrl: './reserve.component.html',
   styles: `
     @keyframes spin {
@@ -65,7 +65,7 @@ export class ReserveComponent {
   private dialogService = inject(DialogService);
 
   constructor(
-    public dialogRef: DialogRef<boolean,ReserveComponent>,
+    public dialogRef: DialogRef<boolean, ReserveComponent>,
     @Inject(DIALOG_DATA)
     public data: {
       student_id: string;
